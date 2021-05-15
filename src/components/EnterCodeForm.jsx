@@ -8,6 +8,7 @@ import HostRoom from './HostRoom'
 import '../style/style.css'
 
 //globals
+//
 
 export const socket = io('http://localhost:3001')
 
