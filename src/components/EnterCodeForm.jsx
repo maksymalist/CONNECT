@@ -10,7 +10,7 @@ import '../style/style.css'
 //globals
 //
 
-export const socket = io('http://localhost:3001')
+export const socket = io('https://champion-connect.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
 
 export default function EnterCodeForm() {
 
