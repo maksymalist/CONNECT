@@ -22,7 +22,7 @@ export default function WaitingRoom(props) {
         })
 
         socket.on('addeduser', (data)=>{
-            console.log(data)
+            //console.log(data)
             /*var RoomUsers = []
         
             for(var i = 0; i < data.names.length; i++){
@@ -43,7 +43,7 @@ export default function WaitingRoom(props) {
 
         })
         socket.on('joinedWaitingRoom', (data)=>{
-            console.log(data)
+            //console.log(data)
         })
         socket.on('playerLeftRoom', (data)=>{
             document.getElementById('userList').innerHTML = data.UsersInRoom

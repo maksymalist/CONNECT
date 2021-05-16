@@ -40,10 +40,10 @@ export default function HostRoom(props) {
             
         })
         socket.on('roomAdd', (data)=>{
-            console.log(data)
+            //console.log(data)
         })
         socket.on('yes', (data)=>{
-            console.log(data)
+            //console.log(data)
         })
 
         socket.on('timeBoard', (data)=>{

@@ -41,7 +41,6 @@ export default function GameRoom({match}) {
     }
 
     const setCardsFunction = () => {
-        console.log(quiz2)
         for(var i = 0; i < 6; i++){
             cards.push({
                 question: quiz2[`q${i}`].question,
@@ -67,7 +66,6 @@ export default function GameRoom({match}) {
 
     var elements = 0
     const GetCards = () => {
-        console.log(cards)
         for(var i = 0; i < cards.length; i++){
             let newCard = document.createElement('div')
             let newCard2 = document.createElement('div')
@@ -118,7 +116,6 @@ export default function GameRoom({match}) {
             question: ques,
             ans: ans
         })
-        console.log(memory)
 
         if(memory.length == 2){
 
@@ -132,8 +129,6 @@ export default function GameRoom({match}) {
                 document.getElementById(memory[1].ans).remove()
 
                 elements -= 2
-
-                console.log(elements, 'number of elements')
 
                 if(elements == 0){
                     GameOver = true
@@ -167,7 +162,7 @@ export default function GameRoom({match}) {
             const children = document.getElementById('cardContainer').childNodes
 
             children.forEach((child)=>{
-                console.log(child)
+                //
             })
         }
         cardsRando()

@@ -23,7 +23,6 @@ export default function EnterCodeForm() {
         var joinbutton = document.getElementById('joinbutton')
         
         socket.on('myroom', (data)=>{
-            console.log('myroom')
             socket.emit('adduser', {
                 name: data.name,
                 room: data.room
@@ -31,7 +30,6 @@ export default function EnterCodeForm() {
         })
         
         socket.on('roomcallback', (data)=>{
-            console.log(data.message)
         
             if(data.joined == true){
                 joined = true
@@ -49,12 +47,11 @@ export default function EnterCodeForm() {
         })
 
         socket.on('changeName', (data)=>{
-            console.log(data.message)
+            //
         })
         
         
         socket.on('addeduser', (data)=>{
-            console.log(data)
             /*var RoomUsers = []
         
             for(var i = 0; i < data.names.length; i++){
