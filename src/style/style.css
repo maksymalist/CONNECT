@@ -98,6 +98,14 @@ h1{
     min-width: 200px;
     min-height: 250px;
 }
+@media (pointer:none), (pointer:coarse) {
+    #mainConatainer{
+        margin-top: 18vh;
+    }
+    #subConatainer{
+        margin-top: 18vh;
+    }
+}
 
 #cardContainer{
     position: absolute;
