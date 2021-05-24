@@ -3,20 +3,25 @@ import ReactDOM from 'react-dom'
 import { io } from 'socket.io-client'
 import WaitingRoom from './WaitingRoom'
 import HostRoom from './HostRoom'
+import GoogleLogin from 'react-google-login'
+import { AwesomeButton } from "react-awesome-button";
+import "react-awesome-button/dist/styles.css"
 
 
 import '../style/style.css'
+import { toast } from 'react-toastify'
 
 //globals
 //
 
-export const socket = io('https://champion-connect.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
+export const socket = io('http://localhost:3001', {transports: ['websocket', 'polling', 'flashsocket']});
 
 export default function EnterCodeForm() {
 
     var [role, setRole] = useState('')
 
     useEffect(() => {
+        
 
         var joined = false
 
@@ -48,6 +53,9 @@ export default function EnterCodeForm() {
 
         socket.on('changeName', (data)=>{
             //
+        })
+        socket.on('roomFull', (data)=>{
+            toast.warning(data.message)
         })
         
         
@@ -84,6 +92,7 @@ export default function EnterCodeForm() {
     }, [])
 
 
+
     const JoinRoom = ()=>{
         socket.emit('joinroom', {
         code: document.getElementById('code').value, 
@@ -96,6 +105,9 @@ export default function EnterCodeForm() {
             room: document.getElementById('roomName').value,
             gamecode: document.getElementById('gameCode').value
         })
+    }
+    const responseGoogle = (response)=>{
+        console.log(response)
     }
 
 

@@ -6,6 +6,12 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import GameEnded from './GameEnded'
 
+//firebase
+import firebase from "firebase/app"
+import "firebase/auth";
+import "firebase/database";
+
+
 import 'react-toastify/dist/ReactToastify.css';
 import '../style/style.css'
 
@@ -18,11 +24,15 @@ export default function HostRoom(props) {
 
     const [podiumPlayers, setPodiumPLayers] = useState([])
     const [podiumPlayerTimes, setpodiumPlayerTimes] = useState([])
+    var [isActive, setIsActive] = useState("inactive")
+    var [userLimit, setUserLimit] = useState(8)
     const podium = []
+    var [numberOfUsers, setNumberOfUsers] = useState(0)
 
     const [playerTimes, setPlayerTimes] = useState([])
 
     useEffect(() => {
+        CheckPlanStatus()
         socket.emit('joinHostRoom', {
             room: props.room
         })
@@ -37,6 +47,11 @@ export default function HostRoom(props) {
                 }
             }
             document.getElementById('userList').innerHTML = data.UsersInRoom
+            setNumberOfUsers(numberOfUsers = numberOfUsers += 1)
+
+            if(numberOfUsers >= userLimit){
+                socket.emit('roomLimitReached', props.room)
+            }
             
         })
         socket.on('roomAdd', (data)=>{
@@ -98,6 +113,21 @@ export default function HostRoom(props) {
 
     }, [])
 
+    const CheckPlanStatus = () =>{
+        firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/planStatus`).on('value',(snap)=>{
+            if(snap.exists()){
+              var planStatus = snap.val()
+              setIsActive(isActive = planStatus)
+              if(isActive == "active"){
+                  setUserLimit(userLimit = 40)
+              }
+              else{
+                setUserLimit(userLimit = 8)
+              }
+            }
+          });
+    }
+
 
     const StartGame = (room)=>{
         socket.emit('startGame', {
@@ -132,6 +162,7 @@ export default function HostRoom(props) {
     return (
         <div>
             <h1>{props.room}</h1>
+            <h2>Max Users: {numberOfUsers}/{userLimit}</h2>
             <h2 id={'userList'}></h2>
             <div style={playerTimesStyle} id="times">
                 <h1>Player Times</h1>
