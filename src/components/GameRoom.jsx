@@ -10,6 +10,7 @@ import FinishedScreen from './FinishedScreen'
 import GameEnded from './GameEnded'
 
 import '../style/style.css'
+import { toast } from 'react-toastify'
 
 export default function GameRoom({match}) {
     var [time, updateTime] = useState(0)
@@ -187,6 +188,9 @@ export default function GameRoom({match}) {
 
         socket.on('timeBoard', (data)=>{
             //console.log(data.time, data.user)
+        })
+        socket.on('PlayerFinished2', (data)=>{
+            toast.success(`${data} has finished their game!`)
         })
 
         socket.on('EndedGame', (data)=>{

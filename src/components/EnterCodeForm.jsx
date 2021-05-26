@@ -6,6 +6,7 @@ import HostRoom from './HostRoom'
 import GoogleLogin from 'react-google-login'
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css"
+import Background from './Background'
 
 
 import '../style/style.css'
@@ -14,7 +15,7 @@ import { toast } from 'react-toastify'
 //globals
 //
 
-export const socket = io('http://localhost:3001', {transports: ['websocket', 'polling', 'flashsocket']});
+export const socket = io('https://connect-quiz-now.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
 
 export default function EnterCodeForm() {
 
@@ -45,7 +46,10 @@ export default function EnterCodeForm() {
             setRole(role = 'host')
             
             ReactDOM.render(
-                <HostRoom room={data.room} gamecode={data.gamecode}/>,
+                <div>
+                <HostRoom room={data.room} gamecode={data.gamecode}/>
+                <Background/>
+                </div>,
                 document.getElementById('root')
             )
 
@@ -74,8 +78,10 @@ export default function EnterCodeForm() {
                 if(sessionStorage.getItem('roomJoined') !== 'true'){
 
                     ReactDOM.render(
-                
-                        <WaitingRoom room={data.currentRoom} usersInRoom={data.UsersInRoom} user={data.name}/>,
+                        <div>
+                        <WaitingRoom room={data.currentRoom} usersInRoom={data.UsersInRoom} user={data.name}/>
+                        <Background/>
+                        </div>,
                         document.getElementById('root')
                     )
                     sessionStorage.setItem('roomJoined', 'true')
@@ -105,9 +111,6 @@ export default function EnterCodeForm() {
             room: document.getElementById('roomName').value,
             gamecode: document.getElementById('gameCode').value
         })
-    }
-    const responseGoogle = (response)=>{
-        console.log(response)
     }
 
 

@@ -47,7 +47,7 @@ export default function Plans() {
             return
         }
     
-        const res = await axios.post('http://localhost:3001/create-customer-portal-session', {customerId: customerId});
+        const res = await axios.post('https://connect-quiz-now.herokuapp.com/create-customer-portal-session', {customerId: customerId});
     
         const {redirectUrl} = res.data;
         console.log(redirectUrl)

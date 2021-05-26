@@ -63,7 +63,7 @@ function App() {
   }, [])
 
   const fetchCustomerData = async (id)=>{
-    const res = await axios.post('http://localhost:3001/get-customer-data', {subId: id});
+    const res = await axios.post('https://connect-quiz-now.herokuapp.com/get-customer-data', {subId: id});
     console.log(JSON.parse(res.data.subscriptionDetails))
     firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).update({
       UserName: `${JSON.parse(localStorage.getItem('user')).profileObj.givenName} ${JSON.parse(localStorage.getItem('user')).profileObj.familyName}`,

@@ -59,7 +59,7 @@ function HomePage() {
       return;
     }
 
-    const res = await axios.post('http://localhost:3001/pay', {email: email});
+    const res = await axios.post('https://connect-quiz-now.herokuapp.com/pay', {email: email});
 
     const clientSecret = res.data['client_secret'];
 
@@ -112,7 +112,7 @@ function HomePage() {
       console.log(result.error.message);
       toast.error(result.error.message, 'Try Again')
     } else {
-      const res = await axios.post('http://localhost:3001/sub', {'payment_method': result.paymentMethod.id, 'email': email});
+      const res = await axios.post('https://connect-quiz-now.herokuapp.com/sub', {'payment_method': result.paymentMethod.id, 'email': email});
       // eslint-disable-next-line camelcase
       const {client_secret, status, customer_obj, subscription_obj} = res.data;
       console.log(JSON.parse(customer_obj).id)
