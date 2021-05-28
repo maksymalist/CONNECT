@@ -23,6 +23,7 @@ import MemberRoom from './components/MemberRoom'
 import Background from './components/Background'
 
 
+
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
@@ -55,6 +56,7 @@ function App() {
       });
     }
     else{
+      toast.warn('You Have To Login If You Want To Use CONNECT!')
       return
     }
     return () => {

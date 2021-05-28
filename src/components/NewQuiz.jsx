@@ -44,7 +44,7 @@ export default function NewQuiz() {
 
 
     return (
-        <div style={{backgroundColor:'white', borderRadius:'25px', margin:'5%'}}>
+        <div style={{backgroundColor:'white', borderRadius:'25px', margin:'5%', marginTop:'20vh'}}>
             <div>
                 <h1>Quiz Name</h1>
                 <input id={'quizName'} type='text' placeholder="Enter Quiz's Name"></input>

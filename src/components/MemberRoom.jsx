@@ -11,6 +11,7 @@ import "firebase/database";
 import '../style/style.css'
 import loading from '../img/loading.gif'
 
+
 export default function MemberRoom() {
     var [isActive, setIsActive] = useState("inactive")
     

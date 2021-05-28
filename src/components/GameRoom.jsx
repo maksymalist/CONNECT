@@ -144,6 +144,7 @@ export default function GameRoom({match}) {
                         document.getElementById('popUp')
 
                     )
+                    document.getElementById('time').setAttribute('hidden', 'true')
                 }
             }
             else{
@@ -230,7 +231,7 @@ export default function GameRoom({match}) {
     return (
         <div>
             <h1>Time</h1>
-            <h1>{time}</h1>
+            <h1 id='time'>{time}</h1>
             <div id='cardContainer'></div>
             <div hidden id='popUp'></div>
             <h1 hidden>{JSON.stringify(selected)}</h1>

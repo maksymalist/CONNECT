@@ -69,7 +69,7 @@ export default function BrowseQuizes() {
 
 
     return (
-        <div id='feed'>
+        <div style={{marginTop:'20vh'}} id='feed'>
             <h1 id='loading'>Loading<img src={loading}></img></h1>
         </div>
     )

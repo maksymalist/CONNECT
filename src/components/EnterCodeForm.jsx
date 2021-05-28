@@ -117,14 +117,14 @@ export default function EnterCodeForm() {
     return (
         <div>
             <div id='mainConatainer'>
-                <h1>Enter Code</h1>
-                <input placeholder={'Enter Name'} type="text" id="name"/>
-                <br></br><input placeholder={'Enter Room Code'} type="text" id="code"/>
+                <h1>Join Room</h1>
+                <input placeholder={'Enter Your Nickname'} type="text" id="name"/>
+                <br></br><input placeholder={'Enter Room Name'} type="text" id="code"/>
                 <br></br><button id="joinbutton" onClick={()=>{JoinRoom()}}>Join Room</button>
             </div>
             <div id='subConatainer'>
                 <h1>Create Room</h1>
-                <input placeholder={'Enter Room Name'} type="text" id="roomName"/>
+                <input placeholder={'Give Your Room A Name'} type="text" id="roomName"/>
                 <br></br><input placeholder={'Enter Game Code'} type="text" id="gameCode"/>
                 <br></br><button onClick={()=>{CreateRoom()}}>Create Room</button>
             </div>

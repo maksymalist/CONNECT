@@ -32,7 +32,7 @@ export default function Plans() {
               console.log(data.customerObj.id, 'customerId')
             }
             else{
-              alert('haram')
+              alert('Something when Wrong')
             }
           });
         return () => {
@@ -65,7 +65,7 @@ export default function Plans() {
       };
 
     return (
-        <div>
+        <div className='planDiv'>
             <h1 hidden>current Plan: {subscribedStatus}</h1>
             <div id='plan1'>
                 <h1>
@@ -75,7 +75,7 @@ export default function Plans() {
                 <h2>Features</h2>
                 <ul>
                     <li className='features'>• Acces to The Multiplayer Flash Card Game</li>
-                    <li className='features'>• Have 5 or Less People in Your Rooms</li>
+                    <li className='features'>• Have 8 or Less People in Your Rooms</li>
                     <li className='features'>• You Can Create Quizes</li>
                 </ul>
                 <img height='220px' width='220px' src={StarterImg}></img>
@@ -90,9 +90,9 @@ export default function Plans() {
                 <h2>10$ per month</h2>
                 <h2>Features</h2>
                 <ul>
-                    <li className='features'>feature 1</li>
-                    <li className='features'>feature 2</li>
-                    <li className='features'>feature 3</li>
+                    <li className='features'>• Acces to The Multiplayer Flash Card Game</li>
+                    <li className='features'>• Have 40 or Less People in Your Rooms</li>
+                    <li className='features'>• You Can Create Quizes</li>
                 </ul>
                 <img height='220px' width='220px' src={TeacherImg}></img>
                 <div>
@@ -101,7 +101,7 @@ export default function Plans() {
             </div>
             <div id='plan3'>
                 <h1>
-                    Entreprise Plan
+                    (Coming Soon)
                 </h1>
                 <h2>25$ per month</h2>
                 <h2>Features</h2>
@@ -116,7 +116,7 @@ export default function Plans() {
                 </div>
             </div>
             <div>
-                <button style={{marginTop:'100px'}} onClick={()=>{openCustomerPortal()}}>Customer Portal</button>
+                <button style={{marginTop:'100px'}} onClick={()=>{openCustomerPortal()}}>Subscription Status</button>
             </div>
         </div>
     )
