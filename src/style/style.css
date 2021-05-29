@@ -428,3 +428,35 @@ input{
   /* Change the background color of the dropdown button when the dropdown content is shown */
   .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
+
+
+  /*times*/
+#times{
+    justify-content: center;
+    text-align: center;
+    background-color: white;
+    border-radius: 15px;
+    width: 50%;
+    height: 600px;
+    margin-left: 25%;
+}
+#podium{
+    justify-content: center;
+    text-align: center;
+    background-color: white;
+    border-radius: 15px;
+    width: 50%;
+    height: 600px;
+    margin-left: 25%;
+}
+
+@media (pointer:none), (pointer:coarse) {
+    #times{
+        width: 95%;
+        margin: 10px;
+    }
+    #podium{
+        width: 95%;
+        margin: 10px;
+    }
+}

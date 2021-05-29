@@ -53,12 +53,10 @@ function Nav() {
       firebase.database().ref(`users/${response.profileObj.googleId}`).on('value',(snap)=>{
         if(snap.exists()){
           window.location.reload()
-          alert('refssdfwfew')
         }
         else{
           updateUsers(response.profileObj.email.replace('.', ''), response.profileObj.googleId, `${response.profileObj.givenName} ${response.profileObj.familyName}`)
           window.location.reload()
-          alert('asdasfdas')
         }
       });
 

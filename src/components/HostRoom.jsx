@@ -156,7 +156,7 @@ export default function HostRoom(props) {
         window.location = '/roomleave'
     }
 
-    const playerTimesStyle = {backgroundColor:'white', borderRadius:'25px', height:'600px', width:'auto', maxWidth:'50vw'}
+    const playerTimesStyle = {backgroundColor:'white', borderRadius:'25px', height:'600px', width:'100%', maxWidth:'75vw'}
     const playerPodiumStyle = {backgroundColor:'white', borderRadius:'25px', height:'600px', width:'auto', maxWidth:'50vw'}
 
     return (
@@ -164,10 +164,10 @@ export default function HostRoom(props) {
             <h1>{props.room}</h1>
             <h2>Max Users: {numberOfUsers}/{userLimit}</h2>
             <h2 id={'userList'}></h2>
-            <div style={playerTimesStyle} id="times">
+            <div id="times">
                 <h1>Player Times</h1>
             </div>
-            <div id='podium' style={playerPodiumStyle}>
+            <div id='podium'>
                 <h1>Podium</h1>
                 {podiumPlayers.map((player, index) =>(
                 <h1 key={player}>{player} time:{podiumPlayerTimes[index]}</h1>
