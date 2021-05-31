@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## CONNECT Demo
+## CONNECT Demo Video
 https://youtu.be/9A2tYQTLsKg
 
 ## CONNECT Website
