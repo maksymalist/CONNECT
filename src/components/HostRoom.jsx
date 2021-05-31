@@ -83,6 +83,7 @@ export default function HostRoom(props) {
 
         socket.on('playerLeftRoom', (data)=>{
             document.getElementById('userList').innerHTML = data.UsersInRoom
+            setNumberOfUsers(numberOfUsers = data.UsersInRoom.length)
         })
 
         socket.on('EndGame', (data)=>{
@@ -179,4 +180,3 @@ export default function HostRoom(props) {
         </div>
     )
 }
-

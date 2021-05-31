@@ -15,7 +15,7 @@ import { toast } from 'react-toastify'
 //globals
 //
 
-export const socket = io('https://connect-quiz-now.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
+export const socket = io('http://localhost:3001/', {transports: ['websocket', 'polling', 'flashsocket']});
 
 export default function EnterCodeForm() {
 

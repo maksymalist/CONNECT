@@ -47,6 +47,7 @@ export default function WaitingRoom(props) {
         })
         socket.on('playerLeftRoom', (data)=>{
             document.getElementById('userList').innerHTML = data.UsersInRoom
+            console.log(data.UsersInRoom)
         })
 
         socket.on('EndedGame', (data)=>{

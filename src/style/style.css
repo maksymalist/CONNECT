@@ -13,7 +13,6 @@ nav {
     top: 0;
     left: 0;
     height: auto;
-    box-shadow: 2px 2px 10px #5e60e0;
     width: 100%;
     z-index: 20;
 }
@@ -453,10 +452,8 @@ input{
 @media (pointer:none), (pointer:coarse) {
     #times{
         width: 95%;
-        margin: 10px;
     }
     #podium{
         width: 95%;
-        margin: 10px;
     }
 }
