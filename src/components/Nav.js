@@ -88,12 +88,8 @@ function Nav() {
                   <a href="/newquiz">NEW QUIZ</a>
                   <a href="/browsequizes">QUIZES</a>
                   <a href="/plans">PLANS</a>
-                  <a href="/create-room">HOST</a>
                 </div>
             </div>
-            <Link style={navStyle} to='/create-room'>
-              <li className="nav-links lileft">host room</li>
-            </Link>
             <Link style={navStyle} to='/newquiz'>
               <li className="nav-links lileft">New Quiz</li>
             </Link>

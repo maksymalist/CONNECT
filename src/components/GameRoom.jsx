@@ -66,18 +66,19 @@ export default function GameRoom({match}) {
     
 
     var elements = 0
+    const randomNum = [0,1,2,3,4,5].sort( () => .5 - Math.random() )
     const GetCards = () => {
         for(var i = 0; i < cards.length; i++){
             let newCard = document.createElement('div')
             let newCard2 = document.createElement('div')
-            const item = cards[i].question
-            const ans = cards[i].ans
+            const item = cards[randomNum[i]].question
+            const ans = cards[randomNum[i]].ans
             newCard.id = 'cardDiv'
             document.getElementById('cardContainer').appendChild(newCard)
 
             ReactDOM.render(
                 <>
-                <div className='card' id={item} onClick={()=>{CardClick(item, ans, item)}}>{item}</div>
+                <div className='card' id={item} onClick={()=>{CardClick(item, ans, item, i)}}>{item}</div>
                 </>,
                 newCard
             )
@@ -85,16 +86,17 @@ export default function GameRoom({match}) {
  
 
         }
+        const randomNum2 = [0,1,2,3,4,5].sort( () => .5 - Math.random() )
         for(var i = 0; i < cards.length; i++){
             let newCard2 = document.createElement('div')
-            const item = cards[i].question
-            const ans = cards[i].ans
+            const item = cards[randomNum2[i]].question
+            const ans = cards[randomNum2[i]].ans
             newCard2.id = 'cardDiv2'
             document.getElementById('cardContainer').appendChild(newCard2)
 
             ReactDOM.render(
                 <>
-                <div className='card' id={ans} onClick={()=>{CardClick(item, ans, ans)}}>{ans}</div>
+                <div className='card' id={ans} onClick={()=>{CardClick(item, ans, ans, (i + 10))}}>{ans}</div>
                 </>,
                 newCard2
             )
@@ -106,7 +108,7 @@ export default function GameRoom({match}) {
         }
     }
     var memory = []
-    function CardClick(ques, ans, id){
+    function CardClick(ques, ans, id, index){
         setSelected(selected =>[...selected, {
             question: ques,
             ans: ans
@@ -115,7 +117,8 @@ export default function GameRoom({match}) {
 
         memory.push({
             question: ques,
-            ans: ans
+            ans: ans,
+            index: index
         })
 
         if(memory.length == 2){
@@ -124,6 +127,12 @@ export default function GameRoom({match}) {
                 document.getElementById(document.getElementsByClassName('card')[i].id).style = 'box-shadow: 0px 0px 0px royalblue;'
             }
             if(memory[0].question == memory[1].question){
+                if(memory[0].index == memory[1].index){
+                    updateTime(time += 5)
+                    memory = []
+                    setSelected(selected = [])
+                    return
+                }
             
                 console.log(memory[0].question, memory[1].ans)
                 document.getElementById(memory[0].question).remove()
