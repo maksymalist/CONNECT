@@ -16,6 +16,17 @@ nav {
     width: 100%;
     z-index: 20;
 }
+#navMargin{
+    margin: 50px;
+}
+#navMargin2{
+    margin: 300px;
+}
+@media (pointer:none), (pointer:coarse) {
+    #navMargin{
+        margin: 25vh;
+    }
+}
 ul{
     
     padding: 0;
@@ -99,7 +110,7 @@ h1{
     font-size: 5vh;
 }
 #mainConatainer{
-    position: absolute;
+    position: relative;
     top: 10%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -114,7 +125,7 @@ h1{
     z-index: 1;
 }
 #subConatainer{
-    position: absolute;
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -169,6 +180,17 @@ h1{
     display: inline-block;
     margin: 5px;
     margin-left: 5px;
+}
+
+#time{
+    margin-top: 10vh
+}
+
+@media (pointer:none), (pointer:coarse) {
+    #time{
+        position: relative;
+        bottom: 50px;
+    }
 }
 
 
@@ -236,6 +258,17 @@ input{
     border-bottom: 1px solid black;
     font-size: 2vh;
     margin-top: 1vh;
+}
+.numberInput{
+    outline: none;
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+    border-bottom: 1px solid black;
+    font-size: 2vh;
+    margin-top: 1vh;
+    float: left;
+    max-width: 150px;
+    margin-left: 17%;
 }
 .center-dive{
     position: absolute;

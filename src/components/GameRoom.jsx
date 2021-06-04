@@ -226,11 +226,36 @@ export default function GameRoom({match}) {
             sessionStorage.setItem('roomJoined', 'false')
         }
     }, [])
+    function shuffle(elems) {
+ 
+        var allElems = (function(){
+        var ret = [], l = elems.length;
+        while (l--) { ret[ret.length] = elems[l]; }
+        return ret;
+        })();
+     
+        var shuffled = (function(){
+            var l = allElems.length, ret = [];
+            while (l--) {
+                var random = Math.floor(Math.random() * allElems.length),
+                    randEl = allElems[random].cloneNode(true);
+                allElems.splice(random, 1);
+                ret[ret.length] = randEl;
+            }
+            return ret; 
+        })(), l = elems.length;
+     
+        while (l--) {
+            elems[l].parentNode.insertBefore(shuffled[l], elems[l].nextSibling);
+            elems[l].parentNode.removeChild(elems[l]);
+        }
+     
+    }
 
 
     return (
         <div>
-            <h1>Time</h1>
+            <h1></h1>
             <h1 id='time'>{time}</h1>
             <div id='cardContainer'></div>
             <div hidden id='popUp'></div>

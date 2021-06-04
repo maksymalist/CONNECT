@@ -21,6 +21,7 @@ import StripeSubscriptions from './components/StripeSubscriptions'
 import Plans from './components/Plans'
 import MemberRoom from './components/MemberRoom'
 import Background from './components/Background'
+import CreateRoom from './components/CreateRoom'
 
 
 
@@ -59,6 +60,9 @@ function App() {
       toast.warn('You Have To Login If You Want To Use CONNECT!')
       return
     }
+    window.onbeforeunload = function() {
+      localStorage.removeItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId);
+    }
     return () => {
       //cleanup
     }
@@ -82,6 +86,7 @@ function App() {
       <Router>
     <div className="App">
       <Nav/>
+      <div id='navMargin'/>
       <Background/>
       <Switch>
         <Route exact path='/' component={EnterCodeForm}/>

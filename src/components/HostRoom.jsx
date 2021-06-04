@@ -24,6 +24,7 @@ export default function HostRoom(props) {
 
     const [podiumPlayers, setPodiumPLayers] = useState([])
     const [podiumPlayerTimes, setpodiumPlayerTimes] = useState([])
+    var [playerPodiumMax, setPlayerPodiumMax] = useState(props.podiumPlaces)
     var [isActive, setIsActive] = useState("inactive")
     var [userLimit, setUserLimit] = useState(8)
     const podium = []
@@ -88,6 +89,7 @@ export default function HostRoom(props) {
 
         socket.on('EndGame', (data)=>{
             window.location = '/roomleave'
+            localStorage.removeItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId);
         })
 
         socket.on('UpdatePodium', (data)=>{
@@ -98,8 +100,8 @@ export default function HostRoom(props) {
 
             alert(`${data.user} Has Finished Their Quiz!`)
 
-            if(podium.length == 2){
-                alert('5 Players Have Finished Their Quiz You Might Want To End The Game!')
+            if(podium.length == playerPodiumMax){
+                alert(`${playerPodiumMax} Players Have Finished Their Quiz You Might Want To End The Game!`)
             }
         })
 
@@ -109,6 +111,7 @@ export default function HostRoom(props) {
                 room: props.room
             })
             window.location = '/roomleave'
+            localStorage.removeItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId);
         }
 
 
@@ -120,10 +123,29 @@ export default function HostRoom(props) {
               var planStatus = snap.val()
               setIsActive(isActive = planStatus)
               if(isActive == "active"){
-                  setUserLimit(userLimit = 40)
+                setUserLimit(userLimit = 40)
+                if(props.maxPlayers > 40){
+                    setUserLimit(userLimit = 40)
+                }
+                else{
+                    setUserLimit(userLimit = props.maxPlayers)
+                }
+                if(props.maxPlayers < 3){
+                    setUserLimit(userLimit = 3)
+                }
+                  
               }
               else{
                 setUserLimit(userLimit = 8)
+                if(props.maxPlayers > 8){
+                    setUserLimit(userLimit = 8)
+                }
+                else{
+                    setUserLimit(userLimit = props.maxPlayers)
+                }
+                if(props.maxPlayers < 3){
+                    setUserLimit(userLimit = 3)
+                }
               }
             }
           });
@@ -142,6 +164,7 @@ export default function HostRoom(props) {
             room: props.room
         })
         window.location = '/roomleave'
+        localStorage.removeItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId);
     }
     const GameOver = () => {
         const Podium = []
@@ -155,6 +178,7 @@ export default function HostRoom(props) {
             podium: Podium
         })
         window.location = '/roomleave'
+        localStorage.removeItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId);
     }
 
     const playerTimesStyle = {backgroundColor:'white', borderRadius:'25px', height:'600px', width:'100%', maxWidth:'75vw'}
