@@ -188,8 +188,8 @@ h1{
 
 @media (pointer:none), (pointer:coarse) {
     #time{
-        position: absolute;
-        bottom: 50px;
+        position: relative;
+        bottom: 100px;
     }
 }
 
