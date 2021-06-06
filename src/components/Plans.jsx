@@ -10,6 +10,8 @@ import "firebase/database";
 import { toast } from 'react-toastify'
 import axios from 'axios'
 
+import Button from '@material-ui/core/Button'
+
 export default function Plans() {
     var [subscribedStatus, setSubscribedStatus] = useState("Starter")
     var [customerId, setCustomerId] =useState('')
@@ -26,6 +28,13 @@ export default function Plans() {
         firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).on('value',(snap)=>{
             if(snap.exists()){
               var data = snap.val()
+              if(data.planStatus == 'inactive'){
+                document.getElementById('Starter').innerHTML = 'Selected✓'
+              }
+              if(data.planStatus == 'canceled'){
+                document.getElementById('Starter').innerHTML = 'Selected✓'
+                return
+              }
               setSubscribedStatus(subscribedStatus = data.plan)
               document.getElementById(data.plan).innerHTML = 'Selected✓'
               setCustomerId(customerId = data.customerObj.id)
@@ -80,7 +89,13 @@ export default function Plans() {
                 </ul>
                 <img height='220px' width='220px' src={StarterImg}></img>
                 <div>
-                    <button id='Starter' className='sub-button'>Select</button>
+                    <Button 
+                    id='Starter' 
+                    className='sub-button' 
+                    style={{marginBottom:'1vh'}} 
+                    variant="contained" 
+                    color="primary" 
+                    size='small'>Select</Button>
                 </div>
             </div>
             <div id='plan2'>
@@ -96,7 +111,14 @@ export default function Plans() {
                 </ul>
                 <img height='220px' width='220px' src={TeacherImg}></img>
                 <div>
-                    <button id='Classroom' className='sub-button' onClick={()=>{SubscriptionPage('classroom')}}>Select</button>
+                    <Button 
+                    id='Classroom' 
+                    className='sub-button' 
+                    style={{marginBottom:'1vh'}} 
+                    variant="contained" 
+                    color="primary" 
+                    size='small' 
+                    onClick={()=>{SubscriptionPage('classroom')}}>Select</Button>
                 </div>
             </div>
             <div id='plan3'>
@@ -112,7 +134,12 @@ export default function Plans() {
                 </ul>
                 <img height='220px' width='220px' src={EntrepriseImg}></img>
                 <div>
-                    <button className='sub-button'>Select</button>
+                    <Button 
+                    className='sub-button' 
+                    style={{marginBottom:'1vh'}} 
+                    variant="contained" 
+                    color="primary" 
+                    size='small'>Select</Button>
                 </div>
             </div>
             <div>

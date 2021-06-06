@@ -3,6 +3,8 @@ import { io } from 'socket.io-client'
 import { socket } from './EnterCodeForm'
 import ReactDOM from 'react-dom'
 
+import Button from '@material-ui/core/Button'
+
 import firebase from "firebase"
 import "firebase/database";
 
@@ -80,7 +82,7 @@ export default function NewQuiz() {
                 <input id='answer6' type='text' placeholder={'Answer'} />
             </div>
             <div>
-                <button onClick={()=>{Submit()}}>Submit</button>
+                <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{Submit()}}>Submit</Button>
             </div>
         </div>
     )

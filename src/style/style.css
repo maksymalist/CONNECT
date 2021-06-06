@@ -251,14 +251,20 @@ button{
 
 }
 
-input{
-    outline: none;
-    font-family: Arial, Helvetica, sans-serif;
-    border: none;
-    border-bottom: 1px solid black;
-    font-size: 2vh;
-    margin-top: 1vh;
-}
+/*button {
+	box-shadow:inset 0px 1px 0px 0px #646fcb;
+	background:linear-gradient(to bottom, #8f94fb 5%, #4e54c8 100%);
+	background-color:#8f94fb;
+	border-radius:6px;
+	border:1px solid #646fcb;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-size:15px;
+	padding:6px 20px;
+	text-decoration:none;
+}*/
+
 .numberInput{
     outline: none;
     font-family: Arial, Helvetica, sans-serif;
@@ -315,6 +321,7 @@ input{
     border-radius: 15px;
     box-shadow: 10px 10px 0px #262626;
 }
+/*
 .sub-button{
     background: linear-gradient(-45deg, #3494E6, #EC6EAD);
 	animation: gradient 15s ease infinite;
@@ -327,7 +334,7 @@ input{
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 5px;
-}
+}*/
 
 @media (pointer:none), (pointer:coarse) {
     #plan1{
@@ -352,7 +359,7 @@ input{
         border-radius: 15px;
         box-shadow: 10px 10px 0px #262626;
     }
-    .sub-button{
+    /*.sub-button{
         background: linear-gradient(-45deg, #3494E6, #EC6EAD);
         animation: gradient 15s ease infinite;
         border-radius: 25px;
@@ -364,7 +371,7 @@ input{
         padding-left: 20px;
         padding-right: 20px;
         padding-bottom: 25px;
-    }
+    }*/
 }
 
 .features{
@@ -485,8 +492,44 @@ input{
 @media (pointer:none), (pointer:coarse) {
     #times{
         width: 95%;
+        margin-left: 2%;
     }
     #podium{
         width: 95%;
+        margin-left: 2%;
     }
+}
+.container {
+	position: relative;
+	display: inline-block;
+	margin: 1rem;
+}
+
+.container:hover {
+	border: 1px solid darkgray;
+	border-radius: .5rem;
+}
+
+.container:hover input {
+	border: none;
+}
+
+input {
+	border: 1px solid lightgray;
+	padding: .5rem;
+    width: auto;
+    margin-bottom: .2rem;
+    outline: none;
+}
+
+input:hover {
+	border-color: #646ecb;
+}
+.userH1:hover {
+    color: #ba000d;
+    text-decoration: line-through;
+}
+.userH1{
+    color:#000;
+    text-decoration: none;
 }

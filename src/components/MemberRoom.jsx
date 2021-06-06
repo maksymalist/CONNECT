@@ -16,8 +16,11 @@ export default function MemberRoom() {
     var [isActive, setIsActive] = useState("inactive")
     
     useEffect(() => {
+        console.log('asdafafafa')
         firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/planStatus`).on('value',(snap)=>{
+            console.log('asdafafafa')
             if(snap.exists()){
+                alert('qwodhvoyicwdvuiopwdbuivdwsdwzvscbgvvb')
               var planStatus = snap.val()
               setIsActive(isActive = planStatus)
               if(isActive == "active"){
@@ -32,6 +35,10 @@ export default function MemberRoom() {
                     document.getElementById('mainDiv')
                 )
               }
+            }
+            else{
+                alert('niigigiefifgeifei')
+                console.log('asdafafafa')
             }
           });
         return () => {

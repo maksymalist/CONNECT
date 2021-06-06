@@ -70,6 +70,18 @@ function App() {
 
   const fetchCustomerData = async (id)=>{
     const res = await axios.post('https://connect-quiz-now.herokuapp.com/get-customer-data', {subId: id});
+    var plan = ''
+    if(JSON.parse(res.data.subscriptionDetails).status == 'canceled'){
+      plan = 'Starter'
+    }
+    if(JSON.parse(res.data.subscriptionDetails).status == 'active'){
+      plan = 'Classroom'
+    }
+    else{
+      plan = 'Starter'
+    }
+
+
     console.log(JSON.parse(res.data.subscriptionDetails))
     firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).update({
       UserName: `${JSON.parse(localStorage.getItem('user')).profileObj.givenName} ${JSON.parse(localStorage.getItem('user')).profileObj.familyName}`,
@@ -77,6 +89,7 @@ function App() {
       subscriptionObj: JSON.parse(res.data.subscriptionDetails),
       planAtive: JSON.parse(res.data.subscriptionDetails).status,
       planStatus: JSON.parse(res.data.subscriptionDetails).status,
+      plan: plan
 
 
     }) 

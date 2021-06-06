@@ -3,6 +3,7 @@ import { io } from 'socket.io-client'
 import { socket } from './EnterCodeForm'
 import loading from '../img/loading.gif'
 import ReactDOM from 'react-dom'
+import Button from '@material-ui/core/Button'
 
 import GameEnded from './GameEnded'
 
@@ -48,6 +49,17 @@ export default function WaitingRoom(props) {
         socket.on('playerLeftRoom', (data)=>{
             document.getElementById('userList').innerHTML = data.UsersInRoom
             console.log(data.UsersInRoom)
+        })
+
+        socket.on('kicked', (data)=>{
+            if(props.user == data.user){
+                socket.emit('leaveRoom', {
+                    room: props.room,
+                    user: props.user
+                })
+                window.location = '/roomleave'
+                sessionStorage.setItem('roomJoined', 'false')
+            }
         })
 
         socket.on('EndedGame', (data)=>{
@@ -96,7 +108,7 @@ export default function WaitingRoom(props) {
             <h2>User:{props.user}</h2>
             <textarea id={'userList'} defaultValue={props.usersInRoom} readOnly></textarea>
             <div>
-            <button onClick={()=>{leaveRoom()}}>Leave Room</button>
+                <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{leaveRoom()}}>Leave Room</Button>
             </div>
         </div>
     )

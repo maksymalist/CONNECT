@@ -7,22 +7,38 @@ import GoogleLogin from 'react-google-login'
 import "react-awesome-button/dist/styles.css"
 import Background from './Background'
 
-
 import '../style/style.css'
 import { toast } from 'react-toastify'
+
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button'
+import Switch from '@material-ui/core/Switch';
+
+const list = require('badwords-list')
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+  }));
+
 
 //globals
 //https://connect-quiz-now.herokuapp.com/
 //http://localhost:3001
 
-export const socket = io('https://connect-quiz-now.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
+export const socket = io('http://localhost:3001', {transports: ['websocket', 'polling', 'flashsocket']});
 
 export default function EnterCodeForm() {
+    const classes = useStyles();
 
     var [role, setRole] = useState('')
+    var [checked, setChecked] = useState(false)
 
     useEffect(() => {
-        
+        console.log(list.array)
 
         var joined = false
 
@@ -51,7 +67,8 @@ export default function EnterCodeForm() {
                 maxPlayers={document.getElementById('max-players').value} 
                 podiumPlaces={document.getElementById('podium-places').value} 
                 room={data.room} 
-                gamecode={data.gamecode}/>
+                gamecode={data.gamecode}
+                friendly={checked}/>
                 <Background/>
                 </div>,
                 document.getElementById('root')
@@ -117,7 +134,8 @@ export default function EnterCodeForm() {
     const JoinRoom = ()=>{
         socket.emit('joinroom', {
         code: document.getElementById('code').value, 
-        name: document.getElementById('name').value})
+        name: document.getElementById('name').value,
+        profane: list.array.includes(document.getElementById('name').value)})
     }
 
     
@@ -137,6 +155,18 @@ export default function EnterCodeForm() {
         socket.emit('GenerateCode', '')
     }
 
+    
+      const handleChange = () => {
+        if(checked == false){
+            setChecked(checked = true);
+            return
+        }
+        if(checked == true){
+            setChecked(checked = false);
+            return
+        }
+      };
+
 
     return (
         <div>
@@ -145,7 +175,7 @@ export default function EnterCodeForm() {
                 <h1>Join Room</h1>
                 <input placeholder={'Enter Your Nickname'} type="text" id="name"/>
                 <br></br><input placeholder={'Enter Room Name'} type="text" id="code"/>
-                <br></br><button id="joinbutton" onClick={()=>{JoinRoom()}}>Join Room</button>
+                <br></br><Button style={{marginTop:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{JoinRoom()}}>Join Room</Button>
             </div>
             <div id='subConatainer'>
             <h1>Host Room</h1>
@@ -153,11 +183,21 @@ export default function EnterCodeForm() {
                 <br></br><input placeholder={'Enter Game Code'} type="text" id="gameCode"/>
                 <div>
                     <h1 style={{fontSize:'25px'}}>Presets</h1><br></br>
-                    <label>Max Players</label><input id='max-players' type='number' min='3' max='23'/>
-                    <br></br><label>Podium Places</label><input id='podium-places' type='number' min='3' max='10'/>
+                    <label>Max Players </label><input id='max-players' type='number' min='0' max='40'/>
+                    <br></br><label>Podium Places </label><input id='podium-places' type='number' min='3' max='10'/>
+                    <br></br>
+                        <div>
+                            <label>Friendly Nicknames</label>
+                            <Switch 
+                            checked={checked} 
+                            onChange={()=>{handleChange()}} 
+                            color="primary" 
+                            name="checked" 
+                            inputProps={{ 'aria-label': 'primary checkbox' }}/>
+                        </div>
                 </div>
-                <br></br><button onClick={()=>{Generatecode()}}>Generate Name</button>
-                <br></br><button style={{marginBottom:'1vh'}} onClick={()=>{CreateRoom()}}>Host Room</button>
+                <br></br><Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{Generatecode()}}>Generate Name</Button>
+                <br></br><Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{CreateRoom()}}>Host Room</Button>
             </div>
                 <textarea hidden cols="40" rows="30" id="userList" placeholder="No users" readOnly></textarea>
 
