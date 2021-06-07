@@ -205,6 +205,14 @@ h1{
     min-width: 500px;
     width: 20%;
 }
+@media (pointer:none), (pointer:coarse) {
+    .newQuiz{
+        min-width: 100%;
+        width: 100%;
+        margin-left: 1%;
+        margin-right: 3%;
+    }
+}
 .loading{
     position: absolute;
     top: 50%;
