@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import { io } from 'socket.io-client'
 import WaitingRoom from './WaitingRoom'
 import HostRoom from './HostRoom'
-import GoogleLogin from 'react-google-login'
 import "react-awesome-button/dist/styles.css"
 import Background from './Background'
 
@@ -33,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 export const socket = io('https://connect-now-backend.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
 
 export default function EnterCodeForm() {
-    const classes = useStyles();
+    //const classes = useStyles();
 
     var [role, setRole] = useState('')
     var [checked, setChecked] = useState(false)
@@ -42,8 +41,6 @@ export default function EnterCodeForm() {
         console.log(list.array)
 
         var joined = false
-
-        var joinbutton = document.getElementById('joinbutton')
         
         socket.on('myroom', (data)=>{
             socket.emit('adduser', {

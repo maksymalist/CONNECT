@@ -87,7 +87,7 @@ export default function Plans() {
                     <li className='features'>• Have 8 or Less People in Your Rooms</li>
                     <li className='features'>• You Can Create Quizes</li>
                 </ul>
-                <img height='220px' width='220px' src={StarterImg}></img>
+                <img alt='starter-img' height='220px' width='220px' src={StarterImg}></img>
                 <div>
                     <Button 
                     id='Starter' 
@@ -109,7 +109,7 @@ export default function Plans() {
                     <li className='features'>• Have 40 or Less People in Your Rooms</li>
                     <li className='features'>• You Can Create Quizes</li>
                 </ul>
-                <img height='220px' width='220px' src={TeacherImg}></img>
+                <img alt='classroom-img' height='220px' width='220px' src={TeacherImg}></img>
                 <div>
                     <Button 
                     id='Classroom' 
@@ -132,7 +132,7 @@ export default function Plans() {
                     <li className='features'>feature 2</li>
                     <li className='features'>feature 3</li>
                 </ul>
-                <img height='220px' width='220px' src={EntrepriseImg}></img>
+                <img alt='entreprise-img' height='220px' width='220px' src={EntrepriseImg}></img>
                 <div>
                     <Button 
                     className='sub-button' 

@@ -264,7 +264,7 @@ export default function GameRoom({match}) {
 
     return (
         <div>
-            <h1></h1>
+            <h1> </h1>
             <h1 id='time'>{time}</h1>
             <div id='cardContainer'></div>
             <div hidden id='popUp'></div>

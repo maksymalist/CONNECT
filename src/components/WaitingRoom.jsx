@@ -103,7 +103,7 @@ export default function WaitingRoom(props) {
 
     return (
         <div>
-            <h1>Waiting Room<img  style={{backgroundColor:'white', borderRadius:'150px'}} src={loading}/></h1>
+            <h1>Waiting Room<img  style={{backgroundColor:'white', borderRadius:'150px'}} alt='load-animation' src={loading}/></h1>
             <h2>Room:{props.room}</h2>
             <h2>User:{props.user}</h2>
             <textarea id={'userList'} defaultValue={props.usersInRoom} readOnly></textarea>

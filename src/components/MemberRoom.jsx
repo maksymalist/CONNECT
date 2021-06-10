@@ -47,7 +47,7 @@ export default function MemberRoom() {
     }, [])
     return (
         <div id='mainDiv'>
-            <h1 id='loading'>Loading<img src={loading}></img></h1>
+            <h1 id='loading'>Loading<img alt='load-animation' src={loading}></img></h1>
         </div>
     )
 }

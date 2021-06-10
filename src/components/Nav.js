@@ -67,7 +67,7 @@ function Nav() {
   return (
     <nav>
         <ul>
-            <img hidden style={{borderRadius:'100px', marginTop:'3px'}} className='liright' height='40px' width='40px' id='profilePic'></img>
+            <img hidden alt="profile-pic" style={{borderRadius:'100px', marginTop:'3px'}} className='liright' height='40px' width='40px' id='profilePic'></img>
             <div style={{marginBottom:'3px'}} id='googleLogin'>
             <GoogleLogin
             clientId='701696427912-ajmlkcj3hpo46q5fokhtn5mmeib0m3be.apps.googleusercontent.com'
@@ -80,7 +80,7 @@ function Nav() {
             />
             </div>
             <Link to='/'>
-            <img id='home' className="nav-links lileft" width={50} height={50} src={logo}></img><li className="nav-links lileft">Home</li>
+            <img id='home' className="nav-links lileft" alt="connect-logo" width={50} height={50} src={logo}></img><li className="nav-links lileft">Home</li>
             </Link>
             <div class="dropdown">
               <button class="dropbtn">Menu ▼</button>
