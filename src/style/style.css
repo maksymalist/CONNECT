@@ -258,7 +258,6 @@ button{
     font-family: Arial, Helvetica, sans-serif;
 
 }
-
 /*button {
 	box-shadow:inset 0px 1px 0px 0px #646fcb;
 	background:linear-gradient(to bottom, #8f94fb 5%, #4e54c8 100%);
@@ -541,3 +540,14 @@ input:hover {
     color:#000;
     text-decoration: none;
 }
+
+
+
+body {
+    background: #ff5f6d;
+    background: -webkit-linear-gradient(to right, #ff5f6d, #ffc371);
+    background: linear-gradient(to right, #ff5f6d, #ffc371);
+    min-height: 100vh;
+  }
+  
+  
