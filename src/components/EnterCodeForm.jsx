@@ -28,8 +28,9 @@ const useStyles = makeStyles((theme) => ({
 //globals
 //https://connect-quiz-now.herokuapp.com/
 //http://localhost:3001
+//https://connect-now-backend.herokuapp.com/
 
-export const socket = io('https://connect-quiz-now.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
+export const socket = io('https://connect-now-backend.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
 
 export default function EnterCodeForm() {
     const classes = useStyles();
