@@ -1,4 +1,4 @@
-# Getting Started With CONNECT!
+# Getting Started With CONNECT! <a href="https://www.codefactor.io/repository/github/john8790909/connect/overview/main"><img src="https://www.codefactor.io/repository/github/john8790909/connect/badge/main" alt="CodeFactor" /></a>
 
 
 ## CONNECT Demo Video
