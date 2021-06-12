@@ -33,6 +33,7 @@ export default function HostRoom(props) {
     var [numberOfUsers, setNumberOfUsers] = useState(0)
 
     const [playerTimes, setPlayerTimes] = useState([])
+    var gameStarted = false
 
     useEffect(() => {
         CheckPlanStatus()
@@ -143,6 +144,7 @@ export default function HostRoom(props) {
     }, [numberOfUsers])
 
     const updateUserDiv = (users) => {
+        if(gameStarted) return
         document.getElementById('userDiv').querySelectorAll('*').forEach(n => n.remove());
         users.map((user, index)=>{
             let newUser = document.createElement('div')
@@ -205,11 +207,14 @@ export default function HostRoom(props) {
             gamecode: props.gamecode
 
         })
+        gameStarted = true
+        document.getElementById('userDiv').remove()
     }
     const EndGame = () => {
         socket.emit('EndGame', {
             room: props.room
         })
+        gameStarted = false
         window.location = '/roomleave'
         localStorage.removeItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId);
     }
@@ -224,6 +229,7 @@ export default function HostRoom(props) {
             room: props.room,
             podium: Podium
         })
+        gameStarted = false
         window.location = '/roomleave'
         localStorage.removeItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId);
     }
