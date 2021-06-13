@@ -48,5 +48,5 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 | | **Plan 1** | **Plan 2** | **Plan 3**|
 |- |----------- | ----------- |-----------|
-|**Price**| Free | $ | $ |
-|**Players**| Nb | Nb |Nb
+|**Price**| Free | 10$ | ??? |
+|**Players**| 8 | 40 |Unlimited
