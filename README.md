@@ -14,6 +14,9 @@ https://youtu.be/9A2tYQTLsKg
 ## CONNECT Website
 https://quiz-connect.netlify.app/
 
+## Future Designs
+<img src="https://emojis.slackmojis.com/emojis/images/1585055723/8322/figma.png?1585055723"/> https://www.figma.com/file/1FEav29TlUJhwIPgM2U2sj/Untitled
+
 ## Available Scripts
 
 In the project directory, you can run:
