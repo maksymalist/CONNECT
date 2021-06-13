@@ -46,7 +46,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ## Subscriptions
 
-| | **Plan 1** | **Plan 2** | **Plan 3**|
+| | **Starter** | **Classroom** | **Entreprise**|
 |- |----------- | ----------- |-----------|
 |**Price**| Free | 10$ | ??? |
 |**Players**| 8 | 40 |Unlimited
