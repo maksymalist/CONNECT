@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 //http://localhost:3001
 //https://connect-now-backend.herokuapp.com/
 
-export const socket = io('https://connect-now-backend.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
+export const socket = io('http://localhost:3001/', {transports: ['websocket', 'polling', 'flashsocket']});
 
 export default function EnterCodeForm() {
     //const classes = useStyles();
@@ -138,10 +138,6 @@ export default function EnterCodeForm() {
 
     
     function CreateRoom(){
-        if(localStorage.getItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId)){
-            toast.info('You Can Only Host One Room!')
-            return
-        }
         socket.emit('createroom', {
             room: document.getElementById('roomName').value,
             gamecode: document.getElementById('gameCode').value,
