@@ -108,10 +108,10 @@ export default function HostRoom(props) {
             setPodiumPLayers(podiumPlayers =>[...podiumPlayers, data.user])
             document.getElementById(data.user).innerHTML = `User: ${data.user} Time: ${data.time}`
 
-            alert(`${data.user} Has Finished Their Quiz!`)
+            toast.success(`${data.user} Has Finished Their Quiz!`)
 
             if(podium.length == playerPodiumMax){
-                alert(`${playerPodiumMax} Players Have Finished Their Quiz You Might Want To End The Game!`)
+                toast.success(`${playerPodiumMax} Players Have Finished Their Quiz You Might Want To End The Game!`)
             }
         })
         if(playerPodiumMax < 3){
@@ -145,6 +145,7 @@ export default function HostRoom(props) {
 
     const updateUserDiv = (users) => {
         if(gameStarted) return
+        if(document.getElementById('userDiv') == null) return
         document.getElementById('userDiv').querySelectorAll('*').forEach(n => n.remove());
         users.map((user, index)=>{
             let newUser = document.createElement('div')

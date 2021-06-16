@@ -189,7 +189,7 @@ export default function GameRoom({match}) {
         }, 100);
 
         socket.on('joinedGameRoom', (data)=>{
-            alert(data)
+            toast.success(data)
         })
         socket.emit('joinGame', {
             room: match.params.room,
@@ -265,7 +265,7 @@ export default function GameRoom({match}) {
     return (
         <div>
             <h1> </h1>
-            <h1 id='time'>{time}</h1>
+            <h1 style={{marginTop:'200px'}} id='time'>{time}</h1>
             <div id='cardContainer'></div>
             <div hidden id='popUp'></div>
             <h1 hidden>{JSON.stringify(selected)}</h1>
