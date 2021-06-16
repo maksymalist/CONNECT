@@ -145,7 +145,7 @@ export default function HostRoom(props) {
 
     const updateUserDiv = (users) => {
         if(gameStarted) return
-        if(document.getElementById('userDiv') == null) return
+        //if(document.getElementById('userDiv') == null) return
         document.getElementById('userDiv').querySelectorAll('*').forEach(n => n.remove());
         users.map((user, index)=>{
             let newUser = document.createElement('div')
