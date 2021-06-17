@@ -7,7 +7,7 @@ import firebase from "firebase/app"
 import "firebase/auth";
 import "firebase/database";
 
-
+import Home from './components/Home'
 import EnterCodeForm from './components/EnterCodeForm'
 import HostRoom from './components/HostRoom'
 import WaitingRoom from './components/WaitingRoom'
@@ -43,6 +43,7 @@ firebase.initializeApp(firebaseConfig);
 
 function App() {
   useEffect(() => {
+    document.getElementById('navMargin').setAttribute('style', `margin: ${document.querySelector('nav').offsetHeight }`)
     if(JSON.parse(localStorage.getItem('user')) !== null){
       console.log(JSON.parse(localStorage.getItem('user')).profileObj)
 
@@ -102,7 +103,8 @@ function App() {
       <div id='navMargin'/>
       <Background/>
       <Switch>
-        <Route exact path='/' component={EnterCodeForm}/>
+        <Route exact path='/' component={Home}/>
+        <Route exact path='/play' component={EnterCodeForm}/>
         <Route path='/gameroom/:room/:gameid/:user' component={GameRoom}/>
         <Route path='/newquiz' component={NewQuiz}/>
         <Route path='/browsequizes' component={BrowseQuizes}/>

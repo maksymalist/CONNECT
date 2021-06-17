@@ -91,6 +91,10 @@ export default function HostRoom(props) {
 
         })
 
+        socket.on('roomTerminated', (data) =>{
+            EndGame()
+        })
+
         socket.on('playerLeftRoom', (data)=>{
             document.getElementById('userList').innerHTML = data.UsersInRoom
             setNumberOfUsers(numberOfUsers = data.UsersInRoom.length)
@@ -119,18 +123,20 @@ export default function HostRoom(props) {
         }
 
         return () => {
-            socket.emit('terminateRoom', props.room)
+           /* socket.emit('terminateRoom', props.room)
             socket.emit('EndGame', {
                 room: props.room
             })
             window.location = '/roomleave'
             localStorage.removeItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId);
+            */
         }
 
 
     }, [])
 
     useEffect(() => {
+        if(document.getElementById('userDiv') == null) return
         if(numberOfUsers > 0){
             let newUser = document.createElement('div')
             newUser.id = ''
@@ -213,7 +219,8 @@ export default function HostRoom(props) {
     }
     const EndGame = () => {
         socket.emit('EndGame', {
-            room: props.room
+            room: props.room,
+            googleId: JSON.parse(localStorage.getItem('user')).profileObj.googleId
         })
         gameStarted = false
         window.location = '/roomleave'
@@ -228,7 +235,8 @@ export default function HostRoom(props) {
 
         socket.emit('GameOver', {
             room: props.room,
-            podium: Podium
+            podium: Podium,
+            googleId: JSON.parse(localStorage.getItem('user')).profileObj.googleId
         })
         gameStarted = false
         window.location = '/roomleave'

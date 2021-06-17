@@ -79,12 +79,14 @@ function Nav() {
             
             />
             </div>
-            <Link to='/'>
-            <img id='home' className="nav-links lileft" alt="connect-logo" width={50} height={50} src={logo}></img><li className="nav-links lileft">Home</li>
+            <img id='home' onClick={()=>{window.location = '/'}} className="nav-links lileft" alt="connect-logo" width={50} height={50} src={logo}/>
+            <Link to='/play'>
+            <li className="nav-links lileft">Play</li>
             </Link>
-            <div class="dropdown">
-              <button class="dropbtn">Menu ▼</button>
-                <div class="dropdown-content">
+            <div className="dropdown">
+              <button className="dropbtn">Menu ▼</button>
+                <div className="dropdown-content">
+                  <a href="/play">PLAY</a>
                   <a href="/newquiz">NEW QUIZ</a>
                   <a href="/browsequizes">QUIZES</a>
                   <a href="/plans">PLANS</a>

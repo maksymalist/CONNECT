@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 //http://localhost:3001
 //https://connect-now-backend.herokuapp.com/
 
-export const socket = io('https://connect-now-backend.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
+export const socket = io('http://localhost:3001/', {transports: ['websocket', 'polling', 'flashsocket']});
 
 export default function EnterCodeForm() {
     //const classes = useStyles();
@@ -73,6 +73,11 @@ export default function EnterCodeForm() {
             )
             localStorage.setItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId, true)
 
+            socket.emit('addHost', {
+                googleId: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
+                room: data.room
+            })
+
         })
 
         socket.on('changeName', (data)=>{
@@ -110,8 +115,20 @@ export default function EnterCodeForm() {
             }
             
         })
+        const terminateRoomPopUp = (room) => (
+            <div>
+                <h3>You are Already Hosting a Room</h3>
+                <h4>Do you Want to Terminate that Room?</h4>
+                <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{terminateRoom(room)}}>Terminate</Button>
+            </div>
+        )
+
         socket.on('roomAlreadyExists', (data)=>{
             alert('A Room With This Name Already Exists Choose Another Name')
+        })
+
+        socket.on('alreadyHostRoom', (data)=>{
+            toast.info(terminateRoomPopUp(data), {autoClose: 10000})
         })
 
         socket.on('GeneratedCode', (data)=>{
@@ -147,6 +164,13 @@ export default function EnterCodeForm() {
 
     const Generatecode = () => {
         socket.emit('GenerateCode', '')
+    }
+    const terminateRoom = (room) => {
+        socket.emit('EndGameTerminated',{
+            room: room,
+            googleId: JSON.parse(localStorage.getItem('user')).profileObj.googleId
+        })
+        toast.success(`Room: ${room} has succesfuly been terminated!`)
     }
 
     

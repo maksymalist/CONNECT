@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from 'react'
+/*import React,{ useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { io } from 'socket.io-client'
 import WaitingRoom from './WaitingRoom'
@@ -95,4 +95,4 @@ export default function EnterCodeForm() {
 
         </div>
     )
-}
+}*/
