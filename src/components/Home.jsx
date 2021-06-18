@@ -41,16 +41,19 @@ export default function HomePage() {
         <div className="newdiv2">
             <h1>About</h1>
             <div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio consectetur voluptate laudantium, facilis dolorum quibusdam saepe sit, </p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio consectetur voluptate laudantium, facilis dolorum quibusdam saepe sit,  cumque ab rem? Ratione aut non cumque.</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio consectetur voluptate laudantium, facilis dolorum quibusdam saepe sit, </p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio consectetur voluptate laudantium, facilis dolorum quibusdam saepe sit, </p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio consectetur voluptate laudantium, facilis dolorum quibusdam saepe sit</p>
+                <p>CONNECT!’s goal is to make class learning easier and more fun for students and teachers from all around the world.</p>
+                <p>For us, learning is the key to forging a better future and it is our prioritie to make learning more accesible and more engaging for everywhere.</p>
             </div>
-            <div style={{display:'flex', flexDirection:'column'}}>
-                <div className='about-card'>Card1</div>
-                <div className='about-card'>Card2</div>
-                <div className='about-card'>Card3</div>
+            <div id='aboutContainer'>
+                <div className='about-card'>
+                    <h3>Card 1</h3>
+                </div>
+                <div className='about-card'>
+                    <h3>Card 2</h3>
+                </div>
+                <div className='about-card'>
+                    <h3>Card 3</h3>
+                </div>
             </div>
         </div>
         </div>
