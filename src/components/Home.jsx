@@ -1,5 +1,6 @@
 import React, { useEffect} from 'react'
 import { Button } from '@material-ui/core'
+import { Star, School, Group, PartyMode } from '@material-ui/icons'
 import HomePageImg from '../img/HomePageImg.svg'
 
 
@@ -46,13 +47,19 @@ export default function HomePage() {
             </div>
             <div id='aboutContainer'>
                 <div className='about-card'>
-                    <h3>Card 1</h3>
+                    <School color='primary' style={{width:'100px', height:'100px'}}/>
+                    <h3>Learning</h3>
+                    <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
                 </div>
                 <div className='about-card'>
-                    <h3>Card 2</h3>
+                <Group color='primary' style={{width:'100px', height:'100px'}}/>
+                    <h3>Collaboration</h3>
+                    <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
                 </div>
                 <div className='about-card'>
-                    <h3>Card 3</h3>
+                    <span style={{fontSize:'75px'}}>🎉</span>
+                    <h3>Fun</h3>
+                    <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
                 </div>
             </div>
         </div>
