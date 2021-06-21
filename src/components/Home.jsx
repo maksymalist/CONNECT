@@ -52,17 +52,17 @@ export default function HomePage() {
                 <div className='about-card'>
                     <School color='primary' style={{width:'100px', height:'100px'}}/>
                     <h3>Learning</h3>
-                    {/* <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/> */}
+                    <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
                 </div>
                 <div className='about-card'>
                 <Group color='primary' style={{width:'100px', height:'100px'}}/>
                     <h3>Collaboration</h3>
-                    {/* <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/> */}
+                    <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
                 </div>
                 <div className='about-card'>
                     <span style={{fontSize:'72px'}}>🎉</span>
                     <h3>Fun</h3>
-                    {/* <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/> */}
+                    <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
                 </div>
             </div>
         </div>
