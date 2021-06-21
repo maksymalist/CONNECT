@@ -7,10 +7,18 @@ import Button from '@material-ui/core/Button'
 
 import firebase from "firebase"
 import "firebase/database";
+import { toast } from 'react-toastify'
 
 export default function NewQuiz() {
 
     const Submit = () => {
+        for(var i = 0; i < document.getElementsByClassName('userInput').length; i++){
+            console.log('userIn')
+            if(document.getElementsByClassName('userInput')[i].value == ""){
+                toast.error('A field has been left empty!')
+                return
+            }
+        }
         firebase.database().ref(`quizes/`).push({
             name: document.getElementById('quizName').value,
 
@@ -41,7 +49,7 @@ export default function NewQuiz() {
             }
     
         })
-        alert('Quiz Created')
+        toast.success('Quiz Created!')
     }
 
 
@@ -49,37 +57,37 @@ export default function NewQuiz() {
         <div style={{backgroundColor:'white', borderRadius:'25px', margin:'5%', marginTop:'20vh'}}>
             <div>
                 <h1>Quiz Name</h1>
-                <input id={'quizName'} type='text' placeholder="Enter Quiz's Name"></input>
+                <input className='userInput' id={'quizName'} type='text' placeholder="Enter Quiz's Name"></input>
             </div>
             <div>
                 <h1>Question1</h1>
-                <input id='question1' type='text' placeholder={'Question'}/>
-                <input id='answer1' type='text' placeholder={'Answer'} />
+                <input className='userInput' id='question1' type='text' placeholder={'Question'}/>
+                <input className='userInput' id='answer1' type='text' placeholder={'Answer'} />
             </div>
             <div>
                 <h1>Question2</h1>
-                <input id='question2' type='text' placeholder={'Question'}/>
-                <input id='answer2' type='text' placeholder={'Answer'} />
+                <input className='userInput' id='question2' type='text' placeholder={'Question'}/>
+                <input className='userInput' id='answer2' type='text' placeholder={'Answer'} />
             </div>
             <div>
                 <h1>Question3</h1>
-                <input id='question3' type='text' placeholder={'Question'}/>
-                <input id='answer3' type='text' placeholder={'Answer'} />
+                <input className='userInput' id='question3' type='text' placeholder={'Question'}/>
+                <input className='userInput' id='answer3' type='text' placeholder={'Answer'} />
             </div>
             <div>
                 <h1>Question4</h1>
-                <input id='question4' type='text' placeholder={'Question'}/>
-                <input id='answer4' type='text' placeholder={'Answer'} />
+                <input className='userInput' id='question4' type='text' placeholder={'Question'}/>
+                <input className='userInput' id='answer4' type='text' placeholder={'Answer'} />
             </div>
             <div>
                 <h1>Question5</h1>
-                <input id='question5' type='text' placeholder={'Question'}/>
-                <input id='answer5' type='text' placeholder={'Answer'} />
+                <input className='userInput' id='question5' type='text' placeholder={'Question'}/>
+                <input className='userInput' id='answer5' type='text' placeholder={'Answer'} />
             </div>
             <div>
                 <h1>Question6</h1>
-                <input id='question6' type='text' placeholder={'Question'}/>
-                <input id='answer6' type='text' placeholder={'Answer'} />
+                <input className='userInput' id='question6' type='text' placeholder={'Question'}/>
+                <input className='userInput' id='answer6' type='text' placeholder={'Answer'} />
             </div>
             <div>
                 <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{Submit()}}>Submit</Button>
