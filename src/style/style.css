@@ -183,13 +183,14 @@ h1{
 }
 
 #time{
-    margin-top: 10vh
+    margin-top: 0vh
 }
 
 @media (pointer:none), (pointer:coarse) {
     #time{
         position: relative;
         bottom: 100px;
+        margin-top: 15vh;
     }
 }
 
@@ -485,7 +486,34 @@ button{
   /* Change the background color of the dropdown button when the dropdown content is shown */
   .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
+#waitingRoomDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: white;
+    height: 50%;
+    margin-top: 100px;
+    width: 50% !important;
+    margin-left: 25%;
 
+}
+@media only screen and (max-width: 730px) {
+    #waitingRoomDiv {
+        width: 100% !important;
+        margin:0;
+        margin-top: 100px;
+    }
+}
+
+#userList{
+    background-color: white;
+    border: 1px solid #262626;
+    width: 80%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 250px;
+}
 
   /*times*/
 #times{
@@ -496,6 +524,8 @@ button{
     width: 50%;
     height: 600px;
     margin-left: 25%;
+    overflow-y: scroll;
+    margin-bottom: 50px;
 }
 #podium{
     justify-content: center;
@@ -505,6 +535,7 @@ button{
     width: 50%;
     height: 600px;
     margin-left: 25%;
+    overflow-y: scroll;
 }
 
 @media (pointer:none), (pointer:coarse) {
@@ -575,27 +606,15 @@ input:hover {
     margin-left: 5vw;
     width: 200px
 }
-.imgDiv{
-    float: right;
-
-}
 #home-page-img{
-    position: relative;
-    bottom: 145%;
-    margin-right: 0;
-    margin-top: 85vh;
+    margin-top: -750px;
+    margin-left: 50vw;
     width: 50vw;
     height: 100vh;
+    min-width: 300px;
+    min-height: 300px;
 }
 @media (pointer:none), (pointer:coarse) {
-    #home-page-img{
-        /*/*/
-        margin-top: 140vh;
-        width: 100vw;
-        height: 100vh;
-        max-width: 500px;
-        max-height: 550px;
-    }
     #navMargin{
         margin: 5vh;
     }
@@ -603,19 +622,22 @@ input:hover {
         position: relative;
     }
 }
+@media only screen and (max-width: 600px) {
+    #home-page-img{
+        margin: 0;
+        margin-top: -350px;
+        width: 50vw;
+        height: 100vh;
+        min-width: 300px;
+        min-height: 300px;
+    }
+}
+
 #aboutContainer{
     display: flex;
     flex-direction: row;
 }
 @media only screen and (max-width: 730px) {
-    #home-page-img{
-        /*/*/
-        margin-top: 140vh;
-        width: 100vw;
-        height: 100vh;
-        max-width: 500px;
-        max-height: 550px;
-    }
     #aboutContainer{
         flex-direction: column;
     }
@@ -624,23 +646,22 @@ input:hover {
 .homePageDivPurple{
     text-align: left;
     background-color: #6C63FF;
-    height: 130vh;
+    height: 100vh;
     justify-content: start;
 }
 .homePageDivWhite{
     text-align: left;
     background-color: white;
-    height: 110vh;
+    height: 90vh;
     justify-content: start;
     border-radius: 90px 0px 0px 0px;
+    z-index: 0;
 }
 .newdiv2 {
-    position: relative;
     background-color: white;
     width: 100%;
     height: 140vh;
     float: left;
-    bottom: 180vh;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
@@ -655,3 +676,10 @@ input:hover {
     min-width: 200px !important;
     margin: 5vh;
 }
+#share{
+    position: fixed;
+    right: 0;
+    top: 0;
+    margin: 1vh;
+}
+/*footer*/

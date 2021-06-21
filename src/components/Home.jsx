@@ -2,6 +2,8 @@ import React, { useEffect} from 'react'
 import { Button } from '@material-ui/core'
 import { Star, School, Group, PartyMode } from '@material-ui/icons'
 import HomePageImg from '../img/HomePageImg.svg'
+import Footer from 'rc-footer';
+import 'rc-footer/assets/index.css'
 
 
 export default function HomePage() {
@@ -12,7 +14,8 @@ export default function HomePage() {
         }
     }, [])
     return (
-        <div>
+        <>
+        <div style={{margin:'0'}}>
         <div id='homePageDivPurple' className='homePageDivPurple'>
             <br></br>
             <br></br>
@@ -49,21 +52,40 @@ export default function HomePage() {
                 <div className='about-card'>
                     <School color='primary' style={{width:'100px', height:'100px'}}/>
                     <h3>Learning</h3>
-                    <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
+                    {/* <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/> */}
                 </div>
                 <div className='about-card'>
                 <Group color='primary' style={{width:'100px', height:'100px'}}/>
                     <h3>Collaboration</h3>
-                    <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
+                    {/* <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/> */}
                 </div>
                 <div className='about-card'>
-                    <span style={{fontSize:'75px'}}>🎉</span>
+                    <span style={{fontSize:'72px'}}>🎉</span>
                     <h3>Fun</h3>
-                    <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
+                    {/* <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/> */}
                 </div>
             </div>
         </div>
         </div>
+        <div>
+        <Footer
+        style={{maxWidth:'100%'}}
+        theme='dark'
+        columns={[
+        {
+            icon: (
+            <img src="https://gw.alipayobjects.com/zos/rmsportal/XuVpGqBFxXplzvLjJBZB.svg" />
+            ),
+            title: '语雀',
+            url: 'https://yuque.com',
+            description: '知识创作与分享工具',
+            openExternal: true,
+        },
+        ]}
+        bottom="Copyright (c) 2021 CONNECT!"
+        />
+        </div>
+        </>
     )
 }
 
