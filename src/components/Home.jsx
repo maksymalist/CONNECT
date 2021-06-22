@@ -2,8 +2,10 @@ import React, { useEffect} from 'react'
 import { Button } from '@material-ui/core'
 import { Star, School, Group, PartyMode } from '@material-ui/icons'
 import HomePageImg from '../img/HomePageImg.svg'
+import BigStripe from '../img/BigStripe.svg'
 import Footer from 'rc-footer';
 import 'rc-footer/assets/index.css'
+import zIndex from '@material-ui/core/styles/zIndex'
 
 
 export default function HomePage() {
@@ -15,7 +17,7 @@ export default function HomePage() {
     }, [])
     return (
         <>
-        <div style={{margin:'0'}}>
+        <div>
         <div id='homePageDivPurple' className='homePageDivPurple'>
             <br></br>
             <br></br>
@@ -34,7 +36,7 @@ export default function HomePage() {
             <br></br>
             <br></br>
             <h2 className='homepage-text-medium'>Take learning to the <br/> next level.</h2>
-            <br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /><br /><br />
             <h3 className='homepage-text-small'>CONNECT! helps you learn fast <br /> and together.</h3>
             <br /><br /><br /><br /><br />
             <Button style={{zIndex:'2'}} id='button-start' variant="contained" color="primary" size='large' onClick={()=>{window.location = '/play'}}>Start Learning ➞</Button>
@@ -43,10 +45,10 @@ export default function HomePage() {
             </div>
         </div>
         <div className="newdiv2">
-            <h1>About</h1>
-            <div>
-                <p>CONNECT!’s goal is to make class learning easier and more fun for students and teachers from all around the world.</p>
-                <p>For us, learning is the key to forging a better future and it is our prioritie to make learning more accesible and more engaging for everywhere.</p>
+            <h1 className='aboutText' style={{color:'white', zIndex:'230'}}>About</h1>
+            <div className='aboutText' style={{color:'white', zIndex:'230'}}>
+                <p className='aboutText' style={{color:'white', zIndex:'230'}}>CONNECT!’s goal is to make class learning easier and more fun for students and teachers from all around the world.</p>
+                <p className='aboutText' style={{color:'white', zIndex:'230'}}>For us, learning is the key to forging a better future and it is our prioritie to make learning more accesible and more engaging for everywhere.</p>
             </div>
             <div id='aboutContainer'>
                 <div className='about-card'>
@@ -64,6 +66,10 @@ export default function HomePage() {
                     <h3>Fun</h3>
                     <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
                 </div>
+            </div>
+            <div classNam='howItWorks'>
+                <img id='big-stripe' src={BigStripe} alt='big-stripe'/>
+                <h1>How it Works</h1>
             </div>
         </div>
         </div>
