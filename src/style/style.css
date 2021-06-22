@@ -14,7 +14,7 @@ nav {
     left: 0;
     height: auto;
     width: 100%;
-    z-index: 20;
+    z-index: 400;
 }
 #navMargin{
     margin: 50px;
@@ -614,6 +614,11 @@ input:hover {
     min-width: 300px;
     min-height: 300px;
 }
+#big-stripe{
+    margin-top: -1020px;
+    width: 120vw;
+    z-index: 0;
+}
 @media (pointer:none), (pointer:coarse) {
     #navMargin{
         margin: 5vh;
@@ -631,6 +636,14 @@ input:hover {
         min-width: 300px;
         min-height: 300px;
     }
+    #big-stripe{
+        margin-top: -1020px;
+        height: 40vh;
+    }
+}
+#aboutText{
+    color: white;
+    z-index: 23;
 }
 
 #aboutContainer{
@@ -640,6 +653,14 @@ input:hover {
 @media only screen and (max-width: 730px) {
     #aboutContainer{
         flex-direction: column;
+    }
+    .aboutText{
+        color: black !important;
+    }
+}
+@media only screen and (max-width: 1040px) {
+    .aboutText{
+        color: black !important;
     }
 }
 
@@ -660,7 +681,7 @@ input:hover {
 .newdiv2 {
     background-color: white;
     width: 100%;
-    height: 140vh;
+    height: 240vh;
     float: left;
     display: flex;
     flex-wrap: nowrap;
@@ -675,6 +696,7 @@ input:hover {
     min-height: 200px !important;
     min-width: 200px !important;
     margin: 5vh;
+    z-index: 10;
 }
 #share{
     position: fixed;
