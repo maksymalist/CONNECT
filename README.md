@@ -2,19 +2,18 @@
 
 ![connect-logo](https://quiz-connect.netlify.app/static/media/logoo.a41829fd.PNG)
 
-
-
-
 # Getting Started With CONNECT! <a href="https://www.codefactor.io/repository/github/john8790909/connect/overview/main"><img src="https://www.codefactor.io/repository/github/john8790909/connect/badge/main" alt="CodeFactor" /></a>
 
-
 ## CONNECT Demo Video
+
 https://youtu.be/9A2tYQTLsKg
 
 ## CONNECT Website
+
 https://quiz-connect.netlify.app/
 
 ## Future Designs
+
 <img src="https://emojis.slackmojis.com/emojis/images/1585055723/8322/figma.png?1585055723"/> https://www.figma.com/file/1FEav29TlUJhwIPgM2U2sj/Untitled
 
 ## Available Scripts
@@ -32,21 +31,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 
-
-
-
 You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-
 
 ## Subscriptions
 
-| | **Starter** | **Classroom** | **Entreprise**|
-|- |----------- | ----------- |-----------|
-|**Price**| Free | 10$ | ??? |
-|**Players**| 8 | 40 |Unlimited
+|             | **Starter** | **Classroom** | **Entreprise** |
+| ----------- | ----------- | ------------- | -------------- |
+| **Price**   | Free        | 10$           | ???            |
+| **Players** | 8           | 40            | Unlimited      |
