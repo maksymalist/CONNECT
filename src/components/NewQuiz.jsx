@@ -22,6 +22,10 @@ export default function NewQuiz() {
         firebase.database().ref(`quizes/`).push({
             name: document.getElementById('quizName').value,
 
+            userName: JSON.parse(localStorage.getItem('user')).profileObj.name,
+
+            userProfilePic: JSON.parse(localStorage.getItem('user')).profileObj.imageUrl,
+
             q0: {
                 question: document.getElementById('question1').value,
                 answer: document.getElementById('answer1').value

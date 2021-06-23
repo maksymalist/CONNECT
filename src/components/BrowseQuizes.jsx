@@ -41,10 +41,93 @@ export default function BrowseQuizes() {
             document.getElementById('feed').appendChild(newQuiz)
 
             ReactDOM.render(
-                <div>
-                    <div style={{margin:'100px'}}/>
+                <div style={{overflowY:'scroll'}}>
+                    <div/>
+                    <h2>{`by ${data[k].userName}`}
+                    <img 
+                        width='25px' 
+                        height='25px' 
+                        src={data[k].userProfilePic} 
+                        alt={data[k].userProfilePic}
+                        style={{
+                            borderRadius:'25px',
+                            marginBottom:'-6px',
+                            marginLeft:'10px'
+                        }}
+                    />
+                    </h2>
                     <h1>{data[k].name}</h1>
                     <h2>Game Code: {k}</h2>
+                    <Button style={{marginBottom:'10vh'}} variant="contained" color="primary" size='small' onClick={()=>{viewMore(`newQuiz${index}Div`)}}>View More</Button>
+                    <div id={`newQuiz${index}Div`} hidden>
+                        <h1>Questions</h1>
+                        <div>
+                        <h3>{data[k].q0.question}</h3>
+                        <h3 style={{visibility:'hidden'}} id={data[k].q0.answer}>{data[k].q0.answer}</h3>
+                        <Button id={(data[k].name)+'q1'} style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q0.answer, (data[k].name)+'q1')}}>REVEAL ANSWER</Button>
+                        </div>
+                        <h3>{data[k].q1.question}</h3>
+                        <h3 style={{visibility:'hidden'}} id={data[k].q1.answer}>{data[k].q1.answer}</h3>
+                        <Button id={(data[k].name)+'q2'} style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q1.answer, (data[k].name)+'q2')}}>REVEAL ANSWER</Button>
+                        <div>
+                        <h3>{data[k].q2.question}</h3>
+                        <h3 style={{visibility:'hidden'}} id={data[k].q2.answer}>{data[k].q2.answer}</h3>
+                        <Button id={(data[k].name)+'q3'} style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q2.answer, (data[k].name)+'q3')}}>REVEAL ANSWER</Button>
+                        </div>
+                        <div>
+                        <h3>{data[k].q3.question}</h3>
+                        <h3 style={{visibility:'hidden'}} id={data[k].q3.answer}>{data[k].q3.answer}</h3>
+                        <Button id={(data[k].name)+'q4'} style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q3.answer, (data[k].name)+'q4')}}>REVEAL ANSWER</Button>
+                        </div>
+                        <div>
+                        <h3>{data[k].q4.question}</h3>
+                        <h3 style={{visibility:'hidden'}} id={data[k].q4.answer}>{data[k].q4.answer}</h3>
+                        <Button id={(data[k].name)+'q5'} style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q4.answer, (data[k].name)+'q5')}}>REVEAL ANSWER</Button>
+                        </div>
+                        <div>
+                        <h3>{data[k].q5.question}</h3>
+                        <h3 style={{visibility:'hidden'}} id={data[k].q5.answer}>{data[k].q5.answer}</h3>
+                        <Button id={(data[k].name)+'q6'} style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q5.answer, (data[k].name)+'q6')}}>REVEAL ANSWER</Button>
+                        </div>
+                        <Button style={{marginBottom:'10vh'}} variant="contained" color="secondary" size='small' onClick={()=>{viewLess(`newQuiz${index}Div`)}}>View Less</Button>
+                    </div>
+                </div>,
+                document.getElementById(`newQuiz${index}`)
+            )
+            document.getElementById('loading').setAttribute('hidden', 'true')
+          })
+          
+        }, function (errorObject) {
+          console.log("The read failed: " + errorObject.code);
+        });
+    }
+
+    const revealAns = (ans, button) =>{
+        document.getElementById(ans).style.visibility = "visible"
+        document.getElementById(button).style.visibility = "hidden"
+        console.log(ans)
+    }
+    const hideAns = (ans) =>{
+        document.getElementById(ans).setAttribute('hidden', true)
+    }
+    const viewMore = (divId) => {
+        document.getElementById(divId).hidden = false
+    }
+    const viewLess = (divId) =>{
+        document.getElementById(divId).hidden = true
+    }
+
+
+
+    return (
+        <div style={{marginTop:'60vh'}} id='feed'>
+            <h1 id='loading'>Loading<img alt='load-animation' src={loading}></img></h1>
+        </div>
+    )
+}
+
+
+/*
                     <div>
                         <h1>Questions</h1>
                         <div>
@@ -75,84 +158,4 @@ export default function BrowseQuizes() {
                         <h3 style={{visibility:'hidden'}} id={data[k].q5.answer}>{data[k].q5.answer}</h3>
                         <Button id={(data[k].name)+'q6'} style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q5.answer, (data[k].name)+'q6')}}>REVEAL ANSWER</Button>
                         </div>
-                    </div>
-                </div>,
-                document.getElementById(`newQuiz${index}`)
-            )
-            document.getElementById('loading').setAttribute('hidden', 'true')
-          })
-          /*for (var i = 0 ; i < keys.length; i++){
-              var k = keys[i]
-
-              let newQuiz = document.createElement('div')
-              newQuiz.id = `newQuiz${i}`
-              newQuiz.className = 'newQuiz'
-              document.getElementById('feed').appendChild(newQuiz)
-
-              ReactDOM.render(
-                  <div>
-                      <div style={{margin:'100px'}}/>
-                      <h1>{JSON.stringify(data[k].name)}</h1>
-                      <h2>Game Code: {k}</h2>
-                      <div>
-                          <h1>Questions(6)</h1>
-                          <div>
-                          <h3>{data[k].q0.question}</h3>
-                          <h3 hidden id={data[k].q0.answer}>{data[k].q0.answer}</h3>
-                          <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q0.answer)}}>REVEAL ANSWER</Button>
-                          </div>
-                          <h3>{data[k].q1.question}</h3>
-                          <h3 hidden id={data[k].q1.answer}>{data[k].q1.answer}</h3>
-                          <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q1.answer)}}>REVEAL ANSWER</Button>
-                          <div>
-                          <h3>{data[k].q2.question}</h3>
-                          <h3 hidden id={data[k].q2.answer}>{data[k].q2.answer}</h3>
-                          <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q2.answer)}}>REVEAL ANSWER</Button>
-                          </div>
-                          <div>
-                          <h3>{data[k].q3.question}</h3>
-                          <h3 hidden id={data[k].q3.answer}>{data[k].q3.answer}</h3>
-                          <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q3.answer)}}>REVEAL ANSWER</Button>
-                          </div>
-                          <div>
-                          <h3>{data[k].q4.question}</h3>
-                          <h3 hidden id={data[k].q4.answer}>{data[k].q4.answer}</h3>
-                          <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q4.answer)}}>REVEAL ANSWER</Button>
-                          </div>
-                          <div>
-                          <h3>{data[k].q5.question}</h3>
-                          <h3 hidden id={data[k].q5.answer}>{data[k].q5.answer}</h3>
-                          <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q5.answer)}}>REVEAL ANSWER</Button>
-                          </div>
-                      </div>
-                  </div>,
-                  document.getElementById(`newQuiz${i}`)
-              )
-              document.getElementById('loading').setAttribute('hidden', 'true')
-
-
-    
-    
-          }*/
-        }, function (errorObject) {
-          console.log("The read failed: " + errorObject.code);
-        });
-    }
-
-    const revealAns = (ans, button) =>{
-        document.getElementById(ans).style.visibility = "visible"
-        document.getElementById(button).style.visibility = "hidden"
-        console.log(ans)
-    }
-    const hideAns = (ans) =>{
-        document.getElementById(ans).setAttribute('hidden', true)
-    }
-
-
-
-    return (
-        <div style={{marginTop:'60vh'}} id='feed'>
-            <h1 id='loading'>Loading<img alt='load-animation' src={loading}></img></h1>
-        </div>
-    )
-}
+                    </div>*/
