@@ -48,7 +48,7 @@ export default function HomePage() {
             <h1 className='aboutText' style={{color:'white', zIndex:'230'}}>About</h1>
             <div className='aboutText' style={{color:'white', zIndex:'230'}}>
                 <p className='aboutText' style={{color:'white', zIndex:'230'}}>CONNECT!’s goal is to make class learning easier and more fun for students and teachers from all around the world.</p>
-                <p className='aboutText' style={{color:'white', zIndex:'230'}}>For us, learning is the key to forging a better future and it is our prioritie to make learning more accesible and more engaging for everywhere.</p>
+                <p className='aboutText' style={{color:'white', zIndex:'230'}}>For us, learning is the key to forging a better future and it is our priority to make learning more accesible and more engaging for everyone, everywhere.</p>
             </div>
             <div id='aboutContainer'>
                 <div className='about-card'>
