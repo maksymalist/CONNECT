@@ -244,7 +244,7 @@ export default function HostRoom(props) {
         localStorage.removeItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId);
     }
     const shareLink = () => {
-        var text = `http://localhost:3000/play?code=${props.room}`;
+        var text = `https://quiz-connect.netlify.app/play?code=${props.room}`;
         navigator.clipboard.writeText(text).then(function() {
           toast.success('Copied the Invitation Link!');
         }, function(err) {
