@@ -5,7 +5,7 @@
 # Getting Started With CONNECT! <a href="https://www.codefactor.io/repository/github/john8790909/connect/overview/main"><img src="https://www.codefactor.io/repository/github/john8790909/connect/badge/main" alt="CodeFactor" /></a>
 
 ## Financial Support💰
-<a href="https://www.buymeacoffee.com/connect129" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/arial-blue.png" alt="Buy Me A Coffee" style="height: 50px !important;width: 100px !important;" ></a>
+<a href="https://www.buymeacoffee.com/connect129" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 100px !important;" ></a>
 
 ## CONNECT Demo Video 🎥
 
