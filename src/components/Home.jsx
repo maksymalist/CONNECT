@@ -70,6 +70,7 @@ export default function HomePage() {
             <div classNam='howItWorks'>
                 <img id='big-stripe' src={BigStripe} alt='big-stripe'/>
                 <h1>How it Works</h1>
+                <h3>(Insert Video)</h3>
             </div>
         </div>
         </div>

@@ -33,6 +33,7 @@ export default function WaitingRoom(props) {
                 }
             }*/
             document.getElementById('userList').innerHTML = data.UsersInRoom
+            //document.getElementById('userLength').innerHTML = data.UsersInRoom.length
             
         })
 
@@ -48,6 +49,7 @@ export default function WaitingRoom(props) {
         })
         socket.on('playerLeftRoom', (data)=>{
             document.getElementById('userList').innerHTML = data.UsersInRoom
+            //document.getElementById('userLength').innerHTML = data.UsersInRoom.length
             console.log(data.UsersInRoom)
         })
 
@@ -103,13 +105,25 @@ export default function WaitingRoom(props) {
 
     return (
         <div>
-            <h1>Waiting Room<img  style={{backgroundColor:'white', borderRadius:'150px'}} alt='load-animation' src={loading}/></h1>
-            <h2>Room:{props.room}</h2>
-            <h2>User:{props.user}</h2>
-            <textarea id={'userList'} defaultValue={props.usersInRoom} readOnly></textarea>
+        <div id='waitingRoomDiv'>
+            <h1 style={{marginTop:'100px'}}>Waiting Room</h1>
+            <h2>Players:</h2>
+            <textarea id='userList' defaultValue={props.usersInRoom} readOnly></textarea>
             <div>
-                <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{leaveRoom()}}>Leave Room</Button>
+                <Button style={{marginBottom:'1vh', alignSelf:'left'}} variant="contained" color="secondary" size='large' onClick={()=>{leaveRoom()}}>Leave Room</Button>
             </div>
+        </div>
+        {/* <div style={{display:'flex', placeItems:'center', color:'white', flexDirection:'column'}}>
+            <h1 id='userLength'>{props.usersInRoom.length}</h1>
+            <h1>Players</h1>
+        </div> */}
+        <div>
+            <nav style={{height:'50px'}}>
+                <div style={{float:'left', color:'white', marginLeft:'10px', marginTop:'-10px'}}>
+                    <h2>{props.user}</h2>
+                </div>
+            </nav>
+        </div>
         </div>
     )
 }

@@ -15,6 +15,7 @@ import { toast } from 'react-toastify'
 export default function GameRoom({match}) {
     var [time, updateTime] = useState(0)
     var [selected, setSelected] = useState([])
+    var [name, setName] = useState('')
     const cards = []
 
     var CurrentRoom = match.params.room
@@ -26,6 +27,7 @@ export default function GameRoom({match}) {
         const eventref = firebase.database().ref(`quizes/${match.params.gameid}`);
         const snapshot = await eventref.once('value');
         quiz2 = snapshot.val();
+        setName(name = quiz2.name)
         setCardsFunction()
     }
 
@@ -264,11 +266,16 @@ export default function GameRoom({match}) {
 
     return (
         <div>
-            <h1> </h1>
-            <h1 style={{marginTop:'200px'}} id='time'>{time}</h1>
-            <div id='cardContainer'></div>
-            <div hidden id='popUp'></div>
-            <h1 hidden>{JSON.stringify(selected)}</h1>
+            <div>
+                <h1> </h1>
+                <h1 id='title' style={{marginTop:'10vh'}}>{name}</h1>
+                <h1 id='time' style={{marginBottom:'10vh'}}>{time}</h1>
+            </div>
+            <div>
+            <div style={{marginTop:'10vh'}} id='cardContainer'></div>
+                <div hidden id='popUp'></div>
+                <h1 hidden>{JSON.stringify(selected)}</h1>
+            </div>
         </div>
     )
 }

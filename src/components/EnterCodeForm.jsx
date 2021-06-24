@@ -31,14 +31,21 @@ const useStyles = makeStyles((theme) => ({
 
 export const socket = io('https://connect-now-backend.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
 
-export default function EnterCodeForm() {
+export default function EnterCodeForm({match, location}) {
     //const classes = useStyles();
 
     var [role, setRole] = useState('')
     var [checked, setChecked] = useState(false)
+    var [code, setCode] = useState('')
 
     useEffect(() => {
         console.log(list.array)
+        console.log(match)
+        console.log(location)
+        if(location.search !== ""){
+            setCode(code = location.search.replace('?code=',''))
+            document.getElementById("subConatainer").hidden = true
+        }
 
         var joined = false
         
@@ -192,7 +199,7 @@ export default function EnterCodeForm() {
             <div id='mainConatainer'>
                 <h1>Join Room</h1>
                 <input placeholder={'Enter Your Nickname'} type="text" id="name"/>
-                <br></br><input placeholder={'Enter Room Name'} type="text" id="code"/>
+                <br></br><input defaultValue={code} placeholder={'Enter Room Name'} type="text" id="code"/>
                 <br></br><Button style={{marginTop:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{JoinRoom()}}>Join Room</Button>
             </div>
             <div id='subConatainer'>

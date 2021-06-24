@@ -3,6 +3,7 @@ import { io } from 'socket.io-client'
 import { socket } from './EnterCodeForm'
 import ReactDOM from 'react-dom'
 import { ToastContainer, toast } from 'react-toastify';
+import { Share } from '@material-ui/icons'
 
 import Button from '@material-ui/core/Button'
 
@@ -242,6 +243,14 @@ export default function HostRoom(props) {
         window.location = '/roomleave'
         localStorage.removeItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId);
     }
+    const shareLink = () => {
+        var text = `http://localhost:3000/play?code=${props.room}`;
+        navigator.clipboard.writeText(text).then(function() {
+          toast.success('Copied the Invitation Link!');
+        }, function(err) {
+          toast.error('Could not copy text: ', err);
+        });
+    }
 
     const playerTimesStyle = {backgroundColor:'white', borderRadius:'25px', height:'600px', width:'100%', maxWidth:'75vw'}
     const playerPodiumStyle = {backgroundColor:'white', borderRadius:'25px', height:'600px', width:'auto', maxWidth:'50vw'}
@@ -264,8 +273,9 @@ export default function HostRoom(props) {
             )
             )}</div>
             <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{StartGame(props.room)}}>Start Game</Button>
-            <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{EndGame()}}>End Game</Button>
+            {/* <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{EndGame()}}>End Game</Button> */}
             <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{GameOver()}}>Game Over</Button>
+            <Button style={{marginBottom:'1vh'}} id='share' variant="contained" color="secondary" size='large' onClick={()=>{shareLink()}}>Share  <Share/></Button>
         </div>
     )
 }

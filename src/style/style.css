@@ -497,19 +497,20 @@ button{
     margin-top: 100px;
     width: 50% !important;
     margin-left: 25%;
+    box-shadow: 10px 10px 0px #262626 !important;
 
 }
 @media only screen and (max-width: 730px) {
     #waitingRoomDiv {
-        width: 100% !important;
+        width: 90% !important;
         margin:0;
         margin-top: 100px;
+        margin-left: 15px;
     }
 }
 
 #userList{
     background-color: white;
-    border: 1px solid #262626;
     width: 80%;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -527,6 +528,7 @@ button{
     margin-left: 25%;
     overflow-y: scroll;
     margin-bottom: 50px;
+    box-shadow: 10px 10px 0px #262626;
 }
 #podium{
     justify-content: center;
@@ -537,6 +539,7 @@ button{
     height: 600px;
     margin-left: 25%;
     overflow-y: scroll;
+    box-shadow: 10px 10px 0px #262626;
 }
 
 @media (pointer:none), (pointer:coarse) {
