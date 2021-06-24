@@ -3,6 +3,7 @@
 ![connect-logo](https://quiz-connect.netlify.app/static/media/logoo.a41829fd.PNG)
 
 # Getting Started With CONNECT! <a href="https://www.codefactor.io/repository/github/john8790909/connect/overview/main"><img src="https://www.codefactor.io/repository/github/john8790909/connect/badge/main" alt="CodeFactor" /></a>
+https://www.buymeacoffee.com/connect129
 
 ## CONNECT Demo Video
 
