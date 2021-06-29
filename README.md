@@ -8,7 +8,7 @@
 <a href="https://www.buymeacoffee.com/connect129" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 ## CONNECT Demo Video 🎥
-# **this is an outdated version of the website**
+### This is an outdated version of the website**
 
 https://user-images.githubusercontent.com/79988159/123827669-d1d21200-d8ce-11eb-90d0-b4c417c81ac9.mp4
 
