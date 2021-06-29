@@ -9,7 +9,8 @@
 
 ## CONNECT Demo Video 🎥
 
-https://youtu.be/9A2tYQTLsKg
+https://user-images.githubusercontent.com/79988159/123827669-d1d21200-d8ce-11eb-90d0-b4c417c81ac9.mp4
+
 
 ## CONNECT Website 🌐
 
