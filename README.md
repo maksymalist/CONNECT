@@ -42,5 +42,5 @@ You will also see any lint errors in the console.
 
 |             | **Starter** | **Classroom** | **Entreprise** |
 | ----------- | ----------- | ------------- | -------------- |
-| **Price**   | Free        | 10$           | ???            |
+| **Price**   | Free        | 10$           | 100$           |
 | **Players** | 8           | 40            | Unlimited      |
