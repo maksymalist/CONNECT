@@ -88,7 +88,7 @@ function Nav() {
                 <div className="dropdown-content">
                   <a href="/play">PLAY</a>
                   <a href="/newquiz">NEW QUIZ</a>
-                  <a href="/browsequizes">QUIZES</a>
+                  <a href="/browsequizzes">QUIZZES</a>
                   <a href="/plans">PLANS</a>
                 </div>
             </div>
@@ -96,7 +96,7 @@ function Nav() {
               <li className="nav-links lileft">New Quiz</li>
             </Link>
             <Link style={navStyle} to='/browsequizes'>
-              <li className="nav-links lileft">Browse Existing Quizes</li>
+              <li className="nav-links lileft">Browse Existing Quizzes</li>
             </Link>
             <Link style={navStyle} to='/plans'>
               <li className="nav-links lileft">plans</li>

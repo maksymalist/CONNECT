@@ -20,6 +20,8 @@ export default function GameRoom({match}) {
 
     var CurrentRoom = match.params.room
     var GameOver = false
+    var gameLeft = false
+    var secondTimer = 0
 
     var quiz2
 
@@ -35,11 +37,15 @@ export default function GameRoom({match}) {
     const UpdateTimeFunction = () => {
         if(GameOver == false){
         updateTime(time = Math.round((time += 0.1) * 10) / 10)
-        socket.emit('time', {
-            time: time,
-            room: CurrentRoom,
-            user: match.params.user
-        })
+        secondTimer++
+        if(secondTimer === 10){
+            secondTimer = 0
+            socket.emit('time', {
+                time: time,
+                room: CurrentRoom,
+                user: match.params.user
+            })
+        }
     }
     }
 
@@ -206,6 +212,7 @@ export default function GameRoom({match}) {
         })
 
         socket.on('EndedGame', (data)=>{
+            if(gameLeft) return
             socket.emit('leaveRoom', {
                 room: match.params.room,
                 user: match.params.user
@@ -215,15 +222,13 @@ export default function GameRoom({match}) {
             sessionStorage.setItem('roomJoined', 'false')
         })
         socket.on('GameIsOver', (data)=>{
+            gameLeft = true
             socket.emit('leaveRoom', {
                 room: match.params.room,
                 user: match.params.user
             })
             ReactDOM.render(
-                <div>
-                <GameEnded podium={data}/>
-                <button onClick={()=>{window.location = '/'}}>Return Home</button>
-                </div>,
+                <GameEnded podium={data}/>,
                 document.getElementById('root')
             )
             sessionStorage.setItem('roomJoined', 'false')

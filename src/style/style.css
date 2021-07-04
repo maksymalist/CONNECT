@@ -387,31 +387,7 @@ button{
     margin-top: 1vh;
     display: list-item;
 }
-.aws-btn {
 
-    --button-default-height: 51px;
-    --button-default-font-size: 14px;
-    --button-default-border-radius: 2px;
-    --button-horizontal-padding: 20px;
-    --button-raise-level: 4px;
-    --button-hover-pressure: 1;
-    --transform-speed: 0.175s;
-    --button-primary-color: #646ecb;
-    --button-primary-color-dark: #5e60e0;
-    --button-primary-color-light: #8486db;
-    --button-primary-color-hover: #5e60e0;
-    --button-primary-border: none;
-    --button-secondary-color: #f2f6f9;
-    --button-secondary-color-dark: #1360a4;
-    --button-secondary-color-light: #1e88e5;
-    --button-secondary-color-hover: #e1eaf1;
-    --button-secondary-border: 2px solid #1e88e5;
-    --button-anchor-color: #0e4f88;
-    --button-anchor-color-dark: #072743;
-    --button-anchor-color-light: #ffffff;
-    --button-anchor-color-hover: #0d4a7f;
-    --button-anchor-border: none;
-    }
     @media (pointer:none), (pointer:coarse) {
         .nav-links{
             display: none;
@@ -434,15 +410,6 @@ button{
             display: initial;
         }
       }
-#headlessui-popover-panel-2{
-    background-color: #5e60e0;
-    border-radius: 15px;
-    width: 10%;
-    max-width: 200px;
-    min-width: 150px;
-    overflow-y: scroll;
-    z-index: 100;
-}
 
 /* Dropdown Button */
 .dropbtn {
@@ -521,14 +488,13 @@ button{
 #times{
     justify-content: center;
     text-align: center;
-    background-color: white;
     border-radius: 15px;
     width: 50%;
-    height: 600px;
+    height: auto;
     margin-left: 25%;
-    overflow-y: scroll;
     margin-bottom: 50px;
-    box-shadow: 10px 10px 0px #262626;
+    color: white;
+    text-align: left;
 }
 #podium{
     justify-content: center;
@@ -541,6 +507,32 @@ button{
     overflow-y: scroll;
     box-shadow: 10px 10px 0px #262626;
 }
+/*'first-place', 'second-place', 'third-place', 'other-place'
+.first-place{
+    background-image: linear-gradient(315deg, #fbee34 0%, #ffdd00 74%);
+    width: auto;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    min-height: 45px;
+    padding: 10px;
+    border-radius: 25px;
+}
+.second-place{
+    background-color: #045de9;
+    background-image: linear-gradient(315deg, #045de9 0%, #09c6f9 74%);
+    width: auto;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    min-height: 45px;
+    padding: 10px;
+    border-radius: 25px;
+}
+.third-place{
+    
+}
+.other-place{
+
+}*/
 
 @media (pointer:none), (pointer:coarse) {
     #times{

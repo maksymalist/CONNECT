@@ -14,9 +14,15 @@ import firebase from "firebase/app"
 import "firebase/auth";
 import "firebase/database";
 
+//Icons
+import FirstPlaceIcon from '../img/PodiumIcons/firstPlace.svg'
+import SecondPlaceIcon from '../img/PodiumIcons/secondPlace.svg'
+import ThirdPlaceIcon from '../img/PodiumIcons/thirdPlace.svg'
+
 
 import 'react-toastify/dist/ReactToastify.css';
 import '../style/style.css'
+
 
 //globals
 
@@ -25,12 +31,18 @@ const playersTime = []
 
 export default function HostRoom(props) {
 
-    const [podiumPlayers, setPodiumPLayers] = useState([])
-    const [podiumPlayerTimes, setpodiumPlayerTimes] = useState([])
+    var [podiumPlayers, setPodiumPLayers] = useState([])
+    var [podiumPlayerTimes, setpodiumPlayerTimes] = useState([])
     var [playerPodiumMax, setPlayerPodiumMax] = useState(props.podiumPlaces)
     var [isActive, setIsActive] = useState("inactive")
     var [userLimit, setUserLimit] = useState(8)
     const podium = []
+    var numArray = []
+    var playerArr = []
+    const podiumObj = {}
+    const [sortedPodium, setSortedPodium] = useState([])
+    var podiumClasses = ['first-place', 'second-place', 'third-place', 'other-place']
+    var [currentPlace, setCurrentPlace] = useState(0)
     var [numberOfUsers, setNumberOfUsers] = useState(0)
 
     const [playerTimes, setPlayerTimes] = useState([])
@@ -76,14 +88,14 @@ export default function HostRoom(props) {
 
             if(playersTime.includes(data.user) == true){
 
-                document.getElementById(data.user).innerHTML = `User: ${data.user} Time: ${data.time}`
+                document.getElementById(data.user).innerHTML = `${data.user} Time: ${data.time}`
             }
             else{
                 playersTime.push(data.user)
     
                 let newTime = document.createElement('h1')
     
-                newTime.innerHTML = `User: ${data.user} Time: ${data.time}`
+                newTime.innerHTML = `${data.user} Time: ${data.time}`
                 newTime.id = data.user
     
                 document.getElementById('times').appendChild(newTime)
@@ -109,9 +121,14 @@ export default function HostRoom(props) {
 
         socket.on('UpdatePodium', (data)=>{
             podium.push(data.user)
+            podiumObj[data.user] = {
+                time: data.time
+            }
+            handleUpdatePodium(data.user, data.time)
             setpodiumPlayerTimes(podiumPlayerTimes => [...podiumPlayerTimes, data.time])
             setPodiumPLayers(podiumPlayers =>[...podiumPlayers, data.user])
-            document.getElementById(data.user).innerHTML = `User: ${data.user} Time: ${data.time}`
+              //'first-place', 'second-place', 'third-place', 'other-place'
+            setCurrentPlace(currentPlace++)
 
             toast.success(`${data.user} Has Finished Their Quiz!`)
 
@@ -165,6 +182,143 @@ export default function HostRoom(props) {
                 newUser
             )
         })
+    }
+    /*
+    var obj = {
+	p1:{
+  	time: 14
+  },
+  p2:{
+  	time: 11
+  },
+  p3:{
+  	time: 100
+  }
+}
+var numArr = []
+var timeArr = []
+var PlayerVals = []
+
+Object.keys(obj).map((key, index) =>{
+	numArr.push(obj[key].time)
+})
+
+numArr.sort((a, b) => {
+return a - b;
+});
+
+
+Object.keys(obj).map((key, index) =>{
+	console.log(obj[Object.keys(obj)[index]].time, 'time')
+	numArr.map((time, timeIndex) => {
+  console.log(time)
+  	if(time === obj[Object.keys(obj)[index]].time){
+    	PlayerVals.push({
+        player: Object.keys(obj)[index], 
+        time: obj[Object.keys(obj)[index]].time,
+        place: (timeIndex + 1)
+      })
+    }
+  })
+})
+
+console.log(PlayerVals)
+*/
+
+    const handleUpdatePodium = () => {
+        if(document.getElementById('podium') == null) return
+
+        Object.keys(podiumObj).map((key, index) =>{
+            numArray.push(podiumObj[key].time)
+        })
+        
+        numArray.sort((a, b) => {
+        return a - b;
+        });
+        
+        
+        Object.keys(podiumObj).map((key, index) =>{
+            console.log(podiumObj[Object.keys(podiumObj)[index]].time, 'time')
+            numArray.map((time, timeIndex) => {
+          console.log(time)
+              if(time === podiumObj[Object.keys(podiumObj)[index]].time){
+                playerArr.push({
+                player: Object.keys(podiumObj)[index], 
+                time: podiumObj[Object.keys(podiumObj)[index]].time,
+                place: (timeIndex + 1)
+              })
+            }
+          })
+        })
+        
+        console.log(playerArr)
+        document.getElementById('podium').querySelectorAll('*').forEach(n => n.remove());
+        
+        //header text
+        let podiumHeader = document.createElement('h1')
+        podiumHeader.innerHTML = 'Podium'
+        document.getElementById('podium').appendChild(podiumHeader)
+
+        for(var i = 0; i < playerArr.length; i++){
+            let newPlayerTime = document.createElement('div')
+            document.getElementById('podium').appendChild(newPlayerTime)
+
+            if(playerArr[i].place === 1){
+                ReactDOM.render(
+                    <>
+                        <h1 
+                            className='first-place podium-time' 
+                            data-position={playerArr[i].place} 
+                            data-time={playerArr[i].time} 
+                            id={playerArr[i].player}><img width='40' height='40' src={FirstPlaceIcon} alt='FirstPlaceIcon'/>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
+                        </h1>
+                    </>,
+                    newPlayerTime
+                )
+            }
+            if(playerArr[i].place === 2){
+                ReactDOM.render(
+                    <>
+                        <h1 
+                            className='second-place podium-time' 
+                            data-position={playerArr[i].place} 
+                            data-time={playerArr[i].time} 
+                            id={playerArr[i].player}><img width='40' height='40' src={SecondPlaceIcon} alt='SecondPlaceIcon'/>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
+                        </h1>
+                    </>,
+                    newPlayerTime
+                )
+            }
+            if(playerArr[i].place === 3){
+                ReactDOM.render(
+                    <>
+                        <h1 
+                            className='third-place podium-time' 
+                            data-position={playerArr[i].place} 
+                            data-time={playerArr[i].time} 
+                            id={playerArr[i].player}><img width='40' height='40' src={ThirdPlaceIcon} alt='ThirdPlaceIcon'/>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
+                        </h1>
+                    </>,
+                    newPlayerTime
+                )
+            }
+            if(playerArr[i].place > 3){
+                ReactDOM.render(
+                    <>
+                        <h1
+                            className='other-place podium-time' 
+                            data-position={playerArr[i].place}
+                            data-time={playerArr[i].time} 
+                            id={playerArr[i].player}>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
+                        </h1>
+                    </>,
+                    newPlayerTime
+                )
+            }
+        }
+
+        numArray = []
+        playerArr = []
     }
 
     const kickUser = (user) => {
@@ -229,10 +383,18 @@ export default function HostRoom(props) {
     }
     const GameOver = () => {
         const Podium = []
-        podiumPlayers.map((player, index) =>{
-            Podium.push(`User: ${player} Time: ${podiumPlayerTimes[index]}`)
-        })
-        console.log(Podium)
+        // playerArr.map((data, index) =>{
+        //     Podium.push(`User: ${data.player} Time: ${data.time}`)
+        // })
+        // console.log(Podium)
+        for(var i = 0; i < document.getElementsByClassName('podium-time').length; i++){
+            Podium.push({
+                time: document.getElementsByClassName('podium-time')[i].dataset.time,
+                position: document.getElementsByClassName('podium-time')[i].dataset.position,
+                player: document.getElementsByClassName('podium-time')[i].id
+            })
+            console.log(document.getElementsByClassName('podium-time')[i].innerHTML)
+        }
 
         socket.emit('GameOver', {
             room: props.room,
@@ -259,19 +421,16 @@ export default function HostRoom(props) {
         <div>
             <h1>{props.room}</h1>
             <h2>Max Users: {numberOfUsers}/{userLimit}</h2>
-            <h2 hidden id={'userList'}></h2>
+            <h2 hidden id='userList'></h2>
             <h1>Players</h1>
             <div id='userDiv'>
             </div>
-            <div id="times">
-                <h1>Player Times</h1>
-            </div>
             <div id='podium'>
                 <h1>Podium</h1>
-                {podiumPlayers.map((player, index) =>(
-                <h1 key={player}>{player} time:{podiumPlayerTimes[index]}</h1>
-            )
-            )}</div>
+            </div>
+            <div id="times">
+                <h1 style={{textAlign:'center'}}>Player Times</h1>
+            </div>
             <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{StartGame(props.room)}}>Start Game</Button>
             {/* <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{EndGame()}}>End Game</Button> */}
             <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{GameOver()}}>Game Over</Button>
