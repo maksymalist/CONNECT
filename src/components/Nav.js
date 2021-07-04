@@ -88,11 +88,7 @@ function Nav() {
                 <div className="dropdown-content">
                   <a href="/play">PLAY</a>
                   <a href="/newquiz">NEW QUIZ</a>
-<<<<<<< HEAD
-                  <a href="/browsequizzes">QUIZZES</a>
-=======
                   <a href="/browsequizes">QUIZZES</a>
->>>>>>> 5965afdf7b6f19ff3c3fca393293477c84ebbfbe
                   <a href="/plans">PLANS</a>
                 </div>
             </div>
