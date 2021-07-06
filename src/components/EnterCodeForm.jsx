@@ -13,6 +13,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
 import Switch from '@material-ui/core/Switch';
 
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+
 const list = require('badwords-list')
 
 const useStyles = makeStyles((theme) => ({
@@ -27,9 +29,9 @@ const useStyles = makeStyles((theme) => ({
 //globals
 //https://connect-quiz-now.herokuapp.com/
 //http://localhost:3001
-//https://connect-now-backend.herokuapp.com/
+//good one https://connect-now-backend.herokuapp.com/
 
-export const socket = io('http://localhost:3001', {transports: ['websocket', 'polling', 'flashsocket']});
+export const socket = io('https://connect-now-backend.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
 
 export default function EnterCodeForm({match, location}) {
     //const classes = useStyles();
@@ -193,6 +195,7 @@ export default function EnterCodeForm({match, location}) {
       };
 
 
+
     return (
         <div>
             <div id='navMargin2'/>
@@ -204,8 +207,9 @@ export default function EnterCodeForm({match, location}) {
             </div>
             <div id='subConatainer'>
             <h1>Host Room</h1>
-                <input placeholder={'Give Your Room A Name'} type="text" id="roomName"/>
-                <br></br><input placeholder={'Enter Game Code'} type="text" id="gameCode"/>
+                <input className='host-input' placeholder={'Give Your Room A Name'} type="text" id="roomName"/>
+                <br></br><input style={{marginLeft:'8px'}} className='host-input' placeholder={'Enter Game Code'} type="text" id="gameCode"/>
+                <InfoOutlinedIcon onClick={()=>{window.location = '/browsequizes'}} style={{marginBottom:'-8px', marginRight:'-15px'}} color='primary'/>
                 <div>
                     <h1 style={{fontSize:'25px'}}>Presets</h1><br></br>
                     <label>Max Players </label><input id='max-players' type='number' min='0' max='40'/>

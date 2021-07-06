@@ -19,6 +19,10 @@ import FirstPlaceIcon from '../img/PodiumIcons/firstPlace.svg'
 import SecondPlaceIcon from '../img/PodiumIcons/secondPlace.svg'
 import ThirdPlaceIcon from '../img/PodiumIcons/thirdPlace.svg'
 
+//Material Ui
+import AssessmentRoundedIcon from '@material-ui/icons/AssessmentRounded';
+import TimerRoundedIcon from '@material-ui/icons/TimerRounded';
+
 
 import 'react-toastify/dist/ReactToastify.css';
 import '../style/style.css'
@@ -254,14 +258,32 @@ console.log(PlayerVals)
         console.log(playerArr)
         document.getElementById('podium').querySelectorAll('*').forEach(n => n.remove());
         
-        //header text
-        let podiumHeader = document.createElement('h1')
-        podiumHeader.innerHTML = 'Podium'
+        //render header + first-place-div + second-place-div + third-place-div
+        let podiumHeader = document.createElement('div')
         document.getElementById('podium').appendChild(podiumHeader)
+        ReactDOM.render(
+            <h1 style={{borderBottom: '4px solid'}}>Podium<AssessmentRoundedIcon style={{width:"50px", height:"50px"}}/></h1>,
+            podiumHeader
+        )
+
+        //first-place-div
+        let firstPlaceDiv = document.createElement('div')
+        firstPlaceDiv.id = 'first-place-div'
+        document.getElementById('podium').appendChild(firstPlaceDiv)
+        //second-place-div
+        let secondPlaceDiv = document.createElement('div')
+        secondPlaceDiv.id = 'second-place-div'
+        document.getElementById('podium').appendChild(secondPlaceDiv)
+        //third-place-div
+        let thirdPlaceDiv = document.createElement('div')
+        thirdPlaceDiv.id = 'third-place-div'
+        document.getElementById('podium').appendChild(thirdPlaceDiv)
 
         for(var i = 0; i < playerArr.length; i++){
             let newPlayerTime = document.createElement('div')
-            document.getElementById('podium').appendChild(newPlayerTime)
+            if(playerArr[i].place > 3){
+                document.getElementById('podium').appendChild(newPlayerTime)
+            }
 
             if(playerArr[i].place === 1){
                 ReactDOM.render(
@@ -273,7 +295,7 @@ console.log(PlayerVals)
                             id={playerArr[i].player}><img width='40' height='40' src={FirstPlaceIcon} alt='FirstPlaceIcon'/>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
                         </h1>
                     </>,
-                    newPlayerTime
+                    document.getElementById('first-place-div')
                 )
             }
             if(playerArr[i].place === 2){
@@ -286,7 +308,7 @@ console.log(PlayerVals)
                             id={playerArr[i].player}><img width='40' height='40' src={SecondPlaceIcon} alt='SecondPlaceIcon'/>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
                         </h1>
                     </>,
-                    newPlayerTime
+                    document.getElementById('second-place-div')
                 )
             }
             if(playerArr[i].place === 3){
@@ -299,7 +321,7 @@ console.log(PlayerVals)
                             id={playerArr[i].player}><img width='40' height='40' src={ThirdPlaceIcon} alt='ThirdPlaceIcon'/>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
                         </h1>
                     </>,
-                    newPlayerTime
+                    document.getElementById('third-place-div')
                 )
             }
             if(playerArr[i].place > 3){
@@ -426,15 +448,18 @@ console.log(PlayerVals)
             <div id='userDiv'>
             </div>
             <div id='podium'>
-                <h1>Podium</h1>
+                <h1 style={{borderBottom: '4px solid'}}>Podium <AssessmentRoundedIcon style={{width:"50px", height:"50px"}}/></h1>
+                <div id='first-place-div'></div>
+                <div id='second-place-div'></div>
+                <div id='third-place-div'></div>
             </div>
             <div id="times">
-                <h1 style={{textAlign:'center'}}>Player Times</h1>
+                <h1 style={{textAlign:'center', borderBottom: '4px solid'}}>Player Times<TimerRoundedIcon style={{width:"50px", height:"50px"}}/></h1>
             </div>
-            <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{StartGame(props.room)}}>Start Game</Button>
+            <Button style={{marginBottom:'1vh'}} id='startButton' variant="contained" color="primary" size='small' onClick={()=>{StartGame(props.room)}}>Start Game</Button>
             {/* <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{EndGame()}}>End Game</Button> */}
-            <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{GameOver()}}>Game Over</Button>
-            <Button style={{marginBottom:'1vh'}} id='share' variant="contained" color="secondary" size='large' onClick={()=>{shareLink()}}>Share  <Share/></Button>
+            <Button style={{marginBottom:'1vh'}} id='gameOverButton' variant="contained" color="primary" size='small' onClick={()=>{GameOver()}}>Game Over</Button>
+            <Button style={{marginBottom:'1vh'}} id='share' variant="contained" color="secondary" size='medium' onClick={()=>{shareLink()}}>Share  <Share/></Button>
         </div>
     )
 }

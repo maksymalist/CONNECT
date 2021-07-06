@@ -68,7 +68,6 @@ li{
   
   }
 a{
-    
     padding: 10px;
     width: 100px;
     display: initial;
@@ -79,7 +78,7 @@ a{
     font-weight: bold;
     text-transform: uppercase;
     z-index: 1;
-  }
+}
 .liright{
     float: right;
     margin-right: 1%;
@@ -352,6 +351,7 @@ button{
         background-color: white;
         border-radius: 15px;
         box-shadow: 10px 10px 0px #262626;
+        overflow:visible
     }
     
     #plan2{
@@ -360,6 +360,7 @@ button{
         background-color: white;
         border-radius: 15px;
         box-shadow: 10px 10px 0px #262626;
+        overflow:visible
     }
     #plan3{
         margin-top: 20vh;
@@ -367,6 +368,7 @@ button{
         background-color: white;
         border-radius: 15px;
         box-shadow: 10px 10px 0px #262626;
+        overflow:visible
     }
     /*.sub-button{
         background: linear-gradient(-45deg, #3494E6, #EC6EAD);
@@ -499,13 +501,12 @@ button{
 #podium{
     justify-content: center;
     text-align: center;
-    background-color: white;
     border-radius: 15px;
     width: 50%;
     height: 600px;
     margin-left: 25%;
-    overflow-y: scroll;
-    box-shadow: 10px 10px 0px #262626;
+    overflow-y: auto;
+    color: white;
 }
 /*'first-place', 'second-place', 'third-place', 'other-place'
 .first-place{
@@ -533,6 +534,14 @@ button{
 .other-place{
 
 }*/
+share
+
+#first-place-div {
+    color: #6976EA;
+    background-color: white;
+    border-radius: 15px;
+    padding: 1px;
+}
 
 @media (pointer:none), (pointer:coarse) {
     #times{
@@ -698,6 +707,18 @@ input:hover {
     position: fixed;
     right: 0;
     top: 0;
+    margin: 1vh;
+}
+#startButton{
+    position: fixed;
+    right: 0;
+    top: 5vh;
+    margin: 1vh;
+}
+#gameOverButton{
+    position: fixed;
+    right: 0;
+    top: 10vh;
     margin: 1vh;
 }
 /*footer*/
