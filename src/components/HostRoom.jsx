@@ -456,9 +456,8 @@ console.log(PlayerVals)
             <div id="times">
                 <h1 style={{textAlign:'center', borderBottom: '4px solid'}}>Player Times<TimerRoundedIcon style={{width:"50px", height:"50px"}}/></h1>
             </div>
-            <Button style={{marginBottom:'1vh'}} id='startButton' variant="contained" color="primary" size='small' onClick={()=>{StartGame(props.room)}}>Start Game</Button>
-            {/* <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{EndGame()}}>End Game</Button> */}
-            <Button style={{marginBottom:'1vh'}} id='gameOverButton' variant="contained" color="primary" size='small' onClick={()=>{GameOver()}}>Game Over</Button>
+            <Button style={{marginBottom:'1vh'}} id='startButton' variant="contained" color="primary" size='medium' onClick={()=>{StartGame(props.room)}}>Start Game</Button>
+            <Button style={{marginBottom:'1vh'}} id='gameOverButton' variant="contained" color="primary" size='medium' onClick={()=>{GameOver()}}>Game Over</Button>
             <Button style={{marginBottom:'1vh'}} id='share' variant="contained" color="secondary" size='medium' onClick={()=>{shareLink()}}>Share  <Share/></Button>
         </div>
     )

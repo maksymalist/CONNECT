@@ -706,19 +706,19 @@ input:hover {
 #share{
     position: fixed;
     right: 0;
-    top: 0;
+    top: 10vh;
     margin: 1vh;
 }
 #startButton{
     position: fixed;
     right: 0;
-    top: 5vh;
+    top: 0;
     margin: 1vh;
 }
 #gameOverButton{
     position: fixed;
     right: 0;
-    top: 10vh;
+    top: 5vh;
     margin: 1vh;
 }
 /*footer*/
