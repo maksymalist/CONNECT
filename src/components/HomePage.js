@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import ReactDOM from 'react-dom'
 import axios from 'axios';
 // MUI Components
 import Button from '@material-ui/core/Button';
@@ -9,8 +10,10 @@ import TextField from '@material-ui/core/TextField';
 import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 // Util imports
 import {makeStyles} from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress'
 // Custom Components
 import CardInput from './CardInput';
+import ThanksForPurchasingAnimation from './ThanksForPurchasingAnimation'
 //toast
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
@@ -48,6 +51,7 @@ function HomePage() {
   const classes = useStyles();
   // State
   const [email, setEmail] = useState('');
+  var [spinnerSize, setSpinnerSize] = useState(0)
 
   const stripe = useStripe();
   const elements = useElements();
@@ -79,6 +83,8 @@ function HomePage() {
       // The payment has been processed!
       if (result.paymentIntent.status === 'succeeded') {
         console.log('Money is in the bank!');
+        renderAnimation()
+        setSpinnerSize(spinnerSize = 0)
         // Show a success message to your customer
         // There's a risk of the customer closing the window before callback
         // execution. Set up a webhook or plugin to listen for the
@@ -99,6 +105,7 @@ function HomePage() {
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
+    setSpinnerSize(spinnerSize = 20)
 
     const result = await stripe.createPaymentMethod({
       type: 'card',
@@ -130,6 +137,8 @@ function HomePage() {
             console.log('You got the money!');
             console.log(res.data)
             toast.success("Wow so easy!")
+            renderAnimation()
+            setSpinnerSize(spinnerSize = 0)
             console.log(result)
             firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).set({
               UserName: `${JSON.parse(localStorage.getItem('user')).profileObj.givenName} ${JSON.parse(localStorage.getItem('user')).profileObj.familyName}`,
@@ -151,6 +160,8 @@ function HomePage() {
         console.log('You got the money!');
         console.log(res.data)
         toast.success("Wow so easy!")
+        renderAnimation()
+        setSpinnerSize(spinnerSize = 0)
         console.log(result)
         firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).set({
           UserName: `${JSON.parse(localStorage.getItem('user')).profileObj.givenName} ${JSON.parse(localStorage.getItem('user')).profileObj.familyName}`,
@@ -172,8 +183,16 @@ function HomePage() {
     }
   };
 
+  const renderAnimation = () => {
+    ReactDOM.render(
+      <ThanksForPurchasingAnimation/>,
+      document.getElementById('paymentFormCard')
+    )
+    setSpinnerSize(spinnerSize = 0)
+  }
+
   return (
-    <Card className={classes.root}>
+    <Card id='paymentFormCard' className={classes.root}>
       <CardContent className={classes.content}>
         <TextField
           label='Email'
@@ -189,7 +208,8 @@ function HomePage() {
         <CardInput />
         <div className={classes.div}>
           <Button variant="contained" color="primary" className={classes.button} onClick={handleSubmitSub}>
-            Subscribe
+            Subscribe⠀
+            <CircularProgress size={spinnerSize}/>
           </Button>
         </div>
       </CardContent>

@@ -28,16 +28,9 @@ export default function StripeSubscriptions() {
             if(snap.exists()){
               var data = snap.val()
                 if(data.plan == 'Classroom'){
-                    ReactDOM.render(
-                        <div>
-                            <h1 style={{margin:'5vh'}}>You Already Own This Plan!</h1>
-                        </div>,
-                        document.getElementById('paymentIntent')
-                    )
                 }
             }
             else{
-              alert('haram')
             }
           });
         return () => {
