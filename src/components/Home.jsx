@@ -10,9 +10,10 @@ import zIndex from '@material-ui/core/styles/zIndex'
 
 export default function HomePage() {
     useEffect(() => {
+        document.getElementById('root').style.padding = '0px'
         document.getElementById('navMargin').setAttribute('style', `margin: ${document.querySelector('nav').offsetHeight }`)
         return () => {
-            //cleanup
+            document.getElementById('root').style.padding = '10px'
         }
     }, [])
     return (

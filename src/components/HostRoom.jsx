@@ -26,6 +26,7 @@ import TimerRoundedIcon from '@material-ui/icons/TimerRounded';
 
 import 'react-toastify/dist/ReactToastify.css';
 import '../style/style.css'
+import '../style/playButtonAnimation.css'
 
 
 //globals
@@ -392,6 +393,9 @@ console.log(PlayerVals)
 
         })
         gameStarted = true
+        document.getElementById('playButtonSvg').style.visibility = 'hidden'
+        document.getElementById('closeButtonSvg').style.visibility = 'visible'
+        if(document.getElementById('userDiv') === null) return
         document.getElementById('userDiv').remove()
     }
     const EndGame = () => {
@@ -442,6 +446,7 @@ console.log(PlayerVals)
     return (
         <div>
             <h1>{props.room}</h1>
+            <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='medium' onClick={()=>{shareLink()}}>Share  <Share/></Button>
             <h2>Max Users: {numberOfUsers}/{userLimit}</h2>
             <h2 hidden id='userList'></h2>
             <h1>Players</h1>
@@ -456,9 +461,31 @@ console.log(PlayerVals)
             <div id="times">
                 <h1 style={{textAlign:'center', borderBottom: '4px solid'}}>Player Times<TimerRoundedIcon style={{width:"50px", height:"50px"}}/></h1>
             </div>
-            <Button style={{marginBottom:'1vh'}} id='startButton' variant="contained" color="primary" size='medium' onClick={()=>{StartGame(props.room)}}>Start Game</Button>
-            <Button style={{marginBottom:'1vh'}} id='gameOverButton' variant="contained" color="primary" size='medium' onClick={()=>{GameOver()}}>Game Over</Button>
-            <Button style={{marginBottom:'1vh'}} id='share' variant="contained" color="secondary" size='medium' onClick={()=>{shareLink()}}>Share  <Share/></Button>
+
+            <svg onClick={()=>{StartGame(props.room)}} id='playButtonSvg' width="69" height="100" viewBox="0 0 69 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="triangles" clip-path="url(#clip0)">
+                    <g id="darkGroup">
+                        <path id="dark2" opacity="0.75" d="M44 48.268C45.3333 49.0378 45.3333 50.9622 44 51.732L9.5 71.6506C8.16666 72.4204 6.5 71.4582 6.5 69.9186L6.5 30.0814C6.5 28.5418 8.16667 27.5796 9.5 28.3494L44 48.268Z" fill="#1BB978"/>
+                        <path id="dark1" opacity="0.75" d="M66 48.268C67.3333 49.0378 67.3333 50.9622 66 51.732L31.5 71.6506C30.1667 72.4204 28.5 71.4582 28.5 69.9186L28.5 30.0814C28.5 28.5418 30.1667 27.5796 31.5 28.3494L66 48.268Z" fill="#1BB978"/>
+                    </g>
+                    <g id="lightGroup">
+                        <path id="light1" opacity="0.75" d="M44 48.268C45.3333 49.0378 45.3333 50.9622 44 51.732L9.5 71.6506C8.16666 72.4204 6.5 71.4582 6.5 69.9186L6.5 30.0814C6.5 28.5418 8.16667 27.5796 9.5 28.3494L44 48.268Z" fill="#6ED69A"/>
+                    </g>
+                </g>
+                <defs>
+                    <clipPath id="clip0">
+                    <rect width="69" height="100" fill="white"/>
+                    </clipPath>
+                </defs>
+            </svg>
+
+            <svg style={{visibility:'hidden'}} onClick={()=>{GameOver()}} id='closeButtonSvg' width="55" height="55" viewBox="0 0 62 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect id='darkBar' x="53.8581" y="1" width="11" height="75" rx="2" transform="rotate(45.8985 53.8581 1)" fill="#C70047"/>
+                <rect id='lightBar' x="0.351059" y="8.41962" width="11" height="75" rx="2" transform="rotate(-45 0.351059 8.41962)" fill="#FF0000"/>
+            </svg>
+
+            {/* Button style={{marginBottom:'1vh'}} id='gameOverButton' variant="contained" color="secondary" size='medium' onClick={()=>{GameOver()}}>End</Button> */}
+            {/* <Button style={{marginBottom:'1vh'}} id='share' variant="contained" color="secondary" size='medium' onClick={()=>{shareLink()}}>Share  <Share/></Button> */}
         </div>
     )
 }
