@@ -537,12 +537,13 @@ button{
 .other-place{
 
 }*/
-share
 
 #first-place-div {
     color: #6976EA;
     background-color: white;
     border-radius: 15px;
+    width: auto;
+    height: auto;
     padding: 1px;
 }
 
