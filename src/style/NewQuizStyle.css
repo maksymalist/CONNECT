@@ -1,0 +1,54 @@
+.cardContainer2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card2{
+    padding: 0;
+    width: 95%;
+    max-width: 600px;
+    margin: 20px;
+    background-color: white;
+    box-shadow: 5px 5px 0px #262626 !important;
+    /* background-image: url('../img/NewQuizImg/purpleWave.svg');
+    background-size: 100% 100%; */
+    border: 2px solid black;
+    height: 300px;
+    background-size: 100% 100%;
+}
+.card3{
+    padding: 0;
+    width: 95%;
+    max-width: 600px;
+    margin: 20px;
+    background-color: white;
+    box-shadow: 5px 5px 0px #262626 !important;
+    /* background-image: url('../img/NewQuizImg/purpleWave2.svg');
+    background-size: 100% 100%; */
+    border: 2px solid black;
+    height: 300px;
+    background-size: 100% 100%;
+}
+.card2:hover{
+    border-color: #646ecb;
+    box-shadow: 5px 5px 0px #646ecb !important;
+}
+
+.card3:hover{
+    border-color: #646ecb;
+    box-shadow: 5px 5px 0px #646ecb !important;
+}
+
+#quizName{
+    box-shadow: 5px 5px 0px #262626 !important;
+    border: 2px solid black;
+    height: 50px;
+    width: 100%;
+    max-width: 600px;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-left: -10px;
+}
+.userInput{
+    margin: 5px;
+}

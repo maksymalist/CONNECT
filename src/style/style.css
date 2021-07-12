@@ -543,7 +543,7 @@ button{
     background-color: white;
     border-radius: 15px;
     width: auto;
-    height: auto;
+    min-height: 2px;
     padding: 1px;
 }
 

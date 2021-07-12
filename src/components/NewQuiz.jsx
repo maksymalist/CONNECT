@@ -2,6 +2,7 @@ import React,{ useState, useEffect } from 'react'
 import { io } from 'socket.io-client'
 import { socket } from './EnterCodeForm'
 import ReactDOM from 'react-dom'
+import '../style/NewQuizStyle.css'
 
 import Button from '@material-ui/core/Button'
 
@@ -58,40 +59,39 @@ export default function NewQuiz() {
 
 
     return (
-        <div style={{backgroundColor:'white', borderRadius:'25px', margin:'5%', marginTop:'20vh'}}>
+        <div className='cardContainer2' style={{backgroundColor:'white', borderRadius:'25px', margin:'5%', marginTop:'20vh'}}>
             <div>
-                <h1>Quiz Name</h1>
-                <input className='userInput' id={'quizName'} type='text' placeholder="Enter Quiz's Name"></input>
+                <input className='userInput' id={'quizName'} type='text' placeholder="Give your quiz a cool name"></input>
             </div>
-            <div>
-                <h1>Question1</h1>
+            <div className='card2'>
+                <h1>Question 1</h1>
                 <input className='userInput' id='question1' type='text' placeholder={'Question'}/>
-                <input className='userInput' id='answer1' type='text' placeholder={'Answer'} />
+                <br></br><input className='userInput' id='answer1' type='text' placeholder={'Answer'} />
             </div>
-            <div>
-                <h1>Question2</h1>
+            <div className='card3'>
+                <h1>Question 2</h1>
                 <input className='userInput' id='question2' type='text' placeholder={'Question'}/>
-                <input className='userInput' id='answer2' type='text' placeholder={'Answer'} />
+                <br></br><input className='userInput' id='answer2' type='text' placeholder={'Answer'} />
             </div>
-            <div>
-                <h1>Question3</h1>
+            <div className='card2'>
+                <h1>Question 3</h1>
                 <input className='userInput' id='question3' type='text' placeholder={'Question'}/>
-                <input className='userInput' id='answer3' type='text' placeholder={'Answer'} />
+                <br></br><input className='userInput' id='answer3' type='text' placeholder={'Answer'} />
             </div>
-            <div>
-                <h1>Question4</h1>
+            <div className='card3'>
+                <h1>Question 4</h1>
                 <input className='userInput' id='question4' type='text' placeholder={'Question'}/>
-                <input className='userInput' id='answer4' type='text' placeholder={'Answer'} />
+                <br></br><input className='userInput' id='answer4' type='text' placeholder={'Answer'} />
             </div>
-            <div>
-                <h1>Question5</h1>
+            <div className='card2'>
+                <h1>Question 5</h1>
                 <input className='userInput' id='question5' type='text' placeholder={'Question'}/>
-                <input className='userInput' id='answer5' type='text' placeholder={'Answer'} />
+                <br></br><input className='userInput' id='answer5' type='text' placeholder={'Answer'} />
             </div>
-            <div>
-                <h1>Question6</h1>
+            <div className='card3'>
+                <h1>Question 6</h1>
                 <input className='userInput' id='question6' type='text' placeholder={'Question'}/>
-                <input className='userInput' id='answer6' type='text' placeholder={'Answer'} />
+                <br></br><input className='userInput' id='answer6' type='text' placeholder={'Answer'} />
             </div>
             <div>
                 <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{Submit()}}>Submit</Button>
