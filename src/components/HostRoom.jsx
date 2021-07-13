@@ -3,7 +3,7 @@ import { io } from 'socket.io-client'
 import { socket } from './EnterCodeForm'
 import ReactDOM from 'react-dom'
 import { ToastContainer, toast } from 'react-toastify';
-import { Share } from '@material-ui/icons'
+import { Share, People } from '@material-ui/icons'
 
 import Button from '@material-ui/core/Button'
 
@@ -446,7 +446,7 @@ console.log(PlayerVals)
     return (
         <div>
             <h1>{props.room}</h1>
-            <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='medium' onClick={()=>{shareLink()}}>Share  <Share/></Button>
+            <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='medium' onClick={()=>{shareLink()}}><People/>⠀Share</Button>
             <h2>Max Users: {numberOfUsers}/{userLimit}</h2>
             <h2 hidden id='userList'></h2>
             <h1>Players</h1>
