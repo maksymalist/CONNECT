@@ -38,7 +38,7 @@ export default function HomePage() {
             <br></br>
             <h2 className='homepage-text-medium'>Take learning to the <br/> next level.</h2>
             <br /><br /><br /><br /><br /><br /><br />
-            <h3 className='homepage-text-small'>CONNECT! helps you learn fast <br /> and together.</h3>
+            <h3 className='homepage-text-small'>CONNECT! helps you learn faster <br /> and together.</h3>
             <br /><br /><br /><br /><br />
             <Button style={{zIndex:'2'}} id='button-start' variant="contained" color="primary" size='large' onClick={()=>{window.location = '/play'}}>Start Learning ➞</Button>
             <br></br><br></br><br></br><br></br>
@@ -49,7 +49,7 @@ export default function HomePage() {
             <h1 className='aboutText' style={{color:'white', zIndex:'230'}}>About</h1>
             <div className='aboutText' style={{color:'white', zIndex:'230'}}>
                 <p className='aboutText' style={{color:'white', zIndex:'230'}}>CONNECT!’s goal is to make class learning easier and more fun for students and teachers from all around the world.</p>
-                <p className='aboutText' style={{color:'white', zIndex:'230'}}>For us, learning is the key to forging a better future and it is our priority to make learning more accesible and more engaging for everyone, everywhere.</p>
+                <p className='aboutText' style={{color:'white', zIndex:'230'}}>For us, learning is the key to a better future and it is our priority to make learning more accessible and more engaging for everyone, everywhere.</p>
             </div>
             <div id='aboutContainer'>
                 <div className='about-card'>
@@ -84,7 +84,7 @@ export default function HomePage() {
             icon: (
             <img src="https://gw.alipayobjects.com/zos/rmsportal/XuVpGqBFxXplzvLjJBZB.svg" />
             ),
-            title: '语雀',
+            title: '',
             url: 'https://yuque.com',
             description: '知识创作与分享工具',
             openExternal: true,
