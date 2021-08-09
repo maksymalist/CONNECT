@@ -24,13 +24,21 @@ export default function GameRoom({match}) {
     var secondTimer = 0
 
     var quiz2
+    const cardsLen = []
 
     const getQuiz = async () => {
         const eventref = firebase.database().ref(`quizes/${match.params.gameid}`);
         const snapshot = await eventref.once('value');
         quiz2 = snapshot.val();
         setName(name = quiz2.name)
-        setCardsFunction()
+        console.log(Object.keys(snapshot.val()).length - 1)
+        Object.keys(snapshot.val()).map((key, index)=>{
+            console.log(key)
+            if(key != 'name' && key != 'userName' && key != 'userProfilePic'){
+              cardsLen.push(key)
+            }
+          })
+        setCardsFunction(cardsLen.length)
     }
 
 
@@ -49,8 +57,8 @@ export default function GameRoom({match}) {
     }
     }
 
-    const setCardsFunction = () => {
-        for(var i = 0; i < 6; i++){
+    const setCardsFunction = (numCards) => {
+        for(var i = 0; i < numCards; i++){
             cards.push({
                 question: quiz2[`q${i}`].question,
                 ans: quiz2[`q${i}`].answer
@@ -74,8 +82,13 @@ export default function GameRoom({match}) {
     
 
     var elements = 0
-    const randomNum = [0,1,2,3,4,5].sort( () => .5 - Math.random() )
+    const numberOfCardsArr = []
+    var randomNum = [] //[0,1,2,3,4,5].sort( () => .5 - Math.random() )
     const GetCards = () => {
+        cards.map((card, i) => {
+            numberOfCardsArr.push(i)
+        })
+        randomNum = numberOfCardsArr.sort( () => .5 - Math.random() )
         for(var i = 0; i < cards.length; i++){
             let newCard = document.createElement('div')
             let newCard2 = document.createElement('div')
@@ -94,7 +107,7 @@ export default function GameRoom({match}) {
  
 
         }
-        const randomNum2 = [0,1,2,3,4,5].sort( () => .5 - Math.random() )
+        const randomNum2 =  numberOfCardsArr.sort( () => .5 - Math.random() )
         for(var i = 0; i < cards.length; i++){
             let newCard2 = document.createElement('div')
             const item = cards[randomNum2[i]].question
@@ -156,8 +169,9 @@ export default function GameRoom({match}) {
                         time: time
                     })
                     document.getElementById('popUp').removeAttribute('hidden')
+                    document.getElementById('gameContent').hidden = true
                     ReactDOM.render(
-                        <FinishedScreen/>,
+                        <FinishedScreen user={match.params.user}/>,
                         document.getElementById('popUp')
 
                     )
@@ -196,8 +210,10 @@ export default function GameRoom({match}) {
             UpdateTimeFunction()    
         }, 100);
 
+        document.querySelector('nav').hidden = true
+
         socket.on('joinedGameRoom', (data)=>{
-            toast.success(data)
+            console.log(data)
         })
         socket.emit('joinGame', {
             room: match.params.room,
@@ -242,45 +258,29 @@ export default function GameRoom({match}) {
             sessionStorage.setItem('roomJoined', 'false')
         }
     }, [])
-    function shuffle(elems) {
- 
-        var allElems = (function(){
-        var ret = [], l = elems.length;
-        while (l--) { ret[ret.length] = elems[l]; }
-        return ret;
-        })();
-     
-        var shuffled = (function(){
-            var l = allElems.length, ret = [];
-            while (l--) {
-                var random = Math.floor(Math.random() * allElems.length),
-                    randEl = allElems[random].cloneNode(true);
-                allElems.splice(random, 1);
-                ret[ret.length] = randEl;
-            }
-            return ret; 
-        })(), l = elems.length;
-     
-        while (l--) {
-            elems[l].parentNode.insertBefore(shuffled[l], elems[l].nextSibling);
-            elems[l].parentNode.removeChild(elems[l]);
-        }
-     
-    }
 
 
     return (
         <div>
-            <div>
-                <h1> </h1>
-                <h1 id='title' style={{marginTop:'10vh'}}>{name}</h1>
-                <h1 id='time' style={{marginBottom:'10vh'}}>{time}</h1>
+            <div id='gameContent'>
+                <div>
+                    <h1> </h1>
+                    <h1 id='title' style={{marginTop:'10vh', color:'white'}}>{name}</h1>
+                    <h1 id='time' style={{marginBottom:'10vh', color:'white'}}>{time}</h1>
+                </div>
+                <div>
+                <div style={{marginTop:'10vh'}} id='cardContainer'></div>
+                    <h1 hidden>{JSON.stringify(selected)}</h1>
+                </div>
             </div>
             <div>
-            <div style={{marginTop:'10vh'}} id='cardContainer'></div>
-                <div hidden id='popUp'></div>
-                <h1 hidden>{JSON.stringify(selected)}</h1>
+                <nav style={{height:'50px'}}>
+                    <div style={{float:'left', color:'white', marginLeft:'10px', marginTop:'-10px'}}>
+                        <h2>{match.params.user}</h2>
+                    </div>
+                </nav>
             </div>
+            <div hidden style={{width:'100%', height:'100vh', zIndex:'500'}} id='popUp'></div>
         </div>
     )
 }

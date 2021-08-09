@@ -20,7 +20,7 @@ export default function GameEnded(props) {
                 ))
                 }
             </div>
-                <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{window.location = '/'}}>Return Home</Button>
+                <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{window.location = '/play'}}>Return Home</Button>
             </div>
         </div>
     )

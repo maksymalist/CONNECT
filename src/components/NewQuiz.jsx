@@ -9,8 +9,14 @@ import Button from '@material-ui/core/Button'
 import firebase from "firebase"
 import "firebase/database";
 import { toast } from 'react-toastify'
+import { AddCircleRounded, DeleteRounded } from '@material-ui/icons'
 
 export default function NewQuiz() {
+
+    const [question, setQuestion] = useState(0)
+    const [questionArray, setQuestionArray] = useState([1,2,3,4,5,6])
+
+    const quizObj = {}
 
     const Submit = () => {
         for(var i = 0; i < document.getElementsByClassName('userInput').length; i++){
@@ -20,81 +26,66 @@ export default function NewQuiz() {
                 return
             }
         }
-        firebase.database().ref(`quizes/`).push({
-            name: document.getElementById('quizName').value,
-
-            userName: JSON.parse(localStorage.getItem('user')).profileObj.name,
-
-            userProfilePic: JSON.parse(localStorage.getItem('user')).profileObj.imageUrl,
-
-            q0: {
-                question: document.getElementById('question1').value,
-                answer: document.getElementById('answer1').value
-            },
-            q1:{
-                question: document.getElementById('question2').value,
-                answer: document.getElementById('answer2').value
-
-            },
-            q2:{
-                question: document.getElementById('question3').value,
-                answer: document.getElementById('answer3').value
-            },
-            q3:{
-                question: document.getElementById('question4').value,
-                answer: document.getElementById('answer4').value
-            },
-            q4:{
-                question: document.getElementById('question5').value,
-                answer: document.getElementById('answer5').value
-            },
-            q5:{
-                question: document.getElementById('question6').value,
-                answer: document.getElementById('answer6').value
-            }
-    
-        })
+        firebase.database().ref(`quizes/`).push(quizObj)
         toast.success('Quiz Created!')
+        for(var i = 0; i < document.getElementsByClassName('userInput').length; i++){
+            document.getElementsByClassName('userInput')[i].value = ""
+        }
+
+        
     }
 
+    const setQuizObj = () => {
+        console.log(document.getElementsByClassName('questions'))
+
+        quizObj.name = document.getElementById('quizName').value
+        quizObj.userName = JSON.parse(localStorage.getItem('user')).profileObj.name
+        quizObj.userProfilePic = JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
+
+        for(var i = 0; i < document.getElementsByClassName('questions').length; i++){
+            console.log(document.getElementsByClassName('questions')[i].value + ' ' +  document.getElementsByClassName('questions')[i].value)
+            quizObj[`q${i}`] = {
+                question: document.getElementsByClassName('questions')[i].value,
+                answer: document.getElementsByClassName('answers')[i].value
+            } 
+        }
+
+        console.log(quizObj)
+        Submit()
+    }
+
+    const Card = ({questionNumber}) => (
+        <div className='card2' id={`question${questionNumber}card`}>
+            <h1>Question {questionNumber}</h1>
+            <input className='questions userInput' id={`question${questionNumber}`} type='text' placeholder={'Question'}/>
+            <br></br><input className='answers userInput' id={`answer${questionNumber}`} type='text' placeholder={'Answer'} />
+        </div>
+    )
+
+    const AddQuestion = () => {
+        setQuestion(question + 1)
+        setQuestionArray( [...questionArray, question])
+    }
 
     return (
-        <div className='cardContainer2' style={{backgroundColor:'white', borderRadius:'25px', margin:'5%', marginTop:'20vh'}}>
-            <div>
-                <input className='userInput' id={'quizName'} type='text' placeholder="Give your quiz a cool name"></input>
-            </div>
-            <div className='card2'>
-                <h1>Question 1</h1>
-                <input className='userInput' id='question1' type='text' placeholder={'Question'}/>
-                <br></br><input className='userInput' id='answer1' type='text' placeholder={'Answer'} />
-            </div>
-            <div className='card3'>
-                <h1>Question 2</h1>
-                <input className='userInput' id='question2' type='text' placeholder={'Question'}/>
-                <br></br><input className='userInput' id='answer2' type='text' placeholder={'Answer'} />
-            </div>
-            <div className='card2'>
-                <h1>Question 3</h1>
-                <input className='userInput' id='question3' type='text' placeholder={'Question'}/>
-                <br></br><input className='userInput' id='answer3' type='text' placeholder={'Answer'} />
-            </div>
-            <div className='card3'>
-                <h1>Question 4</h1>
-                <input className='userInput' id='question4' type='text' placeholder={'Question'}/>
-                <br></br><input className='userInput' id='answer4' type='text' placeholder={'Answer'} />
-            </div>
-            <div className='card2'>
-                <h1>Question 5</h1>
-                <input className='userInput' id='question5' type='text' placeholder={'Question'}/>
-                <br></br><input className='userInput' id='answer5' type='text' placeholder={'Answer'} />
-            </div>
-            <div className='card3'>
-                <h1>Question 6</h1>
-                <input className='userInput' id='question6' type='text' placeholder={'Question'}/>
-                <br></br><input className='userInput' id='answer6' type='text' placeholder={'Answer'} />
-            </div>
-            <div>
-                <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{Submit()}}>Submit</Button>
+        <div style={{marginTop:'100px'}}>
+            <div style={{backgroundColor:'white', borderRadius:'25px', display:'flex', alignItems:'center', flexDirection:'column'}}>
+                <div>
+                    <input className='userInput' id={'quizName'} type='text' placeholder="Give your quiz a cool name"></input>
+                </div>
+                <div className='cardContainer2' style={{margin:'1%'}}>
+                    {
+                        questionArray.map((question, i) => (
+                            <Card key={i} questionNumber={i+1}/>
+                        ))
+                    }
+                    <div onClick={()=>{AddQuestion()}} className='card2-2' style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+                        <AddCircleRounded style={{width:'75px', height:'75px'}} color='primary'/>
+                    </div>
+                </div>
+                <div>
+                    <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='large' onClick={()=>{setQuizObj()}}>Submit</Button>
+                </div>
             </div>
         </div>
     )

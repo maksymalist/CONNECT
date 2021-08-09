@@ -54,6 +54,13 @@ export default function HostRoom(props) {
     var gameStarted = false
 
     useEffect(() => {
+        console.log(props.friendlyroom)
+        if(props.friendlyroom === true){
+            console.log('added firendly')
+            socket.emit('addFriendlyRoom', {
+                room: props.room
+            })
+        }
         CheckPlanStatus()
         socket.emit('joinHostRoom', {
             room: props.room
@@ -76,11 +83,6 @@ export default function HostRoom(props) {
             }
             
         })
-        if(props.friendly){
-            socket.emit('addFriendlyRoom', {
-                room: props.room
-            })
-        }
 
         socket.on('roomAdd', (data)=>{
             //console.log(data)
@@ -188,47 +190,6 @@ export default function HostRoom(props) {
             )
         })
     }
-    /*
-    var obj = {
-	p1:{
-  	time: 14
-  },
-  p2:{
-  	time: 11
-  },
-  p3:{
-  	time: 100
-  }
-}
-var numArr = []
-var timeArr = []
-var PlayerVals = []
-
-Object.keys(obj).map((key, index) =>{
-	numArr.push(obj[key].time)
-})
-
-numArr.sort((a, b) => {
-return a - b;
-});
-
-
-Object.keys(obj).map((key, index) =>{
-	console.log(obj[Object.keys(obj)[index]].time, 'time')
-	numArr.map((time, timeIndex) => {
-  console.log(time)
-  	if(time === obj[Object.keys(obj)[index]].time){
-    	PlayerVals.push({
-        player: Object.keys(obj)[index], 
-        time: obj[Object.keys(obj)[index]].time,
-        place: (timeIndex + 1)
-      })
-    }
-  })
-})
-
-console.log(PlayerVals)
-*/
 
     const handleUpdatePodium = () => {
         if(document.getElementById('podium') == null) return
@@ -397,6 +358,8 @@ console.log(PlayerVals)
         document.getElementById('closeButtonSvg').style.visibility = 'visible'
         if(document.getElementById('userDiv') === null) return
         document.getElementById('userDiv').remove()
+
+        document.getElementById('game-container').style.visibility = 'visible'
     }
     const EndGame = () => {
         socket.emit('EndGame', {
@@ -445,21 +408,23 @@ console.log(PlayerVals)
 
     return (
         <div>
-            <h1>{props.room}</h1>
+            <h1 style={{color:'white'}}>{props.room}</h1>
             <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='medium' onClick={()=>{shareLink()}}><People/>⠀Share</Button>
-            <h2>Max Users: {numberOfUsers}/{userLimit}</h2>
+            <h2 style={{color:'white'}}>Max Users: {numberOfUsers}/{userLimit}</h2>
             <h2 hidden id='userList'></h2>
-            <h1>Players</h1>
-            <div id='userDiv'>
+            <h1 style={{color:'white'}}>Players</h1>
+            <div style={{color:'white'}} id='userDiv'>
             </div>
-            <div id='podium'>
-                <h1 style={{borderBottom: '4px solid'}}>Podium <AssessmentRoundedIcon style={{width:"50px", height:"50px"}}/></h1>
-                <div id='first-place-div'></div>
-                <div id='second-place-div'></div>
-                <div id='third-place-div'></div>
-            </div>
-            <div id="times">
-                <h1 style={{textAlign:'center', borderBottom: '4px solid'}}>Player Times<TimerRoundedIcon style={{width:"50px", height:"50px"}}/></h1>
+            <div id='game-container' style={{visibility:'hidden'}}>
+                <div id='podium'>
+                    <h1 style={{borderBottom: '4px solid'}}>Podium <AssessmentRoundedIcon style={{width:"50px", height:"50px"}}/></h1>
+                    <div id='first-place-div'></div>
+                    <div id='second-place-div'></div>
+                    <div id='third-place-div'></div>
+                </div>
+                <div id="times">
+                    <h1 style={{textAlign:'center', borderBottom: '4px solid'}}>Player Times<TimerRoundedIcon style={{width:"50px", height:"50px"}}/></h1>
+                </div>
             </div>
 
             <svg onClick={()=>{StartGame(props.room)}} id='playButtonSvg' width="69" height="100" viewBox="0 0 69 100" fill="none" xmlns="http://www.w3.org/2000/svg">

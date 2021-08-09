@@ -1,12 +1,17 @@
 import '../App.css';
-import React, {useState, useEffect, useRef} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import ReactDOM from 'react-dom'
 import GoogleLogin from 'react-google-login'
 import { toast } from 'react-toastify';
-import { Popover } from '@headlessui/react'
+import { Menu, MenuItem, Divider } from '@material-ui/core';
 
-import logo from '../img/logoo.PNG'
+//material-ui
+import MenuIcon from '@material-ui/icons/Menu';
+
+import axios from 'axios';
+
+import logo from '../img/logo.svg'
 import nav from '../img/nav.svg'
 
 //firebase
@@ -19,7 +24,10 @@ export var profilePic = null
 
 
 
-function Nav() {
+function Nav({ isLoggedIn, customerId }) {
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [currentUsername, setCurrentUsername] = useState(null);
 
     const navStyle = {
         color: "white"
@@ -33,12 +41,16 @@ function Nav() {
         plan: 'Starter',
         clientSecret: 0,
         customerObj: 0,
-        googleObj: JSON.parse(localStorage.getItem('user')),
         subscriptionObj: 0
 
   
       })
     }
+
+    useEffect(() => {
+      if(JSON.parse(localStorage.getItem('user')) === null) return
+      setCurrentUsername(JSON.parse(localStorage.getItem('user')).profileObj.name)
+    }, [])
 
 
 
@@ -56,7 +68,7 @@ function Nav() {
           window.location.reload()
         }
         else{
-          updateUsers(response.profileObj.email.replace('.', ''), response.profileObj.googleId, `${response.profileObj.givenName} ${response.profileObj.familyName}`)
+          updateUsers(response.profileObj.email, response.profileObj.googleId, `${response.profileObj.givenName} ${response.profileObj.familyName}`)
           window.location.reload()
         }
       });
@@ -64,32 +76,95 @@ function Nav() {
       
   }
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const openCustomerPortal = async () => {
+
+    if(customerId == undefined){
+        toast.info('You Need To Buy A Plan To See This Information!')
+        return
+    }
+    setAnchorEl(null);
+
+    const res = await axios.post('https://connect-quiz-now.herokuapp.com/create-customer-portal-session', {customerId: customerId});
+
+    const {redirectUrl} = res.data;
+    console.log(redirectUrl)
+
+    window.location = redirectUrl
+
+
+    if (res.error) {
+      // Show error to your customer (e.g., insufficient funds)
+      console.log(res.error.message);
+    } else {
+        //
+    }
+
+  };
+
+  const logOut = () => {
+    localStorage.removeItem('user')
+    window.location.reload()
+  }
+
   return (
     <nav>
         <ul>
-            <img hidden alt="profile-pic" style={{borderRadius:'100px', marginTop:'3px'}} className='liright' height='40px' width='40px' id='profilePic'></img>
-            <div style={{marginBottom:'3px'}} id='googleLogin'>
-            <GoogleLogin
-            clientId='701696427912-ajmlkcj3hpo46q5fokhtn5mmeib0m3be.apps.googleusercontent.com'
-            buttonText='Login'
-            onSuccess={responseGoogle}
-            onFailure={()=>{console.log(Error)}}
-            cookiePolicy={'single_host_origin'}
-            className='liright-google'
-            
-            />
-            </div>
+            <img 
+              hidden 
+              aria-controls="simple-menu" 
+              aria-haspopup="true" 
+              onClick={handleClick} 
+              alt="profile-pic" 
+              style={{
+                borderRadius:'100px', 
+                marginLeft:'-20px',
+                margin:'5px',
+              }} 
+              className='liright' 
+              height='40px' 
+              width='40px' 
+              id='profilePic'>
+            </img>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+              style={{width:'150px', marginTop:'30px', padding:'5px', display:'flex', alignItems:'center', marginRight:'10px'}}
+            >
+              <MenuItem style={{borderBottom:'1px solid grey', width:'150px'}} onClick={handleClose}>Signed in as <br></br> {currentUsername}</MenuItem>
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={openCustomerPortal}>Subscription</MenuItem>
+              <MenuItem style={{backgroundColor:'rgb(220, 0, 78)', color:'white', fontWeight:'bold', borderRadius:'5px'}} onClick={logOut}>Logout</MenuItem>
+            </Menu>
+            {isLoggedIn ?
+              null
+              :
+              <Link to='/login'>
+                <li className="liright nav-links">Login</li>
+              </Link>
+            }
             <img id='home' onClick={()=>{window.location = '/'}} className="nav-links lileft" alt="connect-logo" width={50} height={50} src={logo}/>
             <Link to='/play'>
             <li className="nav-links lileft">Play</li>
             </Link>
-            <div className="dropdown">
-              <button className="dropbtn">Menu ▼</button>
+            <div className="dropdown lileft nav-links">
+              <button className="dropbtn"><MenuIcon /></button>
                 <div className="dropdown-content">
                   <a href="/play">PLAY</a>
                   <a href="/newquiz">NEW QUIZ</a>
                   <a href="/browsequizes">QUIZZES</a>
                   <a href="/plans">PLANS</a>
+                  <a href="/login">LOGIN</a>
                 </div>
             </div>
             <Link style={navStyle} to='/newquiz'>
@@ -108,4 +183,3 @@ function Nav() {
 }
 
 export default Nav;
-

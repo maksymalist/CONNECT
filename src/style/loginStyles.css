@@ -1,0 +1,20 @@
+.login-main-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    margin-top: 20vh;
+}
+.login-component-container{
+    background-color: white;
+    width: 20%;
+    min-width: 300px;
+    height: auto;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 10px 10px 0px #262626;
+    border: 1px solid black;
+
+}

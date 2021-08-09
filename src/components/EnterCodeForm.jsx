@@ -9,21 +9,14 @@ import Background from './Background'
 import '../style/style.css'
 import { toast } from 'react-toastify'
 
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
 import Switch from '@material-ui/core/Switch';
 
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
-const list = require('badwords-list')
+//material-ui
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-      '& > *': {
-        margin: theme.spacing(1),
-      },
-    },
-  }));
+const list = require('badwords-list')
 
 
 //globals
@@ -31,14 +24,16 @@ const useStyles = makeStyles((theme) => ({
 //http://localhost:3001
 //good one https://connect-now-backend.herokuapp.com/
 
-export const socket = io('https://connect-now-backend.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
+export const socket = io('http://localhost:3001/', {transports: ['websocket', 'polling', 'flashsocket']});
 
 export default function EnterCodeForm({match, location}) {
     //const classes = useStyles();
 
     var [role, setRole] = useState('')
-    var [checked, setChecked] = useState(false)
+    const [checked, setChecked] = React.useState(false);
     var [code, setCode] = useState('')
+
+    const [gameCode, setGameCode] = useState('')
 
     useEffect(() => {
         console.log(list.array)
@@ -68,14 +63,16 @@ export default function EnterCodeForm({match, location}) {
         socket.on('roomcreated', (data)=>{
             setRole(role = 'host')
             
+            console.log(data.friendly +'checked uit')
             ReactDOM.render(
                 <div>
                 <HostRoom 
-                maxPlayers={document.getElementById('max-players').value} 
-                podiumPlaces={document.getElementById('podium-places').value} 
-                room={data.room} 
-                gamecode={data.gamecode}
-                friendly={checked}/>
+                    maxPlayers={document.getElementById('max-players').value} 
+                    podiumPlaces={document.getElementById('podium-places').value} 
+                    room={data.room} 
+                    gamecode={data.gamecode}
+                    friendlyroom={data.friendly}
+                    />
                 <Background/>
                 </div>,
                 document.getElementById('root')
@@ -156,6 +153,14 @@ export default function EnterCodeForm({match, location}) {
 
 
     const JoinRoom = ()=>{
+        if(document.getElementById('name').value === ''){ 
+            toast.error('Please Enter a Name')
+            return
+        }
+        if(document.getElementById('code').value === ''){ 
+            toast.error('Please Enter a Code')
+            return
+        }
         socket.emit('joinroom', {
         code: document.getElementById('code').value, 
         name: document.getElementById('name').value,
@@ -164,10 +169,20 @@ export default function EnterCodeForm({match, location}) {
 
     
     function CreateRoom(){
+        if(document.getElementById('roomName').value === undefined){
+            toast.error('Please Enter a Room Name')
+            return
+        }
+        if(gameCode === ''){
+            toast.error('Please Enter a Game Code')
+            return
+        }
+        console.log(checked)
         socket.emit('createroom', {
             room: document.getElementById('roomName').value,
-            gamecode: document.getElementById('gameCode').value,
-            host: JSON.parse(localStorage.getItem('user')).profileObj.googleId
+            gamecode: gameCode,
+            host: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
+            friendly: checked
         })
     }
 
@@ -183,21 +198,13 @@ export default function EnterCodeForm({match, location}) {
     }
 
     
-      const handleChange = () => {
-        if(checked == false){
-            setChecked(checked = true);
-            return
-        }
-        if(checked == true){
-            setChecked(checked = false);
-            return
-        }
+    const toggleChecked = () => {
+        setChecked((prev) => !prev);
       };
 
 
-
     return (
-        <div>
+        <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
             <div id='navMargin2'/>
             <div id='mainConatainer'>
                 <h1>Join Room</h1>
@@ -208,8 +215,11 @@ export default function EnterCodeForm({match, location}) {
             <div id='subConatainer'>
             <h1>Host Room</h1>
                 <input className='host-input' placeholder={'Give Your Room A Name'} type="text" id="roomName"/>
-                <br></br><input style={{marginLeft:'8px'}} className='host-input' placeholder={'Enter Game Code'} type="text" id="gameCode"/>
-                <InfoOutlinedIcon onClick={()=>{window.location = '/browsequizes'}} style={{marginBottom:'-8px', marginRight:'-15px'}} color='primary'/>
+                <br></br><input value={gameCode} onChange={(event) => setGameCode(event.target.value)} style={{marginLeft:'8px'}} className='host-input' placeholder={'Enter Game Code'} type="text" id="gameCode"/>
+                {gameCode != '' ?
+                    null
+                    : <InfoOutlinedIcon onClick={()=>{window.location = '/browsequizes'}} style={{marginBottom:'-8px', marginRight:'-15px', position:'relative', left:'-30px'}} color='primary'/>
+                }
                 <div>
                     <h1 style={{fontSize:'25px'}}>Presets</h1><br></br>
                     <label>Max Players </label><input id='max-players' type='number' min='0' max='40'/>
@@ -218,11 +228,13 @@ export default function EnterCodeForm({match, location}) {
                         <div>
                             <label>Friendly Nicknames</label>
                             <Switch 
-                            checked={checked} 
-                            onChange={()=>{handleChange()}} 
-                            color="primary" 
-                            name="checked" 
-                            inputProps={{ 'aria-label': 'primary checkbox' }}/>
+                                size="small" 
+                                checked={checked} 
+                                onChange={()=>{toggleChecked()}}
+                                color="primary" 
+                                name="checked" 
+                                inputProps={{ 'aria-label': 'primary checkbox' }}
+                            />
                         </div>
                 </div>
                 <br></br><Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{Generatecode()}}>Generate Name</Button>

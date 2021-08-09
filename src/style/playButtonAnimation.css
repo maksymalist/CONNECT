@@ -29,8 +29,9 @@
 #closeButtonSvg,
 #darkBar,
 #lightBar{
-    transition: all 0.5s ease;
+    transition: all 0.5s cubic-bezier(0.25, 0.1, 0, 1.33);
 }
+
 #closeButtonSvg{
     position: fixed;
     right: 0;
@@ -39,7 +40,7 @@
 }
 
 #closeButtonSvg:hover{
-    transform: rotate(180deg);
+    transform: rotate(134deg);
 }
 #closeButtonSvg:hover #darkBar{
     transform: rotate(180deg);

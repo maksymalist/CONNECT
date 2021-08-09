@@ -1,17 +1,17 @@
 import React, { useEffect} from 'react'
 import { Button } from '@material-ui/core'
 import { Star, School, Group, PartyMode } from '@material-ui/icons'
-import HomePageImg from '../img/HomePageImg.svg'
+import HomePageImage from '../img/HomePageImage1.svg'
 import BigStripe from '../img/BigStripe.svg'
 import Footer from 'rc-footer';
 import 'rc-footer/assets/index.css'
 import zIndex from '@material-ui/core/styles/zIndex'
+import Logo from '../img/logo.svg'
 
 
 export default function HomePage() {
     useEffect(() => {
         document.getElementById('root').style.padding = '0px'
-        document.getElementById('navMargin').setAttribute('style', `margin: ${document.querySelector('nav').offsetHeight }`)
         return () => {
             document.getElementById('root').style.padding = '10px'
         }
@@ -42,7 +42,8 @@ export default function HomePage() {
             <br /><br /><br /><br /><br />
             <Button style={{zIndex:'2'}} id='button-start' variant="contained" color="primary" size='large' onClick={()=>{window.location = '/play'}}>Start Learning ➞</Button>
             <br></br><br></br><br></br><br></br>
-            <img className='imgDiv' id='home-page-img' alt='home-page-img' src={HomePageImg}/>
+            <img src={HomePageImage} className='imgDiv' id='home-page-img' alt='home-page-img'/>
+
             </div>
         </div>
         <div className="newdiv2">
@@ -82,10 +83,10 @@ export default function HomePage() {
         columns={[
         {
             icon: (
-            <img src="https://gw.alipayobjects.com/zos/rmsportal/XuVpGqBFxXplzvLjJBZB.svg" />
+                <img src={Logo} alt='logo'/>
             ),
-            title: '语雀',
-            url: 'https://yuque.com',
+            title: '',
+            url: '',
             description: '知识创作与分享工具',
             openExternal: true,
         },

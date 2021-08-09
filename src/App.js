@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 
 
 import firebase from "firebase/app"
@@ -21,12 +21,12 @@ import StripeSubscriptions from './components/StripeSubscriptions'
 import Plans from './components/Plans'
 import MemberRoom from './components/MemberRoom'
 import Background from './components/Background'
-import CreateRoom from './components/CreateRoom'
 
 
 
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import Login from './components/Auth/Login';
 
 
 const firebaseConfig = {
@@ -42,11 +42,15 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [customerId, setCustomerId] = useState(null);
+  const arrr = [];
+
   useEffect(() => {
-    document.getElementById('navMargin').setAttribute('style', `margin: ${document.querySelector('nav').offsetHeight }`)
+    testf()
     if(JSON.parse(localStorage.getItem('user')) !== null){
       console.log(JSON.parse(localStorage.getItem('user')).profileObj)
-
+      setIsLoggedIn(true);
       document.getElementById('profilePic').removeAttribute('hidden')
       document.getElementById('profilePic').src = JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
 
@@ -69,6 +73,19 @@ function App() {
     }
   }, [])
 
+  const testf = async () => {
+    const eventref = firebase.database().ref(`quizes/${'-MeVhshEnJtVeptEaUuf'}`);
+    const snapshot = await eventref.once('value');
+    console.log(Object.keys(snapshot.val()))
+    Object.keys(snapshot.val()).map((key, index)=>{
+      console.log(key)
+      if(key != 'name' && key != 'userName' && key != 'userProfilePic'){
+        arrr.push(key)
+      }
+    })
+    console.log(arrr)
+  }
+
   const fetchCustomerData = async (id)=>{
     const res = await axios.post('https://connect-quiz-now.herokuapp.com/get-customer-data', {subId: id});
     var plan = ''
@@ -82,7 +99,7 @@ function App() {
       plan = 'Starter'
     }
 
-
+    setCustomerId(JSON.parse(res.data.subscriptionDetails).customer)
     console.log(JSON.parse(res.data.subscriptionDetails))
     firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).update({
       UserName: `${JSON.parse(localStorage.getItem('user')).profileObj.givenName} ${JSON.parse(localStorage.getItem('user')).profileObj.familyName}`,
@@ -99,8 +116,8 @@ function App() {
   return (
       <Router>
     <div className="App">
-      <Nav/>
-      <div id='navMargin'/>
+      <Nav isLoggedIn={isLoggedIn} customerId={customerId}/>
+      <div style={{margin:'0 !important'}} id='navMargin'/>
       <Background/>
       <Switch>
         <Route exact path='/' component={Home}/>
@@ -113,6 +130,7 @@ function App() {
         <Route path='/plans' component={Plans}/>
         <Route path='/subscription/:plan' component={StripeSubscriptions}/>
         <Route path='/classroom' component={MemberRoom}/>
+        <Route path='/login' component={Login}/>
       </Switch>
     </div>
   </Router>

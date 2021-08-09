@@ -25,6 +25,7 @@ export default function Plans() {
         }
     }
     useEffect(() => {
+        if(JSON.parse(localStorage.getItem('user')) === null) return
         firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).on('value',(snap)=>{
             if(snap.exists()){
               var data = snap.val()
@@ -37,6 +38,7 @@ export default function Plans() {
               }
               setSubscribedStatus(subscribedStatus = data.plan)
               document.getElementById(data.plan).innerHTML = 'Selected✓'
+              document.getElementById('Starter').innerHTML = 'View'
               setCustomerId(customerId = data.customerObj.id)
               console.log(data.customerObj.id, 'customerId')
             }
@@ -95,7 +97,7 @@ export default function Plans() {
                     style={{marginBottom:'1vh'}} 
                     variant="contained" 
                     color="primary" 
-                    size='small'>Select</Button>
+                    size='medium'>Select</Button>
                 </div>
             </div>
             <div id='plan2'>
@@ -117,7 +119,7 @@ export default function Plans() {
                     style={{marginBottom:'1vh'}} 
                     variant="contained" 
                     color="primary" 
-                    size='small' 
+                    size='medium' 
                     onClick={()=>{SubscriptionPage('classroom')}}>Select</Button>
                 </div>
             </div>
@@ -139,11 +141,8 @@ export default function Plans() {
                     style={{marginBottom:'1vh'}} 
                     variant="contained" 
                     color="primary" 
-                    size='small'>Select</Button>
+                    size='medium'>Select</Button>
                 </div>
-            </div>
-            <div>
-                <button style={{marginTop:'100px'}} onClick={()=>{openCustomerPortal()}}>Subscription Status</button>
             </div>
         </div>
     )

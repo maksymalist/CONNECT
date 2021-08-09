@@ -7,19 +7,17 @@ html, body {
 }
 body {
     background: #4e54c8;  
-    background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
 	background-size: 400% 400%;
 	animation: gradient 15s ease infinite;
     width: 100%;
     height: 90vh;
 }
-
 nav {
-    background: #646ecb;
+    background: #4e54c8;
     position: fixed;
     top: 0;
     left: 0;
-    height: auto;
+    height: 60px !important;
     width: 100%;
     z-index: 400;
 }
@@ -27,12 +25,7 @@ nav {
     margin: 50px;
 }
 #navMargin2{
-    margin: 300px;
-}
-@media (pointer:none), (pointer:coarse) {
-    #navMargin{
-        margin: 25vh;
-    }
+    margin: 50px;
 }
 ul{
     
@@ -42,6 +35,16 @@ ul{
     z-index: 1;
   
   }
+.MuiMenu-list {
+    outline: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+.MuiMenu-paper{
+    margin-left: -15px !important;
+}
+
 li{
     float: left;
     font-family: Arial, Helvetica, sans-serif;
@@ -50,8 +53,7 @@ li{
     margin-top: 1%;
     margin-bottom: 0%;
     z-index: 20;
-    
-  
+    font-size: 1rem;
   }
 .features{
     position: relative;
@@ -89,11 +91,18 @@ a{
 .lileft{
     float: left;
     margin-right: 1%;
+
 }
 .liright-google{
     float: right;
     margin-right: 1%;
     margin-left: 5%;
+    color: white !important;
+    background-color: transparent !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
 }
 
 @keyframes gradient {
@@ -116,41 +125,36 @@ h1{
     font-size: 5vh;
 }
 #mainConatainer{
-    position: relative;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 20%;
-    height: 25%;
+    height: auto;
     background-color: white;
-    border-radius: 15px;
-    margin-top: 15vh;
+    margin-top: 12vh;
     min-width: 250px;
     min-height: 250px;
     box-shadow: 10px 10px 0px #262626;
     z-index: 1;
+    border: 2px solid black;
+    padding: 15px;
 }
 #subConatainer{
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 20%;
-    height: 25%;
+    height: auto;
     background-color: white;
-    border-radius: 15px;
     margin-top: 13vh;
     min-width: 250px;
     min-height: 280px;
     box-shadow: 10px 10px 0px #262626;
     z-index: 1;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    padding: 15px;
 }
 @media (pointer:none), (pointer:coarse) {
     #mainConatainer{
-        margin-top: 18vh;
+        margin-top: 14vh;
     }
     #subConatainer{
-        margin-top: 22vh;
+        margin-top: 14vh;
     }
 }
 
@@ -183,9 +187,12 @@ h1{
     border:2px solid #d4d4d4;
     width: 100px;
     height: 100px;
-    display: inline-block;
     margin: 5px;
     margin-left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
 }
 
 #time{
@@ -228,10 +235,8 @@ h1{
 }
 #popUp{
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
+    top: 0;
+    left: 0;
     width: 50vw;
     height: 40vw;    justify-content: center;
     text-align: center;
@@ -314,23 +319,26 @@ button{
     margin-top: 20vh;
     margin-left: 10vw;
     background-color: white;
-    border-radius: 15px;
     box-shadow: 10px 10px 0px #262626;
+    border: 2px solid black;
+    padding: 15px;
 }
 
 #plan2{
     margin-top: 20vh;
     margin-left: 10vw;
     background-color: white;
-    border-radius: 15px;
     box-shadow: 10px 10px 0px #262626;
+    border: 2px solid black;
+    padding: 15px;
 }
 #plan3{
     margin-top: 20vh;
     margin-left: 10vw;
     background-color: white;
-    border-radius: 15px;
     box-shadow: 10px 10px 0px #262626;
+    border: 2px solid black;
+    padding: 15px;
 }
 /*
 .sub-button{
@@ -352,8 +360,6 @@ button{
         margin-top: 20vh;
         margin-left: 6vw;
         background-color: white;
-        border-radius: 15px;
-        box-shadow: 10px 10px 0px #262626;
         overflow:visible
     }
     
@@ -361,16 +367,12 @@ button{
         margin-top: 20vh;
         margin-left: 6vw;
         background-color: white;
-        border-radius: 15px;
-        box-shadow: 10px 10px 0px #262626;
         overflow:visible
     }
     #plan3{
         margin-top: 20vh;
         margin-left: 6vw;
         background-color: white;
-        border-radius: 15px;
-        box-shadow: 10px 10px 0px #262626;
         overflow:visible
     }
     /*.sub-button{
@@ -511,6 +513,9 @@ button{
     overflow-y: auto;
     color: white;
 }
+.userDiv > * {
+    color: white;
+}
 /*'first-place', 'second-place', 'third-place', 'other-place'
 .first-place{
     background-image: linear-gradient(315deg, #fbee34 0%, #ffdd00 74%);
@@ -577,18 +582,25 @@ input {
 	padding: .5rem;
     width: auto;
     margin-bottom: .2rem;
-    outline: none;
+    outline: none !important;
+    border-radius: 5px;
+}
+
+::placeholder {
+    /* font-weight: bold; */
+    color: #b2b2b2;
+    text-align: center;
 }
 
 input:hover {
-	border-color: #646ecb;
+	border-color: #646ecb !important;
 }
 .userH1:hover {
     color: #ba000d;
     text-decoration: line-through;
 }
 .userH1{
-    color:#000;
+    color:#fff;
     text-decoration: none;
 }
 
@@ -629,9 +641,6 @@ input:hover {
     z-index: 0;
 }
 @media (pointer:none), (pointer:coarse) {
-    #navMargin{
-        margin: 5vh;
-    }
     .about{
         position: relative;
     }
@@ -675,7 +684,7 @@ input:hover {
 
 .homePageDivPurple{
     text-align: left;
-    background-color: #6C63FF;
+    background-color:#6C63FF;
     height: 100vh;
     justify-content: start;
 }
