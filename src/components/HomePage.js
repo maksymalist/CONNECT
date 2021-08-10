@@ -70,7 +70,7 @@ function HomePage() {
     }
     //https://connect-quiz-now.herokuapp.com
 
-    const res = await axios.post('http://localhost:3001/pay', {email: email});
+    const res = await axios.post('https://connect-now-backend.herokuapp.com/pay', {email: email});
 
     const clientSecret = res.data['client_secret'];
 
@@ -127,7 +127,7 @@ function HomePage() {
       toast.error(result.error.message, 'Try Again')
     } else {
         if(activeCoupon === false){
-        const res = await axios.post('http://localhost:3001/sub', {'payment_method': result.paymentMethod.id, 'email': email});
+        const res = await axios.post('https://connect-now-backend.herokuapp.com/sub', {'payment_method': result.paymentMethod.id, 'email': email});
         // eslint-disable-next-line camelcase
         const {client_secret, status, customer_obj, subscription_obj} = res.data;
         console.log(JSON.parse(customer_obj).id)
@@ -187,7 +187,7 @@ function HomePage() {
         }
       }
       if(activeCoupon === true){
-        const res = await axios.post('http://localhost:3001/sub-coupon', {'payment_method': result.paymentMethod.id, 'email': email, 'coupon': coupon});
+        const res = await axios.post('https://connect-now-backend.herokuapp.com/sub-coupon', {'payment_method': result.paymentMethod.id, 'email': email, 'coupon': coupon});
         // eslint-disable-next-line camelcase
         const {client_secret, status, customer_obj, subscription_obj} = res.data;
         console.log(JSON.parse(customer_obj).id)
@@ -262,7 +262,7 @@ function HomePage() {
       return
     }
     else{
-      const res = await axios.post(`http://localhost:3001/get-coupon`, {coupon: coupon})
+      const res = await axios.post(`https://connect-now-backend.herokuapp.com/get-coupon`, {coupon: coupon})
       console.log(res.data)
       if(res.data === 'Invalid Coupon'){
         toast.error('Invalid Coupon Code!')
