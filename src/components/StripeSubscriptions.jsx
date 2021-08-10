@@ -16,7 +16,7 @@ import firebase from "firebase/app"
 import "firebase/auth";
 import "firebase/database";
 
-const stripePromise = loadStripe('pk_test_51Isp9eLjpdOyivM3wMonqnjVW7RqSkp9mBmcfCoUMK3Ruq9rbPBZsrc7PTG5DOKywHRjEBLKUJ1PyP64MbNNhbah00LVvg7hRr');
+const stripePromise = loadStripe('pk_live_51JMw6pBqTzgw1Au7Y06gQdURUJrgclwkr0hpdfIvGoKd9sLugfqbnBe6lC5d6bF6fdnlbxgutmmH0933EqR3cii000BXjkHPZD');
 
 
 

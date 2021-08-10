@@ -8,10 +8,9 @@
     width: 300px;
     margin: 20px;
     background-color: white;
-    box-shadow: 1px 1px 5px #262626 !important;
+    box-shadow: 10px 10px 0px #262626 !important;
     height: 300px;
-    background-size: 100% 100%;
-    border-radius: 25px;
+    border: 2px solid black !important;
 }
 .card2-2{
     padding: 12px;
@@ -21,7 +20,8 @@
     box-shadow: 1px 1px 5px #262626 !important;
     height: 300px;
     background-size: 100% 100%;
-    border-radius: 25px;
+    box-shadow: 10px 10px 0px #262626 !important;
+    border: 2px solid black !important;
 }
 .card2:hover{
     border-color: #646ecb;

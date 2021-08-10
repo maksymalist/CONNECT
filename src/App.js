@@ -87,7 +87,7 @@ function App() {
   }
 
   const fetchCustomerData = async (id)=>{
-    const res = await axios.post('https://connect-quiz-now.herokuapp.com/get-customer-data', {subId: id});
+    const res = await axios.post('http://localhost:3001/get-customer-data', {subId: id});
     var plan = ''
     if(JSON.parse(res.data.subscriptionDetails).status == 'canceled'){
       plan = 'Starter'

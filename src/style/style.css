@@ -312,33 +312,35 @@ button{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-content: flex-start;
-    justify-content: flex-start;
+    justify-content: center;
 }
 #plan1{
-    margin-top: 20vh;
-    margin-left: 10vw;
     background-color: white;
     box-shadow: 10px 10px 0px #262626;
     border: 2px solid black;
     padding: 15px;
+    width: 100%;
+    margin: 50px;
+    max-width: 400px;
 }
 
 #plan2{
-    margin-top: 20vh;
-    margin-left: 10vw;
     background-color: white;
     box-shadow: 10px 10px 0px #262626;
     border: 2px solid black;
     padding: 15px;
+    width: 100%;
+    margin: 50px;
+    max-width: 400px;
 }
 #plan3{
-    margin-top: 20vh;
-    margin-left: 10vw;
     background-color: white;
     box-shadow: 10px 10px 0px #262626;
     border: 2px solid black;
     padding: 15px;
+    width: 100%;
+    margin: 50px;
+    max-width: 400px;
 }
 /*
 .sub-button{
@@ -355,25 +357,30 @@ button{
     padding-bottom: 5px;
 }*/
 
-@media (pointer:none), (pointer:coarse) {
+@media only screen and (max-width: 500px) {
     #plan1{
         margin-top: 20vh;
-        margin-left: 6vw;
-        background-color: white;
-        overflow:visible
+        overflow:visible;
+        margin-right: 50px;
+        margin: 0;
+        margin-top: 100px;
+        width: 100%;
+
     }
     
     #plan2{
         margin-top: 20vh;
-        margin-left: 6vw;
-        background-color: white;
-        overflow:visible
+        overflow:visible;
+        margin: 0;
+        margin-top: 100px;
+        width: 100%;
     }
     #plan3{
         margin-top: 20vh;
-        margin-left: 6vw;
-        background-color: white;
-        overflow:visible
+        overflow:visible;
+        margin: 0;
+        margin-top: 100px;
+        width: 100%;
     }
     /*.sub-button{
         background: linear-gradient(-45deg, #3494E6, #EC6EAD);

@@ -24,7 +24,7 @@ const list = require('badwords-list')
 //http://localhost:3001
 //good one https://connect-now-backend.herokuapp.com/
 
-export const socket = io('https://connect-now-backend.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
+export const socket = io('http://localhost:3001/', {transports: ['websocket', 'polling', 'flashsocket']});
 
 export default function EnterCodeForm({match, location}) {
     //const classes = useStyles();

@@ -2,6 +2,15 @@
   text-align: center;
 }
 
+body::-webkit-scrollbar {
+  width: 12px;
+  height: 20px !important;               /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #262626;    /* color of the scroll thumb */       /* roundness of the scroll thumb */
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
