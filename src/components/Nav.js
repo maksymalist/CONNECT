@@ -1,10 +1,8 @@
 import '../App.css';
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import ReactDOM from 'react-dom'
-import GoogleLogin from 'react-google-login'
 import { toast } from 'react-toastify';
-import { Menu, MenuItem, Divider } from '@material-ui/core';
+import { Menu, MenuItem } from '@material-ui/core';
 
 //material-ui
 import MenuIcon from '@material-ui/icons/Menu';
@@ -12,12 +10,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import axios from 'axios';
 
 import logo from '../img/logo.svg'
-import nav from '../img/nav.svg'
 
 //firebase
 import firebase from "firebase/app"
 import "firebase/auth";
 import "firebase/database";
+
+import { Add, QuestionAnswerRounded, FilterNoneRounded } from '@material-ui/icons'
 
 export var ActiveUser = null
 export var profilePic = null
@@ -27,6 +26,7 @@ export var profilePic = null
 function Nav({ isLoggedIn, customerId }) {
 
     const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl2, setAnchorEl2] = useState(null);
     const [currentUsername, setCurrentUsername] = useState(null);
 
     const navStyle = {
@@ -80,8 +80,16 @@ function Nav({ isLoggedIn, customerId }) {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleClose2 = () => {
+    setAnchorEl2(null);
   };
 
   const openCustomerPortal = async () => {
@@ -146,6 +154,24 @@ function Nav({ isLoggedIn, customerId }) {
               <MenuItem onClick={openCustomerPortal}>Subscription</MenuItem>
               <MenuItem style={{backgroundColor:'rgb(220, 0, 78)', color:'white', fontWeight:'bold', borderRadius:'5px'}} onClick={logOut}>Logout</MenuItem>
             </Menu>
+            <Add 
+              style={{color:'white', width:'30px', height:'30px', marginTop:'10px', marginLeft:'10px'}} 
+              className="liright nav-links" 
+              aria-controls="simple-menu" 
+              aria-haspopup="true" 
+              onClick={handleClick2} 
+            />
+            <Menu
+              id="simple-menu2"
+              anchorEl={anchorEl2}
+              keepMounted
+              open={Boolean(anchorEl2)}
+              onClose={handleClose2}
+              style={{width:'150px', marginTop:'30px', padding:'5px', display:'flex', alignItems:'center', marginRight:'10px'}}
+            >
+              <MenuItem onClick={()=>{window.location = '/newquiz'}}><QuestionAnswerRounded style={{marginRight:'10px'}} color='primary'/> New Quiz</MenuItem>
+              <MenuItem onClick={()=>{window.location = '/new-multi-quiz'}}><FilterNoneRounded style={{marginRight:'10px'}} color='primary'/> New Multi</MenuItem>
+            </Menu>
             {isLoggedIn ?
               null
               :
@@ -161,17 +187,13 @@ function Nav({ isLoggedIn, customerId }) {
               <button className="dropbtn"><MenuIcon /></button>
                 <div className="dropdown-content">
                   <a href="/play">PLAY</a>
-                  <a href="/newquiz">NEW QUIZ</a>
                   <a href="/browsequizes">QUIZZES</a>
                   <a href="/plans">PLANS</a>
                   <a href="/login">LOGIN</a>
                 </div>
             </div>
-            <Link style={navStyle} to='/newquiz'>
-              <li className="nav-links lileft">New Quiz</li>
-            </Link>
             <Link style={navStyle} to='/browsequizes'>
-              <li className="nav-links lileft">Browse Existing Quizzes</li>
+              <li className="nav-links lileft">Quizzes</li>
             </Link>
             <Link style={navStyle} to='/plans'>
               <li className="nav-links lileft">plans</li>

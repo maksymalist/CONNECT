@@ -12,13 +12,14 @@ import EnterCodeForm from './components/EnterCodeForm'
 import HostRoom from './components/HostRoom'
 import WaitingRoom from './components/WaitingRoom'
 import GameRoom from './components/GameRoom'
+import MultiGameRoom from './components/MultiGameRoom'
 import Nav from './components/Nav'
 import NewQuiz from './components/NewQuiz'
 import BrowseQuizes from './components/BrowseQuizes'
 import AfterRoomLeave from './components/AfterRoomLeave'
 import GameEnded from './components/GameEnded'
-import StripeSubscriptions from './components/StripeSubscriptions'
-import Plans from './components/Plans'
+import StripeSubscriptions from './components/payment/StripeSubscriptions'
+import Plans from './components/payment/Plans'
 import MemberRoom from './components/MemberRoom'
 import Background from './components/Background'
 
@@ -27,6 +28,7 @@ import Background from './components/Background'
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Login from './components/Auth/Login';
+import NewMultiQuiz from './components/NewMultiQuiz';
 
 
 const firebaseConfig = {
@@ -44,10 +46,8 @@ firebase.initializeApp(firebaseConfig);
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [customerId, setCustomerId] = useState(null);
-  const arrr = [];
 
   useEffect(() => {
-    testf()
     if(JSON.parse(localStorage.getItem('user')) !== null){
       console.log(JSON.parse(localStorage.getItem('user')).profileObj)
       setIsLoggedIn(true);
@@ -72,19 +72,6 @@ function App() {
       //cleanup
     }
   }, [])
-
-  const testf = async () => {
-    const eventref = firebase.database().ref(`quizes/${'-MeVhshEnJtVeptEaUuf'}`);
-    const snapshot = await eventref.once('value');
-    console.log(Object.keys(snapshot.val()))
-    Object.keys(snapshot.val()).map((key, index)=>{
-      console.log(key)
-      if(key != 'name' && key != 'userName' && key != 'userProfilePic'){
-        arrr.push(key)
-      }
-    })
-    console.log(arrr)
-  }
 
   const fetchCustomerData = async (id)=>{
     const res = await axios.post('http://localhost:3001/get-customer-data', {subId: id});
@@ -122,8 +109,10 @@ function App() {
       <Switch>
         <Route exact path='/' component={Home}/>
         <Route exact path='/play' component={EnterCodeForm}/>
-        <Route path='/gameroom/:room/:gameid/:user' component={GameRoom}/>
+        <Route path='/normal/:room/:gameid/:user' component={GameRoom}/>
+        <Route path='/multi/:room/:gameid/:user' component={MultiGameRoom}/>
         <Route path='/newquiz' component={NewQuiz}/>
+        <Route path='/new-multi-quiz' component={NewMultiQuiz}/>
         <Route path='/browsequizes' component={BrowseQuizes}/>
         <Route path='/roomleave' component={AfterRoomLeave}/>
         <Route path='/gamefinsihed/:room/:user' component={GameEnded}/>

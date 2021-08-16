@@ -1,8 +1,10 @@
-import React from 'react'
-import Button from '@material-ui/core/Button'
+import React, { useState, useEffect } from 'react'
+import { Button } from '@material-ui/core'
 
-export default function AfterRoomLeave() {
+
+export default function AfterRoomLeave(props) {
     const h1Style = {marginTop:'15vh', color: '#fff'}
+
     return (
         <div>
             <h1 style={h1Style}>You Have Left the Room</h1>

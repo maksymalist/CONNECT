@@ -3,6 +3,11 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+.cardContainer2-sub {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 .card2{
     padding: 12px;
     width: 300px;
@@ -40,4 +45,26 @@
 }
 .userInput{
     margin: 5px;
+}
+.card2-2-subject{
+    padding: 12px;
+    width: 80vw;
+    margin: 20px;
+    background-color: white;
+    box-shadow: 1px 1px 5px #262626 !important;
+    height: 300px;
+    background-size: 100% 100%;
+    box-shadow: 10px 10px 0px #262626 !important;
+    border: 2px solid black !important;
+}
+.subject-container{
+    padding: 12px;
+    width: auto;
+    margin: 20px;
+    background-color: white;
+    box-shadow: 10px 10px 0px #262626 !important;
+    border: 2px solid black !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import '../style/checkAnimation.css';
+import '../../style/checkAnimation.css';
 import Button from '@material-ui/core/Button'
 
 export default function ThanksForPurchasingAnimation() {

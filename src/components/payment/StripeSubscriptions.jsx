@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import GoogleLogin from 'react-google-login'
 
 
-import '../style/style.css'
+import '../../style/style.css'
 
 import HomePage from './HomePage';
 // Stripe

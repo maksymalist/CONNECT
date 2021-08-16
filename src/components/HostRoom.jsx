@@ -92,6 +92,12 @@ export default function HostRoom(props) {
         })
 
         socket.on('timeBoard', (data)=>{
+            console.log(data)
+
+            if(podium.includes(data.user)){
+                console.log('in here')
+                return
+            }
 
             if(playersTime.includes(data.user) == true){
 
@@ -127,6 +133,7 @@ export default function HostRoom(props) {
         })
 
         socket.on('UpdatePodium', (data)=>{
+            console.log('up pod')
             podium.push(data.user)
             podiumObj[data.user] = {
                 time: data.time
@@ -254,7 +261,7 @@ export default function HostRoom(props) {
                             className='first-place podium-time' 
                             data-position={playerArr[i].place} 
                             data-time={playerArr[i].time} 
-                            id={playerArr[i].player}><img width='40' height='40' src={FirstPlaceIcon} alt='FirstPlaceIcon'/>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
+                            id={playerArr[i].player+0}><img width='40' height='40' src={FirstPlaceIcon} alt='FirstPlaceIcon'/>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
                         </h1>
                     </>,
                     document.getElementById('first-place-div')
@@ -267,7 +274,7 @@ export default function HostRoom(props) {
                             className='second-place podium-time' 
                             data-position={playerArr[i].place} 
                             data-time={playerArr[i].time} 
-                            id={playerArr[i].player}><img width='40' height='40' src={SecondPlaceIcon} alt='SecondPlaceIcon'/>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
+                            id={playerArr[i].player+0}><img width='40' height='40' src={SecondPlaceIcon} alt='SecondPlaceIcon'/>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
                         </h1>
                     </>,
                     document.getElementById('second-place-div')
@@ -280,7 +287,7 @@ export default function HostRoom(props) {
                             className='third-place podium-time' 
                             data-position={playerArr[i].place} 
                             data-time={playerArr[i].time} 
-                            id={playerArr[i].player}><img width='40' height='40' src={ThirdPlaceIcon} alt='ThirdPlaceIcon'/>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
+                            id={playerArr[i].player+0}><img width='40' height='40' src={ThirdPlaceIcon} alt='ThirdPlaceIcon'/>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
                         </h1>
                     </>,
                     document.getElementById('third-place-div')
@@ -293,7 +300,7 @@ export default function HostRoom(props) {
                             className='other-place podium-time' 
                             data-position={playerArr[i].place}
                             data-time={playerArr[i].time} 
-                            id={playerArr[i].player}>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
+                            id={playerArr[i].player+0}>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
                         </h1>
                     </>,
                     newPlayerTime
@@ -350,7 +357,8 @@ export default function HostRoom(props) {
     const StartGame = (room)=>{
         socket.emit('startGame', {
             room: room,
-            gamecode: props.gamecode
+            gamecode: props.gamecode,
+            gamemode: props.gamemode
 
         })
         gameStarted = true

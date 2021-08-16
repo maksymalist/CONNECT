@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import Button from '@material-ui/core/Button'
+import { Button, Backdrop } from '@material-ui/core'
 
 export default function GameEnded(props) {
     useEffect(() => {

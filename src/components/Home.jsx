@@ -1,12 +1,10 @@
 import React, { useEffect} from 'react'
-import { Button } from '@material-ui/core'
+import { Button, Divider } from '@material-ui/core'
 import { Star, School, Group, PartyMode } from '@material-ui/icons'
 import HomePageImage from '../img/HomePageImage1.svg'
 import BigStripe from '../img/BigStripe.svg'
-import Footer from 'rc-footer';
-import 'rc-footer/assets/index.css'
-import zIndex from '@material-ui/core/styles/zIndex'
 import Logo from '../img/logo.svg'
+
 
 
 export default function HomePage() {
@@ -75,24 +73,6 @@ export default function HomePage() {
                 <h3>(Insert Video)</h3>
             </div>
         </div>
-        </div>
-        <div>
-        <Footer
-        style={{maxWidth:'100%'}}
-        theme='dark'
-        columns={[
-        {
-            icon: (
-                <img src={Logo} alt='logo'/>
-            ),
-            title: '',
-            url: '',
-            description: '知识创作与分享工具',
-            openExternal: true,
-        },
-        ]}
-        bottom="Copyright (c) 2021 CONNECT!"
-        />
         </div>
         </>
     )

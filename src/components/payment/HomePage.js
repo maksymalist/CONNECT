@@ -1,11 +1,11 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useEffect } from 'react';
 import ReactDOM from 'react-dom'
 import axios from 'axios';
 // MUI Components
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { TextField, InputAdornment, Typography, Divider } from "@material-ui/core";
+import { TextField, InputAdornment, Typography, Divider, Backdrop, Paper } from "@material-ui/core";
 // stripe
 import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 // Util imports
@@ -56,12 +56,33 @@ function HomePage() {
   const [email, setEmail] = useState('');
   const [coupon, setCoupon] = useState('');
   const [activeCoupon, setActiveCoupon] = useState(false);
-  const couponRef = useRef(null);
   var [spinnerSize, setSpinnerSize] = useState(0)
   const [spinner, setSpinner] = useState(false)
 
+  var [currentDiscount, setCurrentDiscount] = useState('this field is optional')
+  var [discountName, setDiscountName] = useState('None')
+  const [discount, setDiscount] = useState(0)
+
+  const [total, setTotal] = useState(0)
+  const [price, setPrice] = useState(10)
+
+  const [comfirmPurchase, setComfirmPurchase] = useState(false)
+
+  const [open, setOpen] = useState(false);
+
   const stripe = useStripe();
   const elements = useElements();
+
+  useEffect(() => {
+    setTotal(price - discount)
+    console.log(total)
+    if(discount >= price){
+        setTotal(0)
+    }
+    return () => {
+        setTotal(0)
+    }
+}, [discount])
 
   const handleSubmitPay = async (event) => {
     if (!stripe || !elements) {
@@ -114,6 +135,7 @@ function HomePage() {
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
+    if(comfirmPurchase == false) return
     setSpinner(true)
 
     const result = await stripe.createPaymentMethod({
@@ -272,16 +294,100 @@ function HomePage() {
       if(res.data === 'Invalid Coupon'){
         toast.error('Invalid Coupon Code!')
         setActiveCoupon(false)
+        setCurrentDiscount(currentDiscount = 'this field is optional')
+        setDiscount(0)
+        setDiscountName('None')
         return
       }
       else{
         console.log(res.data)
         setActiveCoupon(true)
+        if(res.data.amount_off != null){
+          setCurrentDiscount(currentDiscount = res.data.amount_off + '$ OFF')
+          setDiscountName(discountName = `${res.data.name} ${currentDiscount}`)
+          setDiscount(res.data.amount_off)
+        }
+        if(res.data.percent_off != null){
+          setCurrentDiscount(currentDiscount = res.data.percent_off + '% OFF')
+          setDiscountName(discountName = `${res.data.name} (${currentDiscount})`)
+          setDiscount((res.data.percent_off / 100) * 10)
+        }
         toast.success(`Coupon Applied!`)
         return
       }
     }
   }
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
+
+  const handleComfirmPurchase = (childData) => {
+    if(childData === true){
+      setComfirmPurchase(true)
+      handleSubmitSub()
+    }
+    else{
+      setComfirmPurchase(false)
+      toast.error('Purchase Failed')
+    }
+  }
+
+  const ComfirmPurchase = ({ discount, price, discountName, callback }) => {
+
+    return (
+        <div>
+            <Paper style={{padding:'35px', border:'2px solid black', borderRadius:'0px', boxShadow:'10px 10px 0px #262626'}}>
+                <Typography variant="h3">Confirm Purchase</Typography>
+                <br></br>
+                <Typography variant="h5">Classroom Plan</Typography>
+                <br></br>
+                <Divider />
+                <br></br>
+                <div style={{display:'flex', justifyContent:'space-between'}}>
+                        <Typography variant="subtitle1">Classroom Plan</Typography>
+                        <Typography variant="subtitle1">{price}$USD</Typography>
+                </div>
+                <br></br>
+                <div style={{display:'flex', justifyContent:'space-between'}}>
+                        <Typography variant="subtitle1">Subtotal</Typography>
+                        <Typography variant="subtitle1">{price}$USD</Typography>
+                </div>
+                <br></br>
+                <Divider />
+                <br></br>
+                <div style={{display:'flex', justifyContent:'space-between'}}>
+                    <Typography variant="subtitle1">Discount: {discountName}</Typography>
+                    <Typography variant="subtitle1">-{discount}$USD</Typography>
+                </div>
+                <br></br>
+                <Divider />
+                <br></br>
+                <div style={{display:'flex', justifyContent:'space-between'}}>
+                    <Typography variant="subtitle1">Total</Typography>
+                    <Typography variant="subtitle1">{total}$USD</Typography>
+                </div>
+                <br></br>
+                <Divider />
+                <br></br>
+                <div style={{display:'flex', justifyContent:'space-between'}}>
+                    <Typography variant="subtitle1">Amount Paid</Typography>
+                    <Typography variant="subtitle1">{total}$USD</Typography>
+                </div>
+                <br></br>
+                <Divider />
+                <br></br>
+                <div style={{display:'flex', justifyContent: 'flex-end'}}>
+                    <Button variant="contained" color="secondary" style={{margin:'10px'}} onClick={()=>{callback(false)}}>Cancel</Button>
+                    <Button variant="contained" color="primary" style={{margin:'10px'}} onClick={()=>{callback(true)}}>Comfirm</Button>
+                </div>
+            </Paper>
+        </div>
+    )
+}
 
   return (
     <Card id='paymentFormCard' className={classes.root} style={{padding:'10px', border:'2px solid black', boxShadow:'10px 10px 0px #262626', borderRadius:'0px'}}>
@@ -320,7 +426,7 @@ function HomePage() {
               )
             }}
             id='outlined-coupon-input'
-            helperText={`this field is optional`}
+            helperText={currentDiscount}
             margin='normal'
             variant='outlined'
             size={'small'}
@@ -332,7 +438,7 @@ function HomePage() {
         </div>
         <CardInput />
         <div className={classes.div}>
-          <Button variant="contained" color="primary" className={classes.button} onClick={handleSubmitSub}>
+          <Button variant="contained" color="primary" className={classes.button} onClick={()=>{handleToggle()}}>
             {spinner ?
               <CircularProgress style={{marginLeft:'32px', marginRight:'32px'}} size={20} />
               :
@@ -341,6 +447,9 @@ function HomePage() {
           </Button>
         </div>
       </CardContent>
+      <Backdrop style={{zIndex:'1000'}} open={open} onClick={()=>{handleClose()}}>
+        <ComfirmPurchase discount={discount} discountName={discountName} price={price} callback={handleComfirmPurchase}/>
+      </Backdrop>
     </Card>
   );
 }

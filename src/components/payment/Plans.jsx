@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
-import TeacherImg from '../img/teacher_sub.svg'
-import StarterImg from '../img/starter_sub.svg'
-import EntrepriseImg from '../img/entreprise_sub.svg'
+import TeacherImg from '../../img/teacher_sub.svg'
+import StarterImg from '../../img/starter_sub.svg'
+import EntrepriseImg from '../../img/entreprise_sub.svg'
 
 //firebase
 import firebase from "firebase/app"

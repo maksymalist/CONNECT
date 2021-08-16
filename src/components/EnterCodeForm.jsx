@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from 'react'
+import React,{ useState, useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import { io } from 'socket.io-client'
 import WaitingRoom from './WaitingRoom'
@@ -11,10 +11,14 @@ import { toast } from 'react-toastify'
 
 import Button from '@material-ui/core/Button'
 import Switch from '@material-ui/core/Switch';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import { InputLabel, FormControl } from '@material-ui/core'
 
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
-//material-ui
+
+import { QuestionAnswerRounded, FilterNoneRounded } from '@material-ui/icons';
 
 const list = require('badwords-list')
 
@@ -34,6 +38,10 @@ export default function EnterCodeForm({match, location}) {
     var [code, setCode] = useState('')
 
     const [gameCode, setGameCode] = useState('')
+    const [gameMode, setGameMode] = useState('')
+
+    const maxPlayers = useRef(null)
+    const podiumPlaces = useRef(null)
 
     useEffect(() => {
         console.log(list.array)
@@ -43,6 +51,7 @@ export default function EnterCodeForm({match, location}) {
             setCode(code = location.search.replace('?code=',''))
             document.getElementById("subConatainer").hidden = true
         }
+
 
         var joined = false
         
@@ -67,11 +76,12 @@ export default function EnterCodeForm({match, location}) {
             ReactDOM.render(
                 <div>
                 <HostRoom 
-                    maxPlayers={document.getElementById('max-players').value} 
-                    podiumPlaces={document.getElementById('podium-places').value} 
+                    maxPlayers={maxPlayers.current.value} 
+                    podiumPlaces={podiumPlaces.current.value} 
                     room={data.room} 
                     gamecode={data.gamecode}
                     friendlyroom={data.friendly}
+                    gamemode={data.gamemode}
                     />
                 <Background/>
                 </div>,
@@ -177,12 +187,17 @@ export default function EnterCodeForm({match, location}) {
             toast.error('Please Enter a Game Code')
             return
         }
+        if(gameMode === ''){
+            toast.error('Please Enter a Game Mode')
+            return
+        }
         console.log(checked)
         socket.emit('createroom', {
             room: document.getElementById('roomName').value,
             gamecode: gameCode,
             host: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
-            friendly: checked
+            friendly: checked,
+            gamemode: gameMode
         })
     }
 
@@ -202,6 +217,12 @@ export default function EnterCodeForm({match, location}) {
         setChecked((prev) => !prev);
       };
 
+    
+    const changeGamemode = (event) => {
+        event.preventDefault();
+        setGameMode(event.target.value);
+    }
+
 
     return (
         <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
@@ -214,7 +235,23 @@ export default function EnterCodeForm({match, location}) {
             </div>
             <div id='subConatainer'>
             <h1>Host Room</h1>
-                <input className='host-input' placeholder={'Give Your Room A Name'} type="text" id="roomName"/>
+            <FormControl>
+            <InputLabel id="demo-simple-select-outlined-label">Game Mode</InputLabel>
+                <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={gameMode}
+                    onChange={changeGamemode}
+                    label="GameMode"
+                    style={{width:'180px', height:'40px'}}
+                    required
+                    >
+                    <MenuItem value='normal'><QuestionAnswerRounded color='primary'/>⠀Normal</MenuItem>
+                    <MenuItem value='multi'><FilterNoneRounded color='primary'/>⠀Multi</MenuItem>
+                </Select>
+                </FormControl>
+                <br></br>
+                <br></br><input className='host-input' placeholder={'Give Your Room A Name'} type="text" id="roomName"/>
                 <br></br><input value={gameCode} onChange={(event) => setGameCode(event.target.value)} style={{marginLeft:'8px'}} className='host-input' placeholder={'Enter Game Code'} type="text" id="gameCode"/>
                 {gameCode != '' ?
                     null
@@ -222,8 +259,8 @@ export default function EnterCodeForm({match, location}) {
                 }
                 <div>
                     <h1 style={{fontSize:'25px'}}>Presets</h1><br></br>
-                    <label>Max Players </label><input id='max-players' type='number' min='0' max='40'/>
-                    <br></br><label>Podium Places </label><input id='podium-places' type='number' min='3' max='10'/>
+                    <label>Max Players </label><input ref={maxPlayers} id='max-players' type='number' min='0' max='40'/>
+                    <br></br><label>Podium Places </label><input ref={podiumPlaces} id='podium-places' type='number' min='3' max='10'/>
                     <br></br>
                         <div>
                             <label>Friendly Nicknames</label>
