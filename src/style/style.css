@@ -131,7 +131,7 @@ h1{
     margin-top: 12vh;
     min-width: 250px;
     min-height: 250px;
-    box-shadow: 10px 10px 0px #262626;
+    box-shadow: 10px 10px 0 #262626;
     z-index: 1;
     border: 2px solid black;
     padding: 15px;
@@ -143,7 +143,7 @@ h1{
     margin-top: 13vh;
     min-width: 250px;
     min-height: 280px;
-    box-shadow: 10px 10px 0px #262626;
+    box-shadow: 10px 10px 0 #262626;
     z-index: 1;
     margin-bottom: 10px;
     border: 2px solid black;
@@ -169,7 +169,7 @@ h1{
     overflow-y: scroll;
     min-width: 350px;
     background-color: white;
-    border-radius: 0px;
+    border-radius: 0;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -198,7 +198,7 @@ h1{
 }
 
 #time{
-    margin-top: 0vh
+    margin-top: 0
 }
 
 @media (pointer:none), (pointer:coarse) {
@@ -221,7 +221,7 @@ h1{
     height: 500px;
     margin: 10px;
     border: 2px solid black;
-    box-shadow: 5px 5px 0px #262626;
+    box-shadow: 5px 5px 0 #262626;
     
 }
 @media (pointer:none), (pointer:coarse) {
@@ -318,7 +318,7 @@ button{
 }
 #plan1{
     background-color: white;
-    box-shadow: 10px 10px 0px #262626;
+    box-shadow: 10px 10px 0 #262626;
     border: 2px solid black;
     padding: 15px;
     width: 100%;
@@ -328,7 +328,7 @@ button{
 
 #plan2{
     background-color: white;
-    box-shadow: 10px 10px 0px #262626;
+    box-shadow: 10px 10px 0 #262626;
     border: 2px solid black;
     padding: 15px;
     width: 100%;
@@ -337,7 +337,7 @@ button{
 }
 #plan3{
     background-color: white;
-    box-shadow: 10px 10px 0px #262626;
+    box-shadow: 10px 10px 0 #262626;
     border: 2px solid black;
     padding: 15px;
     width: 100%;
@@ -450,7 +450,7 @@ button{
     position: absolute;
     background-color: #f1f1f1;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
     border-radius: 5px;
   }
@@ -485,7 +485,7 @@ button{
     margin-top: 100px;
     width: 50% !important;
     margin-left: 25%;
-    box-shadow: 10px 10px 0px #262626 !important;
+    box-shadow: 10px 10px 0 #262626 !important;
 
 }
 @media only screen and (max-width: 730px) {
@@ -707,7 +707,7 @@ input:hover {
     background-color: white;
     height: 90vh;
     justify-content: start;
-    border-radius: 90px 0px 0px 0px;
+    border-radius: 90px 0 0;
     z-index: 0;
 }
 .newdiv2 {

@@ -1,8 +1,7 @@
-# CONNECT!
-<a href="https://www.codefactor.io/repository/github/john8790909/connect/overview/main"><img src="https://www.codefactor.io/repository/github/john8790909/connect/badge/main" alt="CodeFactor" /></a>
-
 ![Component 31 (1)](https://user-images.githubusercontent.com/79988159/128874212-42576756-19a1-426b-8e22-f7bcaac2e910.png)
 
+# CONNECT!
+<a href="https://www.codefactor.io/repository/github/john8790909/connect/overview/main"><img src="https://www.codefactor.io/repository/github/john8790909/connect/badge/main" alt="CodeFactor" /></a>
 
 
 ## Getting Started With CONNECT!
