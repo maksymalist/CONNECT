@@ -10,7 +10,7 @@ import '../style/style.css'
 import loading from '../img/loading.gif'
 import Button from '@material-ui/core/Button'
 
-//globals
+//components
 
 export default function BrowseQuizes() {
 
