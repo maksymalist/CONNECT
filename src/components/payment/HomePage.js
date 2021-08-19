@@ -50,7 +50,7 @@ const useStyles = makeStyles({
   },
 });
 
-function HomePage() {
+function HomePage(props) {
   const classes = useStyles();
   // State
   const [email, setEmail] = useState('');
@@ -83,6 +83,10 @@ function HomePage() {
         setTotal(0)
     }
 }, [discount])
+
+useEffect(() => {
+  console.log(props.match)
+}, [])
 
   const handleSubmitPay = async (event) => {
     if (!stripe || !elements) {
@@ -393,8 +397,13 @@ function HomePage() {
     <Card id='paymentFormCard' className={classes.root} style={{padding:'10px', border:'2px solid black', boxShadow:'10px 10px 0px #262626', borderRadius:'0px'}}>
       <CardContent className={classes.content}>
         <Typography variant='h4' component='h4'>
-          Subscription
+          Payment Form
         </Typography>
+        <br></br>
+        <Typography variant='h5'>
+          {props.match.params.plan === 'classroom' ? 'Classroom Plan' : 'Premium Plan'}
+        </Typography>
+        <br></br>
         <Divider/>
         <br></br>
         <TextField

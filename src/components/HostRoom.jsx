@@ -92,10 +92,8 @@ export default function HostRoom(props) {
         })
 
         socket.on('timeBoard', (data)=>{
-            console.log(data)
 
             if(podium.includes(data.user)){
-                console.log('in here')
                 return
             }
 
@@ -211,7 +209,6 @@ export default function HostRoom(props) {
         
         
         Object.keys(podiumObj).map((key, index) =>{
-            console.log(podiumObj[Object.keys(podiumObj)[index]].time, 'time')
             numArray.map((time, timeIndex) => {
           console.log(time)
               if(time === podiumObj[Object.keys(podiumObj)[index]].time){

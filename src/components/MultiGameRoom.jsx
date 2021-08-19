@@ -14,6 +14,8 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 
+import CountDown from './CountDown'
+
 function MultiGameRoom({match}) {
     const [activeStep, setActiveStep] = useState(0);
 
@@ -35,6 +37,8 @@ function MultiGameRoom({match}) {
     var cardsLen = []
 
     var [emitted, setEmitted] = useState(false)
+
+    var [isCountdown, setIsCountdown] = useState(false)
     
 
 
@@ -235,12 +239,11 @@ function MultiGameRoom({match}) {
         }
     }, [activeStep, steps])
 
-    const startTime = () => {
+    const handleStopCountdown = (cond) => {
+        setIsCountdown(cond)
         setInterval(()=>{
-            if(emitted === true) return
-            if(GameOver === true) return
             UpdateTimeFunction()    
-        }, 100);
+        }, 100)
     }
 
     useEffect(() => {
@@ -258,7 +261,7 @@ function MultiGameRoom({match}) {
             console.log(stepArr.length)
             setSteps(prev => prev = stepArr)
             setMaxSteps(stepArr.length)
-            startTime()
+            setIsCountdown(isCountdown = true)
         })
 
         document.querySelector('nav').hidden = true
@@ -313,6 +316,7 @@ function MultiGameRoom({match}) {
 
     return (
         <div>
+            {isCountdown ? <CountDown stop={handleStopCountdown}/> : null}
             <div>
             <div id='gameContent'>
                 <div>

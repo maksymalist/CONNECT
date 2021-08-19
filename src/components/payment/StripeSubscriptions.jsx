@@ -22,7 +22,7 @@ const stripePromise = loadStripe('pk_live_51JMw6pBqTzgw1Au7Y06gQdURUJrgclwkr0hpd
 
 
 
-export default function StripeSubscriptions() {
+export default function StripeSubscriptions({match}) {
     useEffect(() => {
         firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).on('value',(snap)=>{
             if(snap.exists()){
@@ -42,7 +42,7 @@ export default function StripeSubscriptions() {
         <div id='paymentIntent' className='center-div'>
             <div>
             <Elements stripe={stripePromise}>
-                <HomePage />
+                <HomePage match={match} />
             </Elements>
             </div>
 

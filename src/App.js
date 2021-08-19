@@ -22,6 +22,7 @@ import StripeSubscriptions from './components/payment/StripeSubscriptions'
 import Plans from './components/payment/Plans'
 import MemberRoom from './components/MemberRoom'
 import Background from './components/Background'
+import CountDown from './components/CountDown'
 
 
 
@@ -119,11 +120,10 @@ function App() {
         <Route path='/plans' component={Plans}/>
         <Route path='/subscription/:plan' component={StripeSubscriptions}/>
         <Route path='/classroom' component={MemberRoom}/>
-        <Route path='/login' component={Login}/>
+        <Route path='/login' component={CountDown}/>
       </Switch>
     </div>
   </Router>
   );
 }
-
 export default App;

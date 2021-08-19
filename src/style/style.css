@@ -56,21 +56,7 @@ li{
     font-size: 1rem;
   }
 .features{
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    float: none;
-    font-family: Arial, Helvetica, sans-serif;
-    display: block;
-    margin-left: 0%;
-    margin-top: 0%;
-    margin-bottom: 0%;
-    z-index: 1;
-    justify-content: center;
-    text-align: center;
-    
-  
+    margin: 10px !important;
   }
 a{
     padding: 10px;
@@ -163,7 +149,6 @@ h1{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 45vh;
     min-height: 300px;
     width: 20%;
     overflow-y: scroll;
@@ -177,6 +162,7 @@ h1{
     justify-content: flex-start;
     border: 2px solid black;
     box-shadow: 10px 10px 0px #262626;
+    height: 450px;
 }
 
 #cardDiv{
@@ -397,11 +383,6 @@ button{
         padding-right: 20px;
         padding-bottom: 25px;
     }*/
-}
-
-.features{
-    margin-top: 1vh;
-    display: list-item;
 }
 
     @media (pointer:none), (pointer:coarse) {

@@ -11,6 +11,9 @@ import { toast } from 'react-toastify'
 import axios from 'axios'
 
 import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+
+import { CheckRounded } from '@material-ui/icons'
 
 export default function Plans() {
     var [subscribedStatus, setSubscribedStatus] = useState("Starter")
@@ -80,15 +83,15 @@ export default function Plans() {
             <h1 hidden>current Plan: {subscribedStatus}</h1>
             <div id='plan1'>
                 <h1>
-                    Starter Plan
+                    Starter
                 </h1>
                 <h2>Free</h2>
                 <h2>Features</h2>
-                <ul>
-                    <li className='features'>• Acces to The Multiplayer Flash Card Game</li>
-                    <li className='features'>• Have 8 or Less People in Your Rooms</li>
-                    <li className='features'>• You Can Create Quizes</li>
-                </ul>
+                <div style={{display:'flex', flexDirection:'column', textAlign:'start', maxHeight:'200px', overflowY:'auto'}}>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Acces to The Multiplayer Card Games</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Have 8 or Less People in Your Rooms</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀You Can Create Quizes</Typography>
+                </div>
                 <img alt='starter-img' height='220px' width='220px' src={StarterImg}></img>
                 <div>
                     <Button 
@@ -102,15 +105,15 @@ export default function Plans() {
             </div>
             <div id='plan2'>
                 <h1>
-                    Classroom Plan
+                    Classroom
                 </h1>
-                <h2>10$ per month</h2>
+                <h2>$10.00 monthly</h2>
                 <h2>Features</h2>
-                <ul>
-                    <li className='features'>• Acces to The Multiplayer Flash Card Game</li>
-                    <li className='features'>• Have 40 or Less People in Your Rooms</li>
-                    <li className='features'>• You Can Create Quizes</li>
-                </ul>
+                <div style={{display:'flex', flexDirection:'column', textAlign:'start', maxHeight:'300px', overflowY:'auto'}}>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Acces to The Multiplayer Card Games</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Have 40 or Less People in Your Rooms</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀You Can Create Quizes</Typography>
+                </div>
                 <img alt='classroom-img' height='220px' width='220px' src={TeacherImg}></img>
                 <div>
                     <Button 
@@ -125,15 +128,15 @@ export default function Plans() {
             </div>
             <div id='plan3'>
                 <h1>
-                    (Coming Soon)
+                    Entreprise
                 </h1>
-                <h2>25$ per month</h2>
+                <h2>$100.00 monthly</h2>
                 <h2>Features</h2>
-                <ul>
-                    <li className='features'>feature 1</li>
-                    <li className='features'>feature 2</li>
-                    <li className='features'>feature 3</li>
-                </ul>
+                <div style={{display:'flex', flexDirection:'column', textAlign:'start', maxHeight:'300px', overflowY:'auto'}}>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Acces to The Multiplayer Card Games</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Have 200 or Less People in Your Rooms</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀You Can Create Quizes</Typography>
+                </div>
                 <img alt='entreprise-img' height='220px' width='220px' src={EntrepriseImg}></img>
                 <div>
                     <Button 
