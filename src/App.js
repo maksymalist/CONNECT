@@ -120,7 +120,7 @@ function App() {
         <Route path='/plans' component={Plans}/>
         <Route path='/subscription/:plan' component={StripeSubscriptions}/>
         <Route path='/classroom' component={MemberRoom}/>
-        <Route path='/login' component={CountDown}/>
+        <Route path='/login' component={Login}/>
       </Switch>
     </div>
   </Router>
