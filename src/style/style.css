@@ -649,6 +649,11 @@ input:hover {
         min-width: 300px;
         min-height: 300px;
     }
+    .imgDiv{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     #big-stripe{
         margin-top: -1020px;
         height: 40vh;
