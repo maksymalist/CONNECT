@@ -269,7 +269,7 @@ export default function GameRoom({match}) {
                     <h1 id='time' style={{marginBottom:'10vh', color:'white'}}>{time}</h1>
                 </div>
                 <div>
-                <div style={{marginTop:'10vh'}} id='cardContainer'></div>
+                <div style={{marginTop:'13vh'}} id='cardContainer'></div>
                     <h1 hidden>{JSON.stringify(selected)}</h1>
                 </div>
             </div>
