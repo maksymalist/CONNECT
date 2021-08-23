@@ -37,11 +37,7 @@ function MultiGameRoom({match}) {
     var cardsLen = []
 
     var [emitted, setEmitted] = useState(false)
-
-    var [isCountdown, setIsCountdown] = useState(false)
     
-
-
     const getQuiz = async (currentQuiz) => {
         quiz2 = currentQuiz
         setName('Quiz About Stuff') //name = quiz2.name
@@ -239,8 +235,7 @@ function MultiGameRoom({match}) {
         }
     }, [activeStep, steps])
 
-    const handleStopCountdown = (cond) => {
-        setIsCountdown(cond)
+    const startTime = () => {
         setInterval(()=>{
             UpdateTimeFunction()    
         }, 100)
@@ -261,7 +256,7 @@ function MultiGameRoom({match}) {
             console.log(stepArr.length)
             setSteps(prev => prev = stepArr)
             setMaxSteps(stepArr.length)
-            setIsCountdown(isCountdown = true)
+            startTime()
         })
 
         document.querySelector('nav').hidden = true
@@ -316,7 +311,6 @@ function MultiGameRoom({match}) {
 
     return (
         <div>
-            {isCountdown ? <CountDown stop={handleStopCountdown}/> : null}
             <div>
             <div id='gameContent'>
                 <div>

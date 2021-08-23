@@ -12,8 +12,6 @@ import GameEnded from './GameEnded'
 import '../style/style.css'
 import { toast } from 'react-toastify'
 
-import CountDown from './CountDown'
-
 export default function GameRoom({match}) {
     var [time, updateTime] = useState(0)
     var [selected, setSelected] = useState([])
@@ -27,8 +25,6 @@ export default function GameRoom({match}) {
 
     var quiz2
     const cardsLen = []
-
-    var [isCountdown, setIsCountdown] = useState(false)
 
     const getQuiz = async () => {
         const eventref = firebase.database().ref(`quizes/${match.params.gameid}`);
@@ -208,19 +204,11 @@ export default function GameRoom({match}) {
         
     }
 
-    const handleStopCountdown = (cond) => {
-        setIsCountdown(cond)
+    useEffect(() => {
+        getQuiz()
         setInterval(()=>{ 
             UpdateTimeFunction()    
         }, 100);
-    }
-
-    useEffect(() => {
-        getQuiz()
-        // setInterval(()=>{ 
-        //     UpdateTimeFunction()    
-        // }, 100);
-        setIsCountdown(isCountdown = true)
 
         document.querySelector('nav').hidden = true
 
@@ -274,7 +262,6 @@ export default function GameRoom({match}) {
 
     return (
         <div>
-            {isCountdown ? <CountDown stop={handleStopCountdown}/> : null}
             <div id='gameContent'>
                 <div>
                     <h1> </h1>

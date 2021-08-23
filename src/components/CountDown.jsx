@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../style/countDownStyles.css'
 
-function CountDown({ stop }) {
+function CountDown({ start, room }) {
 
     var [number, setNumber] = useState(0)
     var [isCountdown, setIsCountdown] = useState(true)
@@ -14,7 +14,7 @@ function CountDown({ stop }) {
             setNumber(number += 1)
             if(number === 4){
                 setIsCountdown(isCountdown = false)
-                stop(false)
+                start(room)
             }
         }, 1000);
     }, [])
