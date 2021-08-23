@@ -9,8 +9,6 @@ import "firebase/database";
 
 import Home from './components/Home'
 import EnterCodeForm from './components/EnterCodeForm'
-import HostRoom from './components/HostRoom'
-import WaitingRoom from './components/WaitingRoom'
 import GameRoom from './components/GameRoom'
 import MultiGameRoom from './components/MultiGameRoom'
 import Nav from './components/Nav'
@@ -22,7 +20,6 @@ import StripeSubscriptions from './components/payment/StripeSubscriptions'
 import Plans from './components/payment/Plans'
 import MemberRoom from './components/MemberRoom'
 import Background from './components/Background'
-import CountDown from './components/CountDown'
 
 
 

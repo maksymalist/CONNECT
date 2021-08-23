@@ -7,7 +7,6 @@ import "firebase/database";
 
 
 import '../style/style.css'
-import loading from '../img/loading.gif'
 import Button from '@material-ui/core/Button'
 import { CircularProgress } from '@material-ui/core';
 import Select from '@material-ui/core/Select';

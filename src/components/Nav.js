@@ -53,29 +53,6 @@ function Nav({ isLoggedIn, customerId }) {
     }, [])
 
 
-
-    const responseGoogle = (response)=>{
-      console.log(response)
-      ActiveUser = `Active User: ${response.profileObj.givenName} ${response.profileObj.familyName}` 
-      toast.success(ActiveUser)
-      localStorage.setItem('user', JSON.stringify(response))
-
-      document.getElementById('profilePic').removeAttribute('hidden')
-      document.getElementById('profilePic').src = JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
-
-      firebase.database().ref(`users/${response.profileObj.googleId}`).on('value',(snap)=>{
-        if(snap.exists()){
-          window.location.reload()
-        }
-        else{
-          updateUsers(response.profileObj.email, response.profileObj.googleId, `${response.profileObj.givenName} ${response.profileObj.familyName}`)
-          window.location.reload()
-        }
-      });
-
-      
-  }
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
