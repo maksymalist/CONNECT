@@ -187,12 +187,12 @@ function Nav({ isLoggedIn, customerId }) {
               <button className="dropbtn"><MenuIcon /></button>
                 <div className="dropdown-content">
                   <a href="/play">PLAY</a>
-                  <a href="/browsequizes">QUIZZES</a>
+                  <a href="/browsequizzes/normal">QUIZZES</a>
                   <a href="/plans">PLANS</a>
                   <a href="/login">LOGIN</a>
                 </div>
             </div>
-            <Link style={navStyle} to='/browsequizes'>
+            <Link style={navStyle} to='/browsequizzes/normal'>
               <li className="nav-links lileft">Quizzes</li>
             </Link>
             <Link style={navStyle} to='/plans'>

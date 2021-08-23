@@ -114,7 +114,7 @@ function App() {
         <Route path='/multi/:room/:gameid/:user' component={MultiGameRoom}/>
         <Route path='/newquiz' component={NewQuiz}/>
         <Route path='/new-multi-quiz' component={NewMultiQuiz}/>
-        <Route path='/browsequizes' component={BrowseQuizes}/>
+        <Route path='/browsequizzes/:gamemode' component={BrowseQuizes}/>
         <Route path='/roomleave' component={AfterRoomLeave}/>
         <Route path='/gamefinsihed/:room/:user' component={GameEnded}/>
         <Route path='/plans' component={Plans}/>

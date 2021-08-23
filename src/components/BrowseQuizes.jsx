@@ -9,15 +9,27 @@ import "firebase/database";
 import '../style/style.css'
 import loading from '../img/loading.gif'
 import Button from '@material-ui/core/Button'
+import { CircularProgress } from '@material-ui/core';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import { InputLabel, FormControl } from '@material-ui/core'
+
+import { QuestionAnswerRounded, FilterNoneRounded } from '@material-ui/icons';
 
 //components
 
-export default function BrowseQuizes() {
+export default function BrowseQuizes({match}) {
+
+    const [gameMode, setGameMode] = useState("")
 
     useEffect(() => {
-        GetQuizes()
-        return () => {
-            //cleanup
+        setGameMode(match.params.gamemode)
+        console.log(match.params.gamemode)
+        if(match.params.gamemode === 'multi'){
+            GetMulti()
+        }
+        if(match.params.gamemode === 'normal'){
+            GetQuizes()
         }
     }, [])
 
@@ -26,7 +38,10 @@ export default function BrowseQuizes() {
 
     const GetQuizes = () => {
 
+        console.log('normal')
+        ReactDOM.render(null, document.getElementById('feed'))
         var db = firebase.database().ref('quizes/')
+
         
         // Attach an asynchronous callback to read the data at our posts reference
         db.on("value", function(snapshot) {
@@ -94,7 +109,76 @@ export default function BrowseQuizes() {
                 </div>,
                 document.getElementById(`newQuiz${index}`)
             )
-            document.getElementById('loading').setAttribute('hidden', 'true')
+            // document.getElementById('loading').setAttribute('hidden', 'true')
+          })
+          
+        }, function (errorObject) {
+          console.log("The read failed: " + errorObject.code);
+        });
+    }
+
+    const GetMulti = () => {
+
+        console.log('multi')
+        ReactDOM.render(null, document.getElementById('feed'))
+        var db = firebase.database().ref('multiQuizzes/')
+        
+        // Attach an asynchronous callback to read the data at our posts reference
+        db.on("value", function(snapshot) {
+          var data = snapshot.val();
+          var keys = Object.keys(data);
+          keys.map((key, index)=>{
+            var k = keys[index]
+
+            let newQuiz = document.createElement('div')
+            newQuiz.id = `newQuiz${index}`
+            newQuiz.className = 'newQuiz'
+            document.getElementById('feed').appendChild(newQuiz)
+
+            ReactDOM.render(
+                <div style={{overflowY:'scroll'}}>
+                    <div/>
+                    <h2>{`by ${data[k].userName}`}
+                    <img 
+                        width='25px' 
+                        height='25px' 
+                        src={data[k].userProfilePic} 
+                        alt={data[k].userProfilePic}
+                        style={{
+                            borderRadius:'25px',
+                            marginBottom:'-6px',
+                            marginLeft:'10px'
+                        }}
+                    />
+                    </h2>
+                    <h1>{data[k].name}</h1>
+                    <h2>Game Code: {k}</h2>
+                    <div>
+                        {Object.keys(data[k].steps).map((stp, i)=>{
+                            return (
+                                <>
+                                    <h2>{Object.keys(data[k].steps)[i]}</h2>
+                                    <div>
+                                        {
+                                            Object.keys(data[k].steps[Object.keys(data[k].steps)[i]]).map((quest, indx) => {
+                                                console.log(data[k].steps[Object.keys(data[k].steps)[i]][quest])
+                                                return(
+                                                    <div>
+                                                        <h4>{data[k].steps[Object.keys(data[k].steps)[i]][quest].question}</h4>
+                                                        <h4>{data[k].steps[Object.keys(data[k].steps)[i]][quest].answer}</h4>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </>
+                            )
+                        })}
+                    </div>
+                </div>,
+                document.getElementById(`newQuiz${index}`)
+            )
+            // document.getElementById('loading').setAttribute('hidden', 'true')
           })
           
         }, function (errorObject) {
@@ -117,12 +201,45 @@ export default function BrowseQuizes() {
         document.getElementById(divId).hidden = true
     }
 
+    const changeGamemode = (event) => {
+        event.preventDefault();
+        setGameMode(event.target.value);
+        if(event.target.value === 'normal'){
+            window.location = '/browsequizzes/normal'
+        }
+        if(event.target.value === 'multi'){
+            window.location = '/browsequizzes/multi'
+        }
+    }
+//console.log(Object.keys(data[k].steps[Object.keys(data[k].steps)[i]]))
 
 
     return (
-        <div style={{marginTop:'60vh'}} id='feed'>
-            <h1 id='loading'>Loading<img alt='load-animation' src={loading}></img></h1>
+        <>  
+        <div style={{width:'100%', display:'flex', justifyContent:'flex-start',backgroundColor:'white', alignItems:'center', border:'2px solid black', boxShadow:'10px 10px 0 #262626', padding:'10px'}}>
+            <h1 style={{fontSize:'1.5rem', marginRight:'20px'}}>Explore Content</h1>
+            <FormControl variant='outlined'>
+                <InputLabel id="demo-simple-select-outlined-label">Game Mode</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-outlined-label"
+                        id="demo-simple-select-outlined"
+                        value={gameMode}
+                        onChange={changeGamemode}
+                        label="GameMode"
+                        style={{width:'180px', height:'40px'}}
+                        required
+                        >
+                        <MenuItem value='normal'><QuestionAnswerRounded color='primary'/>⠀Normal</MenuItem>
+                        <MenuItem value='multi'><FilterNoneRounded color='primary'/>⠀Multi</MenuItem>
+                    </Select>
+            </FormControl>
         </div>
+        <div style={{marginTop:'100px'}} id='feed'>
+            <div style={{display:'flex', alignItems:'center'}}>
+                <h1 id='loading'><span style={{color:"white"}}>Loading</span>⠀<CircularProgress size={40} style={{color:'white'}} /></h1>
+            </div>
+        </div>
+        </>
     )
 }
 
