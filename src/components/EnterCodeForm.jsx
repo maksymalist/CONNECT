@@ -255,7 +255,7 @@ export default function EnterCodeForm({match, location}) {
                 <br></br><input value={gameCode} onChange={(event) => setGameCode(event.target.value)} style={{marginLeft:'8px'}} className='host-input' placeholder={'Enter Game Code'} type="text" id="gameCode"/>
                 {gameCode != '' ?
                     null
-                    : <InfoOutlinedIcon onClick={()=>{window.location = '/browsequizes'}} style={{marginBottom:'-8px', marginRight:'-15px', position:'relative', left:'-30px'}} color='primary'/>
+                    : <InfoOutlinedIcon onClick={()=>{window.location = '/browsequizzes/normal'}} style={{marginBottom:'-8px', marginRight:'-15px', position:'relative', left:'-30px'}} color='primary'/>
                 }
                 <div>
                     <h1 style={{fontSize:'25px'}}>Presets</h1><br></br>

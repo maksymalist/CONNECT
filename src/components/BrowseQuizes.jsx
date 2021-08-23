@@ -13,7 +13,9 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { InputLabel, FormControl } from '@material-ui/core'
 
-import { QuestionAnswerRounded, FilterNoneRounded } from '@material-ui/icons';
+import { QuestionAnswerRounded, FilterNoneRounded, FileCopyRounded } from '@material-ui/icons';
+
+import { toast } from 'react-toastify';
 
 //components
 
@@ -56,7 +58,6 @@ export default function BrowseQuizes({match}) {
 
             ReactDOM.render(
                 <div style={{overflowY:'scroll'}}>
-                    <div/>
                     <h2>{`by ${data[k].userName}`}
                     <img 
                         width='25px' 
@@ -71,7 +72,8 @@ export default function BrowseQuizes({match}) {
                     />
                     </h2>
                     <h1>{data[k].name}</h1>
-                    <h2>Game Code: {k}</h2>
+                    <h2>Game Code</h2>
+                    <h2>{k}⠀<FileCopyRounded onClick={()=>{copyCode(k)}} color='primary'/></h2>
                     <Button style={{marginBottom:'10vh'}} variant="contained" color="primary" size='small' onClick={()=>{viewMore(`newQuiz${index}Div`)}}>View More</Button>
                     <div id={`newQuiz${index}Div`} hidden>
                         <h1>Questions</h1>
@@ -151,7 +153,8 @@ export default function BrowseQuizes({match}) {
                     />
                     </h2>
                     <h1>{data[k].name}</h1>
-                    <h2>Game Code: {k}</h2>
+                    <h2>Game Code</h2>
+                    <h2>{k}⠀<FileCopyRounded onClick={()=>{copyCode(k)}} color='primary' /></h2>
                     <div>
                         {Object.keys(data[k].steps).map((stp, i)=>{
                             return (
@@ -209,6 +212,15 @@ export default function BrowseQuizes({match}) {
         if(event.target.value === 'multi'){
             window.location = '/browsequizzes/multi'
         }
+    }
+
+    const copyCode = (code) => {
+        var text = code;
+        navigator.clipboard.writeText(text).then(function() {
+          toast.success('Copied the code!');
+        }, function(err) {
+          toast.error('Could not copy the code: ', err);
+        });
     }
 //console.log(Object.keys(data[k].steps[Object.keys(data[k].steps)[i]]))
 
