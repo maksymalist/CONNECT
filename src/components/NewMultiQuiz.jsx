@@ -19,6 +19,10 @@ function NewMultiQuiz() {
     //
     const quizName = useRef(null)
 
+    useEffect(() => {
+        toast.info("Please make sure each answer is different or the quiz will not work!")
+    }, [])
+
     const Submit = () => {
         for(var i = 0; i < document.getElementsByClassName('userInput').length; i++){
             console.log('userIn')
@@ -134,7 +138,7 @@ function NewMultiQuiz() {
     
     return (
         <div style={{marginTop:'100px'}}>
-        <div style={{backgroundColor:'white', borderRadius:'25px', display:'flex', alignItems:'center', flexDirection:'column'}}>
+        <div style={{display:'flex', alignItems:'center', flexDirection:'column'}}>
             <div>
                 <input ref={quizName} className='userInput' id={'quizName'} type='text' placeholder="Give your quiz a cool name"></input>
             </div>
