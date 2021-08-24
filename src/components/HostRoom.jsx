@@ -359,7 +359,8 @@ export default function HostRoom(props) {
         socket.emit('startGame', {
             room: room,
             gamecode: props.gamecode,
-            gamemode: props.gamemode
+            gamemode: props.gamemode,
+            maxPodium: playerPodiumMax,
 
         })
         gameStarted = true

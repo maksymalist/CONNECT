@@ -27,6 +27,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import Login from './components/Auth/Login';
 import NewMultiQuiz from './components/NewMultiQuiz';
+import PodiumAnimation from './components/PodiumAnimation';
 
 
 const firebaseConfig = {
@@ -107,8 +108,8 @@ function App() {
       <Switch>
         <Route exact path='/' component={Home}/>
         <Route exact path='/play' component={EnterCodeForm}/>
-        <Route path='/normal/:room/:gameid/:user' component={GameRoom}/>
-        <Route path='/multi/:room/:gameid/:user' component={MultiGameRoom}/>
+        <Route path='/normal/:room/:gameid/:user/:maxpodium' component={GameRoom}/>
+        <Route path='/multi/:room/:gameid/:user/:maxpodium' component={MultiGameRoom}/>
         <Route path='/newquiz' component={NewQuiz}/>
         <Route path='/new-multi-quiz' component={NewMultiQuiz}/>
         <Route path='/browsequizzes/:gamemode' component={BrowseQuizes}/>

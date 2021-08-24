@@ -293,7 +293,7 @@ function MultiGameRoom({match}) {
                 user: match.params.user
             })
             ReactDOM.render(
-                <GameEnded podium={data}/>,
+                <GameEnded podium={data} maxPodiumPlayers={match.params.maxpodium}/>,
                 document.getElementById('root')
             )
             sessionStorage.setItem('roomJoined', 'false')

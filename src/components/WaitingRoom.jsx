@@ -39,7 +39,7 @@ export default function WaitingRoom(props) {
 
         socket.on('gameStarted', (data)=>{
             if(gameStatus == false){
-                window.location = `/${data.gamemode}/${props.room}/${data.gamecode}/${props.user}` //multi //normal
+                window.location = `/${data.gamemode}/${props.room}/${data.gamecode}/${props.user}/${data.maxPodium}` //multi //normal
             }
             setGameStatus(gameStatus = true)
 
