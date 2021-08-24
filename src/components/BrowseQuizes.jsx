@@ -13,9 +13,11 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { InputLabel, FormControl } from '@material-ui/core'
 
-import { QuestionAnswerRounded, FilterNoneRounded, FileCopyRounded } from '@material-ui/icons';
+import { QuestionAnswerRounded, FilterNoneRounded, FileCopyRounded, AccountCircle } from '@material-ui/icons';
 
 import { toast } from 'react-toastify';
+
+import Placeholder from '../img/quizCoverPlaceholder.svg'
 
 //components
 
@@ -57,21 +59,27 @@ export default function BrowseQuizes({match}) {
             document.getElementById('feed').appendChild(newQuiz)
 
             ReactDOM.render(
-                <div style={{overflowY:'scroll'}}>
-                    <h2>{`by ${data[k].userName}`}
-                    <img 
-                        width='25px' 
-                        height='25px' 
-                        src={data[k].userProfilePic} 
-                        alt={data[k].userProfilePic}
-                        style={{
-                            borderRadius:'25px',
-                            marginBottom:'-6px',
-                            marginLeft:'10px'
-                        }}
-                    />
-                    </h2>
-                    <h1>{data[k].name}</h1>
+                <div style={{overflowY:'scroll', overflowX:'hidden'}}>
+                    <img style={{width:'100%', height:'300px'}} src={data[k].coverImg || Placeholder} alt='cover-img'/>
+                    <h2>{data[k].name}</h2>
+                    <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+                         {
+                            data[k].userProfilePic == undefined ?
+                            <AccountCircle style={{marginRight:'10px'}} color='primary'/>
+                            :
+                            <img 
+                                width='25px' 
+                                height='25px' 
+                                src={data[k].userProfilePic} 
+                                alt={data[k].userProfilePic}
+                                style={{
+                                    borderRadius:'100%',
+                                    marginRight:'10px'
+                                }}
+                            />                       
+                         }
+                        <h3>{`by ${data[k].userName}`}</h3>
+                    </div>
                     <h2>Game Code</h2>
                     <h2>{k}⠀<FileCopyRounded onClick={()=>{copyCode(k)}} color='primary'/></h2>
                     <Button style={{marginBottom:'10vh'}} variant="contained" color="primary" size='small' onClick={()=>{viewMore(`newQuiz${index}Div`)}}>View More</Button>
@@ -137,22 +145,27 @@ export default function BrowseQuizes({match}) {
             document.getElementById('feed').appendChild(newQuiz)
 
             ReactDOM.render(
-                <div style={{overflowY:'scroll'}}>
-                    <div/>
-                    <h2>{`by ${data[k].userName}`}
-                    <img 
-                        width='25px' 
-                        height='25px' 
-                        src={data[k].userProfilePic} 
-                        alt={data[k].userProfilePic}
-                        style={{
-                            borderRadius:'25px',
-                            marginBottom:'-6px',
-                            marginLeft:'10px'
-                        }}
-                    />
-                    </h2>
-                    <h1>{data[k].name}</h1>
+                <div style={{overflowY:'scroll', overflowX:'hidden'}}>
+                    <img style={{width:'100%', height:'300px'}} src={data[k].coverImg || Placeholder} alt='cover-img'/>
+                    <h2>{data[k].name}</h2>
+                    <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+                        {
+                            data[k].userProfilePic == undefined ?
+                            <AccountCircle style={{marginRight:'10px'}} color='primary'/>
+                            :
+                            <img 
+                                width='25px' 
+                                height='25px' 
+                                src={data[k].userProfilePic} 
+                                alt={data[k].userProfilePic}
+                                style={{
+                                    borderRadius:'100%',
+                                    marginRight:'10px'
+                                }}
+                            />                       
+                         }
+                        <h3>{`by ${data[k].userName}`}</h3>
+                    </div>
                     <h2>Game Code</h2>
                     <h2>{k}⠀<FileCopyRounded onClick={()=>{copyCode(k)}} color='primary' /></h2>
                     <div>

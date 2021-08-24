@@ -40,7 +40,15 @@ const firebaseConfig = {
   measurementId: "G-7TZ8J1DMSJ"
 };
 
-firebase.initializeApp(firebaseConfig);
+const instance = firebase.initializeApp(firebaseConfig);
+
+export const getFirebase = () => {
+  if (typeof window !== "undefined") {
+    return instance;
+  }
+
+  return null;
+}
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

@@ -10,11 +10,13 @@ import firebase from "firebase"
 import "firebase/database";
 import { toast } from 'react-toastify'
 import { AddCircleRounded, DeleteRounded } from '@material-ui/icons'
+import UploadButton from './UploadButton'
 
 export default function NewQuiz() {
 
     const [question, setQuestion] = useState(0)
     const [questionArray, setQuestionArray] = useState([1,2,3,4,5,6])
+
 
     const quizObj = {}
 
@@ -45,6 +47,7 @@ export default function NewQuiz() {
         quizObj.name = document.getElementById('quizName').value
         quizObj.userName = JSON.parse(localStorage.getItem('user')).profileObj.name
         quizObj.userProfilePic = JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
+        quizObj.coverImg = document.getElementById('coverImg').src
 
         for(var i = 0; i < document.getElementsByClassName('questions').length; i++){
             console.log(document.getElementsByClassName('questions')[i].value + ' ' +  document.getElementsByClassName('questions')[i].value)
@@ -76,6 +79,9 @@ export default function NewQuiz() {
             <div style={{display:'flex', alignItems:'center', flexDirection:'column'}}>
                 <div>
                     <input className='userInput' id={'quizName'} type='text' placeholder="Give your quiz a cool name"></input>
+                </div>
+                <div>
+                    <UploadButton/>
                 </div>
                 <div className='cardContainer2' style={{margin:'1%'}}>
                     {
