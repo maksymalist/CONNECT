@@ -54,10 +54,14 @@ export default function HomePage() {
         </div>
         <br></br><br></br><br></br><br></br>
         <div className="newdiv2">
-            <h1 className='aboutText' style={{color:'white', zIndex:'230'}}>About</h1>
-            <div className='aboutText' style={{color:'white', zIndex:'230'}}>
-                <p className='aboutText' style={{color:'white', zIndex:'230'}}>CONNECT!’s goal is to make class learning easier and more fun for students and teachers from all around the world.</p>
-                <p className='aboutText' style={{color:'white', zIndex:'230'}}>For us, learning is the key to a better future and it is our priority to make learning more accessible and more engaging for everyone, everywhere.</p>
+        <img id='big-stripe-top' style={{minWidth:'1980px', transform:'rotate(-180deg)'}} src={BigStripe} alt='big-stripe'/>
+            <div className='purpleAboutDiv'>
+                <h1 className='aboutText' style={{color:'white', zIndex:'230'}}>About</h1>
+                <div className='aboutText' style={{color:'white', zIndex:'230'}}>
+                    <p className='aboutText' style={{color:'white', zIndex:'230'}}>CONNECT!’s goal is to make class learning easier and more fun for students and teachers from all around the world.</p>
+                    <p className='aboutText' style={{color:'white', zIndex:'230'}}>For us, learning is the key to a better future and it is our priority to make learning more accessible and more engaging for everyone, everywhere.</p>
+                </div>
+                <img id='big-stripe' style={{minWidth:'1980px'}} src={BigStripe} alt='big-stripe'/>
             </div>
             <div id='aboutContainer'>
                 <div className='about-card'>
@@ -77,7 +81,6 @@ export default function HomePage() {
                 </div>
             </div>
             <div classNam='howItWorks'>
-                <img id='big-stripe' src={BigStripe} alt='big-stripe'/>
                 <h1>How it Works <Gears/></h1>
                 <div className='howitworks-div'>
                     <div style={{display:'flex', alignItems:'center', flexWrap:'wrap', justifyContent:'space-around', width:'70%', margin:'100px', minWidth:'350px'}}>
