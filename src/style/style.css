@@ -111,7 +111,7 @@ h1{
     font-size: 5vh;
 }
 #mainConatainer{
-    width: 20%;
+    width: 90%;
     height: auto;
     background-color: white;
     margin-top: 12vh;
@@ -121,9 +121,10 @@ h1{
     z-index: 1;
     border: 2px solid black;
     padding: 15px;
+    max-width: 400px;
 }
 #subConatainer{
-    width: 20%;
+    width: 90%;
     height: auto;
     background-color: white;
     margin-top: 13vh;
@@ -134,6 +135,7 @@ h1{
     margin-bottom: 10px;
     border: 2px solid black;
     padding: 15px;
+    max-width: 400px;
 }
 @media (pointer:none), (pointer:coarse) {
     #mainConatainer{
@@ -468,6 +470,7 @@ button{
     margin-top: 100px;
     width: 50% !important;
     margin-left: 25%;
+    border: 2px solid black;
     box-shadow: 10px 10px 0 #262626 !important;
 
 }
@@ -693,7 +696,7 @@ input:hover {
 .homePageDivWhite{
     text-align: left;
     background-color: white;
-    height: 90vh;
+    height: 100%;
     justify-content: start;
     border-radius: 90px 0 0;
     z-index: 0;
@@ -701,7 +704,7 @@ input:hover {
 .newdiv2 {
     background-color: white;
     width: 100%;
-    height: 240vh;
+    height: 100%;
     float: left;
     display: flex;
     flex-wrap: nowrap;
@@ -739,16 +742,61 @@ input:hover {
 .upload-box{
     border: 2px dashed black;
     box-shadow: 10px 10px 0 #262626;
-    width: 90vh;
+    width: 100%;
+    padding: 30px;
+    padding-left: 100px;
+    padding-right: 100px;
     background-color: #fff;
     height: 450px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 50px;
+    margin-bottom: 50px;
+    margin-top: 50px;
     
 }
 .upload-box:hover{
     cursor: pointer;
     filter: brightness(0.8);
+}
+
+.howitworks-div{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.iphone-div{
+    background-image: url('../img/Iphone.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 420px;
+    height: 725px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#background-video{
+    width: 320px;
+    height: 450px;
+}
+/*gear animation*/
+
+#large {
+    animation: spin 1.5s linear infinite;
+}
+#small {
+    animation: spin 1.5s linear infinite;
+}
+  
+@keyframes spin {
+    0% { 
+        transform-box: fill-box;
+        transform-origin: center;
+        transform: rotate(0deg); 
+     }
+    100% {    
+        transform-box: fill-box;
+        transform-origin: center;
+        transform: rotate(360deg); 
+    }
 }

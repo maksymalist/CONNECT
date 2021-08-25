@@ -116,7 +116,32 @@ function PodiumAnimation({ maxPodiumPlayers, podium }) {
     //         player:'John Smith7',
     //         position:'7',
     //         time:'18s'
-    //     }
+    //     },
+    //     {
+    //         player:'John Smith8',
+    //         position:'8',
+    //         time:'177s'
+    //     },
+    //     {
+    //         player:'John Smith9',
+    //         position:'9',
+    //         time:'178s'
+    //     },
+    //     {
+    //         player:'John Smith10',
+    //         position:'10',
+    //         time:'179s'
+    //     },
+    //     {
+    //         player:'John Smith11',
+    //         position:'11',
+    //         time:'180s'
+    //     },
+    //     {
+    //         player:'John Smith12',
+    //         position:'12',
+    //         time:'182s'
+    //     },
     // ]
 
     return (
@@ -156,8 +181,10 @@ function PodiumAnimation({ maxPodiumPlayers, podium }) {
                             <div style={{display:'flex', flexWrap:'wrap', width:'550px', height:'auto'}}>
                             {
                                 podium.map((place, index) => {
-                                    if(place.position > 3 && place.position <= maxPodiumPlayers) {
-                                        return <div className='other-places' style={otherPlaceStyle}>{place.position}th place {place.player}</div>
+                                    if(place.position > 3) {
+                                        if(place.position <= maxPodiumPlayers){
+                                            return <div className='other-places' style={otherPlaceStyle}>{place.position}th place {place.player}</div>
+                                        }
                                     }
                                 })
                             }
