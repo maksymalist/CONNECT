@@ -85,19 +85,19 @@ export default function HomePage() {
                             <img draggable='false' id='background-video' src={HostVideo} alt='host-video'/>
                         </div>
                         <div style={{display:'flex', flexDirection:'column', height:'725px'}}>
-                            <p style={{width:'420px', textAlign:'start'}}>1. Select your desired game mode</p>
-                            <p style={{width:'420px', textAlign:'start'}}>2. Type in the room name / code or click the “GENERATE NAME” button</p>
-                            <p style={{width:'420px', textAlign:'start'}}>3. Go to <a style={{color:'#6976EA', margin:'0'}} href='/browsequizzes/normal'>Browse Quizzes</a> and find a game you would like to host copy that game’s code (don't forget to include the “-” at the start of the code)</p>
-                            <p style={{width:'420px', textAlign:'start'}}>4. Enter the amount of players you want in your room Starter plan users max out at 8 users whilst Classroom plan users get 40 users</p>
-                            <p style={{width:'420px', textAlign:'start'}}>5. Specify if the user nicknames should be friendly</p>
-                            <p style={{width:'420px', textAlign:'start'}}>6. Start the game!!!</p>
+                            <p style={{width:'380px', textAlign:'start'}}>1. Select your desired game mode</p>
+                            <p style={{width:'380px', textAlign:'start'}}>2. Type in the room name / code or click the “GENERATE NAME” button</p>
+                            <p style={{width:'380px', textAlign:'start'}}>3. Go to <a style={{color:'#6976EA', margin:'0'}} href='/browsequizzes/normal'>Browse Quizzes</a> and find a game you would like to host copy that game’s code (don't forget to include the “-” at the start of the code)</p>
+                            <p style={{width:'380px', textAlign:'start'}}>4. Enter the amount of players you want in your room Starter plan users max out at 8 users whilst Classroom plan users get 40 users</p>
+                            <p style={{width:'380px', textAlign:'start'}}>5. Specify if the user nicknames should be friendly</p>
+                            <p style={{width:'380px', textAlign:'start'}}>6. Start the game!!!</p>
                         </div>
                     </div>
                     <div style={{display:'flex', alignItems:'center', flexWrap:'wrap', justifyContent:'space-around', width:'70%', margin:'100px', minWidth:'350px'}}>
                     <div style={{display:'flex', flexDirection:'column', height:'725px'}}>
-                            <p style={{width:'420px', textAlign:'start'}}>1. Enter your nickname</p>
-                            <p style={{width:'420px', textAlign:'start'}}>2. Enter a valid room name / code</p>
-                            <p style={{width:'420px', textAlign:'start'}}>3. Join your game and (hopefully) have fun !!!</p>
+                            <p style={{width:'380px', textAlign:'start'}}>1. Enter your nickname</p>
+                            <p style={{width:'380px', textAlign:'start'}}>2. Enter a valid room name / code</p>
+                            <p style={{width:'380px', textAlign:'start'}}>3. Join your game and (hopefully) have fun !!!</p>
                         </div>
                         <div className='iphone-div'>
                             <img draggable='false' style={{width:'320px', height:'220px'}} src={JoinVideo} alt='join-video'/>
@@ -108,9 +108,9 @@ export default function HomePage() {
                             <img draggable='false' style={{width:'320px', height:'400px'}} src={GameRoomVideo} alt='game-video'/>
                         </div>
                         <div style={{display:'flex', flexDirection:'column', height:'725px'}}>
-                            <p style={{width:'420px', textAlign:'start'}}>1. Match the question cards with their answers</p>
-                            <p style={{width:'420px', textAlign:'start'}}>2. If you match the wrong cards 5s will be added to your timer</p>
-                            <p style={{width:'420px', textAlign:'start'}}>3. The goal is to get the lowest time to have the highest place on the podium and have fun whilst learning!!!</p>
+                            <p style={{width:'380px', textAlign:'start'}}>1. Match the question cards with their answers</p>
+                            <p style={{width:'380px', textAlign:'start'}}>2. If you match the wrong cards 5s will be added to your timer</p>
+                            <p style={{width:'380px', textAlign:'start'}}>3. The goal is to get the lowest time to have the highest place on the podium and have fun whilst learning!!!</p>
                         </div>
                     </div>
                 </div>
