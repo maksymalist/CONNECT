@@ -16,6 +16,7 @@
 
 https://user-images.githubusercontent.com/79988159/130988137-06399025-8712-478b-abf2-985e3a0df083.mp4
 
+#### The same video but on Youtube if you want to support CONNECT! on there
 
 
 ### CONNECT Website 🌐
