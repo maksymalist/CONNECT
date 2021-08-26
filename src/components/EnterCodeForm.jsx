@@ -73,6 +73,10 @@ export default function EnterCodeForm({match, location}) {
             setRole(role = 'host')
             
             console.log(data.friendly +'checked uit')
+            console.log('values below')
+            if(maxPlayers.current == null || podiumPlaces.current == null) return
+            console.log(maxPlayers.current.value)
+            console.log(podiumPlaces.current.value)
             ReactDOM.render(
                 <div>
                 <HostRoom 

@@ -34,7 +34,7 @@ export default function GameRoom({match}) {
         console.log(Object.keys(snapshot.val()).length - 1)
         Object.keys(snapshot.val()).map((key, index)=>{
             console.log(key)
-            if(key != 'name' && key != 'userName' && key != 'userProfilePic'){
+            if(key != 'name' && key != 'userName' && key != 'userProfilePic' && key != 'coverImg'){
               cardsLen.push(key)
             }
           })
@@ -59,6 +59,7 @@ export default function GameRoom({match}) {
 
     const setCardsFunction = (numCards) => {
         for(var i = 0; i < numCards; i++){
+            console.log(i + '/' + numCards + '/' + cardsLen)
             cards.push({
                 question: quiz2[`q${i}`].question,
                 ans: quiz2[`q${i}`].answer
