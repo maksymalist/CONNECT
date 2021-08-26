@@ -12,7 +12,10 @@
 ### CONNECT Demo Video 🎥
 #### *This is an outdated version of the website as the website is still under developement. An up-to-date version will be published soon
 
-https://user-images.githubusercontent.com/79988159/123827669-d1d21200-d8ce-11eb-90d0-b4c417c81ac9.mp4
+
+
+https://user-images.githubusercontent.com/79988159/130988137-06399025-8712-478b-abf2-985e3a0df083.mp4
+
 
 
 ### CONNECT Website 🌐
