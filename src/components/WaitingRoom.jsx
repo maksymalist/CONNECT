@@ -1,9 +1,8 @@
 import React,{ useState, useEffect } from 'react'
 import { io } from 'socket.io-client'
 import { socket } from './EnterCodeForm'
-import loading from '../img/loading.gif'
 import ReactDOM from 'react-dom'
-import Button from '@material-ui/core/Button'
+import { Typography, Button } from '@material-ui/core'
 
 import GameEnded from './GameEnded'
 
@@ -16,11 +15,13 @@ import '../style/style.css'
 export default function WaitingRoom(props) {
 
     var [gameStatus, setGameStatus] = useState(false)
+    const [peopleInRoom, setPeopleInRoom] = useState([])
 
     useEffect(() => {
         socket.emit('joinPlayerRoom', {
             room: props.room
         })
+        setPeopleInRoom(props.usersInRoom)
 
         socket.on('addeduser', (data)=>{
             //console.log(data)
@@ -32,7 +33,9 @@ export default function WaitingRoom(props) {
                     RoomUsers.push(data.names[i])
                 }
             }*/
-            document.getElementById('userList').innerHTML = data.UsersInRoom
+            //document.getElementById('userList').innerHTML = data.UsersInRoom
+            setPeopleInRoom(data.UsersInRoom)
+            console.log(data.UsersInRoom)
             //document.getElementById('userLength').innerHTML = data.UsersInRoom.length
             
         })
@@ -48,9 +51,10 @@ export default function WaitingRoom(props) {
             //console.log(data)
         })
         socket.on('playerLeftRoom', (data)=>{
-            document.getElementById('userList').innerHTML = data.UsersInRoom
+            //document.getElementById('userList').innerHTML = data.UsersInRoom
             //document.getElementById('userLength').innerHTML = data.UsersInRoom.length
             console.log(data.UsersInRoom)
+            setPeopleInRoom(data.UsersInRoom)
         })
 
         socket.on('kicked', (data)=>{
@@ -108,7 +112,14 @@ export default function WaitingRoom(props) {
         <div id='waitingRoomDiv'>
             <h1 style={{marginTop:'100px'}}>Waiting Room</h1>
             <h2>Players:</h2>
-            <textarea id='userList' defaultValue={props.usersInRoom} readOnly></textarea>
+            {/* <textarea id='userList' defaultValue={props.usersInRoom} readOnly></textarea> */}
+            <div style={{width:'90%', display:'flex', flexWrap:'wrap', justifyContent:'center', padding:'100px'}}>
+                {
+                    peopleInRoom.map((person, index)=>{
+                        return <Typography variant='h2' key={index} style={{padding:'10px', margin:'10px', fontSize:'1.5rem'}}>{person}</Typography>
+                    })
+                }
+            </div>
             <div>
                 <Button style={{marginBottom:'1vh', alignSelf:'left'}} variant="contained" color="secondary" size='large' onClick={()=>{leaveRoom()}}>Leave Room</Button>
             </div>

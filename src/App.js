@@ -28,6 +28,7 @@ import axios from 'axios';
 import Login from './components/Auth/Login';
 import NewMultiQuiz from './components/NewMultiQuiz';
 import PodiumAnimation from './components/PodiumAnimation';
+import { Button } from '@material-ui/core';
 
 
 const firebaseConfig = {
@@ -69,7 +70,14 @@ function App() {
       });
     }
     else{
-      toast.warn('You Have To Login If You Want To Use CONNECT!')
+      if(window.location.pathname == '/login') return
+      const ToastContent = () => (
+        <div className="toast-content">
+          <h3>You Have To Login If You Want To Use CONNECT!</h3>
+          <Button variant='contained' color='primary' onClick={()=>{window.location = '/login'}}>Login</Button>
+        </div>
+      )
+      toast.info(<ToastContent/>)
       return
     }
     window.onbeforeunload = function() {
