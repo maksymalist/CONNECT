@@ -10,9 +10,14 @@
 <a href="https://www.buymeacoffee.com/connect129" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 ### CONNECT Demo Video 🎥
-#### *This is an outdated version of the website as the website is still under developement. An up-to-date version will be published soon
+#### *This video might not be an accurate representation of CONNECT! since it is changing often and we can't keep on making videos for every commit.
 
-https://user-images.githubusercontent.com/79988159/123827669-d1d21200-d8ce-11eb-90d0-b4c417c81ac9.mp4
+
+
+https://user-images.githubusercontent.com/79988159/130988137-06399025-8712-478b-abf2-985e3a0df083.mp4
+
+#### The same video but on Youtube if you want to support CONNECT! on there
+https://youtu.be/tNxccQfbLvY
 
 
 ### CONNECT Website 🌐
