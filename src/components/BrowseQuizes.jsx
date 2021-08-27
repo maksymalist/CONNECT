@@ -8,7 +8,7 @@ import "firebase/database";
 
 import '../style/style.css'
 import Button from '@material-ui/core/Button'
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Chip } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { InputLabel, FormControl } from '@material-ui/core'
@@ -82,6 +82,20 @@ export default function BrowseQuizes({match}) {
                     </div>
                     <h2>Game Code</h2>
                     <h2>{k}⠀<FileCopyRounded onClick={()=>{copyCode(k)}} color='primary'/></h2>
+                    <div>
+                        {
+                            data[k].tags == undefined ?
+                            null
+                            :
+                            <div>
+                                {
+                                    data[k].tags.map((tag,index)=>{
+                                        return <Chip style={{margin:'5px'}} key={tag+index} label={tag} color="primary" />
+                                    })
+                                }
+                            </div>
+                        }
+                    </div>
                     <Button style={{marginBottom:'10vh'}} variant="contained" color="primary" size='small' onClick={()=>{viewMore(`newQuiz${index}Div`)}}>View More</Button>
                     <div id={`newQuiz${index}Div`} hidden>
                         <h1>Questions</h1>
@@ -168,6 +182,20 @@ export default function BrowseQuizes({match}) {
                     </div>
                     <h2>Game Code</h2>
                     <h2>{k}⠀<FileCopyRounded onClick={()=>{copyCode(k)}} color='primary' /></h2>
+                    <div>
+                        {
+                            data[k].tags == undefined ?
+                            null
+                            :
+                            <div>
+                                {
+                                    data[k].tags.map((tag,index)=>{
+                                        return <Chip style={{margin:'5px'}} key={tag+index} label={tag} color="primary" />
+                                    })
+                                }
+                            </div>
+                        }
+                    </div>
                     <div>
                         {Object.keys(data[k].steps).map((stp, i)=>{
                             return (
