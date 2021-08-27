@@ -34,7 +34,7 @@ export default function GameRoom({match}) {
         console.log(Object.keys(snapshot.val()).length - 1)
         Object.keys(snapshot.val()).map((key, index)=>{
             console.log(key)
-            if(key != 'name' && key != 'userName' && key != 'userProfilePic' && key != 'coverImg'){
+            if(key != 'name' && key != 'userName' && key != 'userProfilePic' && key != 'coverImg' && key != 'userID' && key != 'tags'){
               cardsLen.push(key)
             }
           })

@@ -1,7 +1,7 @@
 import React,{ useState, useEffect, useRef } from 'react'
 import '../style/NewQuizStyle.css'
 
-import Button from '@material-ui/core/Button'
+import { Chip, TextField, Button, Typography, Divider } from '@material-ui/core';
 
 import firebase from "firebase"
 import "firebase/database";
@@ -13,6 +13,10 @@ function NewMultiQuiz() {
     const [subjects, setSubjects] = useState([]);
     const [subjectIndex, setSubjectIndex] = useState(0);
     const [questions, setQuestions] = useState([]);
+
+    const [tags, setTags] = useState([]);
+    const [currentTag, setCurrentTag] = useState('');
+    const [tagNumber, setTagNumber] = useState(0);
 
     const quizObj = {}
     var subjectArr = []
@@ -107,11 +111,22 @@ function NewMultiQuiz() {
         return questions2
     }
 
+    const getTags = () => {
+        const newTagArr = []
+        tags.map((tag) => {
+            newTagArr.push(tag)
+        })
+        return newTagArr
+    }
+
     const setQuizObj = () => {
         quizObj.name = quizName.current.value
         quizObj.userName = JSON.parse(localStorage.getItem('user')).profileObj.name
         quizObj.userProfilePic = JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
+        quizObj.userID = JSON.parse(localStorage.getItem('user')).profileObj.googleId
         quizObj.coverImg = document.getElementById('coverImg').src
+        quizObj.tags = getTags()
+
         var stepObj = {}
 
         for(var subIndex = 0; subIndex < document.getElementsByClassName('subject-name').length; subIndex++){ 
@@ -137,6 +152,26 @@ function NewMultiQuiz() {
         Submit()
 
     }
+
+
+    const AddTag = (tag) => {
+        if(tag === '') return
+        if(tagNumber >= 5) return
+        setTags([...tags, tag])
+        setCurrentTag('')
+        setTagNumber(tagNumber+1)
+    }
+
+    const handleDelete = (id, name) => {
+        const newTags = []
+        tags.map((tag) => {
+            newTags.push(tag)
+        })
+        newTags.splice(name, 1)
+        setTags(newTags)
+        setTagNumber(newTags.length)
+
+    };
     
     return (
         <div style={{marginTop:'100px'}}>
@@ -146,6 +181,20 @@ function NewMultiQuiz() {
             </div>
             <div>
                 <UploadButton/>
+            </div>
+            <div style={{backgroundColor:'white', padding:'15px', border:'2px solid black', boxShadow:'10px 10px 0 #262626'}}>
+                <Typography variant="h3">Tags</Typography>
+                <br></br>
+                <Divider light/>
+                <br></br>
+                <TextField variant="outlined" size='small' label="Tag Name" helperText={<span style={{color:'black'}}>{5-tagNumber} tags Left</span>} onChange={(e)=>{setCurrentTag(e.target.value)}} value={currentTag}/>
+                <Button variant="contained" size='medium' color="primary" onClick={()=>{AddTag(currentTag)}}>Add Tag</Button>
+                <br></br>
+                {
+                    tags.map((tag, index) => (
+                        <Chip style={{marginTop:'10px'}} key={tag+index} id={tag+index} label={tag} onDelete={()=>handleDelete(tag+index, tag)} color="primary" />
+                    ))
+                }
             </div>
             <div className='cardContainer2-sub' id='cardContainer2-sub' style={{margin:'1%'}}>
                 {

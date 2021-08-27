@@ -44,7 +44,7 @@ function MultiGameRoom({match}) {
         console.log(Object.keys(quiz2).length - 1)
         Object.keys(quiz2).map((key, index)=>{
             console.log(key)
-            if(key != 'name' && key != 'userName' && key != 'userProfilePic' && key != 'coverImg'){
+            if(key != 'name' && key != 'userName' && key != 'userProfilePic' && key != 'coverImg' && key != 'userID' && key != 'tags'){
               cardsLen.push(key)
             }
           })
