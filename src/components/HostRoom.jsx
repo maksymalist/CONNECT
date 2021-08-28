@@ -27,6 +27,7 @@ import TimerRoundedIcon from '@material-ui/icons/TimerRounded';
 import 'react-toastify/dist/ReactToastify.css';
 import '../style/style.css'
 import '../style/playButtonAnimation.css'
+import CountDown from './CountDown';
 
 
 //globals
@@ -49,6 +50,8 @@ export default function HostRoom(props) {
     var podiumClasses = ['first-place', 'second-place', 'third-place', 'other-place']
     var [currentPlace, setCurrentPlace] = useState(0)
     var [numberOfUsers, setNumberOfUsers] = useState(0)
+
+    const [isCountdown, setIsCountdown] = useState(false)
 
     const [playerTimes, setPlayerTimes] = useState([])
     var gameStarted = false
@@ -168,19 +171,19 @@ export default function HostRoom(props) {
 
     }, [])
 
-    useEffect(() => {
-        if(document.getElementById('userDiv') == null) return
-        if(numberOfUsers > 0){
-            let newUser = document.createElement('div')
-            newUser.id = ''
-            newUser.innerHTML =''
-            document.getElementById('userDiv').appendChild(newUser)
-        }
+    // useEffect(() => {
+    //     if(document.getElementById('userDiv') == null) return
+    //     if(numberOfUsers > 0){
+    //         let newUser = document.createElement('div')
+    //         newUser.id = ''
+    //         newUser.innerHTML =''
+    //         document.getElementById('userDiv').appendChild(newUser)
+    //     }
         
-        return () => {
-            //cleanup
-        }
-    }, [numberOfUsers])
+    //     return () => {
+    //         //cleanup
+    //     }
+    // }, [numberOfUsers])
 
     const updateUserDiv = (users) => {
         if(gameStarted) return
@@ -192,7 +195,7 @@ export default function HostRoom(props) {
             document.getElementById('userDiv').appendChild(newUser)
             ReactDOM.render(
                 <div>
-                    <h1 className='userH1' onClick={()=>{kickUser(user)}}>{user}</h1>
+                    <h2 className='userH1' onClick={()=>{kickUser(user)}}>{user}</h2>
                 </div>,
                 newUser
             )
@@ -418,6 +421,12 @@ export default function HostRoom(props) {
 
     return (
         <div>
+            {
+                isCountdown ?
+                <CountDown start={StartGame} room={props.room}/>
+                :
+                null
+            }
             <h1 style={{color:'white'}}>{props.room}</h1>
             <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='medium' onClick={()=>{shareLink()}}><People/>⠀Share</Button>
             <h2 style={{color:'white'}}>Max Users: {numberOfUsers}/{userLimit}</h2>
@@ -437,7 +446,7 @@ export default function HostRoom(props) {
                 </div>
             </div>
 
-            <svg onClick={()=>{StartGame(props.room)}} id='playButtonSvg' width="69" height="100" viewBox="0 0 69 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg onClick={()=>{setIsCountdown(true)}} id='playButtonSvg' width="69" height="100" viewBox="0 0 69 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="triangles" clip-path="url(#clip0)">
                     <g id="darkGroup">
                         <path id="dark2" opacity="0.75" d="M44 48.268C45.3333 49.0378 45.3333 50.9622 44 51.732L9.5 71.6506C8.16666 72.4204 6.5 71.4582 6.5 69.9186L6.5 30.0814C6.5 28.5418 8.16667 27.5796 9.5 28.3494L44 48.268Z" fill="#1BB978"/>
@@ -458,9 +467,7 @@ export default function HostRoom(props) {
                 <rect id='darkBar' x="53.8581" y="1" width="11" height="75" rx="2" transform="rotate(45.8985 53.8581 1)" fill="#C70047"/>
                 <rect id='lightBar' x="0.351059" y="8.41962" width="11" height="75" rx="2" transform="rotate(-45 0.351059 8.41962)" fill="#FF0000"/>
             </svg>
-
-            {/* Button style={{marginBottom:'1vh'}} id='gameOverButton' variant="contained" color="secondary" size='medium' onClick={()=>{GameOver()}}>End</Button> */}
-            {/* <Button style={{marginBottom:'1vh'}} id='share' variant="contained" color="secondary" size='medium' onClick={()=>{shareLink()}}>Share  <Share/></Button> */}
+        
         </div>
     )
 }

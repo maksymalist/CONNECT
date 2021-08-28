@@ -5,12 +5,12 @@ function CountDown({ start, room }) {
 
     var [number, setNumber] = useState(0)
     var [isCountdown, setIsCountdown] = useState(true)
-    var [countDownText, setCountDownText] = useState("Ready?")
+    const [countDownText, setCountDownText] = useState("Ready?")
 
     useEffect(() => {
         setInterval(() => {
             if(isCountdown === false) return
-            setCountDownText(prev => prev = "GO!!!")
+            setCountDownText("GO!!!")
             setNumber(number += 1)
             if(number === 4){
                 setIsCountdown(isCountdown = false)
