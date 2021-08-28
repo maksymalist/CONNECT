@@ -88,6 +88,7 @@ export default function BrowseQuizes({match}) {
                             null
                             :
                             <div>
+                                <br></br>
                                 {
                                     data[k].tags.map((tag,index)=>{
                                         return <Chip style={{margin:'5px'}} key={tag+index} label={tag} color="primary" />
@@ -96,6 +97,7 @@ export default function BrowseQuizes({match}) {
                             </div>
                         }
                     </div>
+                    <br></br>
                     <Button style={{marginBottom:'10vh'}} variant="contained" color="primary" size='small' onClick={()=>{viewMore(`newQuiz${index}Div`)}}>View More</Button>
                     <div id={`newQuiz${index}Div`} hidden>
                         <h1>Questions</h1>
@@ -188,6 +190,7 @@ export default function BrowseQuizes({match}) {
                             null
                             :
                             <div>
+                                <br></br>
                                 {
                                     data[k].tags.map((tag,index)=>{
                                         return <Chip style={{margin:'5px'}} key={tag+index} label={tag} color="primary" />
@@ -196,6 +199,7 @@ export default function BrowseQuizes({match}) {
                             </div>
                         }
                     </div>
+                    <br></br>
                     <div>
                         {Object.keys(data[k].steps).map((stp, i)=>{
                             return (
