@@ -20,6 +20,7 @@ import StripeSubscriptions from './components/payment/StripeSubscriptions'
 import Plans from './components/payment/Plans'
 import MemberRoom from './components/MemberRoom'
 import Background from './components/Background'
+import Profile from './components/profile/Profile';
 
 
 
@@ -29,6 +30,7 @@ import Login from './components/Auth/Login';
 import NewMultiQuiz from './components/NewMultiQuiz';
 import PodiumAnimation from './components/PodiumAnimation';
 import { Button } from '@material-ui/core';
+import MyProfile from './components/profile/MyProfile';
 
 
 const firebaseConfig = {
@@ -78,6 +80,7 @@ function App() {
         </div>
       )
       toast.info(<ToastContent/>)
+      window.location = '/login'
       return
     }
     window.onbeforeunload = function() {
@@ -109,7 +112,8 @@ function App() {
       subscriptionObj: JSON.parse(res.data.subscriptionDetails),
       planAtive: JSON.parse(res.data.subscriptionDetails).status,
       planStatus: JSON.parse(res.data.subscriptionDetails).status,
-      plan: plan
+      plan: plan,
+      imageUrl: JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
 
 
     }) 
@@ -135,6 +139,8 @@ function App() {
         <Route path='/subscription/:plan' component={StripeSubscriptions}/>
         <Route path='/classroom' component={MemberRoom}/>
         <Route path='/login' component={Login}/>
+        <Route path='/profile' component={MyProfile}/>
+        <Route path='/profiles/:id' component={Profile}/>
       </Switch>
     </div>
   </Router>

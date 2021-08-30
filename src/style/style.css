@@ -207,12 +207,18 @@ h1{
     flex-direction: column;
     align-items: center;
     background-color: white;
-    width: 400px;
+    width: 360px;
     height: 500px;
     margin: 10px;
     border: 2px solid black;
     box-shadow: 5px 5px 0 #262626;
+    min-width: 360px;
     
+}
+.newQuiz:hover{
+    cursor: pointer;
+    transition: all 0.2s ease;
+    transform: translate(-0px, -5px);
 }
 @media (pointer:none), (pointer:coarse) {
 }
@@ -230,7 +236,8 @@ h1{
     top: 0;
     left: 0;
     width: 50vw;
-    height: 40vw;    justify-content: center;
+    height: 40vw;    
+    justify-content: center;
     text-align: center;
 
 }
@@ -314,6 +321,13 @@ button{
     width: 100%;
     margin: 50px;
     max-width: 400px;
+}
+#plan1:hover,
+#plan2:hover,
+#plan3:hover{
+    cursor: pointer;
+    transition: all 0.2s ease;
+    transform: translate(0px, -10px);
 }
 
 #plan2{

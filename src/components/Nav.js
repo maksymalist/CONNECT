@@ -127,7 +127,7 @@ function Nav({ isLoggedIn, customerId }) {
               style={{width:'150px', marginTop:'30px', padding:'5px', display:'flex', alignItems:'center', marginRight:'10px'}}
             >
               <MenuItem style={{borderBottom:'1px solid grey', width:'150px'}} onClick={handleClose}>Signed in as <br></br> {currentUsername}</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={()=>window.location = '/profile'}>My account</MenuItem>
               <MenuItem onClick={openCustomerPortal}>Subscription</MenuItem>
               <MenuItem style={{backgroundColor:'rgb(220, 0, 78)', color:'white', fontWeight:'bold', borderRadius:'5px'}} onClick={logOut}>Logout</MenuItem>
             </Menu>
