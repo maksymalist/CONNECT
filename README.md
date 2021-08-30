@@ -20,7 +20,7 @@ https://user-images.githubusercontent.com/79988159/130988137-06399025-8712-478b-
 https://youtu.be/tNxccQfbLvY
 
 #### Older version of CONNECT!
-##### *take a look if you want to see how the project evolved over time
+#### *take a look if you want to see how the project evolved over time
 https://youtu.be/9A2tYQTLsKg
 
 
