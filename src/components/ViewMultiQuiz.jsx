@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import '../style/viewQuizStyles.css'
 
-import { Divider, Typography, Button } from '@material-ui/core'
+import { Divider, Typography, Button, Chip } from '@material-ui/core'
 
 import { AccountCircle } from '@material-ui/icons'
 
@@ -78,6 +78,24 @@ function ViewMultiQuiz() {
                         }
                         <h3>by {quiz.userName || 'undefined'}</h3>
                     </div>
+                    <div style={{display:'flex', alignItems:'center', justifyContent:'center', width:'100%'}}>
+                            <Typography variant="h5" component='h5'>{code}</Typography>
+                        </div>
+                        <div>
+                            {
+                                quiz.tags == undefined ?
+                                null
+                                :
+                                <div>
+                                    <br></br>
+                                    {
+                                        quiz.tags.map((tag,index)=>{
+                                            return <Chip style={{margin:'5px'}} key={tag+index} label={tag} color="primary" />
+                                        })
+                                    }
+                                </div>
+                            }
+                        </div>
                 </div>
             </div>
             <div className="view__quiz__content__questions">
