@@ -78,6 +78,21 @@ function MyProfile() {
         })
     }
 
+    const handleQuizClick = (key) => {
+        firebase.database().ref(`multiQuizzes/${key}`).on('value', (snapshot) => {
+            if(snapshot.exists()) {
+                window.location.href = `/quiz/multi/${key}`
+                return
+            }
+        })
+        firebase.database().ref(`quizes/${key}`).on('value', (snapshot) => {
+            if(snapshot.exists()) {
+                window.location.href = `/quiz/normal/${key}`
+                return
+            }
+        })
+    }
+
     return (
         <div className="profile-container">
             <div className='profile-banner'></div>
@@ -114,7 +129,7 @@ function MyProfile() {
                                 {
                                     userQuizzes.map((data, index) => {
                                         return (
-                                                <div className='newQuiz' style={{overflowY:'auto', overflowX:'hidden'}}>
+                                                <div onClick={()=>{handleQuizClick(data.key)}} className='newQuiz' style={{overflowY:'auto', overflowX:'hidden'}}>
                                                 <img style={{width:'100%', height:'300px'}} src={data.quiz.coverImg || Placeholder} alt='cover-img'/>
                                                 <h2>{data.quiz.name}</h2>
                                                 <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>

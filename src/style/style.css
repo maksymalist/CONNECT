@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
 html, body {
     max-width: 100%;
 }
@@ -218,7 +219,7 @@ h1{
 .newQuiz:hover{
     cursor: pointer;
     transition: all 0.2s ease;
-    transform: translate(-0px, -5px);
+    transform: scale(1.05);
 }
 @media (pointer:none), (pointer:coarse) {
 }
@@ -327,7 +328,7 @@ button{
 #plan3:hover{
     cursor: pointer;
     transition: all 0.2s ease;
-    transform: translate(0px, -10px);
+    transform: scale(1.05);
 }
 
 #plan2{

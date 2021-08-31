@@ -31,6 +31,8 @@ import NewMultiQuiz from './components/NewMultiQuiz';
 import PodiumAnimation from './components/PodiumAnimation';
 import { Button } from '@material-ui/core';
 import MyProfile from './components/profile/MyProfile';
+import ViewQuiz from './components/ViewQuiz';
+import ViewMultiQuiz from './components/ViewMultiQuiz';
 
 
 const firebaseConfig = {
@@ -141,6 +143,8 @@ function App() {
         <Route path='/login' component={Login}/>
         <Route path='/profile' component={MyProfile}/>
         <Route path='/profiles/:id' component={Profile}/>
+        <Route path='/quiz/normal/:code' component={ViewQuiz}/>
+        <Route path='/quiz/multi/:code' component={ViewMultiQuiz}/>
       </Switch>
     </div>
   </Router>

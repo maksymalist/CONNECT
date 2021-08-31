@@ -59,7 +59,7 @@ export default function BrowseQuizes({match}) {
             document.getElementById('feed').appendChild(newQuiz)
 
             ReactDOM.render(
-                <div style={{overflowY:'scroll', overflowX:'hidden'}}>
+                <div onClick={()=>window.location = `/quiz/normal/${k}`} style={{overflowY:'auto', overflowX:'hidden'}}>
                     <img style={{width:'100%', height:'300px'}} src={data[k].coverImg || Placeholder} alt='cover-img'/>
                     <h2>{data[k].name}</h2>
                     <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
@@ -80,8 +80,6 @@ export default function BrowseQuizes({match}) {
                          }
                         <h3>{`by ${data[k].userName}`}</h3>
                     </div>
-                    <h2>Game Code</h2>
-                    <h2>{k}⠀<FileCopyRounded onClick={()=>{copyCode(k)}} color='primary'/></h2>
                     <div>
                         {
                             data[k].tags == undefined ?
@@ -98,39 +96,6 @@ export default function BrowseQuizes({match}) {
                         }
                     </div>
                     <br></br>
-                    <Button style={{marginBottom:'10vh'}} variant="contained" color="primary" size='small' onClick={()=>{viewMore(`newQuiz${index}Div`)}}>View More</Button>
-                    <div id={`newQuiz${index}Div`} hidden>
-                        <h1>Questions</h1>
-                        <div>
-                        <h3>{data[k].q0.question}</h3>
-                        <h3 style={{visibility:'hidden'}} id={data[k].q0.answer}>{data[k].q0.answer}</h3>
-                        <Button id={(data[k].name)+'q1'} style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q0.answer, (data[k].name)+'q1')}}>REVEAL ANSWER</Button>
-                        </div>
-                        <h3>{data[k].q1.question}</h3>
-                        <h3 style={{visibility:'hidden'}} id={data[k].q1.answer}>{data[k].q1.answer}</h3>
-                        <Button id={(data[k].name)+'q2'} style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q1.answer, (data[k].name)+'q2')}}>REVEAL ANSWER</Button>
-                        <div>
-                        <h3>{data[k].q2.question}</h3>
-                        <h3 style={{visibility:'hidden'}} id={data[k].q2.answer}>{data[k].q2.answer}</h3>
-                        <Button id={(data[k].name)+'q3'} style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q2.answer, (data[k].name)+'q3')}}>REVEAL ANSWER</Button>
-                        </div>
-                        <div>
-                        <h3>{data[k].q3.question}</h3>
-                        <h3 style={{visibility:'hidden'}} id={data[k].q3.answer}>{data[k].q3.answer}</h3>
-                        <Button id={(data[k].name)+'q4'} style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q3.answer, (data[k].name)+'q4')}}>REVEAL ANSWER</Button>
-                        </div>
-                        <div>
-                        <h3>{data[k].q4.question}</h3>
-                        <h3 style={{visibility:'hidden'}} id={data[k].q4.answer}>{data[k].q4.answer}</h3>
-                        <Button id={(data[k].name)+'q5'} style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q4.answer, (data[k].name)+'q5')}}>REVEAL ANSWER</Button>
-                        </div>
-                        <div>
-                        <h3>{data[k].q5.question}</h3>
-                        <h3 style={{visibility:'hidden'}} id={data[k].q5.answer}>{data[k].q5.answer}</h3>
-                        <Button id={(data[k].name)+'q6'} style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{revealAns(data[k].q5.answer, (data[k].name)+'q6')}}>REVEAL ANSWER</Button>
-                        </div>
-                        <Button style={{marginBottom:'10vh'}} variant="contained" color="secondary" size='small' onClick={()=>{viewLess(`newQuiz${index}Div`)}}>View Less</Button>
-                    </div>
                 </div>,
                 document.getElementById(`newQuiz${index}`)
             )
@@ -161,7 +126,7 @@ export default function BrowseQuizes({match}) {
             document.getElementById('feed').appendChild(newQuiz)
 
             ReactDOM.render(
-                <div style={{overflowY:'scroll', overflowX:'hidden'}}>
+                <div onClick={()=>window.location = `/quiz/multi/${k}`} style={{overflowY:'auto', overflowX:'hidden'}}>
                     <img style={{width:'100%', height:'300px'}} src={data[k].coverImg || Placeholder} alt='cover-img'/>
                     <h2>{data[k].name}</h2>
                     <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
@@ -182,8 +147,6 @@ export default function BrowseQuizes({match}) {
                          }
                         <h3>{`by ${data[k].userName}`}</h3>
                     </div>
-                    <h2>Game Code</h2>
-                    <h2>{k}⠀<FileCopyRounded onClick={()=>{copyCode(k)}} color='primary' /></h2>
                     <div>
                         {
                             data[k].tags == undefined ?
@@ -198,29 +161,6 @@ export default function BrowseQuizes({match}) {
                                 }
                             </div>
                         }
-                    </div>
-                    <br></br>
-                    <div>
-                        {Object.keys(data[k].steps).map((stp, i)=>{
-                            return (
-                                <>
-                                    <h2>{Object.keys(data[k].steps)[i]}</h2>
-                                    <div>
-                                        {
-                                            Object.keys(data[k].steps[Object.keys(data[k].steps)[i]]).map((quest, indx) => {
-                                                console.log(data[k].steps[Object.keys(data[k].steps)[i]][quest])
-                                                return(
-                                                    <div>
-                                                        <h4>{data[k].steps[Object.keys(data[k].steps)[i]][quest].question}</h4>
-                                                        <h4>{data[k].steps[Object.keys(data[k].steps)[i]][quest].answer}</h4>
-                                                    </div>
-                                                )
-                                            })
-                                        }
-                                    </div>
-                                </>
-                            )
-                        })}
                     </div>
                 </div>,
                 document.getElementById(`newQuiz${index}`)
