@@ -43,7 +43,7 @@ function NewMultiQuiz() {
         }
         firebase.database().ref(`multiQuizzes/`).push(quizObj)
         toast.success('Quiz Created!')
-        for(var i = 0; i < document.getElementsByClassName('userInput').length; i++){
+        for(let i = 0; i < document.getElementsByClassName('userInput').length; i++){
             document.getElementsByClassName('userInput')[i].value = ""
         }
 
@@ -120,6 +120,11 @@ function NewMultiQuiz() {
     }
 
     const setQuizObj = () => {
+        if(JSON.parse(localStorage.getItem('user')) == null) {
+            window.location = '/login'
+            toast.error("Please login to create a quiz!")
+            return
+        }
         quizObj.name = quizName.current.value
         quizObj.userName = JSON.parse(localStorage.getItem('user')).profileObj.name
         quizObj.userProfilePic = JSON.parse(localStorage.getItem('user')).profileObj.imageUrl

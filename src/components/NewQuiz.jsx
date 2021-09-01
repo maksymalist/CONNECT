@@ -53,6 +53,11 @@ export default function NewQuiz() {
     }
 
     const setQuizObj = () => {
+        if(JSON.parse(localStorage.getItem('user')) == null) {
+            window.location = '/login'
+            toast.error("Please login to create a quiz!")
+            return
+        }
         console.log(document.getElementsByClassName('questions'))
 
         quizObj.name = document.getElementById('quizName').value

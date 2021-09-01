@@ -82,7 +82,6 @@ function App() {
         </div>
       )
       toast.info(<ToastContent/>)
-      window.location = '/login'
       return
     }
     window.onbeforeunload = function() {

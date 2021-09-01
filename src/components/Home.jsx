@@ -11,6 +11,7 @@ import GameRoomVideo from '../video/gameroomvideogf.gif'
 
 export default function HomePage() {
     useEffect(() => {
+        if(JSON.parse(localStorage.getItem('user')) == null) window.location = '/login'
         document.getElementById('root').style.padding = '0px'
         return () => {
             document.getElementById('root').style.padding = '10px'
