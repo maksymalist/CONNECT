@@ -10,6 +10,8 @@ import firebase from "firebase"
 import "firebase/database";
 import Placeholder from '../img/quizCoverPlaceholder.svg'
 
+import '../style/playButtonAnimation.css'
+
 function ViewQuiz() {
 
     const [quiz, setQuiz] = useState({})
@@ -58,6 +60,25 @@ function ViewQuiz() {
         setAnsIsShown(false)
     }
 
+    const StartButton = ({ code }) => (
+        <svg style={{position:'unset'}} onClick={()=>{window.location = `/play?gamecode=${code}`}} id='playButtonSvg' width="69" height="100" viewBox="0 0 69 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g id="triangles" clip-path="url(#clip0)">
+            <g id="darkGroup">
+                <path id="dark2" opacity="0.75" d="M44 48.268C45.3333 49.0378 45.3333 50.9622 44 51.732L9.5 71.6506C8.16666 72.4204 6.5 71.4582 6.5 69.9186L6.5 30.0814C6.5 28.5418 8.16667 27.5796 9.5 28.3494L44 48.268Z" fill="#1BB978"/>
+                <path id="dark1" opacity="0.75" d="M66 48.268C67.3333 49.0378 67.3333 50.9622 66 51.732L31.5 71.6506C30.1667 72.4204 28.5 71.4582 28.5 69.9186L28.5 30.0814C28.5 28.5418 30.1667 27.5796 31.5 28.3494L66 48.268Z" fill="#1BB978"/>
+            </g>
+            <g id="lightGroup">
+                <path id="light1" opacity="0.75" d="M44 48.268C45.3333 49.0378 45.3333 50.9622 44 51.732L9.5 71.6506C8.16666 72.4204 6.5 71.4582 6.5 69.9186L6.5 30.0814C6.5 28.5418 8.16667 27.5796 9.5 28.3494L44 48.268Z" fill="#6ED69A"/>
+            </g>
+        </g>
+        <defs>
+            <clipPath id="clip0">
+            <rect width="69" height="100" fill="white"/>
+            </clipPath>
+        </defs>
+        </svg>
+    )
+
     return (
         <div className='view__quiz__flex'>
             <div className="view__quiz__content">
@@ -69,8 +90,11 @@ function ViewQuiz() {
                     }
                 <div style={{float:'left', padding:'10px'}}>
                     <Typography variant="h4" component='h4'>{quiz.name}</Typography>
+                    <div style={{display:'flex', justifyContent:'flex-start', alignItems:'center'}}>
+                        <br></br><StartButton code={code} />
+                    </div>
                     <div style={{display:'flex', alignItems:'flex-start', flexDirection:'column'}}>
-                        <div style={{display:'flex', alignItems:'center'}}>
+                        <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start'}}>
                             {   
                                 quiz.userProfilePic !== undefined ?
                                 <img style={{width:'30px', height:'30px', marginRight:'10px', borderRadius:'50%'}} draggable='false' src={quiz.userProfilePic} alt="quiz-img" />
@@ -78,9 +102,6 @@ function ViewQuiz() {
                                 <AccountCircle style={{width:'30px', height:'30px', marginRight:'10px', borderRadius:'50%'}} color='primary'/>
                             }
                             <h3>by {quiz.userName || 'undefined'}</h3>
-                        </div>
-                        <div style={{display:'flex', alignItems:'center', justifyContent:'center', width:'100%'}}>
-                            <Typography variant="h5" component='h5'>{code}</Typography>
                         </div>
                         <div>
                             {

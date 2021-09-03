@@ -25,7 +25,7 @@ function MultiGameRoom({match}) {
 
     var [time, updateTime] = useState(0)
     var [selected, setSelected] = useState([])
-    var [name, setName] = useState('')
+    const [name, setName] = useState('')
     var cards = []
 
     var CurrentRoom = match.params.room
@@ -38,9 +38,9 @@ function MultiGameRoom({match}) {
 
     var [emitted, setEmitted] = useState(false)
     
-    const getQuiz = async (currentQuiz) => {
+    const getQuiz = async (currentQuiz, name) => {
         quiz2 = currentQuiz
-        setName('Quiz About Stuff') //name = quiz2.name
+        setName(name) //name = quiz2.name
         console.log(Object.keys(quiz2).length - 1)
         Object.keys(quiz2).map((key, index)=>{
             console.log(key)
@@ -225,7 +225,7 @@ function MultiGameRoom({match}) {
                 firebase.database().ref(`multiQuizzes/${match.params.gameid}`).on('value', (snapshot) => {
                     console.log(snapshot.val())
                 return(
-                    getQuiz(snapshot.val().steps[step])
+                    getQuiz(snapshot.val().steps[step], snapshot.val().name)
                 )
                 })
             }

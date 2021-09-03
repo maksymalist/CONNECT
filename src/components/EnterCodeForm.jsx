@@ -1,5 +1,6 @@
 import React,{ useState, useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
+import { useLocation } from 'react-router-dom'
 import { io } from 'socket.io-client'
 import WaitingRoom from './WaitingRoom'
 import HostRoom from './HostRoom'
@@ -17,6 +18,8 @@ import { InputLabel, FormControl } from '@material-ui/core'
 
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
+import firebase from "firebase"
+import "firebase/database";
 
 import { QuestionAnswerRounded, FilterNoneRounded } from '@material-ui/icons';
 
@@ -40,16 +43,43 @@ export default function EnterCodeForm({match, location}) {
     const [gameCode, setGameCode] = useState('')
     const [gameMode, setGameMode] = useState('')
 
+    const [playMode, setPlayMode] = useState(true)
+
     const maxPlayers = useRef(null)
     const podiumPlaces = useRef(null)
 
+    const search = useLocation().search; 
+
+    const [joinFormStep, setJoinFormStep] = useState(0)
+    const [joinFormCode,  setJoinFormCode] = useState("")
+    const [joinFormNickname, setJoinFormNickname] = useState("")
+
+
     useEffect(() => {
-        console.log(list.array)
-        console.log(match)
-        console.log(location)
-        if(location.search !== ""){
-            setCode(code = location.search.replace('?code=',''))
+        const Gamecode = new URLSearchParams(search).get('code');
+        if(Gamecode !== null){
+            setCode(Gamecode)
+            console.log(Gamecode)
             document.getElementById("subConatainer").hidden = true
+            setPlayMode(true)
+        }
+        const gamecodeParam = new URLSearchParams(search).get('gamecode');
+        if(gamecodeParam !== null){
+            console.log(gamecodeParam)
+            setGameCode(gamecodeParam)
+            setPlayMode(false)
+            Generatecode()
+            firebase.database().ref(`/quizes/${gamecodeParam}`).on('value', (snapshot) => {
+                if(snapshot.val() !== null){
+                    setGameMode('normal')
+                }
+            })
+            firebase.database().ref(`/multiQuizzes/${gamecodeParam}`).on('value', (snapshot) => {
+                if(snapshot.val() !== null){
+                    setGameMode('multi')
+                }
+            })
+
         }
 
 
@@ -167,18 +197,18 @@ export default function EnterCodeForm({match, location}) {
 
 
     const JoinRoom = ()=>{
-        if(document.getElementById('name').value === ''){ 
+        if(joinFormNickname === ""){ 
             toast.error('Please Enter a Name')
             return
         }
-        if(document.getElementById('code').value === ''){ 
+        if(joinFormCode === ""){ 
             toast.error('Please Enter a Code')
             return
         }
         socket.emit('joinroom', {
-        code: document.getElementById('code').value, 
-        name: document.getElementById('name').value,
-        profane: list.array.includes(document.getElementById('name').value)})
+        code: joinFormCode, 
+        name: joinFormNickname,
+        profane: list.array.includes(joinFormNickname)})
     }
 
     
@@ -231,59 +261,71 @@ export default function EnterCodeForm({match, location}) {
     return (
         <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
             <div id='navMargin2'/>
-            <div id='mainConatainer'>
-                <h1>Join Room</h1>
-                <input placeholder={'Enter Your Nickname'} type="text" id="name"/>
-                <br></br><input defaultValue={code} placeholder={'Enter Room Name'} type="text" id="code"/>
-                <br></br><Button style={{marginTop:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{JoinRoom()}}>Join Room</Button>
-            </div>
-            <div id='subConatainer'>
-            <h1>Host Room</h1>
-            <FormControl>
-            <InputLabel id="demo-simple-select-outlined-label">Game Mode</InputLabel>
-                <Select
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
-                    value={gameMode}
-                    onChange={changeGamemode}
-                    label="GameMode"
-                    style={{width:'180px', height:'40px'}}
-                    required
-                    >
-                    <MenuItem value='normal'><QuestionAnswerRounded color='primary'/>⠀Normal</MenuItem>
-                    <MenuItem value='multi'><FilterNoneRounded color='primary'/>⠀Multi</MenuItem>
-                </Select>
-                </FormControl>
-                <br></br>
-                <br></br><input className='host-input' placeholder={'Give Your Room A Name'} type="text" id="roomName"/>
-                <br></br><input value={gameCode} onChange={(event) => setGameCode(event.target.value)} style={{marginLeft:'8px'}} className='host-input' placeholder={'Enter Game Code'} type="text" id="gameCode"/>
-                {gameCode != '' ?
-                    null
-                    : <InfoOutlinedIcon onClick={()=>{window.location = '/browsequizzes/normal'}} style={{marginBottom:'-8px', marginRight:'-15px', position:'relative', left:'-30px'}} color='primary'/>
-                }
-                <div>
-                    <h1 style={{fontSize:'25px'}}>Presets</h1><br></br>
-                    <label>Max Players </label><input ref={maxPlayers} id='max-players' type='number' min='0' max='40'/>
-                    <br></br><label>Podium Places </label><input ref={podiumPlaces} id='podium-places' type='number' min='3' max='10'/>
-                    <br></br>
-                        <div>
-                            <label>Friendly Nicknames</label>
-                            <Switch 
-                                size="small" 
-                                checked={checked} 
-                                onChange={()=>{toggleChecked()}}
-                                color="primary" 
-                                name="checked" 
-                                inputProps={{ 'aria-label': 'primary checkbox' }}
-                            />
+            {
+                playMode?
+                        <div id='mainConatainer'>
+                            <h1>Join Game</h1>
+                            {
+                                joinFormStep === 0 &&
+                                <>
+                                    <input value={joinFormCode} onChange={(event) => setJoinFormCode(event.target.value)} style={{width:'100%', height:'48px'}} defaultValue={code} placeholder={'Enter Room Code'} type="text" id="code"/>
+                                    <br></br><Button style={{marginTop:'1vh', width:'100%', fontSize:'1.2rem', height:'48px'}} variant="contained" color="primary" size='small' onClick={()=>{setJoinFormStep(1)}}>Next</Button>
+                                </>
+                            }
+                            {
+                                joinFormStep === 1 &&
+                                <>
+                                    <input value={joinFormNickname} onChange={(event) => setJoinFormNickname(event.target.value)} style={{width:'100%', height:'48px'}} placeholder={'Enter Your Nickname'} type="text" id="name"/>
+                                    <br></br><Button style={{marginTop:'1vh', width:'100%', fontSize:'1.2rem', height:'48px'}} variant="contained" color="primary" size='small' onClick={()=>{JoinRoom()}}>Join</Button>
+                                </>
+                            }
                         </div>
-                </div>
-                <br></br><Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{Generatecode()}}>Generate Name</Button>
-                <br></br><Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{CreateRoom()}}>Host Room</Button>
-            </div>
-                <textarea hidden cols="40" rows="30" id="userList" placeholder="No users" readOnly></textarea>
-
-
+                        :
+                        <div id='subConatainer'>
+                        <h1>Host Room</h1>
+                        <FormControl>
+                        <InputLabel id="demo-simple-select-outlined-label">Game Mode</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-outlined-label"
+                                id="demo-simple-select-outlined"
+                                value={gameMode}
+                                onChange={changeGamemode}
+                                label="GameMode"
+                                style={{width:'180px', height:'40px'}}
+                                required
+                                >
+                                <MenuItem value='normal'><QuestionAnswerRounded color='primary'/>⠀Normal</MenuItem>
+                                <MenuItem value='multi'><FilterNoneRounded color='primary'/>⠀Multi</MenuItem>
+                            </Select>
+                            </FormControl>
+                            <br></br>
+                            <br></br><input className='host-input' placeholder={'Give Your Room A Name'} type="text" id="roomName"/>
+                            <br></br><input value={gameCode} onChange={(event) => setGameCode(event.target.value)} style={{marginLeft:'8px'}} className='host-input' placeholder={'Enter Game Code'} type="text" id="gameCode"/>
+                            {gameCode != '' ?
+                                null
+                                : <InfoOutlinedIcon onClick={()=>{window.location = '/browsequizzes/normal'}} style={{marginBottom:'-8px', marginRight:'-15px', position:'relative', left:'-30px'}} color='primary'/>
+                            }
+                            <div>
+                                <h1 style={{fontSize:'25px'}}>Presets</h1><br></br>
+                                <label>Max Players </label><input ref={maxPlayers} id='max-players' type='number' min='0' max='40'/>
+                                <br></br><label>Podium Places </label><input ref={podiumPlaces} id='podium-places' type='number' min='3' max='10'/>
+                                <br></br>
+                                    <div>
+                                        <label>Friendly Nicknames</label>
+                                        <Switch 
+                                            size="small" 
+                                            checked={checked} 
+                                            onChange={()=>{toggleChecked()}}
+                                            color="primary" 
+                                            name="checked" 
+                                            inputProps={{ 'aria-label': 'primary checkbox' }}
+                                        />
+                                    </div>
+                            </div>
+                            <br></br><Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{Generatecode()}}>Generate Name</Button>
+                            <br></br><Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{CreateRoom()}}>Host Room</Button>
+                        </div>
+            }
         </div>
     )
 }

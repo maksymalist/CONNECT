@@ -155,7 +155,7 @@ h1{
     min-height: 300px;
     width: 20%;
     overflow-y: scroll;
-    min-width: 350px;
+    min-width: 390px;
     background-color: white;
     border-radius: 0;
     display: flex;
@@ -176,14 +176,19 @@ h1{
 }
 .card{
     border:2px solid #d4d4d4;
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     margin: 5px;
     margin-left: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 0.95rem;
+}
+.card:hover{
+    cursor: pointer;
+    transition: all 0.2s ease;
+    transform: scale(1.05);
 }
 
 #time{

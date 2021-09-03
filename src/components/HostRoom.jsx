@@ -371,6 +371,8 @@ export default function HostRoom(props) {
         document.getElementById('closeButtonSvg').style.visibility = 'visible'
         if(document.getElementById('userDiv') === null) return
         document.getElementById('userDiv').remove()
+        document.getElementById('maxPlayersText').remove()
+        document.getElementById('playersText').remove()
 
         document.getElementById('game-container').style.visibility = 'visible'
     }
@@ -429,9 +431,9 @@ export default function HostRoom(props) {
             }
             <h1 style={{color:'white'}}>{props.room}</h1>
             <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='medium' onClick={()=>{shareLink()}}><People/>⠀Share</Button>
-            <h2 style={{color:'white'}}>Max Users: {numberOfUsers}/{userLimit}</h2>
+            <h2 style={{color:'white'}} id='maxPlayersText'>Max Users: {numberOfUsers}/{userLimit}</h2>
             <h2 hidden id='userList'></h2>
-            <h1 style={{color:'white'}}>Players</h1>
+            <h1 style={{color:'white'}} id='playersText'>Players</h1>
             <div style={{color:'white'}} id='userDiv'>
             </div>
             <div id='game-container' style={{visibility:'hidden'}}>
