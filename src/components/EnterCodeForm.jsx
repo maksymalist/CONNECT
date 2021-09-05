@@ -17,6 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { InputLabel, FormControl } from '@material-ui/core'
 
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import CasinoRoundedIcon from '@material-ui/icons/CasinoRounded';
 
 import firebase from "firebase"
 import "firebase/database";
@@ -31,7 +32,7 @@ const list = require('badwords-list')
 //http://localhost:3001
 //good one https://connect-now-backend.herokuapp.com/
 
-export const socket = io('https://connect-now-backend.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
+export const socket = io('http://localhost:3001/', {transports: ['websocket', 'polling', 'flashsocket']});
 
 export default function EnterCodeForm({match, location}) {
     //const classes = useStyles();
@@ -59,8 +60,8 @@ export default function EnterCodeForm({match, location}) {
         const Gamecode = new URLSearchParams(search).get('code');
         if(Gamecode !== null){
             setCode(Gamecode)
+            setJoinFormCode(Gamecode)
             console.log(Gamecode)
-            document.getElementById("subConatainer").hidden = true
             setPlayMode(true)
         }
         const gamecodeParam = new URLSearchParams(search).get('gamecode');
@@ -322,7 +323,7 @@ export default function EnterCodeForm({match, location}) {
                                         />
                                     </div>
                             </div>
-                            <br></br><Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{Generatecode()}}>Generate Name</Button>
+                            <br></br><Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{Generatecode()}}>Generate Name <CasinoRoundedIcon style={{marginLeft:'10px'}}/></Button>
                             <br></br><Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{CreateRoom()}}>Host Room</Button>
                         </div>
             }

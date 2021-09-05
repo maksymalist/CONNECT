@@ -214,7 +214,7 @@ h1{
     align-items: center;
     background-color: white;
     width: 360px;
-    height: 500px;
+    height: 480px;
     margin: 10px;
     border: 2px solid black;
     box-shadow: 5px 5px 0 #262626;
@@ -503,6 +503,16 @@ button{
     }
 }
 
+.waitingRoomPerson{
+    color:#000;
+    text-decoration: none;
+    margin: 10px;
+    background-color: white;
+    border: 1px solid black;
+    box-shadow: 5px 5px 0 #262626;
+    padding: 5px;
+}
+
 #userList{
     background-color: white;
     width: 80%;
@@ -535,6 +545,18 @@ button{
 }
 .userDiv > * {
     color: white;
+    margin: 10px;
+}
+#userDiv{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#playersText{
+    text-align: center;
 }
 /*'first-place', 'second-place', 'third-place', 'other-place'
 .first-place{
@@ -620,8 +642,13 @@ input:hover {
     text-decoration: line-through;
 }
 .userH1{
-    color:#fff;
+    color:#000;
     text-decoration: none;
+    margin: 10px;
+    background-color: white;
+    border: 1px solid black;
+    box-shadow: 5px 5px 0 #262626;
+    padding: 5px;
 }
 
 
@@ -840,3 +867,6 @@ input:hover {
 
 }
 
+.MuiButton-containedPrimary{
+    background-color: #1BB978 !important;
+}

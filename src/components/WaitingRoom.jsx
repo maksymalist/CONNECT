@@ -111,12 +111,11 @@ export default function WaitingRoom(props) {
         <div>
         <div id='waitingRoomDiv'>
             <h1 style={{marginTop:'100px'}}>Waiting Room</h1>
-            <h2>Players:</h2>
             {/* <textarea id='userList' defaultValue={props.usersInRoom} readOnly></textarea> */}
             <div style={{width:'90%', display:'flex', flexWrap:'wrap', justifyContent:'center', padding:'100px'}}>
                 {
                     peopleInRoom.map((person, index)=>{
-                        return <Typography variant='h2' key={index} style={{padding:'10px', margin:'10px', fontSize:'1.5rem'}}>{person}</Typography>
+                        return <Typography className='waitingRoomPerson' variant='h2' key={index} style={{padding:'10px', margin:'10px', fontSize:'1.5rem'}}>{person}</Typography>
                     })
                 }
             </div>

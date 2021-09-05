@@ -60,7 +60,7 @@ export default function BrowseQuizes({match}) {
 
             ReactDOM.render(
                 <div onClick={()=>window.location = `/quiz/normal/${k}`} style={{overflowY:'auto', overflowX:'hidden'}}>
-                    <img style={{width:'100%', height:'300px'}} src={data[k].coverImg || Placeholder} alt='cover-img'/>
+                    <img style={{width:'100%', height:'250px'}} src={data[k].coverImg || Placeholder} alt='cover-img'/>
                     <h2>{data[k].name}</h2>
                     <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
                          {
@@ -127,7 +127,7 @@ export default function BrowseQuizes({match}) {
 
             ReactDOM.render(
                 <div onClick={()=>window.location = `/quiz/multi/${k}`} style={{overflowY:'auto', overflowX:'hidden'}}>
-                    <img style={{width:'100%', height:'300px'}} src={data[k].coverImg || Placeholder} alt='cover-img'/>
+                    <img style={{width:'100%', height:'250px'}} src={data[k].coverImg || Placeholder} alt='cover-img'/>
                     <h2>{data[k].name}</h2>
                     <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
                         {
