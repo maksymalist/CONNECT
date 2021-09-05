@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom'
 import { io } from 'socket.io-client'
 import WaitingRoom from './WaitingRoom'
 import HostRoom from './HostRoom'
-import "react-awesome-button/dist/styles.css"
 import Background from './Background'
 
 import '../style/style.css'
