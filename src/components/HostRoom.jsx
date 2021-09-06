@@ -29,6 +29,8 @@ import '../style/style.css'
 import '../style/playButtonAnimation.css'
 import CountDown from './CountDown';
 
+import SharePopup from './SharePopup';
+
 
 //globals
 
@@ -52,6 +54,7 @@ export default function HostRoom(props) {
     var [numberOfUsers, setNumberOfUsers] = useState(0)
 
     const [isCountdown, setIsCountdown] = useState(false)
+    const [sharePopupActive, setSharePopupActive] = useState(false)
 
     const [playerTimes, setPlayerTimes] = useState([])
     var gameStarted = false
@@ -410,12 +413,7 @@ export default function HostRoom(props) {
         localStorage.removeItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId);
     }
     const shareLink = () => {
-        var text = `https://quiz-connect.netlify.app/play?code=${props.room}`;
-        navigator.clipboard.writeText(text).then(function() {
-          toast.success('Copied the Invitation Link!');
-        }, function(err) {
-          toast.error('Could not copy text: ', err);
-        });
+        setSharePopupActive(!sharePopupActive)
     }
 
     const playerTimesStyle = {backgroundColor:'white', borderRadius:'25px', height:'600px', width:'100%', maxWidth:'75vw'}
@@ -426,6 +424,12 @@ export default function HostRoom(props) {
             {
                 isCountdown ?
                 <CountDown start={StartGame} room={props.room}/>
+                :
+                null
+            }
+            {
+                sharePopupActive ?
+                <SharePopup shareLink={`https://quiz-connect.netlify.app/play?code=${props.room}`} close={shareLink}/>
                 :
                 null
             }

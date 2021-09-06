@@ -33,6 +33,7 @@ import { Button } from '@material-ui/core';
 import MyProfile from './components/profile/MyProfile';
 import ViewQuiz from './components/ViewQuiz';
 import ViewMultiQuiz from './components/ViewMultiQuiz';
+import SharePopup from './components/SharePopup';
 
 
 const firebaseConfig = {
@@ -138,7 +139,6 @@ function App() {
         <Route path='/gamefinsihed/:room/:user' component={GameEnded}/>
         <Route path='/plans' component={Plans}/>
         <Route path='/subscription/:plan' component={StripeSubscriptions}/>
-        <Route path='/classroom' component={MemberRoom}/>
         <Route path='/login' component={Login}/>
         <Route path='/profile' component={MyProfile}/>
         <Route path='/profiles/:id' component={Profile}/>

@@ -1,0 +1,36 @@
+.share__popup__main__div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 380px;
+    background-color: white;
+    padding: 20px;
+    border: 2px solid black;
+    box-shadow: 10px 10px 0 #262626;
+}
+.share__popup__icon__div{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.share__classroom__button__div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 155px;
+    background-color: #1BB978;
+    padding: 5px;
+    height: 28px;
+    border-radius: 2px;
+}
+
+.share__classroom__button__div > *{
+    font-size: 12px !important;
+    margin: 2px !important;
+    color: white !important;
+    font-weight: 500 !important;
+}

@@ -87,10 +87,10 @@ export default function Plans() {
                 </h1>
                 <h2>Free</h2>
                 <h2>Features</h2>
-                <div style={{display:'flex', flexDirection:'column', textAlign:'start', maxHeight:'200px', overflowY:'auto'}}>
+                <div style={{display:'flex', flexDirection:'column', textAlign:'start', height:'270px', overflowY:'auto'}}>
                     <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Acces to The Multiplayer Card Games</Typography>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Have 8 or Less People in Your Rooms</Typography>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀You Can Create Quizes</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Have 40 or Less People in Your Rooms</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀You Can Create Quizzes</Typography>
                 </div>
                 <img alt='starter-img' height='220px' width='220px' src={StarterImg}></img>
                 <div>
@@ -109,10 +109,12 @@ export default function Plans() {
                 </h1>
                 <h2>$10.00 monthly</h2>
                 <h2>Features</h2>
-                <div style={{display:'flex', flexDirection:'column', textAlign:'start', maxHeight:'300px', overflowY:'auto'}}>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Acces to The Multiplayer Card Games</Typography>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Have 40 or Less People in Your Rooms</Typography>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀You Can Create Quizes</Typography>
+                <div style={{display:'flex', flexDirection:'column', textAlign:'start', height:'270px', overflowY:'auto'}}>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Have 90 or less people in your rooms</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Access to player analytics</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀You can create classes</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Google Classroom integration</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Microsoft Teams integration</Typography>
                 </div>
                 <img alt='classroom-img' height='220px' width='220px' src={TeacherImg}></img>
                 <div>
@@ -132,7 +134,7 @@ export default function Plans() {
                 </h1>
                 <h2>$100.00 monthly</h2>
                 <h2>Features</h2>
-                <div style={{display:'flex', flexDirection:'column', textAlign:'start', maxHeight:'300px', overflowY:'auto'}}>
+                <div style={{display:'flex', flexDirection:'column', textAlign:'start', height:'270px', overflowY:'auto'}}>
                     <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Acces to The Multiplayer Card Games</Typography>
                     <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Have 200 or Less People in Your Rooms</Typography>
                     <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀You Can Create Quizes</Typography>

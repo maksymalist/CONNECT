@@ -148,24 +148,36 @@ h1{
 }
 
 #cardContainer{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-height: 300px;
-    width: 20%;
-    overflow-y: scroll;
-    min-width: 390px;
+    overflow-y: auto;
+    width: 650px;
     background-color: white;
     border-radius: 0;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-content: flex-start;
-    justify-content: flex-start;
+    justify-content: center;
     border: 2px solid black;
     box-shadow: 10px 10px 0px #262626;
-    height: 450px;
+    height: 750px;
+    margin: 10px;
+    padding: 15px;
+}
+
+@media only screen and (max-width: 800px){
+    #cardContainer{
+        padding: 10px;
+        width: 520px;
+        height: 600px;
+    }
+}
+
+@media only screen and (max-width: 540px){
+    #cardContainer{
+        padding: 0px !important;
+        width: 390px !important;
+        height: 450px !important;
+    }
 }
 
 #cardDiv{
@@ -869,4 +881,20 @@ input:hover {
 
 .MuiButton-containedPrimary{
     background-color: #1BB978 !important;
+}
+
+
+.ans-card{
+    /* border: 2px solid #1BB978 !important; */
+    box-shadow: -3px 3px 5px #c4c4c4;
+    background-image: url('../img/CardBackGround/answerCard.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.quest-card{
+    /* border: 2px solid #3f51b5 !important; */
+    box-shadow: -3px 3px 5px #c4c4c4;
+    background-image: url('../img/CardBackGround/questionCard.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
 }

@@ -100,7 +100,7 @@ export default function GameRoom({match}) {
 
             ReactDOM.render(
                 <>
-                <div className='card' id={item} onClick={()=>{CardClick(item, ans, item, i)}}>{item}</div>
+                <div className='card quest-card' id={item} onClick={()=>{CardClick(item, ans, item, i)}}>{item}</div>
                 </>,
                 newCard
             )
@@ -118,7 +118,7 @@ export default function GameRoom({match}) {
 
             ReactDOM.render(
                 <>
-                <div className='card' id={ans} onClick={()=>{CardClick(item, ans, ans, (i + 10))}}>{ans}</div>
+                <div className='card ans-card' id={ans} onClick={()=>{CardClick(item, ans, ans, (i + 10))}}>{ans}</div>
                 </>,
                 newCard2
             )
@@ -262,7 +262,7 @@ export default function GameRoom({match}) {
 
 
     return (
-        <div>
+        <div style={{display:'flex', justifyContent:'center', flexDirection:'column', alignItems:'center'}}>
             <div id='gameContent'>
                 <div>
                     <h1> </h1>
