@@ -180,14 +180,21 @@ function NewMultiQuiz() {
     
     return (
         <div style={{marginTop:'100px'}}>
-        <div style={{display:'flex', alignItems:'center', flexDirection:'column'}}>
-            <div>
+        <div style={{display:'flex', alignItems:'center', flexDirection:'column', backgroundColor:'white', margin:'10px', border:'2px solid black', boxShadow:'10px 10px 0 #262626'}}>
+            <div style={{display:'flex', alignItems:'center', flexDirection:'column'}}>
+                <Typography variant="h2" style={{margin:'10px'}}><b>Create a Multi Quiz</b></Typography>
+                <br></br>
+                    <Divider style={{width:'90vw'}} light/>
+                <br></br>
+                <Typography variant="h5" style={{margin:'10px'}}>1. Give your quiz a title</Typography>
                 <input ref={quizName} className='userInput' id={'quizName'} type='text' placeholder="Give your quiz a cool name"></input>
             </div>
-            <div>
+            <div style={{width:'100%', display:'flex', alignItems:'center', flexDirection:'column', marginTop:'100px'}}>
+                <Typography variant="h5" style={{margin:'10px'}}>2. Upload your cover Image</Typography>
                 <UploadButton/>
             </div>
-            <div style={{backgroundColor:'white', padding:'15px', border:'2px solid black', boxShadow:'10px 10px 0 #262626'}}>
+            <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>3. Give your quiz some tags</Typography>
+            <div style={{backgroundColor:'white', padding:'15px', border:'2px solid black', boxShadow:'10px 10px 0 #262626', width:'80vw', maxWidth:'600px', marginTop:'50px'}}>
                 <Typography variant="h3">Tags</Typography>
                 <br></br>
                 <Divider light/>
@@ -201,7 +208,8 @@ function NewMultiQuiz() {
                     ))
                 }
             </div>
-            <div className='cardContainer2-sub' id='cardContainer2-sub' style={{margin:'1%'}}>
+            <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>4. Come up with some interesting questions</Typography>
+            <div className='cardContainer2-sub' id='cardContainer2-sub' style={{margin:'1%', marginTop:'100px'}}>
                 {
                     subjects.map((subject, index) => {
                         return(

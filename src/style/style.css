@@ -821,8 +821,9 @@ input:hover {
 .upload-box{
     border: 2px dashed black;
     box-shadow: 10px 10px 0 #262626;
-    width: 100%;
+    width: 80vw;
     padding: 30px;
+    max-width: 700px;
     padding-left: 100px;
     padding-right: 100px;
     background-color: #fff;

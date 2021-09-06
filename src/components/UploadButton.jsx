@@ -49,7 +49,7 @@ const UploadButton = () => {
         <div onClick={() => handleClick()} className='upload-box'>
             {
                 file === null ?
-                <Typography variant='h3'>Upload Cover Image</Typography>
+                <Typography variant='h3'>Upload</Typography>
                 :
                 <img id='coverImg' style={{width:'100%', height:'100%'}} src={file} alt='quiz-cover'/>
             }
