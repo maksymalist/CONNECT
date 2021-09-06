@@ -129,7 +129,7 @@ function MyProfile() {
                                 {
                                     userQuizzes.map((data, index) => {
                                         return (
-                                                <div onClick={()=>{handleQuizClick(data.key)}} className='newQuiz' style={{overflowY:'auto', overflowX:'hidden'}}>
+                                                <div onClick={()=>{handleQuizClick(data.key)}} className='newQuiz' style={{overflowY:'auto', overflowX:'hidden', maxWidth:'300px'}}>
                                                 <img style={{width:'100%', height:'300px'}} src={data.quiz.coverImg || Placeholder} alt='cover-img'/>
                                                 <h2>{data.quiz.name}</h2>
                                                 <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
