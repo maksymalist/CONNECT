@@ -170,13 +170,12 @@ export default function GameRoom({match}) {
                         time: time
                     })
                     document.getElementById('popUp').removeAttribute('hidden')
-                    document.getElementById('gameContent').hidden = true
+                    document.getElementById('gameContent').remove()
                     ReactDOM.render(
                         <FinishedScreen user={match.params.user}/>,
                         document.getElementById('popUp')
 
                     )
-                    document.getElementById('time').setAttribute('hidden', 'true')
                 }
             }
             else{
@@ -191,15 +190,6 @@ export default function GameRoom({match}) {
             memory = []
             setSelected(selected = [])
         }
-
-        const cardsRando = ()=>{
-            const children = document.getElementById('cardContainer').childNodes
-
-            children.forEach((child)=>{
-                //
-            })
-        }
-        cardsRando()
 
 
         
@@ -263,14 +253,14 @@ export default function GameRoom({match}) {
 
     return (
         <div style={{display:'flex', justifyContent:'center', flexDirection:'column', alignItems:'center'}}>
-            <div id='gameContent'>
+            <div style={{display:'flex', justifyContent:'center', flexDirection:'column', alignItems:'center'}} id='gameContent'>
                 <div>
                     <h1> </h1>
                     <h1 id='title' style={{marginTop:'10vh', color:'white'}}>{name}</h1>
                     <h1 id='time' style={{marginBottom:'10vh', color:'white'}}>{time}</h1>
                 </div>
                 <div>
-                <div style={{marginTop:'13vh'}} id='cardContainer'></div>
+                <div style={{marginTop:'50px'}} id='cardContainer'></div>
                     <h1 hidden>{JSON.stringify(selected)}</h1>
                 </div>
             </div>
