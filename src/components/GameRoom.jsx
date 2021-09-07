@@ -12,6 +12,8 @@ import GameEnded from './GameEnded'
 import '../style/style.css'
 import { toast } from 'react-toastify'
 
+import { Typography } from '@material-ui/core'
+
 export default function GameRoom({match}) {
     var [time, updateTime] = useState(0)
     var [selected, setSelected] = useState([])
@@ -255,9 +257,8 @@ export default function GameRoom({match}) {
         <div style={{display:'flex', justifyContent:'center', flexDirection:'column', alignItems:'center'}}>
             <div style={{display:'flex', justifyContent:'center', flexDirection:'column', alignItems:'center'}} id='gameContent'>
                 <div>
-                    <h1> </h1>
-                    <h1 id='title' style={{marginTop:'10vh', color:'white'}}>{name}</h1>
-                    <h1 id='time' style={{marginBottom:'10vh', color:'white'}}>{time}</h1>
+                    <Typography variant='h2' style={{marginTop:'100px',color:'white'}}>{name}</Typography>
+                    <Typography variant='h3' style={{marginTop:'10px',color:'white'}}>{time}</Typography>
                 </div>
                 <div>
                 <div style={{marginTop:'50px'}} id='cardContainer'></div>

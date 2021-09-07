@@ -13,6 +13,7 @@ import { toast } from 'react-toastify'
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
+import { Typography } from '@material-ui/core'
 
 import CountDown from './CountDown'
 
@@ -213,7 +214,7 @@ function MultiGameRoom({match}) {
                 document.getElementById('popUp')
 
             )
-            document.getElementById('time').setAttribute('hidden', 'true')
+            document.getElementById('quizTextDiv').remove()
             document.getElementById('stepRef').hidden = true
         }
         document.getElementById('cardContainer').innerHTML = ''
@@ -313,11 +314,10 @@ function MultiGameRoom({match}) {
         <div>
             <div>
             <div id='gameContent'>
-                <div>
-                    <h1> </h1>
-                    <h1 id='title' style={{marginTop:'10vh', color:'white'}}>{name}</h1>
-                    <h2 id='title' style={{marginTop:'1vh', color:'white'}}>{steps[activeStep]}</h2>
-                    <h1 id='time' style={{color:'white', bottom:'0'}}>{time}</h1>
+                <div id='quizTextDiv'>
+                    <Typography variant='h2' style={{marginTop:'100px',color:'white'}}>{name}</Typography>
+                    <Typography variant='h3' style={{marginTop:'10px',color:'white'}}>{steps[activeStep]}</Typography>
+                    <Typography variant='h3' style={{marginTop:'10px',color:'white'}}>{time}</Typography>
                 </div>
                 <div style={{display:'flex', alignItems:'center', width:'100%', justifyContent:'center'}}>
                 <Stepper id='stepRef' style={{width:'100%', maxWidth:'400px', margin:'20px', border:'2px solid black', boxShadow:'10px 10px 0 #262626'}} activeStep={activeStep}>
