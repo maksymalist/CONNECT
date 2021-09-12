@@ -24,6 +24,8 @@ function ViewMultiQuiz() {
 
     const { mode, code } = useParams()
 
+    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+
     useEffect(() => {
         Object.keys(document.getElementsByClassName('view__quiz__content__question')).map((el, index) => {
             if(document.getElementsByClassName('view__quiz__content__question')[index] !== undefined)
@@ -100,7 +102,7 @@ function ViewMultiQuiz() {
                             :
                             <AccountCircle style={{width:'30px', height:'30px', marginRight:'10px', borderRadius:'50%'}} color='primary'/>
                         }
-                        <h3>{Translations[localStorage.getItem('connectLanguage')].multiquiz.by} {quiz.userName || 'undefined'}</h3>
+                        <h3>{Translations[userLanguage].multiquiz.by} {quiz.userName || 'undefined'}</h3>
                     </div>
                         <div>
                             {
@@ -122,12 +124,12 @@ function ViewMultiQuiz() {
             <div className="view__quiz__content__questions">
                 <div style={{display:'flex', justifyContent:'space-between', position:'sticky', top:'0', backgroundColor:'white', padding:'10px', zIndex:'1', 
                 borderBottom:'1px solid #c4c4c4'}}>
-                    <Typography variant="h5" component='h5'>{Translations[localStorage.getItem('connectLanguage')].multiquiz.steps}({numberOfSteps})</Typography>
+                    <Typography variant="h5" component='h5'>{Translations[userLanguage].multiquiz.steps}({numberOfSteps})</Typography>
                     {
                         ansIsShown ?
-                        <Button variant="contained" color="secondary" onClick={()=>handleHideAnswers()}>{Translations[localStorage.getItem('connectLanguage')].multiquiz.hideanswers}</Button>
+                        <Button variant="contained" color="secondary" onClick={()=>handleHideAnswers()}>{Translations[userLanguage].multiquiz.hideanswers}</Button>
                         :
-                        <Button variant="contained" color="primary" onClick={()=>handleShowAnswers()}>{Translations[localStorage.getItem('connectLanguage')].multiquiz.showanswers}</Button>
+                        <Button variant="contained" color="primary" onClick={()=>handleShowAnswers()}>{Translations[userLanguage].multiquiz.showanswers}</Button>
                     }
                 </div>
                 {

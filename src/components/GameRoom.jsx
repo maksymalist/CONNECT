@@ -30,6 +30,8 @@ export default function GameRoom({match}) {
     var quiz2
     const cardsLen = []
 
+    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+
     const getQuiz = async () => {
         const eventref = firebase.database().ref(`quizes/${match.params.gameid}`);
         const snapshot = await eventref.once('value');
@@ -219,7 +221,7 @@ export default function GameRoom({match}) {
             //console.log(data.time, data.user)
         })
         socket.on('PlayerFinished2', (data)=>{
-            toast.success(`${data} ${Translations[localStorage.getItem('connectLanguage')].alerts.playerfinishedgame}`)
+            toast.success(`${data} ${Translations[userLanguage].alerts.playerfinishedgame}`)
         })
 
         socket.on('EndedGame', (data)=>{

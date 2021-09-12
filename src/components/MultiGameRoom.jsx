@@ -37,6 +37,8 @@ function MultiGameRoom({match}) {
     var quiz2
     var cardsLen = []
 
+    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+
     var [emitted, setEmitted] = useState(false)
     
     const getQuiz = async (currentQuiz, name) => {
@@ -274,7 +276,7 @@ function MultiGameRoom({match}) {
             //console.log(data.time, data.user)
         })
         socket.on('PlayerFinished2', (data)=>{
-            toast.success(`${data} ${Translations[localStorage.getItem('connectLanguage')].alerts.playerfinishedgame}`)
+            toast.success(`${data} ${Translations[userLanguage].alerts.playerfinishedgame}`)
         })
 
         socket.on('EndedGame', (data)=>{

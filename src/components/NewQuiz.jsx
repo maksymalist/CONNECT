@@ -22,24 +22,25 @@ export default function NewQuiz() {
     const [tags, setTags] = useState([]);
     const [currentTag, setCurrentTag] = useState('');
     const [tagNumber, setTagNumber] = useState(0);
+    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
 
 
     const quizObj = {}
 
     useEffect(() => {
-        toast.info(Translations[localStorage.getItem('connectLanguage')].alerts.eachansdifferent)
+        toast.info(Translations[userLanguage].alerts.eachansdifferent)
     }, [])
 
     const Submit = () => {
         for(var i = 0; i < document.getElementsByClassName('userInput').length; i++){
             console.log('userIn')
             if(document.getElementsByClassName('userInput')[i].value == ""){
-                toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.fieldleftempty)
+                toast.error(Translations[userLanguage].alerts.fieldleftempty)
                 return
             }
         }
         firebase.database().ref(`quizes/`).push(quizObj)
-        toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.quizcreated)
+        toast.success(Translations[userLanguage].alerts.quizcreated)
         for(var i = 0; i < document.getElementsByClassName('userInput').length; i++){
             document.getElementsByClassName('userInput')[i].value = ""
         }
@@ -57,7 +58,7 @@ export default function NewQuiz() {
     const setQuizObj = () => {
         if(JSON.parse(localStorage.getItem('user')) == null) {
             window.location = '/login'
-            toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.logincreatequiz)
+            toast.error(Translations[userLanguage].alerts.logincreatequiz)
             return
         }
         console.log(document.getElementsByClassName('questions'))
@@ -83,9 +84,9 @@ export default function NewQuiz() {
 
     const Card = ({questionNumber}) => (
         <div className='card2' id={`question${questionNumber}card`}>
-            <h1>{Translations[localStorage.getItem('connectLanguage')].newquiz.questions.title} {questionNumber}</h1>
-            <input className='questions userInput' id={`question${questionNumber}`} type='text' placeholder={Translations[localStorage.getItem('connectLanguage')].newquiz.questions.question}/>
-            <br></br><input className='answers userInput' id={`answer${questionNumber}`} type='text' placeholder={Translations[localStorage.getItem('connectLanguage')].newquiz.questions.answer} />
+            <h1>{Translations[userLanguage].newquiz.questions.title} {questionNumber}</h1>
+            <input className='questions userInput' id={`question${questionNumber}`} type='text' placeholder={Translations[userLanguage].newquiz.questions.question}/>
+            <br></br><input className='answers userInput' id={`answer${questionNumber}`} type='text' placeholder={Translations[userLanguage].newquiz.questions.answer} />
         </div>
     )
 
@@ -117,25 +118,25 @@ export default function NewQuiz() {
         <div style={{marginTop:'100px'}}>
             <div style={{display:'flex', alignItems:'center', flexDirection:'column', backgroundColor:'white', margin:'10px', border:'2px solid black', boxShadow:'10px 10px 0 #262626'}}>
                 <div style={{display:'flex', alignItems:'center', flexDirection:'column'}}>
-                    <Typography variant="h2" style={{margin:'10px'}}><b>{Translations[localStorage.getItem('connectLanguage')].newquiz.title}</b></Typography>
+                    <Typography variant="h2" style={{margin:'10px'}}><b>{Translations[userLanguage].newquiz.title}</b></Typography>
                     <br></br>
                     <Divider style={{width:'90vw'}} light/>
                     <br></br>
-                    <Typography variant="h5" style={{margin:'10px'}}>{Translations[localStorage.getItem('connectLanguage')].newquiz.step1}</Typography>
-                    <input className='userInput' id={'quizName'} type='text' placeholder={Translations[localStorage.getItem('connectLanguage')].newquiz.input}></input>
+                    <Typography variant="h5" style={{margin:'10px'}}>{Translations[userLanguage].newquiz.step1}</Typography>
+                    <input className='userInput' id={'quizName'} type='text' placeholder={Translations[userLanguage].newquiz.input}></input>
                 </div>
                 <div style={{width:'100%', display:'flex', alignItems:'center', flexDirection:'column', marginTop:'100px'}}>
-                    <Typography variant="h5" style={{margin:'10px'}}>{Translations[localStorage.getItem('connectLanguage')].newquiz.step2}</Typography>
+                    <Typography variant="h5" style={{margin:'10px'}}>{Translations[userLanguage].newquiz.step2}</Typography>
                     <UploadButton/>
                 </div>
-                <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>{Translations[localStorage.getItem('connectLanguage')].newquiz.step3}</Typography>
+                <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>{Translations[userLanguage].newquiz.step3}</Typography>
                 <div style={{backgroundColor:'white', padding:'15px', border:'2px solid black', boxShadow:'10px 10px 0 #262626', width:'80vw', maxWidth:'600px', marginTop:'50px'}}>
-                    <Typography variant="h3">{Translations[localStorage.getItem('connectLanguage')].newquiz.tags.title}</Typography>
+                    <Typography variant="h3">{Translations[userLanguage].newquiz.tags.title}</Typography>
                     <br></br>
                     <Divider light/>
                     <br></br>
-                    <TextField variant="outlined" size='small' label={Translations[localStorage.getItem('connectLanguage')].newquiz.tags.input} helperText={<span style={{color:'black'}}>{5-tagNumber} {Translations[localStorage.getItem('connectLanguage')].newquiz.tags.helpertext}</span>} onChange={(e)=>{setCurrentTag(e.target.value)}} value={currentTag}/>
-                    <Button variant="contained" size='medium' color="primary" onClick={()=>{AddTag(currentTag)}}>{Translations[localStorage.getItem('connectLanguage')].newquiz.tags.button}</Button>
+                    <TextField variant="outlined" size='small' label={Translations[userLanguage].newquiz.tags.input} helperText={<span style={{color:'black'}}>{5-tagNumber} {Translations[userLanguage].newquiz.tags.helpertext}</span>} onChange={(e)=>{setCurrentTag(e.target.value)}} value={currentTag}/>
+                    <Button variant="contained" size='medium' color="primary" onClick={()=>{AddTag(currentTag)}}>{Translations[userLanguage].newquiz.tags.button}</Button>
                     <br></br>
                     {
                         tags.map((tag, index) => (
@@ -143,7 +144,7 @@ export default function NewQuiz() {
                         ))
                     }
                 </div>
-                <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>{Translations[localStorage.getItem('connectLanguage')].newquiz.step4}</Typography>
+                <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>{Translations[userLanguage].newquiz.step4}</Typography>
                 <div className='cardContainer2' style={{margin:'1%', marginTop:'10px'}}>
                     {
                         questionArray.map((question, i) => (
@@ -155,7 +156,7 @@ export default function NewQuiz() {
                     </div>
                 </div>
                 <div>
-                    <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='large' onClick={()=>{setQuizObj()}}>{Translations[localStorage.getItem('connectLanguage')].newquiz.button}</Button>
+                    <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='large' onClick={()=>{setQuizObj()}}>{Translations[userLanguage].newquiz.button}</Button>
                 </div>
             </div>
         </div>

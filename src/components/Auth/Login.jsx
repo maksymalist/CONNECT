@@ -17,6 +17,8 @@ import Translations from '../../translations/translations.json'
 
 function Login() {
 
+  const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+
     function updateUsers(email, googleId, userName){
         firebase.database().ref(`users/${googleId}`).set({
           UserName: userName,
@@ -58,10 +60,10 @@ function Login() {
             <div className='login-component-container'>
                 <img id='home' onClick={()=>{window.location = '/'}} className="nav-links lileft" alt="connect-logo" width={250} height={250} src={logo}/>
                 <br></br>
-                <h2>{Translations[localStorage.getItem('connectLanguage')].login.title}</h2>
+                <h2>{Translations[userLanguage].login.title}</h2>
                 <GoogleLogin
                     clientId='701696427912-ajmlkcj3hpo46q5fokhtn5mmeib0m3be.apps.googleusercontent.com'
-                    buttonText={Translations[localStorage.getItem('connectLanguage')].login.googlebutton}
+                    buttonText={Translations[userLanguage].login.googlebutton}
                     onSuccess={responseGoogle}
                     onFailure={()=>{console.log(Error)}}
                     cookiePolicy={'single_host_origin'}

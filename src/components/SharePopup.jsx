@@ -18,6 +18,8 @@ function SharePopup({ shareLink, close }) {
 
     const [showPopupModal, setShowPopupModal] = useState(false);
 
+    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+
     useEffect(() => {
         const script = document.createElement('script');
       
@@ -39,7 +41,7 @@ function SharePopup({ shareLink, close }) {
       const shareLinkFunc = () => {
         var text = url;
         navigator.clipboard.writeText(text).then(function() {
-          toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.copiedinvitation);
+          toast.success(Translations[userLanguage].alerts.copiedinvitation);
         }, function(err) {
           toast.error(err);
         });
@@ -49,13 +51,13 @@ function SharePopup({ shareLink, close }) {
         <Backdrop style={{zIndex:'1'}} open onClick={close}>
             <div className='share__popup__main__div'>
                 <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start', paddingLeft:'10px', width:'100%'}}>
-                    <Typography variant='h4' >{Translations[localStorage.getItem('connectLanguage')].sharepopup.title}</Typography>
+                    <Typography variant='h4' >{Translations[userLanguage].sharepopup.title}</Typography>
                 </div>
                 <br></br>
                 <Divider style={{width:'100%'}} light/>
                 <br></br>
                 <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start', paddingLeft:'10px', width:'100%'}}>
-                    <Typography variant='h6' >{Translations[localStorage.getItem('connectLanguage')].sharepopup.sub}</Typography>
+                    <Typography variant='h6' >{Translations[userLanguage].sharepopup.sub}</Typography>
                 </div>
                 <div className='share__popup__icon__div'>
                     <GoogleShareToClassRoom
@@ -71,7 +73,7 @@ function SharePopup({ shareLink, close }) {
                     <div class="teams-share-button" data-href={url} data-button-type="small" data-icon-px-size="75" data-preview="true"></div>
                 </div>
                 <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start', paddingLeft:'10px', width:'100%'}}>
-                    <Typography variant='h6' >{Translations[localStorage.getItem('connectLanguage')].sharepopup.sub2}</Typography>
+                    <Typography variant='h6' >{Translations[userLanguage].sharepopup.sub2}</Typography>
                 </div>
                 <div style={{display:'flex', alignItems:'center', flexDirection:'row'}}>
                     <TextField
@@ -91,7 +93,7 @@ function SharePopup({ shareLink, close }) {
                         style={{width:'250px'}}
                     />
                     <Button onClick={()=>{shareLinkFunc()}} variant="contained" color="primary" style={{marginTop:'8px', height:'50px', marginLeft:'10px'}}>
-                    {Translations[localStorage.getItem('connectLanguage')].sharepopup.button}<Link style={{color:'white', marginLeft:'10px'}}/>
+                    {Translations[userLanguage].sharepopup.button}<Link style={{color:'white', marginLeft:'10px'}}/>
                     </Button>
                 </div>
             </div>

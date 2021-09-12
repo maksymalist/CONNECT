@@ -56,6 +56,8 @@ export default function EnterCodeForm({match, location}) {
     const [joinFormCode,  setJoinFormCode] = useState("")
     const [joinFormNickname, setJoinFormNickname] = useState("")
 
+    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+
 
     useEffect(() => {
         const Gamecode = new URLSearchParams(search).get('code');
@@ -169,14 +171,14 @@ export default function EnterCodeForm({match, location}) {
         })
         const terminateRoomPopUp = (room) => (
             <div>
-                <h3>{Translations[localStorage.getItem('connectLanguage')].alerts.terminate.text1}</h3>
-                <h4>{Translations[localStorage.getItem('connectLanguage')].alerts.terminate.text2}</h4>
-                <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{terminateRoom(room)}}>{Translations[localStorage.getItem('connectLanguage')].alerts.terminate.button}</Button>
+                <h3>{Translations[userLanguage].alerts.terminate.text1}</h3>
+                <h4>{Translations[userLanguage].alerts.terminate.text2}</h4>
+                <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{terminateRoom(room)}}>{Translations[userLanguage].alerts.terminate.button}</Button>
             </div>
         )
 
         socket.on('roomAlreadyExists', (data)=>{
-            toast.info(Translations[localStorage.getItem('connectLanguage')].alerts.roomalreadyexists)
+            toast.info(Translations[userLanguage].alerts.roomalreadyexists)
         })
 
         socket.on('alreadyHostRoom', (data)=>{
@@ -190,7 +192,7 @@ export default function EnterCodeForm({match, location}) {
         })
 
         socket.on('gameAlreadyStarted', (data) => {
-            toast.info(`${Translations[localStorage.getItem('connectLanguage')].alerts.gamealreadystarted} ${data.room}`)
+            toast.info(`${Translations[userLanguage].alerts.gamealreadystarted} ${data.room}`)
         })
 
 
@@ -200,11 +202,11 @@ export default function EnterCodeForm({match, location}) {
 
     const JoinRoom = ()=>{
         if(joinFormNickname === ""){ 
-            toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.entername)
+            toast.error(Translations[userLanguage].alerts.entername)
             return
         }
         if(joinFormCode === ""){ 
-            toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.entercode)
+            toast.error(Translations[userLanguage].alerts.entercode)
             return
         }
         socket.emit('joinroom', {
@@ -216,15 +218,15 @@ export default function EnterCodeForm({match, location}) {
     
     function CreateRoom(){
         if(document.getElementById('roomName').value === undefined){
-            toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.enterroomname)
+            toast.error(Translations[userLanguage].alerts.enterroomname)
             return
         }
         if(gameCode === ''){
-            toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.entergamecode)
+            toast.error(Translations[userLanguage].alerts.entergamecode)
             return
         }
         if(gameMode === ''){
-            toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.entergamemode)
+            toast.error(Translations[userLanguage].alerts.entergamemode)
             return
         }
         console.log(checked)
@@ -245,7 +247,7 @@ export default function EnterCodeForm({match, location}) {
             room: room,
             googleId: JSON.parse(localStorage.getItem('user')).profileObj.googleId
         })
-        toast.success(`${Translations[localStorage.getItem('connectLanguage')].alerts.roomterminated} ${room}`)
+        toast.success(`${Translations[userLanguage].alerts.roomterminated} ${room}`)
     }
 
     
@@ -266,27 +268,27 @@ export default function EnterCodeForm({match, location}) {
             {
                 playMode?
                         <div id='mainConatainer'>
-                            <h1>{Translations[localStorage.getItem('connectLanguage')].play.join.title}</h1>
+                            <h1>{Translations[userLanguage].play.join.title}</h1>
                             {
                                 joinFormStep === 0 &&
                                 <>
-                                    <input value={joinFormCode} onChange={(event) => setJoinFormCode(event.target.value)} style={{width:'100%', height:'48px'}} defaultValue={code} placeholder={Translations[localStorage.getItem('connectLanguage')].play.join.input} type="text" id="code"/>
-                                    <br></br><Button style={{marginTop:'1vh', width:'100%', fontSize:'1.2rem', height:'48px'}} variant="contained" color="primary" size='small' onClick={()=>{setJoinFormStep(1)}}>{Translations[localStorage.getItem('connectLanguage')].play.join.button}</Button>
+                                    <input value={joinFormCode} onChange={(event) => setJoinFormCode(event.target.value)} style={{width:'100%', height:'48px'}} defaultValue={code} placeholder={Translations[userLanguage].play.join.input} type="text" id="code"/>
+                                    <br></br><Button style={{marginTop:'1vh', width:'100%', fontSize:'1.2rem', height:'48px'}} variant="contained" color="primary" size='small' onClick={()=>{setJoinFormStep(1)}}>{Translations[userLanguage].play.join.button}</Button>
                                 </>
                             }
                             {
                                 joinFormStep === 1 &&
                                 <>
                                     <input value={joinFormNickname} onChange={(event) => setJoinFormNickname(event.target.value)} style={{width:'100%', height:'48px'}} placeholder={'Enter Your Nickname'} type="text" id="name"/>
-                                    <br></br><Button style={{marginTop:'1vh', width:'100%', fontSize:'1.2rem', height:'48px'}} variant="contained" color="primary" size='small' onClick={()=>{JoinRoom()}}>{Translations[localStorage.getItem('connectLanguage')].play.join.button2}</Button>
+                                    <br></br><Button style={{marginTop:'1vh', width:'100%', fontSize:'1.2rem', height:'48px'}} variant="contained" color="primary" size='small' onClick={()=>{JoinRoom()}}>{Translations[userLanguage].play.join.button2}</Button>
                                 </>
                             }
                         </div>
                         :
                         <div id='subConatainer'>
-                        <h1>{Translations[localStorage.getItem('connectLanguage')].play.host.title}</h1>
+                        <h1>{Translations[userLanguage].play.host.title}</h1>
                         <FormControl>
-                        <InputLabel id="demo-simple-select-outlined-label">{Translations[localStorage.getItem('connectLanguage')].play.host.gamemode.title}</InputLabel>
+                        <InputLabel id="demo-simple-select-outlined-label">{Translations[userLanguage].play.host.gamemode.title}</InputLabel>
                             <Select
                                 labelId="demo-simple-select-outlined-label"
                                 id="demo-simple-select-outlined"
@@ -296,24 +298,24 @@ export default function EnterCodeForm({match, location}) {
                                 style={{width:'180px', height:'40px'}}
                                 required
                                 >
-                                <MenuItem value='normal'><QuestionAnswerRounded color='primary'/>⠀{Translations[localStorage.getItem('connectLanguage')].play.host.gamemode.normal}</MenuItem>
-                                <MenuItem value='multi'><FilterNoneRounded color='primary'/>⠀{Translations[localStorage.getItem('connectLanguage')].play.host.gamemode.multi}</MenuItem>
+                                <MenuItem value='normal'><QuestionAnswerRounded color='primary'/>⠀{Translations[userLanguage].play.host.gamemode.normal}</MenuItem>
+                                <MenuItem value='multi'><FilterNoneRounded color='primary'/>⠀{Translations[userLanguage].play.host.gamemode.multi}</MenuItem>
                             </Select>
                             </FormControl>
                             <br></br>
-                            <br></br><input className='host-input' placeholder={Translations[localStorage.getItem('connectLanguage')].play.host.input} type="text" id="roomName"/>
-                            <br></br><input value={gameCode} onChange={(event) => setGameCode(event.target.value)} style={{marginLeft:'8px'}} className='host-input' placeholder={Translations[localStorage.getItem('connectLanguage')].play.host.input2} type="text" id="gameCode"/>
+                            <br></br><input className='host-input' placeholder={Translations[userLanguage].play.host.input} type="text" id="roomName"/>
+                            <br></br><input value={gameCode} onChange={(event) => setGameCode(event.target.value)} style={{marginLeft:'8px'}} className='host-input' placeholder={Translations[userLanguage].play.host.input2} type="text" id="gameCode"/>
                             {gameCode != '' ?
                                 null
                                 : <InfoOutlinedIcon onClick={()=>{window.location = '/browsequizzes/normal'}} style={{marginBottom:'-8px', marginRight:'-15px', position:'relative', left:'-30px'}} color='primary'/>
                             }
                             <div>
-                                <h1 style={{fontSize:'25px'}}>{Translations[localStorage.getItem('connectLanguage')].play.host.presets.title}</h1><br></br>
-                                <label>{Translations[localStorage.getItem('connectLanguage')].play.host.presets.maxplayers} </label><input ref={maxPlayers} id='max-players' type='number' min='0' max='40'/>
-                                <br></br><label>{Translations[localStorage.getItem('connectLanguage')].play.host.presets.podiumplaces} </label><input ref={podiumPlaces} id='podium-places' type='number' min='3' max='10'/>
+                                <h1 style={{fontSize:'25px'}}>{Translations[userLanguage].play.host.presets.title}</h1><br></br>
+                                <label>{Translations[userLanguage].play.host.presets.maxplayers} </label><input ref={maxPlayers} id='max-players' type='number' min='0' max='40'/>
+                                <br></br><label>{Translations[userLanguage].play.host.presets.podiumplaces} </label><input ref={podiumPlaces} id='podium-places' type='number' min='3' max='10'/>
                                 <br></br>
                                     <div>
-                                        <label>{Translations[localStorage.getItem('connectLanguage')].play.host.presets.friendly}</label>
+                                        <label>{Translations[userLanguage].play.host.presets.friendly}</label>
                                         <Switch 
                                             size="small" 
                                             checked={checked} 
@@ -324,8 +326,8 @@ export default function EnterCodeForm({match, location}) {
                                         />
                                     </div>
                             </div>
-                            <br></br><Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{Generatecode()}}>{Translations[localStorage.getItem('connectLanguage')].play.host.presets.button} <CasinoRoundedIcon style={{marginLeft:'10px'}}/></Button>
-                            <br></br><Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{CreateRoom()}}>{Translations[localStorage.getItem('connectLanguage')].play.host.presets.button2}</Button>
+                            <br></br><Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{Generatecode()}}>{Translations[userLanguage].play.host.presets.button} <CasinoRoundedIcon style={{marginLeft:'10px'}}/></Button>
+                            <br></br><Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{CreateRoom()}}>{Translations[userLanguage].play.host.presets.button2}</Button>
                         </div>
             }
         </div>

@@ -26,6 +26,7 @@ import Translations from '../translations/translations.json'
 export default function BrowseQuizes({match}) {
 
     const [gameMode, setGameMode] = useState("")
+    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
 
     useEffect(() => {
         setGameMode(match.params.gamemode)
@@ -80,7 +81,7 @@ export default function BrowseQuizes({match}) {
                                 }}
                             />                       
                          }
-                        <h3>{`${Translations[localStorage.getItem('connectLanguage')].quizzes.by} ${data[k].userName}`}</h3>
+                        <h3>{`${Translations[userLanguage].quizzes.by} ${data[k].userName}`}</h3>
                     </div>
                     <div>
                         {
@@ -147,7 +148,7 @@ export default function BrowseQuizes({match}) {
                                 }}
                             />                       
                          }
-                        <h3>{`${Translations[localStorage.getItem('connectLanguage')].quizzes.by} ${data[k].userName}`}</h3>
+                        <h3>{`${Translations[userLanguage].quizzes.by} ${data[k].userName}`}</h3>
                     </div>
                     <div>
                         {
@@ -192,9 +193,9 @@ export default function BrowseQuizes({match}) {
     return (
         <>  
         <div style={{width:'100%', display:'flex', justifyContent:'flex-start',backgroundColor:'white', alignItems:'center', border:'2px solid black', boxShadow:'10px 10px 0 #262626', padding:'10px'}}>
-            <h1 style={{fontSize:'1.5rem', marginRight:'20px'}}>{Translations[localStorage.getItem('connectLanguage')].quizzes.bar.title}</h1>
+            <h1 style={{fontSize:'1.5rem', marginRight:'20px'}}>{Translations[userLanguage].quizzes.bar.title}</h1>
             <FormControl variant='outlined'>
-                <InputLabel id="demo-simple-select-outlined-label">{Translations[localStorage.getItem('connectLanguage')].quizzes.bar.gamemode.title}</InputLabel>
+                <InputLabel id="demo-simple-select-outlined-label">{Translations[userLanguage].quizzes.bar.gamemode.title}</InputLabel>
                     <Select
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
@@ -204,8 +205,8 @@ export default function BrowseQuizes({match}) {
                         style={{width:'180px', height:'40px'}}
                         required
                         >
-                        <MenuItem value='normal'><QuestionAnswerRounded color='primary'/>⠀{Translations[localStorage.getItem('connectLanguage')].quizzes.bar.gamemode.normal}</MenuItem>
-                        <MenuItem value='multi'><FilterNoneRounded color='primary'/>⠀{Translations[localStorage.getItem('connectLanguage')].quizzes.bar.gamemode.multi}</MenuItem>
+                        <MenuItem value='normal'><QuestionAnswerRounded color='primary'/>⠀{Translations[userLanguage].quizzes.bar.gamemode.normal}</MenuItem>
+                        <MenuItem value='multi'><FilterNoneRounded color='primary'/>⠀{Translations[userLanguage].quizzes.bar.gamemode.multi}</MenuItem>
                     </Select>
             </FormControl>
         </div>

@@ -6,11 +6,12 @@ import Translations from '../translations/translations.json'
 
 export default function AfterRoomLeave(props) {
     const h1Style = {marginTop:'15vh', color: '#fff'}
+    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
 
     return (
         <div>
-            <h1 style={h1Style}>{Translations[localStorage.getItem('connectLanguage')].leftroom.title}</h1>
-            <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{window.location = '/play'}}>{Translations[localStorage.getItem('connectLanguage')].leftroom.button}</Button>
+            <h1 style={h1Style}>{Translations[userLanguage].leftroom.title}</h1>
+            <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{window.location = '/play'}}>{Translations[userLanguage].leftroom.button}</Button>
         </div>
     )
 }

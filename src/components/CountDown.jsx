@@ -7,12 +7,13 @@ function CountDown({ start, room }) {
 
     var [number, setNumber] = useState(0)
     var [isCountdown, setIsCountdown] = useState(true)
-    const [countDownText, setCountDownText] = useState(Translations[localStorage.getItem('connectLanguage')].countdown.ready)
+    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+    const [countDownText, setCountDownText] = useState(Translations[userLanguage].countdown.ready)
 
     useEffect(() => {
         setInterval(() => {
             if(isCountdown === false) return
-            setCountDownText(Translations[localStorage.getItem('connectLanguage')].countdown.go)
+            setCountDownText(Translations[userLanguage].countdown.go)
             setNumber(number += 1)
             if(number === 4){
                 setIsCountdown(isCountdown = false)

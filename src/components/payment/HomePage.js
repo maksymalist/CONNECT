@@ -72,6 +72,8 @@ function HomePage(props) {
 
   const [open, setOpen] = useState(false);
 
+  const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+
   const stripe = useStripe();
   const elements = useElements();
 
@@ -131,7 +133,7 @@ useEffect(() => {
 
   const handleSubmitSub = async (event) => {
     if(JSON.parse(localStorage.getItem('user')) == null){
-        toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.loginbeforebuy)
+        toast.error(Translations[userLanguage].alerts.loginbeforebuy)
         setSpinner(false)
         return
     }
@@ -174,9 +176,9 @@ useEffect(() => {
               // Display error message in your UI.
               // The card was declined (i.e. insufficient funds, card has expired, etc)
             } else {
-              console.log(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy);
+              console.log(Translations[userLanguage].alerts.wowsoeasy);
               console.log(res.data)
-              toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy)
+              toast.success(Translations[userLanguage].alerts.wowsoeasy)
               renderAnimation()
               setSpinner(false)
               console.log(result)
@@ -196,9 +198,9 @@ useEffect(() => {
             }
           });
         } else {
-          console.log(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy);
+          console.log(Translations[userLanguage].alerts.wowsoeasy);
           console.log(res.data)
-          toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy)
+          toast.success(Translations[userLanguage].alerts.wowsoeasy)
           renderAnimation()
           setSpinner(false)
           console.log(result)
@@ -235,9 +237,9 @@ useEffect(() => {
               // Display error message in your UI.
               // The card was declined (i.e. insufficient funds, card has expired, etc)
             } else {
-              console.log(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy);
+              console.log(Translations[userLanguage].alerts.wowsoeasy);
               console.log(res.data)
-              toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy)
+              toast.success(Translations[userLanguage].alerts.wowsoeasy)
               renderAnimation()
               setSpinner(false)
               console.log(result)
@@ -256,9 +258,9 @@ useEffect(() => {
             }
           });
         } else {
-          console.log(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy);
+          console.log(Translations[userLanguage].alerts.wowsoeasy);
           console.log(res.data)
-          toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy)
+          toast.success(Translations[userLanguage].alerts.wowsoeasy)
           renderAnimation()
           setSpinner(false)
           console.log(result)
@@ -291,14 +293,14 @@ useEffect(() => {
 
   const handleApplyCoupon = async () => {
     if(coupon === ''){
-      toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.entercoupon)
+      toast.error(Translations[userLanguage].alerts.entercoupon)
       return
     }
     else{
       const res = await axios.post(`https://connect-now-backend.herokuapp.com/get-coupon`, {coupon: coupon})
       console.log(res.data)
       if(res.data === 'Invalid Coupon'){
-        toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.entervalidcoupon)
+        toast.error(Translations[userLanguage].alerts.entervalidcoupon)
         setActiveCoupon(false)
         setCurrentDiscount(currentDiscount = 'this field is optional')
         setDiscount(0)
@@ -318,7 +320,7 @@ useEffect(() => {
           setDiscountName(discountName = `${res.data.name} (${currentDiscount})`)
           setDiscount((res.data.percent_off / 100) * 10)
         }
-        toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.couponapplied)
+        toast.success(Translations[userLanguage].alerts.couponapplied)
         return
       }
     }
@@ -338,7 +340,7 @@ useEffect(() => {
     }
     else{
       setComfirmPurchase(false)
-      toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.purchasefailed)
+      toast.error(Translations[userLanguage].alerts.purchasefailed)
     }
   }
 
@@ -399,11 +401,11 @@ useEffect(() => {
     <Card id='paymentFormCard' className={classes.root} style={{padding:'10px', border:'2px solid black', boxShadow:'10px 10px 0px #262626', borderRadius:'0px'}}>
       <CardContent className={classes.content}>
         <Typography variant='h4' component='h4'>
-        {Translations[localStorage.getItem('connectLanguage')].paymentform.title}
+        {Translations[userLanguage].paymentform.title}
         </Typography>
         <br></br>
         <Typography variant='h5'>
-          {props.match.params.plan === 'classroom' ? Translations[localStorage.getItem('connectLanguage')].paymentform.title : 'Premium Plan'}
+          {props.match.params.plan === 'classroom' ? Translations[userLanguage].paymentform.title : 'Premium Plan'}
         </Typography>
         <br></br>
         <Divider/>
@@ -444,7 +446,7 @@ useEffect(() => {
             onChange={(e) => setCoupon(e.target.value)}
           />
           <Button variant="contained" color="primary" style={{marginTop:'-12px', marginLeft:'5px'}} onClick={()=>handleApplyCoupon()}>
-          {Translations[localStorage.getItem('connectLanguage')].paymentform.button}
+          {Translations[userLanguage].paymentform.button}
           </Button>
         </div>
         <CardInput />
@@ -453,7 +455,7 @@ useEffect(() => {
             {spinner ?
               <CircularProgress style={{marginLeft:'32px', marginRight:'32px'}} size={20} />
               :
-              Translations[localStorage.getItem('connectLanguage')].paymentform.button2
+              Translations[userLanguage].paymentform.button2
             }
           </Button>
         </div>

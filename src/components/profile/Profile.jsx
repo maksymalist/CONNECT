@@ -23,6 +23,8 @@ function Profile() {
 
     const [userQuizzes, setUserQuizzes] = useState([])
 
+    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+
     const [value, setValue] = useState(0);
 
     const quizzesTab = useRef(null)
@@ -146,9 +148,9 @@ function Profile() {
                         onChange={handleChange}
                         aria-label="disabled tabs example"
                     >
-                        <Tab label={Translations[localStorage.getItem('connectLanguage')].profile.quizzes.title} />
-                        <Tab label={Translations[localStorage.getItem('connectLanguage')].profile.saved.title} />
-                        <Tab label={Translations[localStorage.getItem('connectLanguage')].profile.class.title} />
+                        <Tab label={Translations[userLanguage].profile.quizzes.title} />
+                        <Tab label={Translations[userLanguage].profile.saved.title} />
+                        <Tab label={Translations[userLanguage].profile.class.title} />
                     </Tabs>
                 </div>
             </div>
@@ -156,7 +158,7 @@ function Profile() {
                 {
                     value === 0?
                     <div>
-                        <h1>{Translations[localStorage.getItem('connectLanguage')].profile.quizzes.title}</h1>
+                        <h1>{Translations[userLanguage].profile.quizzes.title}</h1>
                         <div className="profile-tab-quizzes" ref={quizzesTab}>
                                 {
                                     userQuizzes.map((data, index) => {
@@ -180,7 +182,7 @@ function Profile() {
                                                             }}
                                                         />                       
                                                     }
-                                                    <h3>{`${Translations[localStorage.getItem('connectLanguage')].profile.quizzes.by} ${data.quiz.userName}`}</h3>
+                                                    <h3>{`${Translations[userLanguage].profile.quizzes.by} ${data.quiz.userName}`}</h3>
                                                 </div>
                                                 {/* <Button variant='contained' size='small' color='primary' style={{margin:'10px'}}>Edit</Button> */}
                                                 <div>
@@ -209,12 +211,12 @@ function Profile() {
                 }
                 {
                     value === 1?
-                    <h1>{Translations[localStorage.getItem('connectLanguage')].profile.saved.title}</h1>:
+                    <h1>{Translations[userLanguage].profile.saved.title}</h1>:
                     null
                 }
                 {
                     value === 2 ?
-                    <h1>{Translations[localStorage.getItem('connectLanguage')].profile.class.title}</h1>:
+                    <h1>{Translations[userLanguage].profile.class.title}</h1>:
                     null
                 }
             </div>

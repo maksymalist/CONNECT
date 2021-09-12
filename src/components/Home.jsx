@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Divider } from '@material-ui/core'
 import { Star, School, Group, PartyMode } from '@material-ui/icons'
 import HomePageImage from '../img/HomePageImage1.svg'
@@ -19,6 +19,8 @@ export default function HomePage() {
             document.getElementById('root').style.padding = '10px'
         }
     }, [])
+
+    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
 
     const Gears = () => (
         <svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,11 +55,11 @@ export default function HomePage() {
             <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
             <div id='homePageDivWhite' className='homePageDivWhite'>
             <br></br><br></br><br></br><br></br>
-            <h2 className='homepage-text-medium' style={{maxWidth:'250px'}}>{Translations[localStorage.getItem('connectLanguage')].home.sub1}</h2>
+            <h2 className='homepage-text-medium' style={{maxWidth:'250px'}}>{Translations[userLanguage].home.sub1}</h2>
             <br /><br /><br /><br /><br /><br /><br />
-            <h3 className='homepage-text-small' style={{maxWidth:'250px'}}>{Translations[localStorage.getItem('connectLanguage')].home.sub2}</h3>
+            <h3 className='homepage-text-small' style={{maxWidth:'250px'}}>{Translations[userLanguage].home.sub2}</h3>
             <br /><br /><br /><br /><br /><br></br><br></br>
-            <Button style={{zIndex:'2'}} id='button-start' variant="contained" color="primary" size='large' onClick={()=>{window.location = '/play'}}>{Translations[localStorage.getItem('connectLanguage')].home.buttonText}</Button>
+            <Button style={{zIndex:'2'}} id='button-start' variant="contained" color="primary" size='large' onClick={()=>{window.location = '/play'}}>{Translations[userLanguage].home.buttonText}</Button>
             <br></br><br></br><br></br><br></br><br></br><br></br>
             <div className='imgDiv'>
                 <img draggable='false' src={HomePageImage} id='home-page-img' alt='home-page-img'/>
@@ -68,51 +70,51 @@ export default function HomePage() {
         <div className="newdiv2">
         <img id='big-stripe-top' style={{minWidth:'1980px', transform:'rotate(-180deg)'}} src={BigStripe} alt='big-stripe'/>
             <div className='purpleAboutDiv'>
-                <h1 className='aboutText' style={{color:'white', zIndex:'230'}}>{Translations[localStorage.getItem('connectLanguage')].home.about.title}</h1>
+                <h1 className='aboutText' style={{color:'white', zIndex:'230'}}>{Translations[userLanguage].home.about.title}</h1>
                 <div className='aboutText' style={{color:'white', zIndex:'230'}}>
-                    <p className='aboutText' style={{color:'white', zIndex:'230'}}>{Translations[localStorage.getItem('connectLanguage')].home.about.sub}</p>
-                    <p className='aboutText' style={{color:'white', zIndex:'230'}}>{Translations[localStorage.getItem('connectLanguage')].home.about.sub2}</p>
+                    <p className='aboutText' style={{color:'white', zIndex:'230'}}>{Translations[userLanguage].home.about.sub}</p>
+                    <p className='aboutText' style={{color:'white', zIndex:'230'}}>{Translations[userLanguage].home.about.sub2}</p>
                 </div>
                 <img id='big-stripe' style={{minWidth:'1980px'}} src={BigStripe} alt='big-stripe'/>
             </div>
             <div id='aboutContainer'>
                 <div className='about-card'>
                     <School color='primary' style={{width:'100px', height:'100px'}}/>
-                    <h3>{Translations[localStorage.getItem('connectLanguage')].home.cards.learning}</h3>
+                    <h3>{Translations[userLanguage].home.cards.learning}</h3>
                     <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
                 </div>
                 <div className='about-card'>
                 <Group color='primary' style={{width:'100px', height:'100px'}}/>
-                    <h3>{Translations[localStorage.getItem('connectLanguage')].home.cards.collaboration}</h3>
+                    <h3>{Translations[userLanguage].home.cards.collaboration}</h3>
                     <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
                 </div>
                 <div className='about-card'>
                     <span style={{fontSize:'72px'}}>🎉</span>
-                    <h3>{Translations[localStorage.getItem('connectLanguage')].home.cards.fun}</h3>
+                    <h3>{Translations[userLanguage].home.cards.fun}</h3>
                     <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
                 </div>
             </div>
             <div classNam='howItWorks'>
-                <Typography variant='h4'>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.title} <Gears/></Typography>
+                <Typography variant='h4'>{Translations[userLanguage].home.howitworks.title} <Gears/></Typography>
                 <div className='howitworks-div'>
                     <div style={{display:'flex', alignItems:'center', flexWrap:'wrap', justifyContent:'space-around', width:'70%', margin:'100px', minWidth:'350px'}}>
                         <div className='iphone-div'>
                             <img draggable='false' id='background-video' src={HostVideo} alt='host-video'/>
                         </div>
                         <div style={{display:'flex', flexDirection:'column', height:'725px'}}>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.host.step1}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.host.step2}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.host.step3}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.host.step4}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.host.step5}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.host.step6}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.host.step1}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.host.step2}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.host.step3}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.host.step4}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.host.step5}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.host.step6}</p>
                         </div>
                     </div>
                     <div style={{display:'flex', alignItems:'center', flexWrap:'wrap', justifyContent:'space-around', width:'70%', margin:'100px', minWidth:'350px'}}>
                     <div style={{display:'flex', flexDirection:'column', height:'725px'}}>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.join.step1}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.join.step2}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.join.step3}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.join.step1}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.join.step2}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.join.step3}</p>
                         </div>
                         <div className='iphone-div'>
                             <img draggable='false' style={{width:'320px', height:'220px'}} src={JoinVideo} alt='join-video'/>
@@ -123,9 +125,9 @@ export default function HomePage() {
                             <img draggable='false' style={{width:'320px', height:'400px'}} src={GameRoomVideo} alt='game-video'/>
                         </div>
                         <div style={{display:'flex', flexDirection:'column', height:'725px'}}>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.play.step1}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.play.step2}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.play.step3}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.play.step1}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.play.step2}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.play.step3}</p>
                         </div>
                     </div>
                 </div>

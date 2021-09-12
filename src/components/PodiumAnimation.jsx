@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import '../style/podiumAnimation.css'
 import Translations from '../translations/translations.json'
 
@@ -16,6 +16,8 @@ function PodiumAnimation({ maxPodiumPlayers, podium }) {
     const secondPlaceName = useRef(null)
     const thirdPlaceName = useRef(null)
     const otherPlaceName = useRef(null)
+
+    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
 
     useEffect(() => {
         handlePodiumAnimation()
@@ -194,7 +196,7 @@ function PodiumAnimation({ maxPodiumPlayers, podium }) {
                     </div>
                     <br></br>
                     <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{window.location = '/play'}}>{Translations[localStorage.getItem('connectLanguage')].gameended.button}</Button>
+                        <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{window.location = '/play'}}>{Translations[userLanguage].gameended.button}</Button>
                     </div>
                 </div>
         </div>
