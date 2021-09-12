@@ -12,6 +12,8 @@ import { toast } from 'react-toastify'
 import { AddCircleRounded, DeleteRounded } from '@material-ui/icons'
 import UploadButton from './UploadButton'
 
+import Translations from '../translations/translations.json'
+
 export default function NewQuiz() {
 
     const [question, setQuestion] = useState(0)
@@ -25,19 +27,19 @@ export default function NewQuiz() {
     const quizObj = {}
 
     useEffect(() => {
-        toast.info("Please make sure each answer is different or the quiz will not work!")
+        toast.info(Translations[localStorage.getItem('connectLanguage')].alerts.eachansdifferent)
     }, [])
 
     const Submit = () => {
         for(var i = 0; i < document.getElementsByClassName('userInput').length; i++){
             console.log('userIn')
             if(document.getElementsByClassName('userInput')[i].value == ""){
-                toast.error('A field has been left empty!')
+                toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.fieldleftempty)
                 return
             }
         }
         firebase.database().ref(`quizes/`).push(quizObj)
-        toast.success('Quiz Created!')
+        toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.quizcreated)
         for(var i = 0; i < document.getElementsByClassName('userInput').length; i++){
             document.getElementsByClassName('userInput')[i].value = ""
         }
@@ -55,7 +57,7 @@ export default function NewQuiz() {
     const setQuizObj = () => {
         if(JSON.parse(localStorage.getItem('user')) == null) {
             window.location = '/login'
-            toast.error("Please login to create a quiz!")
+            toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.logincreatequiz)
             return
         }
         console.log(document.getElementsByClassName('questions'))
@@ -81,9 +83,9 @@ export default function NewQuiz() {
 
     const Card = ({questionNumber}) => (
         <div className='card2' id={`question${questionNumber}card`}>
-            <h1>Question {questionNumber}</h1>
-            <input className='questions userInput' id={`question${questionNumber}`} type='text' placeholder={'Question'}/>
-            <br></br><input className='answers userInput' id={`answer${questionNumber}`} type='text' placeholder={'Answer'} />
+            <h1>{Translations[localStorage.getItem('connectLanguage')].newquiz.questions.title} {questionNumber}</h1>
+            <input className='questions userInput' id={`question${questionNumber}`} type='text' placeholder={Translations[localStorage.getItem('connectLanguage')].newquiz.questions.question}/>
+            <br></br><input className='answers userInput' id={`answer${questionNumber}`} type='text' placeholder={Translations[localStorage.getItem('connectLanguage')].newquiz.questions.answer} />
         </div>
     )
 
@@ -115,25 +117,25 @@ export default function NewQuiz() {
         <div style={{marginTop:'100px'}}>
             <div style={{display:'flex', alignItems:'center', flexDirection:'column', backgroundColor:'white', margin:'10px', border:'2px solid black', boxShadow:'10px 10px 0 #262626'}}>
                 <div style={{display:'flex', alignItems:'center', flexDirection:'column'}}>
-                    <Typography variant="h2" style={{margin:'10px'}}><b>Create a Quiz</b></Typography>
+                    <Typography variant="h2" style={{margin:'10px'}}><b>{Translations[localStorage.getItem('connectLanguage')].newquiz.title}</b></Typography>
                     <br></br>
                     <Divider style={{width:'90vw'}} light/>
                     <br></br>
-                    <Typography variant="h5" style={{margin:'10px'}}>1. Give your quiz a title</Typography>
-                    <input className='userInput' id={'quizName'} type='text' placeholder="Title"></input>
+                    <Typography variant="h5" style={{margin:'10px'}}>{Translations[localStorage.getItem('connectLanguage')].newquiz.step1}</Typography>
+                    <input className='userInput' id={'quizName'} type='text' placeholder={Translations[localStorage.getItem('connectLanguage')].newquiz.input}></input>
                 </div>
                 <div style={{width:'100%', display:'flex', alignItems:'center', flexDirection:'column', marginTop:'100px'}}>
-                    <Typography variant="h5" style={{margin:'10px'}}>2. Upload your cover Image</Typography>
+                    <Typography variant="h5" style={{margin:'10px'}}>{Translations[localStorage.getItem('connectLanguage')].newquiz.step2}</Typography>
                     <UploadButton/>
                 </div>
-                <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>3. Give your quiz some tags</Typography>
+                <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>{Translations[localStorage.getItem('connectLanguage')].newquiz.step3}</Typography>
                 <div style={{backgroundColor:'white', padding:'15px', border:'2px solid black', boxShadow:'10px 10px 0 #262626', width:'80vw', maxWidth:'600px', marginTop:'50px'}}>
-                    <Typography variant="h3">Tags</Typography>
+                    <Typography variant="h3">{Translations[localStorage.getItem('connectLanguage')].newquiz.tags.title}</Typography>
                     <br></br>
                     <Divider light/>
                     <br></br>
-                    <TextField variant="outlined" size='small' label="Tag Name" helperText={<span style={{color:'black'}}>{5-tagNumber} tags Left</span>} onChange={(e)=>{setCurrentTag(e.target.value)}} value={currentTag}/>
-                    <Button variant="contained" size='medium' color="primary" onClick={()=>{AddTag(currentTag)}}>Add Tag</Button>
+                    <TextField variant="outlined" size='small' label={Translations[localStorage.getItem('connectLanguage')].newquiz.tags.input} helperText={<span style={{color:'black'}}>{5-tagNumber} {Translations[localStorage.getItem('connectLanguage')].newquiz.tags.helpertext}</span>} onChange={(e)=>{setCurrentTag(e.target.value)}} value={currentTag}/>
+                    <Button variant="contained" size='medium' color="primary" onClick={()=>{AddTag(currentTag)}}>{Translations[localStorage.getItem('connectLanguage')].newquiz.tags.button}</Button>
                     <br></br>
                     {
                         tags.map((tag, index) => (
@@ -141,7 +143,7 @@ export default function NewQuiz() {
                         ))
                     }
                 </div>
-                <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>4. Come up with some interesting questions</Typography>
+                <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>{Translations[localStorage.getItem('connectLanguage')].newquiz.step4}</Typography>
                 <div className='cardContainer2' style={{margin:'1%', marginTop:'10px'}}>
                     {
                         questionArray.map((question, i) => (
@@ -153,7 +155,7 @@ export default function NewQuiz() {
                     </div>
                 </div>
                 <div>
-                    <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='large' onClick={()=>{setQuizObj()}}>Submit</Button>
+                    <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='large' onClick={()=>{setQuizObj()}}>{Translations[localStorage.getItem('connectLanguage')].newquiz.button}</Button>
                 </div>
             </div>
         </div>

@@ -14,6 +14,8 @@ import { toast } from 'react-toastify'
 
 import { Typography } from '@material-ui/core'
 
+import Translations from '../translations/translations.json'
+
 export default function GameRoom({match}) {
     var [time, updateTime] = useState(0)
     var [selected, setSelected] = useState([])
@@ -217,7 +219,7 @@ export default function GameRoom({match}) {
             //console.log(data.time, data.user)
         })
         socket.on('PlayerFinished2', (data)=>{
-            toast.success(`${data} has finished their game!`)
+            toast.success(`${data} ${Translations[localStorage.getItem('connectLanguage')].alerts.playerfinishedgame}`)
         })
 
         socket.on('EndedGame', (data)=>{

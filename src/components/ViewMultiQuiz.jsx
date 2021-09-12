@@ -11,6 +11,8 @@ import "firebase/database";
 
 import Placeholder from '../img/quizCoverPlaceholder.svg'
 
+import Translations from '../translations/translations.json'
+
 function ViewMultiQuiz() {
 
     const [quiz, setQuiz] = useState([])
@@ -98,7 +100,7 @@ function ViewMultiQuiz() {
                             :
                             <AccountCircle style={{width:'30px', height:'30px', marginRight:'10px', borderRadius:'50%'}} color='primary'/>
                         }
-                        <h3>by {quiz.userName || 'undefined'}</h3>
+                        <h3>{Translations[localStorage.getItem('connectLanguage')].multiquiz.by} {quiz.userName || 'undefined'}</h3>
                     </div>
                         <div>
                             {
@@ -120,12 +122,12 @@ function ViewMultiQuiz() {
             <div className="view__quiz__content__questions">
                 <div style={{display:'flex', justifyContent:'space-between', position:'sticky', top:'0', backgroundColor:'white', padding:'10px', zIndex:'1', 
                 borderBottom:'1px solid #c4c4c4'}}>
-                    <Typography variant="h5" component='h5'>Steps({numberOfSteps})</Typography>
+                    <Typography variant="h5" component='h5'>{Translations[localStorage.getItem('connectLanguage')].multiquiz.steps}({numberOfSteps})</Typography>
                     {
                         ansIsShown ?
-                        <Button variant="contained" color="secondary" onClick={()=>handleHideAnswers()}>Hide Answers</Button>
+                        <Button variant="contained" color="secondary" onClick={()=>handleHideAnswers()}>{Translations[localStorage.getItem('connectLanguage')].multiquiz.hideanswers}</Button>
                         :
-                        <Button variant="contained" color="primary" onClick={()=>handleShowAnswers()}>Show Answers</Button>
+                        <Button variant="contained" color="primary" onClick={()=>handleShowAnswers()}>{Translations[localStorage.getItem('connectLanguage')].multiquiz.showanswers}</Button>
                     }
                 </div>
                 {

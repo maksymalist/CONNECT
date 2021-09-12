@@ -10,7 +10,7 @@ import { toast } from 'react-toastify'
 import '../../style/profileStyles.css'
 
 import Placeholder from '../../img/quizCoverPlaceholder.svg'
-import { keys } from '@material-ui/core/styles/createBreakpoints';
+import Translations from '../../translations/translations.json'
 
 function MyProfile() {
 
@@ -112,9 +112,9 @@ function MyProfile() {
                         onChange={handleChange}
                         aria-label="disabled tabs example"
                     >
-                        <Tab label="Quizzes" />
-                        <Tab label="Saved" />
-                        <Tab label="Class" />
+                        <Tab label={Translations[localStorage.getItem('connectLanguage')].profile.quizzes.title} />
+                        <Tab label={Translations[localStorage.getItem('connectLanguage')].profile.saved.title} />
+                        <Tab label={Translations[localStorage.getItem('connectLanguage')].profile.class.title} />
                     </Tabs>
                 </div>
             </div>
@@ -122,7 +122,7 @@ function MyProfile() {
                 {
                     value === 0?
                     <div>
-                        <h1>Quizzes</h1>
+                        <h1>{Translations[localStorage.getItem('connectLanguage')].profile.quizzes.title}</h1>
                         <Divider style={{marginLeft:'10px', marginRight:'10px'}}/>
                         <br></br>
                         <div className="profile-tab-quizzes" ref={quizzesTab}>
@@ -148,7 +148,7 @@ function MyProfile() {
                                                             }}
                                                         />                       
                                                     }
-                                                    <h3>{`by ${data.quiz.userName}`}</h3>
+                                                    <h3>{`${Translations[localStorage.getItem('connectLanguage')].profile.quizzes.by} ${data.quiz.userName}`}</h3>
                                                 </div>
                                                 {/* <Button variant='contained' size='small' color='primary' style={{margin:'10px'}}>Edit</Button> */}
                                                 <div>
@@ -178,7 +178,7 @@ function MyProfile() {
                 {
                     value === 1?
                     <div>
-                        <h1>Saved</h1>
+                        <h1>{Translations[localStorage.getItem('connectLanguage')].profile.saved.title}</h1>
                          <Divider style={{marginLeft:'10px', marginRight:'10px'}}/>
                         <br></br>
                     </div>:
@@ -187,7 +187,7 @@ function MyProfile() {
                 {
                     value === 2 ?
                     <div>
-                        <h1>Class</h1>
+                        <h1>{Translations[localStorage.getItem('connectLanguage')].profile.class.title}</h1>
                         <Divider style={{marginLeft:'10px', marginRight:'10px'}}/>
                         <br></br>
                     </div>:

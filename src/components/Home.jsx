@@ -7,7 +7,9 @@ import HostVideo from '../video/hostvideogif.gif'
 import JoinVideo from '../video/joinvideogf.gif'
 import GameRoomVideo from '../video/gameroomvideogf.gif'
 
+import Translations from '../translations/translations.json'
 
+import { Typography } from '@material-ui/core'
 
 export default function HomePage() {
     useEffect(() => {
@@ -51,11 +53,11 @@ export default function HomePage() {
             <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
             <div id='homePageDivWhite' className='homePageDivWhite'>
             <br></br><br></br><br></br><br></br>
-            <h2 className='homepage-text-medium'>Take learning to the <br/> next level.</h2>
+            <h2 className='homepage-text-medium' style={{maxWidth:'250px'}}>{Translations[localStorage.getItem('connectLanguage')].home.sub1}</h2>
             <br /><br /><br /><br /><br /><br /><br />
-            <h3 className='homepage-text-small'>CONNECT! helps you learn faster <br /> and together.</h3>
-            <br /><br /><br /><br /><br />
-            <Button style={{zIndex:'2'}} id='button-start' variant="contained" color="primary" size='large' onClick={()=>{window.location = '/play'}}>Start Learning ➞</Button>
+            <h3 className='homepage-text-small' style={{maxWidth:'250px'}}>{Translations[localStorage.getItem('connectLanguage')].home.sub2}</h3>
+            <br /><br /><br /><br /><br /><br></br><br></br>
+            <Button style={{zIndex:'2'}} id='button-start' variant="contained" color="primary" size='large' onClick={()=>{window.location = '/play'}}>{Translations[localStorage.getItem('connectLanguage')].home.buttonText}</Button>
             <br></br><br></br><br></br><br></br><br></br><br></br>
             <div className='imgDiv'>
                 <img draggable='false' src={HomePageImage} id='home-page-img' alt='home-page-img'/>
@@ -66,51 +68,51 @@ export default function HomePage() {
         <div className="newdiv2">
         <img id='big-stripe-top' style={{minWidth:'1980px', transform:'rotate(-180deg)'}} src={BigStripe} alt='big-stripe'/>
             <div className='purpleAboutDiv'>
-                <h1 className='aboutText' style={{color:'white', zIndex:'230'}}>About</h1>
+                <h1 className='aboutText' style={{color:'white', zIndex:'230'}}>{Translations[localStorage.getItem('connectLanguage')].home.about.title}</h1>
                 <div className='aboutText' style={{color:'white', zIndex:'230'}}>
-                    <p className='aboutText' style={{color:'white', zIndex:'230'}}>CONNECT!’s goal is to make class learning easier and more fun for students and teachers from all around the world.</p>
-                    <p className='aboutText' style={{color:'white', zIndex:'230'}}>For us, learning is the key to a better future and it is our priority to make learning more accessible and more engaging for everyone, everywhere.</p>
+                    <p className='aboutText' style={{color:'white', zIndex:'230'}}>{Translations[localStorage.getItem('connectLanguage')].home.about.sub}</p>
+                    <p className='aboutText' style={{color:'white', zIndex:'230'}}>{Translations[localStorage.getItem('connectLanguage')].home.about.sub2}</p>
                 </div>
                 <img id='big-stripe' style={{minWidth:'1980px'}} src={BigStripe} alt='big-stripe'/>
             </div>
             <div id='aboutContainer'>
                 <div className='about-card'>
                     <School color='primary' style={{width:'100px', height:'100px'}}/>
-                    <h3>Learning</h3>
+                    <h3>{Translations[localStorage.getItem('connectLanguage')].home.cards.learning}</h3>
                     <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
                 </div>
                 <div className='about-card'>
                 <Group color='primary' style={{width:'100px', height:'100px'}}/>
-                    <h3>Collaboration</h3>
+                    <h3>{Translations[localStorage.getItem('connectLanguage')].home.cards.collaboration}</h3>
                     <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
                 </div>
                 <div className='about-card'>
                     <span style={{fontSize:'72px'}}>🎉</span>
-                    <h3>Fun</h3>
+                    <h3>{Translations[localStorage.getItem('connectLanguage')].home.cards.fun}</h3>
                     <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
                 </div>
             </div>
             <div classNam='howItWorks'>
-                <h1>How it Works <Gears/></h1>
+                <Typography variant='h4'>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.title} <Gears/></Typography>
                 <div className='howitworks-div'>
                     <div style={{display:'flex', alignItems:'center', flexWrap:'wrap', justifyContent:'space-around', width:'70%', margin:'100px', minWidth:'350px'}}>
                         <div className='iphone-div'>
                             <img draggable='false' id='background-video' src={HostVideo} alt='host-video'/>
                         </div>
                         <div style={{display:'flex', flexDirection:'column', height:'725px'}}>
-                            <p style={{width:'380px', textAlign:'start'}}>Select your desired game mode</p>
-                            <p style={{width:'380px', textAlign:'start'}}>Type in the room name / code or click the “GENERATE NAME” button</p>
-                            <p style={{width:'380px', textAlign:'start'}}>Go to <a style={{color:'#6976EA', margin:'0'}} href='/browsequizzes/normal'>Browse Quizzes</a> and find a game you would like to host copy that game’s code (don't forget to include the “-” at the start of the code)</p>
-                            <p style={{width:'380px', textAlign:'start'}}>Enter the amount of players you want in your room Starter plan users max out at 8 users whilst Classroom plan users get 40 users</p>
-                            <p style={{width:'380px', textAlign:'start'}}>Specify if the user nicknames should be friendly</p>
-                            <p style={{width:'380px', textAlign:'start'}}>Start the game!!!</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.host.step1}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.host.step2}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.host.step3}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.host.step4}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.host.step5}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.host.step6}</p>
                         </div>
                     </div>
                     <div style={{display:'flex', alignItems:'center', flexWrap:'wrap', justifyContent:'space-around', width:'70%', margin:'100px', minWidth:'350px'}}>
                     <div style={{display:'flex', flexDirection:'column', height:'725px'}}>
-                            <p style={{width:'380px', textAlign:'start'}}>Enter your nickname</p>
-                            <p style={{width:'380px', textAlign:'start'}}>Enter a valid room name / code</p>
-                            <p style={{width:'380px', textAlign:'start'}}>Join your game and (hopefully) have fun !!!</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.join.step1}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.join.step2}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.join.step3}</p>
                         </div>
                         <div className='iphone-div'>
                             <img draggable='false' style={{width:'320px', height:'220px'}} src={JoinVideo} alt='join-video'/>
@@ -121,9 +123,9 @@ export default function HomePage() {
                             <img draggable='false' style={{width:'320px', height:'400px'}} src={GameRoomVideo} alt='game-video'/>
                         </div>
                         <div style={{display:'flex', flexDirection:'column', height:'725px'}}>
-                            <p style={{width:'380px', textAlign:'start'}}>Match the question cards with their answers</p>
-                            <p style={{width:'380px', textAlign:'start'}}>If you match the wrong cards 5s will be added to your timer</p>
-                            <p style={{width:'380px', textAlign:'start'}}>The goal is to get the lowest time to have the highest place on the podium and have fun whilst learning!!!</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.play.step1}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.play.step2}</p>
+                            <p style={{width:'380px', textAlign:'start'}}>{Translations[localStorage.getItem('connectLanguage')].home.howitworks.play.step3}</p>
                         </div>
                     </div>
                 </div>

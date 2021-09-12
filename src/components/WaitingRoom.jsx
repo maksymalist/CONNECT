@@ -8,6 +8,8 @@ import GameEnded from './GameEnded'
 
 import '../style/style.css'
 
+import Translations from '../translations/translations.json'
+
 //globals
 
 //const socket = io('http://localhost:3001')
@@ -110,7 +112,7 @@ export default function WaitingRoom(props) {
     return (
         <div>
         <div id='waitingRoomDiv'>
-            <h1 style={{marginTop:'100px'}}>Waiting Room</h1>
+            <h1 style={{marginTop:'100px'}}>{Translations[localStorage.getItem('connectLanguage')].waitingroom.title}</h1>
             {/* <textarea id='userList' defaultValue={props.usersInRoom} readOnly></textarea> */}
             <div style={{width:'90%', display:'flex', flexWrap:'wrap', justifyContent:'center', padding:'100px'}}>
                 {
@@ -120,7 +122,7 @@ export default function WaitingRoom(props) {
                 }
             </div>
             <div>
-                <Button style={{marginBottom:'1vh', alignSelf:'left'}} variant="contained" color="secondary" size='large' onClick={()=>{leaveRoom()}}>Leave Room</Button>
+                <Button style={{marginBottom:'1vh', alignSelf:'left'}} variant="contained" color="secondary" size='large' onClick={()=>{leaveRoom()}}>{Translations[localStorage.getItem('connectLanguage')].waitingroom.leavebutton}</Button>
             </div>
         </div>
         {/* <div style={{display:'flex', placeItems:'center', color:'white', flexDirection:'column'}}>

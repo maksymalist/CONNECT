@@ -5,6 +5,8 @@ import { getFirebase } from '../App'
 import { Typography } from '@material-ui/core'
 import { toast } from "react-toastify";
 
+import Translations from '../translations/translations.json'
+
 const UploadButton = () => {
     const firebase = getFirebase();
     const ref = useRef(undefined);
@@ -28,7 +30,7 @@ const UploadButton = () => {
         .ref(`quizImg/${uploadedFile.name}`)
         .getDownloadURL()
         .then((response) => {
-            toast.success("Successfully uploaded picture!");
+            toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.uploadedpic);
             setFile(response)
         })
         .catch(async (err) => {
@@ -37,7 +39,7 @@ const UploadButton = () => {
                 const url = await storage.ref(`quizImg/${uploadedFile.name}`).getDownloadURL()
                 console.log(url)
                 setFile(url)
-                toast.success("Successfully uploaded picture!");
+                toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.uploadedpic);
             } catch (error) {
                 console.log("error", error);
             }
@@ -49,7 +51,7 @@ const UploadButton = () => {
         <div onClick={() => handleClick()} className='upload-box'>
             {
                 file === null ?
-                <Typography variant='h3'>Upload</Typography>
+                <Typography variant='h3'>{Translations[localStorage.getItem('connectLanguage')].uploadbox.upload}</Typography>
                 :
                 <img id='coverImg' style={{width:'100%', height:'100%'}} src={file} alt='quiz-cover'/>
             }

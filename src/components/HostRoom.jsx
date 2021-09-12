@@ -2,7 +2,7 @@ import React,{ useState, useEffect } from 'react'
 import { io } from 'socket.io-client'
 import { socket } from './EnterCodeForm'
 import ReactDOM from 'react-dom'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { Share, People } from '@material-ui/icons'
 
 import Button from '@material-ui/core/Button'
@@ -30,6 +30,8 @@ import '../style/playButtonAnimation.css'
 import CountDown from './CountDown';
 
 import SharePopup from './SharePopup';
+
+import Translations from '../translations/translations.json'
 
 
 //globals
@@ -107,14 +109,14 @@ export default function HostRoom(props) {
 
             if(playersTime.includes(data.user) == true){
 
-                document.getElementById(data.user).innerHTML = `${data.user} Time: ${data.time}`
+                document.getElementById(data.user).innerHTML = `${data.user} ${Translations[localStorage.getItem('connectLanguage')].hostroom.time}: ${data.time}`
             }
             else{
                 playersTime.push(data.user)
     
                 let newTime = document.createElement('h1')
     
-                newTime.innerHTML = `${data.user} Time: ${data.time}`
+                newTime.innerHTML = `${data.user} ${Translations[localStorage.getItem('connectLanguage')].hostroom.time}: ${data.time}`
                 newTime.id = data.user
     
                 document.getElementById('times').appendChild(newTime)
@@ -151,42 +153,19 @@ export default function HostRoom(props) {
               //'first-place', 'second-place', 'third-place', 'other-place'
             setCurrentPlace(currentPlace++)
 
-            toast.success(`${data.user} Has Finished Their Quiz!`)
+            toast.success(`${data.user} ${Translations[localStorage.getItem('connectLanguage')].alerts.playerfinishedgame}`)
 
             if(podium.length == playerPodiumMax){
-                toast.success(`${playerPodiumMax} Players Have Finished Their Quiz You Might Want To End The Game!`)
+                toast.success(`${playerPodiumMax} ${Translations[localStorage.getItem('connectLanguage')].alerts.maxpodiumlimitreached}`)
             }
         })
         if(playerPodiumMax < 3){
             setPlayerPodiumMax(3)
         }
 
-        return () => {
-           /* socket.emit('terminateRoom', props.room)
-            socket.emit('EndGame', {
-                room: props.room
-            })
-            window.location = '/roomleave'
-            localStorage.removeItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId);
-            */
-        }
-
 
     }, [])
 
-    // useEffect(() => {
-    //     if(document.getElementById('userDiv') == null) return
-    //     if(numberOfUsers > 0){
-    //         let newUser = document.createElement('div')
-    //         newUser.id = ''
-    //         newUser.innerHTML =''
-    //         document.getElementById('userDiv').appendChild(newUser)
-    //     }
-        
-    //     return () => {
-    //         //cleanup
-    //     }
-    // }, [numberOfUsers])
 
     const updateUserDiv = (users) => {
         if(gameStarted) return
@@ -238,7 +217,7 @@ export default function HostRoom(props) {
         let podiumHeader = document.createElement('div')
         document.getElementById('podium').appendChild(podiumHeader)
         ReactDOM.render(
-            <h1 style={{borderBottom: '4px solid'}}>Podium<AssessmentRoundedIcon style={{width:"50px", height:"50px"}}/></h1>,
+            <h1 style={{borderBottom: '4px solid'}}>{Translations[localStorage.getItem('connectLanguage')].hostroom.podium}<AssessmentRoundedIcon style={{width:"50px", height:"50px"}}/></h1>,
             podiumHeader
         )
 
@@ -268,7 +247,7 @@ export default function HostRoom(props) {
                             className='first-place podium-time' 
                             data-position={playerArr[i].place} 
                             data-time={playerArr[i].time} 
-                            id={playerArr[i].player+"⠀"}><img width='40' height='40' src={FirstPlaceIcon} alt='FirstPlaceIcon'/>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
+                            id={playerArr[i].player+"⠀"}><img width='40' height='40' src={FirstPlaceIcon} alt='FirstPlaceIcon'/>{playerArr[i].player} {Translations[localStorage.getItem('connectLanguage')].hostroom.time}: {playerArr[i].time} {Translations[localStorage.getItem('connectLanguage')].hostroom.place}: {playerArr[i].place}
                         </h1>
                     </>,
                     document.getElementById('first-place-div')
@@ -281,7 +260,7 @@ export default function HostRoom(props) {
                             className='second-place podium-time' 
                             data-position={playerArr[i].place} 
                             data-time={playerArr[i].time} 
-                            id={playerArr[i].player+"⠀"}><img width='40' height='40' src={SecondPlaceIcon} alt='SecondPlaceIcon'/>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
+                            id={playerArr[i].player+"⠀"}><img width='40' height='40' src={SecondPlaceIcon} alt='SecondPlaceIcon'/>{playerArr[i].player} {Translations[localStorage.getItem('connectLanguage')].hostroom.time}: {playerArr[i].time} {Translations[localStorage.getItem('connectLanguage')].hostroom.place}: {playerArr[i].place}
                         </h1>
                     </>,
                     document.getElementById('second-place-div')
@@ -294,7 +273,7 @@ export default function HostRoom(props) {
                             className='third-place podium-time' 
                             data-position={playerArr[i].place} 
                             data-time={playerArr[i].time} 
-                            id={playerArr[i].player+"⠀"}><img width='40' height='40' src={ThirdPlaceIcon} alt='ThirdPlaceIcon'/>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
+                            id={playerArr[i].player+"⠀"}><img width='40' height='40' src={ThirdPlaceIcon} alt='ThirdPlaceIcon'/>{playerArr[i].player} {Translations[localStorage.getItem('connectLanguage')].hostroom.time}: {playerArr[i].time} {Translations[localStorage.getItem('connectLanguage')].hostroom.place}: {playerArr[i].place}
                         </h1>
                     </>,
                     document.getElementById('third-place-div')
@@ -307,7 +286,7 @@ export default function HostRoom(props) {
                             className='other-place podium-time' 
                             data-position={playerArr[i].place}
                             data-time={playerArr[i].time} 
-                            id={playerArr[i].player+"⠀"}>{playerArr[i].player} Time: {playerArr[i].time} Place: {playerArr[i].place}
+                            id={playerArr[i].player+"⠀"}>{playerArr[i].player} {Translations[localStorage.getItem('connectLanguage')].hostroom.time}: {playerArr[i].time} {Translations[localStorage.getItem('connectLanguage')].hostroom.place}: {playerArr[i].place}
                         </h1>
                     </>,
                     newPlayerTime
@@ -434,8 +413,8 @@ export default function HostRoom(props) {
                 null
             }
             <h1 style={{color:'white'}}>{props.room}</h1>
-            <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='medium' onClick={()=>{shareLink()}}><People/>⠀Share</Button>
-            <h2 style={{color:'white'}} id='maxPlayersText'>Max Users: {numberOfUsers}/{userLimit}</h2>
+            <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='medium' onClick={()=>{shareLink()}}><People/>⠀{Translations[localStorage.getItem('connectLanguage')].hostroom.sharebutton}</Button>
+            <h2 style={{color:'white'}} id='maxPlayersText'>{numberOfUsers}/{userLimit}</h2>
             <h2 hidden id='userList'></h2>
             <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginBottom:'50px'}}>
                 <svg id='connectText' width="340" height="90" viewBox="0 0 340 90" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -452,13 +431,13 @@ export default function HostRoom(props) {
             </div>
             <div id='game-container' style={{visibility:'hidden'}}>
                 <div id='podium'>
-                    <h1 style={{borderBottom: '4px solid'}}>Podium <AssessmentRoundedIcon style={{width:"50px", height:"50px"}}/></h1>
+                    <h1 style={{borderBottom: '4px solid'}}>{Translations[localStorage.getItem('connectLanguage')].hostroom.podium} <AssessmentRoundedIcon style={{width:"50px", height:"50px"}}/></h1>
                     <div id='first-place-div'></div>
                     <div id='second-place-div'></div>
                     <div id='third-place-div'></div>
                 </div>
                 <div id="times">
-                    <h1 style={{textAlign:'center', borderBottom: '4px solid'}}>Player Times<TimerRoundedIcon style={{width:"50px", height:"50px"}}/></h1>
+                    <h1 style={{textAlign:'center', borderBottom: '4px solid'}}>{Translations[localStorage.getItem('connectLanguage')].hostroom.playertimes} <TimerRoundedIcon style={{width:"50px", height:"50px"}}/></h1>
                 </div>
             </div>
 

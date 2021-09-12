@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import '../style/countDownStyles.css'
 
+import Translations from '../translations/translations.json'
+
 function CountDown({ start, room }) {
 
     var [number, setNumber] = useState(0)
     var [isCountdown, setIsCountdown] = useState(true)
-    const [countDownText, setCountDownText] = useState("Ready?")
+    const [countDownText, setCountDownText] = useState(Translations[localStorage.getItem('connectLanguage')].countdown.ready)
 
     useEffect(() => {
         setInterval(() => {
             if(isCountdown === false) return
-            setCountDownText("GO!!!")
+            setCountDownText(Translations[localStorage.getItem('connectLanguage')].countdown.go)
             setNumber(number += 1)
             if(number === 4){
                 setIsCountdown(isCountdown = false)

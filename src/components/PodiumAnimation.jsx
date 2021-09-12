@@ -1,6 +1,7 @@
 import { Button } from '@material-ui/core'
 import React, { useEffect, useRef } from 'react'
 import '../style/podiumAnimation.css'
+import Translations from '../translations/translations.json'
 
 function PodiumAnimation({ maxPodiumPlayers, podium }) {
 
@@ -193,7 +194,7 @@ function PodiumAnimation({ maxPodiumPlayers, podium }) {
                     </div>
                     <br></br>
                     <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{window.location = '/play'}}>Return Home</Button>
+                        <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{window.location = '/play'}}>{Translations[localStorage.getItem('connectLanguage')].gameended.button}</Button>
                     </div>
                 </div>
         </div>

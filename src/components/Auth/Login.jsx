@@ -13,8 +13,7 @@ import "firebase/database";
 //imgs
 import logo from '../../img/logo.svg'
 
-export var ActiveUser = null
-export var profilePic = null
+import Translations from '../../translations/translations.json'
 
 function Login() {
 
@@ -37,8 +36,6 @@ function Login() {
   
       const responseGoogle = (response)=>{
         console.log(response)
-        ActiveUser = `Active User: ${response.profileObj.givenName} ${response.profileObj.familyName}` 
-        toast.success(ActiveUser)
         localStorage.setItem('user', JSON.stringify(response))
   
         document.getElementById('profilePic').removeAttribute('hidden')
@@ -61,10 +58,10 @@ function Login() {
             <div className='login-component-container'>
                 <img id='home' onClick={()=>{window.location = '/'}} className="nav-links lileft" alt="connect-logo" width={250} height={250} src={logo}/>
                 <br></br>
-                <h2>Sign into CONNECT!</h2>
+                <h2>{Translations[localStorage.getItem('connectLanguage')].login.title}</h2>
                 <GoogleLogin
                     clientId='701696427912-ajmlkcj3hpo46q5fokhtn5mmeib0m3be.apps.googleusercontent.com'
-                    buttonText='Login With Google'
+                    buttonText={Translations[localStorage.getItem('connectLanguage')].login.googlebutton}
                     onSuccess={responseGoogle}
                     onFailure={()=>{console.log(Error)}}
                     cookiePolicy={'single_host_origin'}

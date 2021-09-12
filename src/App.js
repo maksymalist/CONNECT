@@ -18,9 +18,9 @@ import AfterRoomLeave from './components/AfterRoomLeave'
 import GameEnded from './components/GameEnded'
 import StripeSubscriptions from './components/payment/StripeSubscriptions'
 import Plans from './components/payment/Plans'
-import MemberRoom from './components/MemberRoom'
 import Background from './components/Background'
 import Profile from './components/profile/Profile';
+import Classroom from './components/Classroom';
 
 
 
@@ -59,6 +59,7 @@ export const getFirebase = () => {
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [customerId, setCustomerId] = useState(null);
+  const [plan, setPlan] = useState(null);
 
   useEffect(() => {
     if(JSON.parse(localStorage.getItem('user')) !== null){
@@ -66,6 +67,12 @@ function App() {
       setIsLoggedIn(true);
       document.getElementById('profilePic').removeAttribute('hidden')
       document.getElementById('profilePic').src = JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
+
+      firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).update({
+        UserName: `${JSON.parse(localStorage.getItem('user')).profileObj.givenName} ${JSON.parse(localStorage.getItem('user')).profileObj.familyName}`,
+        email: JSON.parse(localStorage.getItem('user')).profileObj.email,
+        imageUrl: JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
+      })
 
       firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/subscriptionObj/id`).on('value',(snap)=>{
         if(snap.exists()){
@@ -98,12 +105,15 @@ function App() {
     var plan = ''
     if(JSON.parse(res.data.subscriptionDetails).status == 'canceled'){
       plan = 'Starter'
+      setPlan(plan)
     }
     if(JSON.parse(res.data.subscriptionDetails).status == 'active'){
       plan = 'Classroom'
+      setPlan(plan)
     }
     else{
       plan = 'Starter'
+      setPlan(plan)
     }
 
     setCustomerId(JSON.parse(res.data.subscriptionDetails).customer)
@@ -124,7 +134,7 @@ function App() {
   return (
       <Router>
     <div className="App">
-      <Nav isLoggedIn={isLoggedIn} customerId={customerId}/>
+      <Nav isLoggedIn={isLoggedIn} customerId={customerId} plan={plan}/>
       <div style={{margin:'0 !important'}} id='navMargin'/>
       <Background/>
       <Switch>

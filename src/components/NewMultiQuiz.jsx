@@ -9,6 +9,8 @@ import { toast } from 'react-toastify'
 import { AddCircleRounded, DeleteRounded } from '@material-ui/icons'
 import UploadButton from './UploadButton';
 
+import Translations from '../translations/translations.json'
+
 function NewMultiQuiz() {
     const [subjects, setSubjects] = useState([]);
     const [subjectIndex, setSubjectIndex] = useState(0);
@@ -25,24 +27,24 @@ function NewMultiQuiz() {
     const quizName = useRef(null)
 
     useEffect(() => {
-        toast.info("Please make sure each answer is different or the quiz will not work!")
+        toast.info(Translations[localStorage.getItem('connectLanguage')].alerts.eachansdifferent)
     }, [])
 
     const Submit = () => {
         for(var i = 0; i < document.getElementsByClassName('userInput').length; i++){
             console.log('userIn')
             if(document.getElementsByClassName('userInput')[i].value == ""){
-                toast.error('A field has been left empty!')
+                toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.fieldleftempty)
                 return
             }
         }
         console.log(document.getElementsByClassName('subject-container'))
         if(document.getElementsByClassName('subject-container').length == 0){
-            toast.error('You need at least 1 subject!')
+            toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.need1subject)
             return
         }
         firebase.database().ref(`multiQuizzes/`).push(quizObj)
-        toast.success('Quiz Created!')
+        toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.quizcreated)
         for(let i = 0; i < document.getElementsByClassName('userInput').length; i++){
             document.getElementsByClassName('userInput')[i].value = ""
         }
@@ -53,16 +55,16 @@ function NewMultiQuiz() {
 
     const Card = ({questionNumber, subIndex}) => (
         <div className='card2' id={`question${questionNumber}card`}>
-            <h1>Question {questionNumber}</h1>
-            <input className={`questions userInput subQuest${subIndex}card${questionNumber}`} id={`question${questionNumber}idx${subIndex}`} type='text' placeholder={'Question'}/>
-            <br></br><input className={`answers userInput subAns${subIndex}card${questionNumber}`} id={`answer${questionNumber}idx${subIndex}`} type='text' placeholder={'Answer'} />
+            <h1>{Translations[localStorage.getItem('connectLanguage')].newmultiquiz.questions.title} {questionNumber}</h1>
+            <input className={`questions userInput subQuest${subIndex}card${questionNumber}`} id={`question${questionNumber}idx${subIndex}`} type='text' placeholder={Translations[localStorage.getItem('connectLanguage')].newmultiquiz.questions.question}/>
+            <br></br><input className={`answers userInput subAns${subIndex}card${questionNumber}`} id={`answer${questionNumber}idx${subIndex}`} type='text' placeholder={Translations[localStorage.getItem('connectLanguage')].newmultiquiz.questions.answer} />
         </div>
     )
 
 
     const Subject = ({name, cards, index}) => (
         <div className='subject-container'>
-            <input defaultValue={name} className='subject-name' type='text' placeholder='Subject Name' />
+            <input defaultValue={name} className='subject-name' type='text' placeholder={Translations[localStorage.getItem('connectLanguage')].newmultiquiz.subjects.input} />
             <div className='cardContainer2' style={{margin:'1%'}}>
                 {cards.map(card => <Card key={card} subIndex={index} questionNumber={card} />)}
                 <div onClick={()=>{AddQuestion(index, (cards.length+1))}} className='card2-2' style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
@@ -78,7 +80,7 @@ function NewMultiQuiz() {
 
     const AddSubject = () => {
         setSubjects([...subjects,{
-            subject: `My cool subject name ${subjectIndex}`,
+            subject: `${Translations[localStorage.getItem('connectLanguage')].newmultiquiz.subjects.value} ${subjectIndex}`,
             subjectIndex: subjectIndex,
         }])
         setQuestions([...questions, 
@@ -182,25 +184,25 @@ function NewMultiQuiz() {
         <div style={{marginTop:'100px'}}>
         <div style={{display:'flex', alignItems:'center', flexDirection:'column', backgroundColor:'white', margin:'10px', border:'2px solid black', boxShadow:'10px 10px 0 #262626'}}>
             <div style={{display:'flex', alignItems:'center', flexDirection:'column'}}>
-                <Typography variant="h2" style={{margin:'10px'}}><b>Create a Multi Quiz</b></Typography>
+                <Typography variant="h2" style={{margin:'10px'}}><b>{Translations[localStorage.getItem('connectLanguage')].newmultiquiz.title}</b></Typography>
                 <br></br>
                     <Divider style={{width:'90vw'}} light/>
                 <br></br>
-                <Typography variant="h5" style={{margin:'10px'}}>1. Give your quiz a title</Typography>
-                <input ref={quizName} className='userInput' id={'quizName'} type='text' placeholder="Give your quiz a cool name"></input>
+                <Typography variant="h5" style={{margin:'10px'}}>{Translations[localStorage.getItem('connectLanguage')].newmultiquiz.step1}</Typography>
+                <input ref={quizName} className='userInput' id={'quizName'} type='text' placeholder={Translations[localStorage.getItem('connectLanguage')].newmultiquiz.input}></input>
             </div>
             <div style={{width:'100%', display:'flex', alignItems:'center', flexDirection:'column', marginTop:'100px'}}>
-                <Typography variant="h5" style={{margin:'10px'}}>2. Upload your cover Image</Typography>
+                <Typography variant="h5" style={{margin:'10px'}}>{Translations[localStorage.getItem('connectLanguage')].newmultiquiz.step2}</Typography>
                 <UploadButton/>
             </div>
-            <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>3. Give your quiz some tags</Typography>
+            <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>{Translations[localStorage.getItem('connectLanguage')].newmultiquiz.step3}</Typography>
             <div style={{backgroundColor:'white', padding:'15px', border:'2px solid black', boxShadow:'10px 10px 0 #262626', width:'80vw', maxWidth:'600px', marginTop:'50px'}}>
-                <Typography variant="h3">Tags</Typography>
+                <Typography variant="h3">{Translations[localStorage.getItem('connectLanguage')].newmultiquiz.tags.title}</Typography>
                 <br></br>
                 <Divider light/>
                 <br></br>
-                <TextField variant="outlined" size='small' label="Tag Name" helperText={<span style={{color:'black'}}>{5-tagNumber} tags Left</span>} onChange={(e)=>{setCurrentTag(e.target.value)}} value={currentTag}/>
-                <Button variant="contained" size='medium' color="primary" onClick={()=>{AddTag(currentTag)}}>Add Tag</Button>
+                <TextField variant="outlined" size='small' label="Tag Name" helperText={<span style={{color:'black'}}>{5-tagNumber} {Translations[localStorage.getItem('connectLanguage')].newmultiquiz.tags.helpertext}</span>} onChange={(e)=>{setCurrentTag(e.target.value)}} value={currentTag}/>
+                <Button variant="contained" size='medium' color="primary" onClick={()=>{AddTag(currentTag)}}>{Translations[localStorage.getItem('connectLanguage')].newmultiquiz.tags.button}</Button>
                 <br></br>
                 {
                     tags.map((tag, index) => (
@@ -208,7 +210,7 @@ function NewMultiQuiz() {
                     ))
                 }
             </div>
-            <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>4. Come up with some interesting questions</Typography>
+            <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>{Translations[localStorage.getItem('connectLanguage')].newmultiquiz.step4}</Typography>
             <div className='cardContainer2-sub' id='cardContainer2-sub' style={{margin:'1%', marginTop:'100px'}}>
                 {
                     subjects.map((subject, index) => {
@@ -224,7 +226,7 @@ function NewMultiQuiz() {
                 </div>
             </div>
             <div>
-                <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='large' onClick={()=>{setQuizObj()}}>Submit</Button>
+                <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='large' onClick={()=>{setQuizObj()}}>{Translations[localStorage.getItem('connectLanguage')].newmultiquiz.button}</Button>
             </div>
         </div>
     </div>

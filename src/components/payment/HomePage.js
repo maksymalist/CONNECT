@@ -25,6 +25,8 @@ import "firebase/database";
 //material-icons
 import { Redeem, AlternateEmail } from '@material-ui/icons'
 
+import Translations from '../../translations/translations.json'
+
 
 
 toast.configure()
@@ -129,7 +131,7 @@ useEffect(() => {
 
   const handleSubmitSub = async (event) => {
     if(JSON.parse(localStorage.getItem('user')) == null){
-        toast.error('You Need To Login before Buying a Plan!')
+        toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.loginbeforebuy)
         setSpinner(false)
         return
     }
@@ -172,9 +174,9 @@ useEffect(() => {
               // Display error message in your UI.
               // The card was declined (i.e. insufficient funds, card has expired, etc)
             } else {
-              console.log('You got the money!');
+              console.log(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy);
               console.log(res.data)
-              toast.success("Wow so easy!")
+              toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy)
               renderAnimation()
               setSpinner(false)
               console.log(result)
@@ -194,9 +196,9 @@ useEffect(() => {
             }
           });
         } else {
-          console.log('You got the money!');
+          console.log(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy);
           console.log(res.data)
-          toast.success("Wow so easy!")
+          toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy)
           renderAnimation()
           setSpinner(false)
           console.log(result)
@@ -233,9 +235,9 @@ useEffect(() => {
               // Display error message in your UI.
               // The card was declined (i.e. insufficient funds, card has expired, etc)
             } else {
-              console.log('You got the money!');
+              console.log(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy);
               console.log(res.data)
-              toast.success("Wow so easy!")
+              toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy)
               renderAnimation()
               setSpinner(false)
               console.log(result)
@@ -254,9 +256,9 @@ useEffect(() => {
             }
           });
         } else {
-          console.log('You got the money!');
+          console.log(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy);
           console.log(res.data)
-          toast.success("Wow so easy!")
+          toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.wowsoeasy)
           renderAnimation()
           setSpinner(false)
           console.log(result)
@@ -289,14 +291,14 @@ useEffect(() => {
 
   const handleApplyCoupon = async () => {
     if(coupon === ''){
-      toast.error('Please Enter a Coupon Code!')
+      toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.entercoupon)
       return
     }
     else{
       const res = await axios.post(`https://connect-now-backend.herokuapp.com/get-coupon`, {coupon: coupon})
       console.log(res.data)
       if(res.data === 'Invalid Coupon'){
-        toast.error('Invalid Coupon Code!')
+        toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.entervalidcoupon)
         setActiveCoupon(false)
         setCurrentDiscount(currentDiscount = 'this field is optional')
         setDiscount(0)
@@ -316,7 +318,7 @@ useEffect(() => {
           setDiscountName(discountName = `${res.data.name} (${currentDiscount})`)
           setDiscount((res.data.percent_off / 100) * 10)
         }
-        toast.success(`Coupon Applied!`)
+        toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.couponapplied)
         return
       }
     }
@@ -336,7 +338,7 @@ useEffect(() => {
     }
     else{
       setComfirmPurchase(false)
-      toast.error('Purchase Failed')
+      toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.purchasefailed)
     }
   }
 
@@ -397,11 +399,11 @@ useEffect(() => {
     <Card id='paymentFormCard' className={classes.root} style={{padding:'10px', border:'2px solid black', boxShadow:'10px 10px 0px #262626', borderRadius:'0px'}}>
       <CardContent className={classes.content}>
         <Typography variant='h4' component='h4'>
-          Payment Form
+        {Translations[localStorage.getItem('connectLanguage')].paymentform.title}
         </Typography>
         <br></br>
         <Typography variant='h5'>
-          {props.match.params.plan === 'classroom' ? 'Classroom Plan' : 'Premium Plan'}
+          {props.match.params.plan === 'classroom' ? Translations[localStorage.getItem('connectLanguage')].paymentform.title : 'Premium Plan'}
         </Typography>
         <br></br>
         <Divider/>
@@ -442,7 +444,7 @@ useEffect(() => {
             onChange={(e) => setCoupon(e.target.value)}
           />
           <Button variant="contained" color="primary" style={{marginTop:'-12px', marginLeft:'5px'}} onClick={()=>handleApplyCoupon()}>
-            Apply
+          {Translations[localStorage.getItem('connectLanguage')].paymentform.button}
           </Button>
         </div>
         <CardInput />
@@ -451,7 +453,7 @@ useEffect(() => {
             {spinner ?
               <CircularProgress style={{marginLeft:'32px', marginRight:'32px'}} size={20} />
               :
-              'Subscribe'
+              Translations[localStorage.getItem('connectLanguage')].paymentform.button2
             }
           </Button>
         </div>

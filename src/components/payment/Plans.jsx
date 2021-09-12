@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 
 import { CheckRounded } from '@material-ui/icons'
+import Translations from '../../translations/translations.json'
 
 export default function Plans() {
     var [subscribedStatus, setSubscribedStatus] = useState("Starter")
@@ -24,7 +25,7 @@ export default function Plans() {
         window.location = `/subscription/${plan}`
         }
         else{
-            toast.info('You Have Already Purchased This Plan!')
+            toast.info(Translations[localStorage.getItem('connectLanguage')].alerts.alreadyhaveplan)
         }
     }
     useEffect(() => {
@@ -33,20 +34,21 @@ export default function Plans() {
             if(snap.exists()){
               var data = snap.val()
               if(data.planStatus == 'inactive'){
-                document.getElementById('Starter').innerHTML = 'Selected✓'
+                document.getElementById('Starter').innerHTML = Translations[localStorage.getItem('connectLanguage')].plans.classroom.buttonsubscribed
+                return
               }
               if(data.planStatus == 'canceled'){
-                document.getElementById('Starter').innerHTML = 'Selected✓'
+                document.getElementById('Starter').innerHTML = Translations[localStorage.getItem('connectLanguage')].plans.classroom.buttonsubscribed
                 return
               }
               setSubscribedStatus(subscribedStatus = data.plan)
-              document.getElementById(data.plan).innerHTML = 'Selected✓'
-              document.getElementById('Starter').innerHTML = 'View'
+              document.getElementById(data.plan).innerHTML = Translations[localStorage.getItem('connectLanguage')].plans.classroom.buttonsubscribed
+              document.getElementById('Starter').innerHTML = Translations[localStorage.getItem('connectLanguage')].plans.starter.button
               setCustomerId(customerId = data.customerObj.id)
               console.log(data.customerObj.id, 'customerId')
             }
             else{
-              alert('Something when Wrong')
+              toast.error(Translations[localStorage.getItem('connectLanguage')].alerts.error)
             }
           });
         return () => {
@@ -57,7 +59,7 @@ export default function Plans() {
     const openCustomerPortal = async (event) => {
 
         if(customerId == undefined){
-            toast.info('You Need To Buy A Plan To See This Information!')
+            toast.info(Translations[localStorage.getItem('connectLanguage')].alerts.buyplanseeinfo)
             return
         }
     
@@ -83,14 +85,14 @@ export default function Plans() {
             <h1 hidden>current Plan: {subscribedStatus}</h1>
             <div id='plan1'>
                 <h1>
-                    Starter
+                    {Translations[localStorage.getItem('connectLanguage')].plans.starter.title}
                 </h1>
-                <h2>Free</h2>
-                <h2>Features</h2>
+                <h2>{Translations[localStorage.getItem('connectLanguage')].plans.starter.price}</h2>
+                <h2>{Translations[localStorage.getItem('connectLanguage')].plans.starter.features.title}</h2>
                 <div style={{display:'flex', flexDirection:'column', textAlign:'start', height:'270px', overflowY:'auto'}}>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Acces to The Multiplayer Card Games</Typography>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Have 40 or Less People in Your Rooms</Typography>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀You Can Create Quizzes</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀{Translations[localStorage.getItem('connectLanguage')].plans.starter.features.feature1}</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀{Translations[localStorage.getItem('connectLanguage')].plans.starter.features.feature2}</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀{Translations[localStorage.getItem('connectLanguage')].plans.starter.features.feature3}</Typography>
                 </div>
                 <img alt='starter-img' height='220px' width='220px' src={StarterImg}></img>
                 <div>
@@ -100,21 +102,21 @@ export default function Plans() {
                     style={{marginBottom:'1vh'}} 
                     variant="contained" 
                     color="primary" 
-                    size='medium'>Select</Button>
+                    size='medium'>{Translations[localStorage.getItem('connectLanguage')].plans.starter.button}</Button>
                 </div>
             </div>
             <div id='plan2'>
                 <h1>
-                    Classroom
+                    {Translations[localStorage.getItem('connectLanguage')].plans.classroom.title}
                 </h1>
-                <h2>$10.00 monthly</h2>
-                <h2>Features</h2>
+                <h2>{Translations[localStorage.getItem('connectLanguage')].plans.classroom.price}</h2>
+                <h2>{Translations[localStorage.getItem('connectLanguage')].plans.classroom.features.title}</h2>
                 <div style={{display:'flex', flexDirection:'column', textAlign:'start', height:'270px', overflowY:'auto'}}>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Have 90 or less people in your rooms</Typography>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Access to player analytics</Typography>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀You can create classes</Typography>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Google Classroom integration</Typography>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Microsoft Teams integration</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀{Translations[localStorage.getItem('connectLanguage')].plans.classroom.features.feature1}</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀{Translations[localStorage.getItem('connectLanguage')].plans.classroom.features.feature2}</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀{Translations[localStorage.getItem('connectLanguage')].plans.classroom.features.feature3}</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀{Translations[localStorage.getItem('connectLanguage')].plans.classroom.features.feature4}</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀{Translations[localStorage.getItem('connectLanguage')].plans.classroom.features.feature5}</Typography>
                 </div>
                 <img alt='classroom-img' height='220px' width='220px' src={TeacherImg}></img>
                 <div>
@@ -125,19 +127,21 @@ export default function Plans() {
                     variant="contained" 
                     color="primary" 
                     size='medium' 
-                    onClick={()=>{SubscriptionPage('classroom')}}>Select</Button>
+                    onClick={()=>{SubscriptionPage('classroom')}}>{Translations[localStorage.getItem('connectLanguage')].plans.classroom.button}</Button>
                 </div>
             </div>
             <div id='plan3'>
                 <h1>
-                    Entreprise
+                    {Translations[localStorage.getItem('connectLanguage')].plans.entreprise.title}
                 </h1>
-                <h2>$100.00 monthly</h2>
-                <h2>Features</h2>
+                <h2>{Translations[localStorage.getItem('connectLanguage')].plans.entreprise.price}</h2>
+                <h2>{Translations[localStorage.getItem('connectLanguage')].plans.entreprise.features.title}</h2>
                 <div style={{display:'flex', flexDirection:'column', textAlign:'start', height:'270px', overflowY:'auto'}}>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Acces to The Multiplayer Card Games</Typography>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀Have 200 or Less People in Your Rooms</Typography>
-                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀You Can Create Quizes</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀{Translations[localStorage.getItem('connectLanguage')].plans.entreprise.features.feature1}</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀{Translations[localStorage.getItem('connectLanguage')].plans.entreprise.features.feature2}</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀{Translations[localStorage.getItem('connectLanguage')].plans.entreprise.features.feature3}</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀{Translations[localStorage.getItem('connectLanguage')].plans.entreprise.features.feature4}</Typography>
+                    <Typography variant='subtitle1' className='features'><CheckRounded style={{color:'#1a7f37'}}/>⠀{Translations[localStorage.getItem('connectLanguage')].plans.entreprise.features.feature5}</Typography>
                 </div>
                 <img alt='entreprise-img' height='220px' width='220px' src={EntrepriseImg}></img>
                 <div>
@@ -146,7 +150,7 @@ export default function Plans() {
                     style={{marginBottom:'1vh'}} 
                     variant="contained" 
                     color="primary" 
-                    size='medium'>Select</Button>
+                    size='medium'>{Translations[localStorage.getItem('connectLanguage')].plans.entreprise.button}</Button>
                 </div>
             </div>
         </div>

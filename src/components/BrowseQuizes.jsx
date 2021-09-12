@@ -19,6 +19,8 @@ import { toast } from 'react-toastify';
 
 import Placeholder from '../img/quizCoverPlaceholder.svg'
 
+import Translations from '../translations/translations.json'
+
 //components
 
 export default function BrowseQuizes({match}) {
@@ -78,7 +80,7 @@ export default function BrowseQuizes({match}) {
                                 }}
                             />                       
                          }
-                        <h3>{`by ${data[k].userName}`}</h3>
+                        <h3>{`${Translations[localStorage.getItem('connectLanguage')].quizzes.by} ${data[k].userName}`}</h3>
                     </div>
                     <div>
                         {
@@ -145,7 +147,7 @@ export default function BrowseQuizes({match}) {
                                 }}
                             />                       
                          }
-                        <h3>{`by ${data[k].userName}`}</h3>
+                        <h3>{`${Translations[localStorage.getItem('connectLanguage')].quizzes.by} ${data[k].userName}`}</h3>
                     </div>
                     <div>
                         {
@@ -173,20 +175,6 @@ export default function BrowseQuizes({match}) {
         });
     }
 
-    const revealAns = (ans, button) =>{
-        document.getElementById(ans).style.visibility = "visible"
-        document.getElementById(button).style.visibility = "hidden"
-        console.log(ans)
-    }
-    const hideAns = (ans) =>{
-        document.getElementById(ans).setAttribute('hidden', true)
-    }
-    const viewMore = (divId) => {
-        document.getElementById(divId).hidden = false
-    }
-    const viewLess = (divId) =>{
-        document.getElementById(divId).hidden = true
-    }
 
     const changeGamemode = (event) => {
         event.preventDefault();
@@ -198,24 +186,15 @@ export default function BrowseQuizes({match}) {
             window.location = '/browsequizzes/multi'
         }
     }
-
-    const copyCode = (code) => {
-        var text = code;
-        navigator.clipboard.writeText(text).then(function() {
-          toast.success('Copied the code!');
-        }, function(err) {
-          toast.error('Could not copy the code: ', err);
-        });
-    }
 //console.log(Object.keys(data[k].steps[Object.keys(data[k].steps)[i]]))
 
 
     return (
         <>  
         <div style={{width:'100%', display:'flex', justifyContent:'flex-start',backgroundColor:'white', alignItems:'center', border:'2px solid black', boxShadow:'10px 10px 0 #262626', padding:'10px'}}>
-            <h1 style={{fontSize:'1.5rem', marginRight:'20px'}}>Explore Content</h1>
+            <h1 style={{fontSize:'1.5rem', marginRight:'20px'}}>{Translations[localStorage.getItem('connectLanguage')].quizzes.bar.title}</h1>
             <FormControl variant='outlined'>
-                <InputLabel id="demo-simple-select-outlined-label">Game Mode</InputLabel>
+                <InputLabel id="demo-simple-select-outlined-label">{Translations[localStorage.getItem('connectLanguage')].quizzes.bar.gamemode.title}</InputLabel>
                     <Select
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
@@ -225,8 +204,8 @@ export default function BrowseQuizes({match}) {
                         style={{width:'180px', height:'40px'}}
                         required
                         >
-                        <MenuItem value='normal'><QuestionAnswerRounded color='primary'/>⠀Normal</MenuItem>
-                        <MenuItem value='multi'><FilterNoneRounded color='primary'/>⠀Multi</MenuItem>
+                        <MenuItem value='normal'><QuestionAnswerRounded color='primary'/>⠀{Translations[localStorage.getItem('connectLanguage')].quizzes.bar.gamemode.normal}</MenuItem>
+                        <MenuItem value='multi'><FilterNoneRounded color='primary'/>⠀{Translations[localStorage.getItem('connectLanguage')].quizzes.bar.gamemode.multi}</MenuItem>
                     </Select>
             </FormControl>
         </div>

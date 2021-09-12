@@ -15,7 +15,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import { Typography } from '@material-ui/core'
 
-import CountDown from './CountDown'
+import Translations from '../translations/translations.json'
 
 function MultiGameRoom({match}) {
     const [activeStep, setActiveStep] = useState(0);
@@ -274,7 +274,7 @@ function MultiGameRoom({match}) {
             //console.log(data.time, data.user)
         })
         socket.on('PlayerFinished2', (data)=>{
-            toast.success(`${data} has finished their game!`)
+            toast.success(`${data} ${Translations[localStorage.getItem('connectLanguage')].alerts.playerfinishedgame}`)
         })
 
         socket.on('EndedGame', (data)=>{

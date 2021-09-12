@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import PodiumAnimation from './PodiumAnimation'
 import { Button, Backdrop } from '@material-ui/core'
+import Translations from '../translations/translations.json'
 
 export default function GameEnded(props) {
     useEffect(() => {
@@ -11,7 +12,7 @@ export default function GameEnded(props) {
     }, [])
     return (
         <div id='main' style={{display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column'}}>
-            <h1 style={{color:"white"}}>Game Has Ended</h1>
+            <h1 style={{color:"white"}}>{Translations[localStorage.getItem('connectLanguage')].gameended.title}</h1>
             <PodiumAnimation maxPodiumPlayers={props.maxPodiumPlayers} podium={props.podium}/>
         </div>
     )

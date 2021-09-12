@@ -9,6 +9,8 @@ import { toast } from 'react-toastify'
 
 import '../style/sharepopupStyles.css'
 
+import Translations from '../translations/translations.json'
+
 function SharePopup({ shareLink, close }) {
 
     const [open, setOpen] = useState(true);
@@ -37,9 +39,9 @@ function SharePopup({ shareLink, close }) {
       const shareLinkFunc = () => {
         var text = url;
         navigator.clipboard.writeText(text).then(function() {
-          toast.success('Copied the Invitation Link!');
+          toast.success(Translations[localStorage.getItem('connectLanguage')].alerts.copiedinvitation);
         }, function(err) {
-          toast.error('Could not copy text: ', err);
+          toast.error(err);
         });
     }
 
@@ -47,13 +49,13 @@ function SharePopup({ shareLink, close }) {
         <Backdrop style={{zIndex:'1'}} open onClick={close}>
             <div className='share__popup__main__div'>
                 <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start', paddingLeft:'10px', width:'100%'}}>
-                    <Typography variant='h4' >Share Code</Typography>
+                    <Typography variant='h4' >{Translations[localStorage.getItem('connectLanguage')].sharepopup.title}</Typography>
                 </div>
                 <br></br>
                 <Divider style={{width:'100%'}} light/>
                 <br></br>
                 <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start', paddingLeft:'10px', width:'100%'}}>
-                    <Typography variant='h6' >Share this link via</Typography>
+                    <Typography variant='h6' >{Translations[localStorage.getItem('connectLanguage')].sharepopup.sub}</Typography>
                 </div>
                 <div className='share__popup__icon__div'>
                     <GoogleShareToClassRoom
@@ -69,7 +71,7 @@ function SharePopup({ shareLink, close }) {
                     <div class="teams-share-button" data-href={url} data-button-type="small" data-icon-px-size="75" data-preview="true"></div>
                 </div>
                 <div style={{display:'flex', alignItems:'center', justifyContent:'flex-start', paddingLeft:'10px', width:'100%'}}>
-                    <Typography variant='h6' >Or copy link</Typography>
+                    <Typography variant='h6' >{Translations[localStorage.getItem('connectLanguage')].sharepopup.sub2}</Typography>
                 </div>
                 <div style={{display:'flex', alignItems:'center', flexDirection:'row'}}>
                     <TextField
@@ -89,7 +91,7 @@ function SharePopup({ shareLink, close }) {
                         style={{width:'250px'}}
                     />
                     <Button onClick={()=>{shareLinkFunc()}} variant="contained" color="primary" style={{marginTop:'8px', height:'50px', marginLeft:'10px'}}>
-                        Copy<Link style={{color:'white', marginLeft:'10px'}}/>
+                    {Translations[localStorage.getItem('connectLanguage')].sharepopup.button}<Link style={{color:'white', marginLeft:'10px'}}/>
                     </Button>
                 </div>
             </div>

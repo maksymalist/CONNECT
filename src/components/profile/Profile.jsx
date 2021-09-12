@@ -13,6 +13,8 @@ import '../../style/profileStyles.css'
 
 import Placeholder from '../../img/quizCoverPlaceholder.svg'
 
+import Translations from '../../translations/translations.json'
+
 function Profile() {
 
     const [userEmail, setUserEmail] = useState('')
@@ -144,9 +146,9 @@ function Profile() {
                         onChange={handleChange}
                         aria-label="disabled tabs example"
                     >
-                        <Tab label="Quizzes" />
-                        <Tab label="Saved" />
-                        <Tab label="Recents" />
+                        <Tab label={Translations[localStorage.getItem('connectLanguage')].profile.quizzes.title} />
+                        <Tab label={Translations[localStorage.getItem('connectLanguage')].profile.saved.title} />
+                        <Tab label={Translations[localStorage.getItem('connectLanguage')].profile.class.title} />
                     </Tabs>
                 </div>
             </div>
@@ -154,7 +156,7 @@ function Profile() {
                 {
                     value === 0?
                     <div>
-                        <h1>Quizzes</h1>
+                        <h1>{Translations[localStorage.getItem('connectLanguage')].profile.quizzes.title}</h1>
                         <div className="profile-tab-quizzes" ref={quizzesTab}>
                                 {
                                     userQuizzes.map((data, index) => {
@@ -178,7 +180,7 @@ function Profile() {
                                                             }}
                                                         />                       
                                                     }
-                                                    <h3>{`by ${data.quiz.userName}`}</h3>
+                                                    <h3>{`${Translations[localStorage.getItem('connectLanguage')].profile.quizzes.by} ${data.quiz.userName}`}</h3>
                                                 </div>
                                                 {/* <Button variant='contained' size='small' color='primary' style={{margin:'10px'}}>Edit</Button> */}
                                                 <div>
@@ -207,12 +209,12 @@ function Profile() {
                 }
                 {
                     value === 1?
-                    <h1>Saved</h1>:
+                    <h1>{Translations[localStorage.getItem('connectLanguage')].profile.saved.title}</h1>:
                     null
                 }
                 {
                     value === 2 ?
-                    <h1>Recents</h1>:
+                    <h1>{Translations[localStorage.getItem('connectLanguage')].profile.class.title}</h1>:
                     null
                 }
             </div>
