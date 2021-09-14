@@ -322,7 +322,7 @@ function MultiGameRoom({match}) {
                     <Typography variant='h3' style={{marginTop:'10px',color:'white'}}>{time}</Typography>
                 </div>
                 <div style={{display:'flex', alignItems:'center', width:'100%', justifyContent:'center'}}>
-                <Stepper id='stepRef' style={{width:'100%', maxWidth:'400px', margin:'20px', border:'2px solid black', boxShadow:'10px 10px 0 #262626'}} activeStep={activeStep}>
+                <Stepper id='stepRef' style={{width:'100%', maxWidth:'400px', margin:'20px', border:'2px solid black', boxShadow:'10px 10px 0 #262626', overflowX:'auto'}} activeStep={activeStep}>
                     {steps.map((step, index) => {
                         return (
                             <Step key={index}>
