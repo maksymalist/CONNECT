@@ -24,7 +24,6 @@ function Login() {
           UserName: userName,
           email: email,
           planStatus: 'inactive',
-          planDuration: 0,
           plan: 'Starter',
           clientSecret: 0,
           customerObj: 0,
@@ -49,7 +48,7 @@ function Login() {
             window.location = '/play'
           }
           else{
-            updateUsers(response.profileObj.email.replace('.', ''), response.profileObj.googleId, `${response.profileObj.givenName} ${response.profileObj.familyName}`)
+            updateUsers(response.profileObj.email, response.profileObj.googleId, response.profileObj.name)
             window.location.reload()
             window.location = '/play'
           }

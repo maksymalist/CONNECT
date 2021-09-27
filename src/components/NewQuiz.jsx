@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from 'react'
+import React,{ useState, useEffect, useRef } from 'react'
 import { io } from 'socket.io-client'
 import { socket } from './EnterCodeForm'
 import ReactDOM from 'react-dom'
@@ -23,6 +23,8 @@ export default function NewQuiz() {
     const [currentTag, setCurrentTag] = useState('');
     const [tagNumber, setTagNumber] = useState(0);
     const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+
+    const imgRef = useRef(null)
 
 
     const quizObj = {}
@@ -67,7 +69,7 @@ export default function NewQuiz() {
         quizObj.userName = JSON.parse(localStorage.getItem('user')).profileObj.name
         quizObj.userProfilePic = JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
         quizObj.userID = JSON.parse(localStorage.getItem('user')).profileObj.googleId
-        quizObj.coverImg = document.getElementById('coverImg').src
+        quizObj.coverImg = imgRef.current ? imgRef.current.src : ""
         quizObj.tags = getTags()
 
         for(var i = 0; i < document.getElementsByClassName('questions').length; i++){
@@ -127,7 +129,7 @@ export default function NewQuiz() {
                 </div>
                 <div style={{width:'100%', display:'flex', alignItems:'center', flexDirection:'column', marginTop:'100px'}}>
                     <Typography variant="h5" style={{margin:'10px'}}>{Translations[userLanguage].newquiz.step2}</Typography>
-                    <UploadButton/>
+                    <UploadButton imgRef={imgRef}/>
                 </div>
                 <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>{Translations[userLanguage].newquiz.step3}</Typography>
                 <div style={{backgroundColor:'white', padding:'15px', border:'2px solid black', boxShadow:'10px 10px 0 #262626', width:'80vw', maxWidth:'600px', marginTop:'50px'}}>

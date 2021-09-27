@@ -390,7 +390,7 @@ useEffect(() => {
                 <br></br>
                 <div style={{display:'flex', justifyContent: 'flex-end'}}>
                     <Button variant="contained" color="secondary" style={{margin:'10px'}} onClick={()=>{callback(false)}}>Cancel</Button>
-                    <Button variant="contained" color="primary" style={{margin:'10px'}} onClick={()=>{callback(true)}}>Comfirm</Button>
+                    <Button variant="contained" color="primary" style={{margin:'10px'}} onClick={()=>{callback(true)}}>Confirm</Button>
                 </div>
             </Paper>
         </div>
@@ -405,7 +405,7 @@ useEffect(() => {
         </Typography>
         <br></br>
         <Typography variant='h5'>
-          {props.match.params.plan === 'classroom' ? Translations[userLanguage].paymentform.title : 'Premium Plan'}
+          {props.match.params.plan === 'classroom' ? Translations[userLanguage].paymentform.plan : 'Premium Plan'}
         </Typography>
         <br></br>
         <Divider/>

@@ -14,6 +14,8 @@ import '../style/playButtonAnimation.css'
 
 import Translations from '../translations/translations.json'
 
+import { useLocation } from 'react-router-dom'
+
 function ViewQuiz() {
 
     const [quiz, setQuiz] = useState({})
@@ -21,9 +23,13 @@ function ViewQuiz() {
     const [questionLen, setQuestionLen] = useState(0)
     const [ansIsShown, setAnsIsShown] = useState(false)
 
+    const search = useLocation().search; 
+
     const { mode, code } = useParams()
 
     const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+
+    const classid = new URLSearchParams(search).get('classid');
 
     useEffect(() => {
         Object.keys(document.getElementsByClassName('view__quiz__content__question')).map((el, index) => {
@@ -65,7 +71,7 @@ function ViewQuiz() {
     }
 
     const StartButton = ({ code }) => (
-        <svg style={{position:'unset'}} onClick={()=>{window.location = `/play?gamecode=${code}`}} id='playButtonSvg' width="69" height="100" viewBox="0 0 69 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg style={{position:'unset'}} onClick={()=>{window.location = `/play?gamecode=${code}&classid=${classid}`}} id='playButtonSvg' width="69" height="100" viewBox="0 0 69 100" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g id="triangles" clip-path="url(#clip0)">
             <g id="darkGroup">
                 <path id="dark2" opacity="0.75" d="M44 48.268C45.3333 49.0378 45.3333 50.9622 44 51.732L9.5 71.6506C8.16666 72.4204 6.5 71.4582 6.5 69.9186L6.5 30.0814C6.5 28.5418 8.16667 27.5796 9.5 28.3494L44 48.268Z" fill="#1BB978"/>
@@ -87,7 +93,7 @@ function ViewQuiz() {
         <div className='view__quiz__flex'>
             <div className="view__quiz__content">
                 {
-                    quiz.coverImg !== undefined ?
+                    quiz.coverImg !== undefined && quiz.coverImg !== "" ?
                     <img style={{width:'100%', height:'400px'}} src={quiz.coverImg} alt="quiz" className="view__quiz__image" />
                     :
                     <img style={{width:'100%', height:'400px'}} src={Placeholder} alt="quiz" className="view__quiz__image" />

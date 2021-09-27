@@ -34,6 +34,7 @@ import MyProfile from './components/profile/MyProfile';
 import ViewQuiz from './components/ViewQuiz';
 import ViewMultiQuiz from './components/ViewMultiQuiz';
 import SharePopup from './components/SharePopup';
+import CreateClass from './components/CreateClass';
 
 
 const firebaseConfig = {
@@ -59,7 +60,7 @@ export const getFirebase = () => {
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [customerId, setCustomerId] = useState(null);
-  const [plan, setPlan] = useState(null);
+  const [currentPlan, setPlan] = useState(null);
 
   useEffect(() => {
     if(JSON.parse(localStorage.getItem('user')) !== null){
@@ -92,9 +93,6 @@ function App() {
       toast.info(<ToastContent/>)
       return
     }
-    window.onbeforeunload = function() {
-      localStorage.removeItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId);
-    }
     return () => {
       //cleanup
     }
@@ -103,15 +101,11 @@ function App() {
   const fetchCustomerData = async (id)=>{
     const res = await axios.post('https://connect-now-backend.herokuapp.com/get-customer-data', {subId: id});
     var plan = ''
-    if(JSON.parse(res.data.subscriptionDetails).status == 'canceled'){
-      plan = 'Starter'
-      setPlan(plan)
-    }
-    if(JSON.parse(res.data.subscriptionDetails).status == 'active'){
+    if(JSON.parse(res.data.subscriptionDetails).plan.id == "price_1JMwC7BqTzgw1Au76sejuZu4" && JSON.parse(res.data.subscriptionDetails).status == "active"){
       plan = 'Classroom'
       setPlan(plan)
     }
-    else{
+    if(JSON.parse(res.data.subscriptionDetails).status == 'canceled'){
       plan = 'Starter'
       setPlan(plan)
     }
@@ -119,7 +113,7 @@ function App() {
     setCustomerId(JSON.parse(res.data.subscriptionDetails).customer)
     console.log(JSON.parse(res.data.subscriptionDetails))
     firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).update({
-      UserName: `${JSON.parse(localStorage.getItem('user')).profileObj.givenName} ${JSON.parse(localStorage.getItem('user')).profileObj.familyName}`,
+      UserName: JSON.parse(localStorage.getItem('user')).profileObj.name,
       email: JSON.parse(localStorage.getItem('user')).profileObj.email,
       subscriptionObj: JSON.parse(res.data.subscriptionDetails),
       planAtive: JSON.parse(res.data.subscriptionDetails).status,
@@ -134,7 +128,7 @@ function App() {
   return (
       <Router>
     <div className="App">
-      <Nav isLoggedIn={isLoggedIn} customerId={customerId} plan={plan}/>
+      <Nav isLoggedIn={isLoggedIn} customerId={customerId} plan={currentPlan}/>
       <div style={{margin:'0 !important'}} id='navMargin'/>
       <Background/>
       <Switch>
@@ -145,6 +139,7 @@ function App() {
         <Route path='/newquiz' component={NewQuiz}/>
         <Route path='/new-multi-quiz' component={NewMultiQuiz}/>
         <Route path='/browsequizzes/:gamemode' component={BrowseQuizes}/>
+        <Route path='/browsequizzes/:gamemode/:classid' component={BrowseQuizes}/>
         <Route path='/roomleave' component={AfterRoomLeave}/>
         <Route path='/gamefinsihed/:room/:user' component={GameEnded}/>
         <Route path='/plans' component={Plans}/>
@@ -154,6 +149,8 @@ function App() {
         <Route path='/profiles/:id' component={Profile}/>
         <Route path='/quiz/normal/:code' component={ViewQuiz}/>
         <Route path='/quiz/multi/:code' component={ViewMultiQuiz}/>
+        <Route path='/class/:id' component={Classroom}/>
+        <Route path='/create-class' component={CreateClass}/>
       </Switch>
     </div>
   </Router>

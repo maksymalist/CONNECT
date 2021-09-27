@@ -1,0 +1,39 @@
+.notification__box{
+    box-shadow: 10px 10px 0 #262626;
+    border: 2px solid black;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.notification__header{
+    position: sticky;
+    top: 0;
+}
+.notification__scroll__section{
+    overflow-y: auto;
+    width: 95%;
+    height: 400px;
+    padding: 10px;
+}
+.notification__card{
+    box-shadow: 2px 2px 0 #262626;
+    border: 1px solid black;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 10px;
+    padding: 2px;
+    min-height: 60px;
+}
+
+.notification__card > * {  
+    margin: 10px;
+}
+
+.notification__card:hover {  
+    cursor: pointer;
+    transition: all 0.2s ease;
+    transform: scale(1.05);
+}

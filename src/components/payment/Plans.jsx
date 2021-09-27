@@ -17,36 +17,29 @@ import { CheckRounded } from '@material-ui/icons'
 import Translations from '../../translations/translations.json'
 
 export default function Plans() {
-    var [subscribedStatus, setSubscribedStatus] = useState("Starter")
-    var [customerId, setCustomerId] =useState('')
+    const [plan, setPlan] = useState("")
     const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
 
-    const SubscriptionPage = (plan)=>{
-        if(subscribedStatus == "Starter"){
-        window.location = `/subscription/${plan}`
+    const selectClassroomPlan = ()=>{
+        if(plan == "Starter"){
+            window.location = `/subscription/classroom`
         }
         else{
             toast.info(Translations[userLanguage].alerts.alreadyhaveplan)
         }
     }
     useEffect(() => {
-        if(JSON.parse(localStorage.getItem('user')) === null) return
+        if(JSON.parse(localStorage.getItem('user')) == null) return
         firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).on('value',(snap)=>{
             if(snap.exists()){
-              var data = snap.val()
-              if(data.planStatus == 'inactive'){
-                document.getElementById('Starter').innerHTML = Translations[userLanguage].plans.classroom.buttonsubscribed
-                return
+              const data = snap.val()
+
+              if(data.plan === "Starter"){
+                  setPlan("Starter")
               }
-              if(data.planStatus == 'canceled'){
-                document.getElementById('Starter').innerHTML = Translations[userLanguage].plans.classroom.buttonsubscribed
-                return
+              if(data.plan === "Classroom" && data.planStatus === 'active'){
+                  setPlan("Classroom")
               }
-              setSubscribedStatus(subscribedStatus = data.plan)
-              document.getElementById(data.plan).innerHTML = Translations[userLanguage].plans.classroom.buttonsubscribed
-              document.getElementById('Starter').innerHTML = Translations[userLanguage].plans.starter.button
-              setCustomerId(customerId = data.customerObj.id)
-              console.log(data.customerObj.id, 'customerId')
             }
             else{
               toast.error(Translations[userLanguage].alerts.error)
@@ -57,33 +50,8 @@ export default function Plans() {
         }
     }, [])
 
-    const openCustomerPortal = async (event) => {
-
-        if(customerId == undefined){
-            toast.info(Translations[userLanguage].alerts.buyplanseeinfo)
-            return
-        }
-    
-        const res = await axios.post('https://connect-quiz-now.herokuapp.com/create-customer-portal-session', {customerId: customerId});
-    
-        const {redirectUrl} = res.data;
-        console.log(redirectUrl)
-
-        window.location = redirectUrl
-    
-    
-        if (res.error) {
-          // Show error to your customer (e.g., insufficient funds)
-          console.log(res.error.message);
-        } else {
-            //
-        }
-    
-      };
-
     return (
         <div className='planDiv'>
-            <h1 hidden>current Plan: {subscribedStatus}</h1>
             <div id='plan1'>
                 <h1>
                     {Translations[userLanguage].plans.starter.title}
@@ -103,7 +71,7 @@ export default function Plans() {
                     style={{marginBottom:'1vh'}} 
                     variant="contained" 
                     color="primary" 
-                    size='medium'>{Translations[userLanguage].plans.starter.button}</Button>
+                    size='medium'>{plan === 'Starter' ? Translations[userLanguage].plans.starter.buttonsubscribed : Translations[userLanguage].plans.starter.button}</Button>
                 </div>
             </div>
             <div id='plan2'>
@@ -128,7 +96,7 @@ export default function Plans() {
                     variant="contained" 
                     color="primary" 
                     size='medium' 
-                    onClick={()=>{SubscriptionPage('classroom')}}>{Translations[userLanguage].plans.classroom.button}</Button>
+                    onClick={()=>selectClassroomPlan()}>{plan === 'Classroom' ? Translations[userLanguage].plans.classroom.buttonsubscribed : Translations[userLanguage].plans.classroom.button}</Button>
                 </div>
             </div>
             <div id='plan3'>
@@ -151,7 +119,7 @@ export default function Plans() {
                     style={{marginBottom:'1vh'}} 
                     variant="contained" 
                     color="primary" 
-                    size='medium'>{Translations[userLanguage].plans.entreprise.button}</Button>
+                    size='medium'>{plan === 'Entreprise' ? Translations[userLanguage].plans.entreprise.buttonsubscribed : Translations[userLanguage].plans.entreprise.button}</Button>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import { Typography, Button, Tab, Tabs, Chip, Avatar } from '@material-ui/core'
+import { Typography, Button, Tab, Tabs, Chip, Avatar, Divider } from '@material-ui/core'
 import { AccountCircle } from '@material-ui/icons'
 
 import firebase from "firebase"
@@ -26,6 +26,8 @@ function Profile() {
     const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
 
     const [value, setValue] = useState(0);
+
+    const [userClasses, setUserClasses] = useState([])
 
     const quizzesTab = useRef(null)
 
@@ -64,6 +66,7 @@ function Profile() {
                 setUserImage(undefined)
             }
         })
+        getClasses()
     }, [])
 
     const getMyQuizzes = () => {
@@ -122,6 +125,46 @@ function Profile() {
                 return
             }
         })
+    }
+
+    const getClasses = () => {
+        firebase.database().ref(`users/${id}/classes`).once('value', (snapshot) => {
+            if(snapshot.val() == undefined) return
+            const data = snapshot.val()
+            const keys = Object.keys(data)
+
+            const classArr = []
+
+            for(let i = 0; i < keys.length; i++) {
+                const key = data[keys[i]].id
+                firebase.database().ref(`classes/${key}`).on('value', (snapshot) => {
+                    if(snapshot.val() == undefined) return
+                    const data = snapshot.val()
+                    console.log(data)
+
+                    classArr.push(data)
+
+                })
+            }
+
+            console.log(classArr)
+
+            setUserClasses(classArr)
+
+        })
+    }
+
+    const ClassCardComponent = ({name, banner, ownerName, ownerPfp, id }) => {
+        return(
+            <div className='profile__class__card' onClick={()=>window.location = `/class/${id}`}>
+                <Typography style={{fontWeight:'bold', margin:'20px'}} variant='h5'>{name}</Typography>
+                <img style={{width:'100%', height:'300px'}} src={banner|| Placeholder} alt='banner-img'/>
+                <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
+                    <Avatar src={ownerPfp} style={{margin:'20px'}} />
+                    <Typography style={{margin:'20px'}} variant='h6'>{ownerName}</Typography>
+                </div>
+            </div>
+        )
     }
 
     return (
@@ -216,7 +259,33 @@ function Profile() {
                 }
                 {
                     value === 2 ?
-                    <h1>{Translations[userLanguage].profile.class.title}</h1>:
+                    <div>
+                    <h1>{Translations[userLanguage].profile.class.title}</h1>
+                    <Divider style={{marginLeft:'10px', marginRight:'10px'}}/>
+                    <br></br>
+                    <div className="profile__user__classes">
+                        {
+                            userClasses.map((myclass, index) => {
+
+                                const owner = {}
+
+                                firebase.database().ref(`users/${myclass.owner}`).on('value', (snapshot) => {
+                                    if(snapshot.val() == undefined) return
+                                    const data = snapshot.val()
+
+                                    owner.name = data.UserName
+                                    owner.image = data.imageUrl
+                        
+                                })
+
+                                return (
+                                    <ClassCardComponent key={index} name={myclass.name} banner={myclass.banner} ownerName={owner.name} ownerPfp={owner.image} id={myclass.id}/>
+                                )
+
+                            })
+                        }
+                    </div>
+                </div>:
                     null
                 }
             </div>

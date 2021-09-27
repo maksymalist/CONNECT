@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Divider } from '@material-ui/core'
-import { Star, School, Group, PartyMode } from '@material-ui/icons'
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import { Star, School, Group } from '@material-ui/icons'
 import HomePageImage from '../img/HomePageImage1.svg'
 import BigStripe from '../img/BigStripe.svg'
 import HostVideo from '../video/hostvideogif.gif'
@@ -21,6 +24,10 @@ export default function HomePage() {
     }, [])
 
     const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+
+    const [hostActiveStep, setHostActiveStep] = useState(0)
+    const [joinActiveStep, setJoinActiveStep] = useState(0)
+    const [playActiveStep, setPlayActiveStep] = useState(0)
 
     const Gears = () => (
         <svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -97,37 +104,145 @@ export default function HomePage() {
             <div classNam='howItWorks'>
                 <Typography variant='h4'>{Translations[userLanguage].home.howitworks.title} <Gears/></Typography>
                 <div className='howitworks-div'>
-                    <div style={{display:'flex', alignItems:'center', flexWrap:'wrap', justifyContent:'space-around', width:'70%', margin:'100px', minWidth:'350px'}}>
+                    <div style={{display:'flex', alignItems:'center', flexWrap:'wrap', justifyContent:'space-around', width:'70%', margin:'100px', minWidth:'350px', margin:'10px'}}>
                         <div className='iphone-div'>
                             <img draggable='false' id='background-video' src={HostVideo} alt='host-video'/>
                         </div>
-                        <div style={{display:'flex', flexDirection:'column', height:'725px'}}>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.host.step1}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.host.step2}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.host.step3}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.host.step4}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.host.step5}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.host.step6}</p>
+                        <div style={{display:'flex', width:'350px', height:'550px', overflow:'hidden', flexDirection:'column', border:'2px solid black', boxShadow:'10px 10px 0 #262626', backgroundColor:'white', alignItems:'center', padding:'5px'}}>
+                        <Typography variant='h3'>{Translations[userLanguage].home.howitworks.host.title}</Typography>
+                        <div style={{width:'90%'}}>
+                            <br></br>
+                            <Divider light/>
+                            <br></br>
+                        </div>
+                        <Stepper id='stepRef' style={{width:'100%', maxWidth:'320px', margin:'20px', overflow:'hidden'}} activeStep={hostActiveStep}>
+                            <Step>
+                                <StepLabel></StepLabel>
+                            </Step>
+                            <Step>
+                                <StepLabel></StepLabel>
+                            </Step>
+                            <Step>
+                                <StepLabel></StepLabel>
+                            </Step>
+                            <Step>
+                                <StepLabel></StepLabel>
+                            </Step>
+                            <Step>
+                                <StepLabel></StepLabel>
+                            </Step>
+                            <Step>
+                                <StepLabel></StepLabel>
+                            </Step>
+                        </Stepper>
+                        {
+                            hostActiveStep === 0 &&
+                            <Typography variant='h5'>{Translations[userLanguage].home.howitworks.host.step1}</Typography>
+                        }
+                        {
+                            hostActiveStep === 1 &&
+                            <Typography variant='h5'>{Translations[userLanguage].home.howitworks.host.step2}</Typography>
+                        }
+                        {
+                            hostActiveStep === 2 &&
+                            <Typography variant='h5'>{Translations[userLanguage].home.howitworks.host.step3}</Typography>
+                        }
+                        {
+                            hostActiveStep === 3 &&
+                            <Typography variant='h5'>{Translations[userLanguage].home.howitworks.host.step4}</Typography>
+                        }
+                        {
+                            hostActiveStep === 4 &&
+                            <Typography variant='h5'>{Translations[userLanguage].home.howitworks.host.step5}</Typography>
+                        }
+                        {
+                            hostActiveStep === 5 &&
+                            <Typography variant='h5'>{Translations[userLanguage].home.howitworks.host.step6}</Typography>
+                        }
+                        <div style={{width:'100%', height:'100%', display:'flex', alignItems:'flex-end', justifyContent:'space-between'}}>
+                            <Button style={{margin:'10px'}} variant="contained" color="secondary" size='large' onClick={hostActiveStep > 0? ()=>{setHostActiveStep(hostActiveStep-1)} : null}>{Translations[userLanguage].home.howitworks.host.back}</Button>
+                            <Button style={{margin:'10px'}} variant="contained" color="primary" size='large' onClick={hostActiveStep < 5?()=>{setHostActiveStep(hostActiveStep+1)}: null}>{Translations[userLanguage].home.howitworks.host.next}</Button>
+                        </div>
                         </div>
                     </div>
-                    <div style={{display:'flex', alignItems:'center', flexWrap:'wrap', justifyContent:'space-around', width:'70%', margin:'100px', minWidth:'350px'}}>
-                    <div style={{display:'flex', flexDirection:'column', height:'725px'}}>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.join.step1}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.join.step2}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.join.step3}</p>
+                    <div style={{display:'flex', alignItems:'center', flexWrap:'wrap', justifyContent:'space-around', width:'70%', margin:'100px', minWidth:'350px', margin:'10px'}}>
+                    <div style={{display:'flex', width:'350px', height:'550px', overflow:'hidden', flexDirection:'column', border:'2px solid black', boxShadow:'10px 10px 0 #262626', backgroundColor:'white', alignItems:'center', padding:'5px'}}>
+                    <Typography variant='h3'>{Translations[userLanguage].home.howitworks.join.title}</Typography>
+                    <div style={{width:'90%'}}>
+                        <br></br>
+                        <Divider light/>
+                        <br></br>
+                    </div>
+                    <Stepper id='stepRef' style={{width:'100%', maxWidth:'320px', margin:'20px', overflow:'hidden'}} activeStep={joinActiveStep}>
+                            <Step>
+                                <StepLabel></StepLabel>
+                            </Step>
+                            <Step>
+                                <StepLabel></StepLabel>
+                            </Step>
+                            <Step>
+                                <StepLabel></StepLabel>
+                            </Step>
+                        </Stepper>
+                        {
+                            joinActiveStep === 0 &&
+                            <Typography variant='h5'>{Translations[userLanguage].home.howitworks.join.step1}</Typography>
+                        }
+                        {
+                            joinActiveStep === 1 &&
+                            <Typography variant='h5'>{Translations[userLanguage].home.howitworks.join.step2}</Typography>
+                        }
+                        {
+                            joinActiveStep === 2 &&
+                            <Typography variant='h5'>{Translations[userLanguage].home.howitworks.join.step3}</Typography>
+                        }
+                        <div style={{width:'100%', height:'100%', display:'flex', alignItems:'flex-end', justifyContent:'space-between'}}>
+                            <Button style={{margin:'10px'}} variant="contained" color="secondary" size='large' onClick={joinActiveStep > 0?()=>{setJoinActiveStep(prev => prev-1)}: null}>{Translations[userLanguage].home.howitworks.join.back}</Button>
+                            <Button style={{margin:'10px'}} variant="contained" color="primary" size='large' onClick={joinActiveStep < 2?()=>{setJoinActiveStep(prev => prev+1)}: null}>{Translations[userLanguage].home.howitworks.join.next}</Button>
+                        </div>
                         </div>
                         <div className='iphone-div'>
                             <img draggable='false' style={{width:'320px', height:'220px'}} src={JoinVideo} alt='join-video'/>
                         </div>
                     </div>
-                    <div style={{display:'flex', alignItems:'center', flexWrap:'wrap', justifyContent:'space-around', width:'70%', margin:'100px', minWidth:'350px'}}>
+                    <div style={{display:'flex', alignItems:'center', flexWrap:'wrap', justifyContent:'space-around', width:'70%', margin:'100px', minWidth:'350px', marginTop:'50px'}}>
                         <div className='iphone-div'>
                             <img draggable='false' style={{width:'320px', height:'400px'}} src={GameRoomVideo} alt='game-video'/>
                         </div>
-                        <div style={{display:'flex', flexDirection:'column', height:'725px'}}>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.play.step1}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.play.step2}</p>
-                            <p style={{width:'380px', textAlign:'start'}}>{Translations[userLanguage].home.howitworks.play.step3}</p>
+                        <div style={{display:'flex', width:'350px', height:'550px', overflow:'hidden', flexDirection:'column', border:'2px solid black', boxShadow:'10px 10px 0 #262626', backgroundColor:'white', alignItems:'center', padding:'5px'}}>
+                        <Typography variant='h3'>{Translations[userLanguage].home.howitworks.play.title}</Typography>
+                        <div style={{width:'90%'}}>
+                            <br></br>
+                            <Divider light/>
+                            <br></br>
+                        </div>
+                        <Stepper id='stepRef' style={{width:'100%', maxWidth:'320px', margin:'20px', overflow:'hidden'}} activeStep={playActiveStep}>
+                            <Step>
+                                <StepLabel></StepLabel>
+                            </Step>
+                            <Step>
+                                <StepLabel></StepLabel>
+                            </Step>
+                            <Step>
+                                <StepLabel></StepLabel>
+                            </Step>
+                        </Stepper>
+                        {
+                            playActiveStep === 0 &&
+                            <Typography variant='h5'>{Translations[userLanguage].home.howitworks.play.step1}</Typography>
+                        }
+                        {
+                            playActiveStep === 1 &&
+                            <Typography variant='h5'>{Translations[userLanguage].home.howitworks.play.step2}</Typography>
+                        }
+                        {
+                            playActiveStep === 2 &&
+                            <Typography variant='h5'>{Translations[userLanguage].home.howitworks.play.step3}</Typography>
+                        }
+                        <div style={{width:'100%', height:'100%', display:'flex', alignItems:'flex-end', justifyContent:'space-between'}}>
+                            <Button style={{margin:'10px'}} variant="contained" color="secondary" size='large' onClick={playActiveStep >0?()=>{setPlayActiveStep(prev => prev-1)}: null}>{Translations[userLanguage].home.howitworks.play.back}</Button>
+                            <Button style={{margin:'10px'}} variant="contained" color="primary" size='large' onClick={playActiveStep < 2?()=>{setPlayActiveStep(prev => prev+1)}: null}>{Translations[userLanguage].home.howitworks.play.next}</Button>
+                        </div>
                         </div>
                     </div>
                 </div>

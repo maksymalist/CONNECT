@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { Share, People } from '@material-ui/icons'
 
 import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 
 import GameEnded from './GameEnded'
 
@@ -120,8 +121,9 @@ export default function HostRoom(props) {
     
                 newTime.innerHTML = `${data.user} ${Translations[userLanguage].hostroom.time}: ${data.time}`
                 newTime.id = data.user
+                newTime.className = 'time-box'
     
-                document.getElementById('times').appendChild(newTime)
+                document.getElementById('time__div').appendChild(newTime)
             }
 
 
@@ -147,7 +149,8 @@ export default function HostRoom(props) {
             if(podium.includes(data.user)) return
             podium.push(data.user)
             podiumObj[data.user] = {
-                time: data.time
+                time: data.time,
+                id: data.id
             }
             handleUpdatePodium(data.user, data.time)
             setpodiumPlayerTimes(podiumPlayerTimes => [...podiumPlayerTimes, data.time])
@@ -206,7 +209,8 @@ export default function HostRoom(props) {
                 playerArr.push({
                 player: Object.keys(podiumObj)[index], 
                 time: time,
-                place: (timeIndex + 1)
+                place: (timeIndex + 1),
+                id: podiumObj[Object.keys(podiumObj)[index]].id || ""
               })
             }
           })
@@ -248,7 +252,8 @@ export default function HostRoom(props) {
                         <h1 
                             className='first-place podium-time' 
                             data-position={playerArr[i].place} 
-                            data-time={playerArr[i].time} 
+                            data-time={playerArr[i].time}
+                            data-playerid={playerArr[i].id} 
                             id={playerArr[i].player+"⠀"}><img width='40' height='40' src={FirstPlaceIcon} alt='FirstPlaceIcon'/>{playerArr[i].player} {Translations[userLanguage].hostroom.time}: {playerArr[i].time} {Translations[userLanguage].hostroom.place}: {playerArr[i].place}
                         </h1>
                     </>,
@@ -261,7 +266,8 @@ export default function HostRoom(props) {
                         <h1 
                             className='second-place podium-time' 
                             data-position={playerArr[i].place} 
-                            data-time={playerArr[i].time} 
+                            data-time={playerArr[i].time}
+                            data-playerid={playerArr[i].id} 
                             id={playerArr[i].player+"⠀"}><img width='40' height='40' src={SecondPlaceIcon} alt='SecondPlaceIcon'/>{playerArr[i].player} {Translations[userLanguage].hostroom.time}: {playerArr[i].time} {Translations[userLanguage].hostroom.place}: {playerArr[i].place}
                         </h1>
                     </>,
@@ -274,7 +280,8 @@ export default function HostRoom(props) {
                         <h1 
                             className='third-place podium-time' 
                             data-position={playerArr[i].place} 
-                            data-time={playerArr[i].time} 
+                            data-time={playerArr[i].time}
+                            data-playerid={playerArr[i].id} 
                             id={playerArr[i].player+"⠀"}><img width='40' height='40' src={ThirdPlaceIcon} alt='ThirdPlaceIcon'/>{playerArr[i].player} {Translations[userLanguage].hostroom.time}: {playerArr[i].time} {Translations[userLanguage].hostroom.place}: {playerArr[i].place}
                         </h1>
                     </>,
@@ -287,7 +294,8 @@ export default function HostRoom(props) {
                         <h1
                             className='other-place podium-time' 
                             data-position={playerArr[i].place}
-                            data-time={playerArr[i].time} 
+                            data-time={playerArr[i].time}
+                            data-playerid={playerArr[i].id} 
                             id={playerArr[i].player+"⠀"}>{playerArr[i].player} {Translations[userLanguage].hostroom.time}: {playerArr[i].time} {Translations[userLanguage].hostroom.place}: {playerArr[i].place}
                         </h1>
                     </>,
@@ -308,11 +316,11 @@ export default function HostRoom(props) {
     }
 
     const CheckPlanStatus = () =>{
-        firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/planStatus`).on('value',(snap)=>{
+        firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/plan`).on('value',(snap)=>{
             if(snap.exists()){
-              var planStatus = snap.val()
-              setIsActive(isActive = planStatus)
-              if(isActive == "active"){
+              const plan = snap.val()
+
+              if(plan === "Classroom"){
                 setUserLimit(userLimit = 40)
                 if(props.maxPlayers > 40){
                     setUserLimit(userLimit = 40)
@@ -325,7 +333,7 @@ export default function HostRoom(props) {
                 }
                   
               }
-              else{
+              if(plan === "Starter"){
                 setUserLimit(userLimit = 8)
                 if(props.maxPlayers > 8){
                     setUserLimit(userLimit = 8)
@@ -369,17 +377,159 @@ export default function HostRoom(props) {
         window.location = '/roomleave'
         localStorage.removeItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId);
     }
+
+    const addPoints = (Points, index) =>{
+        firebase.database().ref(`classes/${props.classid}/members/${index}/points`).transaction((points) => {
+            return points + Points
+        })
+    }
+
+    const createRecentGame = () => {
+
+        const Podium = []
+
+        const owner = JSON.parse(localStorage.getItem('user')).profileObj.googleId
+
+        const recentGame = {
+            "room": props.room,
+            "gamecode": props.gamecode,
+            "gamemode": props.gamemode,
+            "name": null,
+            "coverImg": null,
+            "tags": null,
+            "finalists": Podium,
+            "userProfilePic": null,
+            "userName": null,
+            "userID": null,
+            "date": new Date().toLocaleString()
+        }
+
+
+        if(props.gamemode === 'normal'){
+            firebase.database().ref(`quizes/${props.gamecode}`).on('value',(snap)=>{
+                if(snap.exists()){
+                    const data = snap.val()
+    
+                    recentGame.name = data.name || ""
+                    recentGame.coverImg = data.coverImg || ""
+                    recentGame.tags = data.tags || ""
+                    recentGame.userProfilePic = data.userProfilePic || ""
+                    recentGame.userName = data.userName || ""
+                    recentGame.userID = data.userID || ""
+                }
+            });
+        }
+
+        if(props.gamemode === 'multi'){
+            firebase.database().ref(`multiQuizzes/${props.gamecode}`).on('value',(snap)=>{
+                if(snap.exists()){
+                    const data = snap.val()
+    
+                    recentGame.name = data.name || ""
+                    recentGame.coverImg = data.coverImg || ""
+                    recentGame.tags = data.tags || ""
+                    recentGame.userProfilePic = data.userProfilePic || ""
+                    recentGame.userName = data.userName || ""
+                    recentGame.userID = data.userID || ""
+                }
+            });
+        }
+
+        for(let i = 0; i < document.getElementsByClassName('podium-time').length; i++){
+            Podium.push({
+                time: document.getElementsByClassName('podium-time')[i].dataset.time,
+                position: document.getElementsByClassName('podium-time')[i].dataset.position,
+                player: document.getElementsByClassName('podium-time')[i].id,
+                playerID: document.getElementsByClassName('podium-time')[i].dataset.playerid
+            })
+            console.log(document.getElementsByClassName('podium-time')[i].innerHTML)
+        }
+        
+        console.log(recentGame)
+
+        if(props.classid !== null){
+            firebase.database().ref(`classes/${props.classid}/recent_games`).push(recentGame)
+
+            //add points to winners
+            Podium.map((player) => {
+                console.log(player)
+                if(player.position == 1){
+                    console.log('place filter check')
+                    firebase.database().ref(`classes/${props.classid}/members`).once("value", (snap) => {
+                        if(snap.exists()){
+                            console.log('members exist check')
+                            const data = snap.val() || []
+                            const index = data.findIndex(member => member.id === player.playerID)
+                            console.log(index)
+                            if(index !== undefined && index !== null && player.playerID !== owner){
+                                console.log('index error check')
+                                addPoints(100, index)
+                            }
+
+                        }
+                    })
+                }
+            })
+            Podium.map((player) => {
+                console.log(player)
+                if(player.position == 2){
+                    console.log('place filter check')
+                    firebase.database().ref(`classes/${props.classid}/members`).once("value", (snap) => {
+                        if(snap.exists()){
+                            console.log('members exist check')
+                            const data = snap.val() || []
+                            const index = data.findIndex(member => member.id === player.playerID)
+                            console.log(index)
+                            if(index !== undefined && index !== null && player.playerID !== owner){
+                                console.log('index error check')
+                                addPoints(50, index)
+                            }
+
+                        }
+                    })
+                }
+            })
+            Podium.map((player) => {
+                console.log(player)
+                if(player.position == 3){
+                    console.log('place filter check')
+                    firebase.database().ref(`classes/${props.classid}/members`).once("value", (snap) => {
+                        if(snap.exists()){
+                            console.log('members exist check')
+                            const data = snap.val() || []
+                            const index = data.findIndex(member => member.id === player.playerID)
+                            console.log(index)
+                            if(index !== undefined && index !== null && player.playerID !== owner){
+                                console.log('index error check')
+                                addPoints(20, index)
+                            }
+
+                        }
+                    })
+                }
+            })
+        }
+
+    }
+
     const GameOver = () => {
         const Podium = []
-        // playerArr.map((data, index) =>{
-        //     Podium.push(`User: ${data.player} Time: ${data.time}`)
-        // })
-        // console.log(Podium)
+        firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/plan`).on('value',(snap)=>{
+            if(snap.val() !== null){
+               if(snap.val() === 'Classroom'){
+                   if(props.classid != "null" && props.classid !== null){
+                     createRecentGame() 
+                   }
+               }
+
+            }
+        })
         for(var i = 0; i < document.getElementsByClassName('podium-time').length; i++){
             Podium.push({
                 time: document.getElementsByClassName('podium-time')[i].dataset.time,
                 position: document.getElementsByClassName('podium-time')[i].dataset.position,
-                player: document.getElementsByClassName('podium-time')[i].id
+                player: document.getElementsByClassName('podium-time')[i].id,
+                playerID: document.getElementsByClassName('podium-time')[i].dataset.playerid
             })
             console.log(document.getElementsByClassName('podium-time')[i].innerHTML)
         }
@@ -414,6 +564,17 @@ export default function HostRoom(props) {
                 :
                 null
             }
+            {
+                props.classid != "null" &&
+                <div style={{display:'flex', alignItems:'flex-start'}}>
+                    {
+                        props.classid !== null &&
+                        <div style={{display:'flex', alignItems:'center', backgroundColor:'#3f51b5', color:'white', fontWeight:'bold', borderRadius:'5px', margin:'2px', padding:'10px'}}>
+                            <Typography variant="sub1">{Translations[userLanguage].hostroom.private}</Typography>
+                        </div>
+                    }
+                </div>
+            }
             <h1 style={{color:'white'}}>{props.room}</h1>
             <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='medium' onClick={()=>{shareLink()}}><People/>⠀{Translations[userLanguage].hostroom.sharebutton}</Button>
             <h2 style={{color:'white'}} id='maxPlayersText'>{numberOfUsers}/{userLimit}</h2>
@@ -440,6 +601,7 @@ export default function HostRoom(props) {
                 </div>
                 <div id="times">
                     <h1 style={{textAlign:'center', borderBottom: '4px solid'}}>{Translations[userLanguage].hostroom.playertimes} <TimerRoundedIcon style={{width:"50px", height:"50px"}}/></h1>
+                    <div id='time__div'></div>
                 </div>
             </div>
 

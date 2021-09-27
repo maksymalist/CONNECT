@@ -506,6 +506,10 @@ button{
   /* Change the background color of the dropdown button when the dropdown content is shown */
   /* .dropdown:hover .dropbtn {background-color: #4e54c8;} */
 
+.MuiBadge-badge{
+    top: 10px !important;
+}
+
 #waitingRoomDiv {
     display: flex;
     align-items: center;
@@ -624,10 +628,29 @@ button{
 #first-place-div {
     color: #6976EA;
     background-color: white;
-    border-radius: 15px;
+    box-shadow: 10px 10px 0 #262626;
+    border: 2px solid black;
     width: auto;
     min-height: 2px;
     padding: 1px;
+}
+/* .time-box{
+    color: #6976EA;
+    background-color: white;
+    box-shadow: 10px 10px 0 #262626;
+    border: 2px solid black;
+    width: fit-content;
+    padding: 1px;
+} */
+
+#time__div {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 90%;
+    min-width: 350px;
+    flex-direction: column;
+    align-items: center;
 }
 
 @media (pointer:none), (pointer:coarse) {
@@ -806,7 +829,8 @@ input:hover {
 
 .about-card{
     background-color: white;
-    box-shadow: 2px 2px 10px #262626;
+    box-shadow: 10px 10px 0px #262626;
+    border: 2px solid black;
     width: 200px;
     min-height: 200px !important;
     min-width: 200px !important;
@@ -857,12 +881,13 @@ input:hover {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 100px;
 }
 .iphone-div{
     background-image: url('../img/Iphone.svg');
     background-repeat: no-repeat;
     background-size: contain;
-    width: 380px;
+    width: 375px;
     height: 725px;
     display: flex;
     align-items: center;
@@ -905,6 +930,9 @@ input:hover {
 }
 
 .MuiButton-containedPrimary{
+    background-color: #1BB978 !important;
+}
+.MuiBadge-colorPrimary{
     background-color: #1BB978 !important;
 }
 

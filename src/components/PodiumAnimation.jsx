@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button, Typography } from '@material-ui/core'
 import React, { useEffect, useRef, useState } from 'react'
 import '../style/podiumAnimation.css'
 import Translations from '../translations/translations.json'
@@ -82,6 +82,7 @@ function PodiumAnimation({ maxPodiumPlayers, podium }) {
         transition: 'all 5s cubic-bezier(0, 0.13, 1, -1.31)',
         border: '2px solid black',
         boxShadow: '10px 10px 0 #262626',
+        overflow: 'hidden'
     }
 
     // const podium = [
@@ -171,7 +172,7 @@ function PodiumAnimation({ maxPodiumPlayers, podium }) {
                         </div>
                         <div id="thirdplacepodium" ref={thirdPlacePodium}>
                             {
-                                podium.map((place, index) => {
+                                podium.map((place) => {
                                     if(place.position === '3') {
                                         return <div id='third-place-name-div'><h1 id='third-place-name' ref={thirdPlaceName}>{place.player}</h1></div>
                                     }
@@ -183,11 +184,9 @@ function PodiumAnimation({ maxPodiumPlayers, podium }) {
                         <div style={{display:'flex', width:'100vw', justifyContent:'center', alignItems:'center'}}>
                             <div style={{display:'flex', flexWrap:'wrap', width:'550px', height:'auto'}}>
                             {
-                                podium.map((place, index) => {
-                                    if(place.position > 3) {
-                                        if(place.position <= maxPodiumPlayers){
-                                            return <div className='other-places' style={otherPlaceStyle}>{place.position}th place {place.player}</div>
-                                        }
+                                podium.map((place) => {
+                                    if(place.position > 3 && parseInt(maxPodiumPlayers) >= place.position) {
+                                        return <Typography style={otherPlaceStyle} variant='subtitle1' className='other-places'>{place.position}th place {place.player}</Typography>
                                     }
                                 })
                             }

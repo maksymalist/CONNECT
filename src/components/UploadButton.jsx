@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 import Translations from '../translations/translations.json'
 
-const UploadButton = () => {
+const UploadButton = ({ imgRef }) => {
     const firebase = getFirebase();
     const ref = useRef(undefined);
     const [file, setFile] = useState(null);
@@ -55,7 +55,7 @@ const UploadButton = () => {
                 file === null ?
                 <Typography variant='h3'>{Translations[userLanguage].uploadbox.upload}</Typography>
                 :
-                <img id='coverImg' style={{width:'100%', height:'100%'}} src={file} alt='quiz-cover'/>
+                <img id='coverImg' ref={imgRef} style={{width:'100%', height:'100%'}} src={file} alt='quiz-cover'/>
             }
         </div>
     )

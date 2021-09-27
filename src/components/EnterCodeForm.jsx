@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button'
 import Switch from '@material-ui/core/Switch';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { InputLabel, FormControl } from '@material-ui/core'
+import { InputLabel, FormControl, Typography } from '@material-ui/core'
 
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import CasinoRoundedIcon from '@material-ui/icons/CasinoRounded';
@@ -21,7 +21,7 @@ import CasinoRoundedIcon from '@material-ui/icons/CasinoRounded';
 import firebase from "firebase"
 import "firebase/database";
 
-import { QuestionAnswerRounded, FilterNoneRounded } from '@material-ui/icons';
+import { QuestionAnswerRounded, FilterNoneRounded, LockSharp } from '@material-ui/icons';
 
 import Translations from '../translations/translations.json'
 
@@ -33,7 +33,7 @@ const list = require('badwords-list')
 //http://localhost:3001
 //good one https://connect-now-backend.herokuapp.com/
 
-export const socket = io('https://connect-now-backend.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
+export const socket = io('http://localhost:3001', {transports: ['websocket', 'polling', 'flashsocket']});
 
 export default function EnterCodeForm({match, location}) {
     //const classes = useStyles();
@@ -58,8 +58,14 @@ export default function EnterCodeForm({match, location}) {
 
     const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
 
+    const [classid, setClassid] = useState("null")
+    const classID = new URLSearchParams(search).get('classid')
+
+    const classes = []
+
 
     useEffect(() => {
+        console.log(getClasses())
         const Gamecode = new URLSearchParams(search).get('code');
         if(Gamecode !== null){
             setCode(Gamecode)
@@ -72,6 +78,8 @@ export default function EnterCodeForm({match, location}) {
             console.log(gamecodeParam)
             setGameCode(gamecodeParam)
             setPlayMode(false)
+            setClassid(classID)
+            console.log(classID)
             Generatecode()
             firebase.database().ref(`/quizes/${gamecodeParam}`).on('value', (snapshot) => {
                 if(snapshot.val() !== null){
@@ -101,10 +109,13 @@ export default function EnterCodeForm({match, location}) {
             if(data.joined == true){
                 joined = true
             }
+            console.log(data)
         })
         
         socket.on('roomcreated', (data)=>{
             setRole(role = 'host')
+
+            var validclassId = data.classId
             
             console.log(data.friendly +'checked uit')
             console.log('values below')
@@ -120,6 +131,7 @@ export default function EnterCodeForm({match, location}) {
                     gamecode={data.gamecode}
                     friendlyroom={data.friendly}
                     gamemode={data.gamemode}
+                    classid={validclassId}
                     />
                 <Background/>
                 </div>,
@@ -131,6 +143,34 @@ export default function EnterCodeForm({match, location}) {
                 googleId: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
                 room: data.room
             })
+
+            if(validclassId != "null" && validclassId != null){
+                socket.emit('addPrivateRoom', {
+                    room: data.room,
+                    classId: validclassId,
+                    googleId: JSON.parse(localStorage.getItem('user')).profileObj.googleId
+                })
+
+                firebase.database().ref(`classes/${validclassId}/members`).once('value', (snapshot) => {
+                    if(snapshot.val() !== null){
+                        const members = snapshot.val() || []
+
+                        members.map((member) => {
+                            const memberID = member.id
+                            const notification = {
+                                "type": "invitation_to_room",
+                                "classid": validclassId,
+                                "room": data.room,
+                                "read": false,
+                                "date": new Date().toLocaleString(),
+                                "message": `${JSON.parse(localStorage.getItem('user')).profileObj.name} has invited you to play a game in room ${data.room}!`
+                            }
+                            firebase.database().ref(`users/${memberID}/notifications`).push(notification)
+                        })
+                        
+                    }
+                })
+            }
 
         })
 
@@ -195,8 +235,34 @@ export default function EnterCodeForm({match, location}) {
             toast.info(`${Translations[userLanguage].alerts.gamealreadystarted} ${data.room}`)
         })
 
+        socket.on('cannotJoinPrivateRoom', (data) => {
+            toast.error(Translations[userLanguage].alerts.cannotjoinprivate)
+        })
+
 
     }, [])
+
+    const getClasses = () => {
+        const classes = []
+        firebase.database().ref(`/users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/classes`).on('value', (snapshot) => {
+            if(snapshot.exists()){
+                const data = snapshot.val()
+
+                const keys = Object.keys(data)
+
+                console.log(keys)
+
+                for(let i = 0; i < keys.length; i++){
+                    const key = keys[i]
+                    const currentClassId = data[key].id
+                    if(currentClassId !== null){
+                        classes.push(currentClassId)
+                    }
+                }
+            }
+        })
+        return classes
+    }
 
 
 
@@ -210,9 +276,11 @@ export default function EnterCodeForm({match, location}) {
             return
         }
         socket.emit('joinroom', {
-        code: joinFormCode, 
-        name: joinFormNickname,
-        profane: list.array.includes(joinFormNickname)})
+            code: joinFormCode, 
+            name: joinFormNickname,
+            profane: list.array.includes(joinFormNickname),
+            classes: getClasses()
+        })
     }
 
     
@@ -230,12 +298,48 @@ export default function EnterCodeForm({match, location}) {
             return
         }
         console.log(checked)
-        socket.emit('createroom', {
-            room: document.getElementById('roomName').value,
-            gamecode: gameCode,
-            host: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
-            friendly: checked,
-            gamemode: gameMode
+
+        firebase.database().ref(`/classes/${classID}`).on('value', (snapshot) => {
+            if(snapshot.exists()){
+                const snapData = snapshot.val()
+
+                firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/plan`).on('value',(snap)=>{
+                    if(snap.val() !== null){
+                       if(snap.val() === 'Starter'){
+                        socket.emit('createroom', {
+                            room: document.getElementById('roomName').value,
+                            gamecode: gameCode,
+                            host: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
+                            friendly: checked,
+                            gamemode: gameMode,
+                            classId: null
+                        })
+                       }
+                       if(snap.val() === 'Classroom'){
+                        socket.emit('createroom', {
+                            room: document.getElementById('roomName').value || "",
+                            gamecode: gameCode,
+                            host: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
+                            friendly: checked,
+                            gamemode: gameMode,
+                            classId: snapData.id,
+                        })
+                       }
+        
+                    }
+                })
+
+            }
+            else{
+                socket.emit('createroom', {
+                    room: document.getElementById('roomName').value,
+                    gamecode: gameCode,
+                    host: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
+                    friendly: checked,
+                    gamemode: gameMode,
+                    classId: null
+                })
+            }
         })
     }
 
@@ -286,31 +390,27 @@ export default function EnterCodeForm({match, location}) {
                         </div>
                         :
                         <div id='subConatainer'>
+                        {
+                            classid != "null" &&
+                            <div style={{display:'flex', alignItems:'flex-start'}}>
+                                {
+                                    classid !== null &&
+                                    <div style={{display:'flex', alignItems:'center', backgroundColor:'#3f51b5', color:'white', fontWeight:'bold', borderRadius:'5px', margin:'2px', padding:'10px'}}>
+                                        <Typography variant="sub1">{Translations[userLanguage].play.host.private}</Typography>
+                                    </div>
+                                }
+                            </div>
+                        }
                         <h1>{Translations[userLanguage].play.host.title}</h1>
-                        <FormControl>
-                        <InputLabel id="demo-simple-select-outlined-label">{Translations[userLanguage].play.host.gamemode.title}</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={gameMode}
-                                onChange={changeGamemode}
-                                label="GameMode"
-                                style={{width:'180px', height:'40px'}}
-                                required
-                                >
-                                <MenuItem value='normal'><QuestionAnswerRounded color='primary'/>⠀{Translations[userLanguage].play.host.gamemode.normal}</MenuItem>
-                                <MenuItem value='multi'><FilterNoneRounded color='primary'/>⠀{Translations[userLanguage].play.host.gamemode.multi}</MenuItem>
-                            </Select>
-                            </FormControl>
-                            <br></br>
-                            <br></br><input className='host-input' placeholder={Translations[userLanguage].play.host.input} type="text" id="roomName"/>
-                            <br></br><input value={gameCode} onChange={(event) => setGameCode(event.target.value)} style={{marginLeft:'8px'}} className='host-input' placeholder={Translations[userLanguage].play.host.input2} type="text" id="gameCode"/>
+                        <h2>{Translations[userLanguage].play.host.roomcode}</h2>
+                        <input className='host-input' placeholder={Translations[userLanguage].play.host.input} type="text" id="roomName"/>
+                        <input hidden value={gameCode} onChange={(event) => setGameCode(event.target.value)} style={{marginLeft:'8px'}} className='host-input' placeholder={Translations[userLanguage].play.host.input2} type="text" id="gameCode"/>
                             {gameCode != '' ?
                                 null
                                 : <InfoOutlinedIcon onClick={()=>{window.location = '/browsequizzes/normal'}} style={{marginBottom:'-8px', marginRight:'-15px', position:'relative', left:'-30px'}} color='primary'/>
                             }
                             <div>
-                                <h1 style={{fontSize:'25px'}}>{Translations[userLanguage].play.host.presets.title}</h1><br></br>
+                                <h2>{Translations[userLanguage].play.host.presets.title}</h2>
                                 <label>{Translations[userLanguage].play.host.presets.maxplayers} </label><input ref={maxPlayers} id='max-players' type='number' min='0' max='40'/>
                                 <br></br><label>{Translations[userLanguage].play.host.presets.podiumplaces} </label><input ref={podiumPlaces} id='podium-places' type='number' min='3' max='10'/>
                                 <br></br>

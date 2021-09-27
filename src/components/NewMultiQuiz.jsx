@@ -28,6 +28,8 @@ function NewMultiQuiz() {
     //
     const quizName = useRef(null)
 
+    const imgRef = useRef(null)
+
     useEffect(() => {
         toast.info(Translations[userLanguage].alerts.eachansdifferent)
     }, [])
@@ -45,11 +47,41 @@ function NewMultiQuiz() {
             toast.error(Translations[userLanguage].alerts.need1subject)
             return
         }
-        firebase.database().ref(`multiQuizzes/`).push(quizObj)
-        toast.success(Translations[userLanguage].alerts.quizcreated)
-        for(let i = 0; i < document.getElementsByClassName('userInput').length; i++){
-            document.getElementsByClassName('userInput')[i].value = ""
-        }
+        Object.keys(quizObj.steps).forEach(step => {
+            if(JSON.stringify(step).indexOf('.') !== -1){
+                toast.error(Translations[userLanguage].alerts.titlecantcontain)
+                return
+            }
+            if(JSON.stringify(step).indexOf('#') !== -1){
+                toast.error(Translations[userLanguage].alerts.titlecantcontain)
+                return
+            }
+            if(JSON.stringify(step).indexOf('$') !== -1){
+                toast.error(Translations[userLanguage].alerts.titlecantcontain)
+                return
+            }
+            if(JSON.stringify(step).indexOf('/') !== -1){
+                toast.error(Translations[userLanguage].alerts.titlecantcontain)
+                return
+            }
+            if(JSON.stringify(step).indexOf('[') !== -1){
+                toast.error(Translations[userLanguage].alerts.titlecantcontain)
+                return
+            }
+            if(JSON.stringify(step).indexOf(']') !== -1){
+                toast.error(Translations[userLanguage].alerts.titlecantcontain)
+                return
+            }
+
+            if(!JSON.stringify(step).indexOf('.') !== -1 && !JSON.stringify(step).indexOf('#') !== -1 && !JSON.stringify(step).indexOf('$') !== -1 && !JSON.stringify(step).indexOf('/') !== -1 && !JSON.stringify(step).indexOf('[') !== -1 && !JSON.stringify(step).indexOf(']') !== -1){
+                firebase.database().ref(`multiQuizzes/`).push(quizObj)
+
+                toast.success(Translations[userLanguage].alerts.quizcreated)
+                for(let i = 0; i < document.getElementsByClassName('userInput').length; i++){
+                    document.getElementsByClassName('userInput')[i].value = ""
+                }
+            }
+        })
 
         
     }
@@ -126,14 +158,14 @@ function NewMultiQuiz() {
     const setQuizObj = () => {
         if(JSON.parse(localStorage.getItem('user')) == null) {
             window.location = '/login'
-            toast.error("Please login to create a quiz!")
+            toast.error(Translations[userLanguage].alerts.logincreatequiz)
             return
         }
         quizObj.name = quizName.current.value
         quizObj.userName = JSON.parse(localStorage.getItem('user')).profileObj.name
         quizObj.userProfilePic = JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
         quizObj.userID = JSON.parse(localStorage.getItem('user')).profileObj.googleId
-        quizObj.coverImg = document.getElementById('coverImg').src
+        quizObj.coverImg = imgRef.current ? imgRef.current.src : ""
         quizObj.tags = getTags()
 
         var stepObj = {}
@@ -195,7 +227,7 @@ function NewMultiQuiz() {
             </div>
             <div style={{width:'100%', display:'flex', alignItems:'center', flexDirection:'column', marginTop:'100px'}}>
                 <Typography variant="h5" style={{margin:'10px'}}>{Translations[userLanguage].newmultiquiz.step2}</Typography>
-                <UploadButton/>
+                <UploadButton imgRef={imgRef}/>
             </div>
             <Typography variant="h5" style={{margin:'10px', marginTop:'100px'}}>{Translations[userLanguage].newmultiquiz.step3}</Typography>
             <div style={{backgroundColor:'white', padding:'15px', border:'2px solid black', boxShadow:'10px 10px 0 #262626', width:'80vw', maxWidth:'600px', marginTop:'50px'}}>

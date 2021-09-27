@@ -173,7 +173,8 @@ export default function GameRoom({match}) {
                     socket.emit('PlayerFinsihed', {
                         room: match.params.room,
                         user: match.params.user,
-                        time: time
+                        time: time,
+                        id: JSON.parse(localStorage.getItem('user')).profileObj.googleId
                     })
                     document.getElementById('popUp').removeAttribute('hidden')
                     document.getElementById('gameContent').remove()

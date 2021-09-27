@@ -41,22 +41,31 @@
             "howitworks":{
                 "title": "How it works",
                 "host": {
+                    "title": "Host",
                     "step1": "Select your desired game mode",
                     "step2": "Type in the room name / code or click the “GENERATE NAME” button",
-                    "step3": "Go to QUIZZES and find a game you would like to host copy that game’s code (don't forget to include the “-” at the start of the code)",
+                    "step3": "Go to QUIZZES and find a game you would like to host copy that game’s code",
                     "step4": "Enter the amount of players you want in your room Starter plan users max out at 40 users whilst Classroom plan users get 90 users",
                     "step5": "Specify if the user nicknames should be friendly",
-                    "step6": "Start the game!!!"
+                    "step6": "Start the game!!!",
+                    "next": "Next",
+                    "back": "Back"
                 },
                 "join":{
+                    "title": "Join",
                     "step1": "Enter your nickname",
                     "step2": "Enter a valid room name / code",
-                    "step3": "Join your game and have fun !!!"
+                    "step3": "Join your game and have fun !!!",
+                    "next": "Next",
+                    "back": "Back"
                 },
                 "play":{
+                    "title": "Play",
                     "step1": "Match the question cards with their answers",
                     "step2": "If you match the wrong cards 5s will be added to your timer",
-                    "step3": "The goal is to get the lowest time to have the highest place on the podium and have fun whilst learning!!!"
+                    "step3": "The goal is to get the lowest time to have the highest place on the podium.",
+                    "next": "Next",
+                    "back": "Back"
                     
                 }
             }
@@ -85,7 +94,9 @@
                     "friendly": "Friendly nicknames",
                     "button": "Generate Name",
                     "button2": "Host Room"
-                }
+                },
+                "private": "Private",
+                "roomcode": "Room Code"
 
             }
         },
@@ -110,7 +121,8 @@
                     "feature2": "Have 40 or Less People in Your Rooms",
                     "feature3": "You Can Create Quizzes"
                 },
-                "button": "View"
+                "button": "View",
+                "buttonsubscribed": "Selected ✓"
 
             },
             "classroom": {
@@ -152,7 +164,8 @@
             "podium": "Podium",
             "playertimes": "Player Times",
             "time": "Time",
-            "place": "Place"
+            "place": "Place",
+            "private": "Private"
 
         },
         "finishedscreen":{
@@ -220,7 +233,7 @@
                 "title":"Saved"
             },
             "class":{
-                "title":"Class"
+                "title":"Classes"
             }
 
         },
@@ -290,7 +303,11 @@
             "purchasefailed": "Purchase Failed!",
             "alreadyhaveplan": "You Already Have this Plan!",
             "error": "Error!",
-            "entercoupon": "Please Enter a Coupon Code!"
+            "entercoupon": "Please Enter a Coupon Code!",
+            "memberAlreadyExists": "This user is already a member of your class!!!",
+            "thisUserDoesNotExist": "This user does not exist",
+            "cannotjoinprivate": "Cannot join private room",
+            "titlecantcontain": "Step title can't can't contain '.', '#', '$', '/', '[', or ']'"
         },
         "paymentform":{
             "title": "Payment Form",
@@ -298,6 +315,52 @@
             "price": "$10 monthly",
             "button": "Apply",
             "button2": "Subscribe"
+        },
+        "classroom": {
+            "createbutton": "Create Class",
+            "members": {
+                "title": "Members",
+                "add": "add member",
+                "cancel": "Annuler",
+                "remove": "remove member"
+            },
+            "addmember": {
+                "title": "Add Member",
+                "input": "Member Email",
+                "members": "Members",
+                "button": "Add Member",
+                "confirm": "confirm"
+            },
+            "play": {
+                "playbutton": "Play Games",
+                "backbutton": "Back"
+            },
+            "halloffame": {
+                "title": "Hall of Fame"
+            },
+            "recentGames":{
+                "title": "Recent Games"
+            },
+            "finalists": {
+                "title": "Finalists"
+            }
+        },
+        "createclass":{
+            "title": "Create Class",
+            "steps": {
+                "step1": "1. Enter your class name",
+                "input1": "Name",
+                "step2": "2. Upload class banner",
+                "step3": "3. Add members",
+                "addbutton": "Add Member",
+                "memberinput": "Member Email",
+                "members": "Members",
+                "createclassbutton": "Create Class"
+            }
+        },
+        "notifications": {
+            "title": "Notifications",
+            "clear": "Clear Notifications"
         }
 
         
@@ -309,8 +372,8 @@
             "plans": "Forfaits",
             "login": "Connexion",
             "add":{
-                "normal": "Crée Quiz",
-                "multi": "Crée Multi"
+                "normal": "Créer Quiz",
+                "multi": "Créer Multi"
             },
             "profile": {
                 "head": "Connecté avec",
@@ -344,23 +407,32 @@
             "howitworks":{
                 "title": "Fonctionnement",
                 "host": {
+                    "title": "Créer une salle",
                     "step1": "Sélectionnez le mode de jeu souhaité",
                     "step2": "Écrivez le nom / code de la salle ou cliquez sur le bouton « GÉNÉRER LE NOM »",
-                    "step3": "Allez sur QUIZ et trouvez un quiz que vous souhaitez héberger.  copiez le code de ce quiz (n'oubliez pas d'inclure le '-' au début du code)",
+                    "step3": "Allez sur QUIZ et trouvez un quiz que vous souhaitez héberger.  copiez le code de ce quiz",
                     "step4": "Saisissez le nombre de joueurs que vous souhaitez dans votre salle. Le nombre d'utilisateurs du plan de départ est limité à 40 utilisateurs, tandis que les utilisateurs du plan de classe ont 90 utilisateurs.",
                     "step5": "Spécifiez si les pseudonymes des utilisateurs doivent être conviviaux",
-                    "step6": "Commencez le jeu!!!"
+                    "step6": "Commencez le jeu!!!",
+                    "next": "Suivant",
+                    "back": "Retour"
                 },
                 "join":{
+                    "title": "Rejoindre une classe",
                     "step1": "Entrez votre surnom",
                     "step2": "Entrez un nom de salle valide",
-                    "step3": "Rejoignez la salle et amusez-vous !!!"
+                    "step3": "Rejoignez la salle et amusez-vous !!!",
+                    "next": "Suivant",
+                    "back": "Retour"
                 },
                 "play":{
+                    "title": "Jouer",
                     "step1": "Associez les cartes de questions à leurs réponses",
                     "step2": "Si vous faites correspondre les mauvaises cartes, 5s seront ajoutés à votre minuteur",
-                    "step3": "L'objectif est d'obtenir le temps le plus bas pour avoir la plus haute place sur le podium et de s'amuser tout en apprenant !!!"
-                    
+                    "step3": "L'objectif est d'obtenir le temps le plus bas pour avoir la plus haute place sur le podium !!!",
+                    "next": "Suivant",
+                    "back": "Retour"
+
                 }
             }
         },
@@ -388,7 +460,9 @@
                     "friendly": "Surnoms filtrés",
                     "button": "Générer le nom",
                     "button2": "Créer la salle"
-                }
+                },
+                "private": "Privé",
+                "roomcode": "Code de salle"
 
             }
         },
@@ -413,7 +487,8 @@
                     "feature2": "Avoir 40 personnes ou moins dans vos salles",
                     "feature3": "Vous pouvez créer des quiz"
                 },
-                "button": "Voir"
+                "button": "Voir",
+                "buttonsubscribed": "Selectionné ✓"
 
             },
             "classroom": {
@@ -454,7 +529,8 @@
             "podium": "Podium",
             "playertimes": "Temps des Joueurs",
             "time": "Temps",
-            "place": "Place"
+            "place": "Place",
+            "private": "Privé"
 
         },
         "finishedscreen":{
@@ -522,7 +598,7 @@
                 "title":"Enregistré"
             },
             "class":{
-                "title":"Classe"
+                "title":"Classes"
             }
 
         },
@@ -592,7 +668,11 @@
             "purchasefailed": "Achat raté!",
             "alreadyhaveplan": "Vous avez déjà ce forfait !",
             "error": "Error!",
-            "entercoupon": "Veuillez entrer un code de coupon !"
+            "entercoupon": "Veuillez entrer un code de coupon !",
+            "memberAlreadyExists": "Cet utilisateur est déjà un membre de votre classe !!!",
+            "thisUserDoesNotExist": "Cet utilisateur n'existe pas",
+            "cannotjoinprivate": "Impossible de rejoindre la salle privée",
+            "titlecantcontain": "Le titre du sujet ne peut pas contenir '.', '#', '$', '/', '[', ou ']'"
         },
         "paymentform":{
             "title": "Formulaire de paiement",
@@ -600,6 +680,52 @@
             "price": "10 $ par mois",
             "button": "Appliquer",
             "button2": "S'abonner"
+        },
+        "classroom": {
+            "createbutton": "Créer Classe",
+            "members": {
+                "title": "Membres",
+                "add": "Ajouter",
+                "cancel": "Annuler",
+                "remove": "retirer"
+            },
+            "play": {
+                "playbutton": "Jouer",
+                "backbutton": "retourner"
+            },
+            "addmember": {
+                "title": "Ajouter des membres",
+                "input": "Courriel du membre",
+                "members": "Membres",
+                "button": "Ajouter",
+                "confirm": "confirmer"
+            },
+            "halloffame": {
+                "title": "Temple de la renommée"
+            },
+            "recentGames":{
+                "title": "Jeux récents"
+            },
+            "finalists": {
+                "title": "Finalistes"
+            }
+        },
+        "createclass":{
+            "title": "Créer Classe",
+            "steps": {
+                "step1": "1. Entrez votre nom de classe",
+                "input1": "Nom",
+                "step2": "2. Télécharger la bannière de classe",
+                "step3": "3. Ajouter des membres",
+                "addbutton": "Ajouter",
+                "memberinput": "Courriel du membre",
+                "members": "Membres",
+                "createclassbutton": "Créer Classe"
+            }
+        },
+        "notifications": {
+            "title": "Notifications",
+            "clear": "Effacer notifications"
         }
 
         

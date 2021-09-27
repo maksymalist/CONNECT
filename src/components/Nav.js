@@ -2,7 +2,7 @@ import '../App.css';
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify';
-import { Menu, MenuItem, InputLabel, FormControl, Select } from '@material-ui/core';
+import { Menu, MenuItem, InputLabel, FormControl, Select, formatMs, Badge } from '@material-ui/core';
 
 //material-ui
 import MenuIcon from '@material-ui/icons/Menu';
@@ -18,13 +18,9 @@ import "firebase/database";
 
 import Translations from '../translations/translations.json'
 
-import { Add, QuestionAnswerRounded, FilterNoneRounded, TranslateSharp } from '@material-ui/icons'
+import { Add, QuestionAnswerRounded, FilterNoneRounded, TranslateSharp, NotificationsSharp } from '@material-ui/icons'
 
-export var ActiveUser = null
-export var profilePic = null
-
-
-
+import NotificationBox from '../components/NotificationBox'
 
 function Nav({ isLoggedIn, customerId, plan }) {
 
@@ -38,22 +34,10 @@ function Nav({ isLoggedIn, customerId, plan }) {
 
     const [language, setLanguage] = useState('english');
 
+    const [notificationBoxIsOpen, setNotificationBoxIsOpen] = useState(false)
+
     const navStyle = {
         color: "white"
-    }
-    function updateUsers(email, googleId, userName){
-      firebase.database().ref(`users/${googleId}`).set({
-        UserName: userName,
-        email: email,
-        planStatus: 'inactive',
-        planDuration: 0,
-        plan: 'Starter',
-        clientSecret: 0,
-        customerObj: 0,
-        subscriptionObj: 0
-
-  
-      })
     }
 
     useEffect(() => {
@@ -132,6 +116,17 @@ function Nav({ isLoggedIn, customerId, plan }) {
     window.location.reload()
   }
 
+  const getNotifications = () => {
+    if(JSON.parse(localStorage.getItem('user')) === null) return
+    let number = 0
+    firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/notifications`).on('value',(snap)=>{
+      if(snap.val() == undefined) return
+      number = Object.keys(snap.val()).length
+
+    })
+    return number
+  }
+
   return (
     <nav>
         <ul>
@@ -159,11 +154,8 @@ function Nav({ isLoggedIn, customerId, plan }) {
               onClose={handleClose}
               style={{width:'150px', marginTop:'30px', padding:'5px', display:'flex', alignItems:'center', marginRight:'10px'}}
             >
-              <MenuItem style={{borderBottom:'1px solid grey', width:'150px'}} onClick={handleClose}>{Translations[userLanguage].nav.profile.head}<br></br> {currentUsername}</MenuItem>
+              <MenuItem style={{borderBottom:'1px solid grey', width:'150px', justifyContent:'center'}} onClick={handleClose}>{Translations[userLanguage].nav.profile.head}<br></br> {currentUsername}</MenuItem>
               <MenuItem onClick={()=>window.location = '/profile'}>{Translations[userLanguage].nav.profile.account}</MenuItem>
-              {
-                plan === 'Classroom' && <MenuItem onClick={()=>window.location = '/classroom'}>{Translations[userLanguage].nav.profile.class}</MenuItem>
-              }
               <MenuItem onClick={openCustomerPortal}>{Translations[userLanguage].nav.profile.subscription}</MenuItem>
               <MenuItem style={{backgroundColor:'rgb(220, 0, 78)', color:'white', fontWeight:'bold', borderRadius:'5px'}} onClick={logOut}>{Translations[userLanguage].nav.profile.logout}</MenuItem>
             </Menu>
@@ -216,7 +208,20 @@ function Nav({ isLoggedIn, customerId, plan }) {
               } 
               onClick={()=>{handleSetLanguage('french')}}>Français</MenuItem>
             </Menu>
-
+            <div className="liright">
+            <Badge badgeContent={getNotifications()} color="primary" style={{color:'#1BB978'}}>
+              <NotificationsSharp
+                style={{color:'white', width:'30px', height:'30px', marginTop:'10px'}} 
+                className="liright" 
+                onClick={()=>{setNotificationBoxIsOpen(notificationBoxIsOpen => !notificationBoxIsOpen)}}
+              />
+            </Badge>
+              <div style={notificationBoxIsOpen ? {display:'flex',flexDirection:'column', padding:'10px', width:'350px', position:'absolute', top:'50px', marginLeft:'-190px'} : null}>
+                {
+                  notificationBoxIsOpen && <NotificationBox/>
+                }
+              </div>
+            </div>
             {isLoggedIn ?
               null
               :

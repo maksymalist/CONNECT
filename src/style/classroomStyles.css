@@ -1,0 +1,285 @@
+.classroom__main__div{
+    display: flex;
+}
+@media only screen and (max-width: 750px){
+    .classroom__main__div{
+        display: flex;
+        flex-direction: row-reverse;
+    }
+    .classroom__members{
+        min-width: 250px !important;
+    }
+}
+@media only screen and (max-width: 640px){
+    .classroom__main__div{
+        display: flex;
+        flex-direction: unset !important;
+        flex-wrap: wrap;
+    }
+    .classroom__members{
+        min-width: 100% !important;
+        margin: 0 !important;
+    }
+    .classroom__dashboard{
+        min-width: 100% !important;
+        margin: 0!important;
+        margin-top: 50px !important;
+    }
+}
+@media only screen and (max-width: 1470px){
+    .classroom__recent__games__finalists{
+        width: 100% !important;
+    }
+    .classroom__recent__games__games{
+        width: 100% !important;
+    }
+}
+/*member-div*/
+.classroom__members{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border: 2px solid black;
+    box-shadow: 10px 10px 0 #262626;
+    width: 18%;
+    min-width: 350px;
+    height: 1000px;
+    margin: 10px;
+    position: sticky;
+    top: 0;
+}
+.classroom__members__title{
+    margin: 10px !important;
+}
+.classroom__members__member{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    border: 2px solid black;
+    box-shadow: 5px 5px 0 #262626;
+    padding: 10px;
+    width: 90%;
+    height: 75px;
+    margin: 10px;
+
+}
+.classroom__members__member:hover{
+    cursor: pointer;
+    transition: all 0.2s ease;
+    transform: scale(1.05);
+}
+.classroom__members__member > * {
+    margin: 10px;
+}
+.classroom__members__member__img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.classroom__member__scroll__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    width: 100%;
+}
+.classroom__addmember__div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border: 2px solid black;
+    box-shadow: 10px 10px 0 #262626;
+    padding: 10px;
+    width: 400px;
+    z-index: 100;
+    height: auto;
+
+}
+
+
+
+
+/*member-div*/
+
+/*dashboard-div*/
+.classroom__dashboard{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    border: 2px solid black;
+    box-shadow: 10px 10px 0 #262626;
+    width: 75%;
+    min-width: 350px;
+    height: 1000px;
+    margin: 10px;
+    overflow-y: auto;
+}
+.classroom__dashboard__title{
+    margin: 10px !important;
+}
+.classroom__banner__div{
+    width: 100%;
+    height: 500px;
+}
+.classroom__banner{
+    width: 100%;
+    height: 500px;
+}
+
+.classroom__hall__of__fame{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 200px;
+    width: 100%;
+}
+
+.classroom__reward__button__div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 80%;
+    margin-top: 50px;
+}
+
+.classroom__hall__of__fame__card__container{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+.classroom__hall__of__fame__card{
+    width: 300px;
+    height: 300px;
+    background-color: white;
+    border: 2px solid black;
+    box-shadow: 10px 10px 0 #262626;
+    margin: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+.classroom__hall__of__fame__card:hover{
+    cursor: pointer;
+    transition: all 0.2s ease;
+    transform: scale(1.05);
+}
+.classroom__hall__of__fame__card > *{
+    margin: 5px;
+}
+.classroom__hall__of__fame__card__img{
+    width: 125px !important;
+    height: 125px !important;
+}
+.classroom__hall__of__fame__card__rank{
+    width: 75px;
+    height: 75px;
+    position: relative;
+    top: -35px;
+    left: 130px;
+}
+.classroom__reward__date__container{
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.classroom__recent__games{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 550px !important;
+    width: 100%;
+    height: 800px;
+}
+.classroom__recent__games__games{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    border: 2px solid black;
+    box-shadow: 10px 10px 0 #262626;
+    width: 620px;
+    height: 680px;
+    margin: 10px;
+    overflow-y: auto;
+
+}
+.classroom__recent__games__container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.classroom__recent__games__game{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    width: 360px;
+    height: 550px;
+    margin: 10px;
+    border: 2px solid black;
+    box-shadow: 5px 5px 0 #262626;
+    min-width: 360px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.classroom__recent__games__game:hover{
+    cursor: pointer;
+    transition: all 0.2s ease;
+    transform: scale(1.05);
+}
+.classroom__recent__games__finalists{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    border: 2px solid black;
+    box-shadow: 10px 10px 0 #262626;
+    width: 380px;
+    height: 680px;
+    margin: 10px;
+    margin-bottom: 100px;
+    overflow-y: auto;
+}
+.classroom__finalists{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.classroom__finalists__card{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    border: 2px solid black;
+    box-shadow: 10px 10px 0 #262626;
+    padding: 10px;
+    width: 90%;
+    height: 75px;
+    margin: 10px;
+}
+.classroom__finalists__card > *{
+    margin: 10px;
+}
+.classroom__finalists__card__img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.classroom__finalist__card__rank{
+    width: 50px;
+    height: 50px;
+}
+
+/*dashboard-div*/

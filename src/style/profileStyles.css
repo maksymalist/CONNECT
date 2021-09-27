@@ -50,6 +50,7 @@
     flex-wrap: wrap;
     max-width: 100%;
     max-height: 800px;
+    justify-content: center;
 }
 
 
@@ -77,4 +78,36 @@
     .profile-info-text  > * {
         font-size: 0.8rem;
     }
+}
+
+.profile__class__card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid black;
+    box-shadow: 10px 10px 0 #262626;
+    margin: 10px;
+    width: 100%;
+    max-width: 340px;
+}
+
+.profile__class__card:hover{
+    cursor: pointer;
+    transition: all 0.2s ease;
+    transform: scale(1.05);
+}
+
+@media only screen and (max-width: 400px) {
+    .profile__class__card{
+        margin: 0;
+    }
+}
+
+.profile__user__classes{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    max-height: 800px;
+    justify-content: center;
+
 }
