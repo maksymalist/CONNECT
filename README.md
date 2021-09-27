@@ -51,4 +51,4 @@ subscriptions are not definitive yet and will be changed soon
 |             | **Starter** | **Classroom** | **Entreprise** |
 | ----------- | ----------- | ------------- | -------------- |
 | **Price**   | Free        | 10$           | 100$           |
-| **Players** | 8           | 40            | Unlimited      |
+| **Players** | 8           | 40            | 200            |
