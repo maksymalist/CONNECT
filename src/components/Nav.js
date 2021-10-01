@@ -22,7 +22,7 @@ import { Add, QuestionAnswerRounded, FilterNoneRounded, TranslateSharp, Notifica
 
 import NotificationBox from '../components/NotificationBox'
 
-function Nav({ isLoggedIn, customerId, plan }) {
+function Nav({ isLoggedIn, customerId }) {
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [anchorEl2, setAnchorEl2] = useState(null);

@@ -21,6 +21,7 @@ import Plans from './components/payment/Plans'
 import Background from './components/Background'
 import Profile from './components/profile/Profile';
 import Classroom from './components/Classroom';
+import ViewClassroom from './components/ViewClassroom';
 
 
 
@@ -28,14 +29,16 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import Login from './components/Auth/Login';
 import NewMultiQuiz from './components/NewMultiQuiz';
-import PodiumAnimation from './components/PodiumAnimation';
 import { Button } from '@material-ui/core';
 import MyProfile from './components/profile/MyProfile';
 import ViewQuiz from './components/ViewQuiz';
 import ViewMultiQuiz from './components/ViewMultiQuiz';
-import SharePopup from './components/SharePopup';
 import CreateClass from './components/CreateClass';
 
+
+//redux
+import { useDispatch, useSelector } from 'react-redux';
+import { setStarter, setClassroom, setEntreprise } from './actions/Plan'
 
 const firebaseConfig = {
   apiKey: "AIzaSyAuhaVNdwDaivPThUZ6wxYKCkvs0tEDRNs",
@@ -57,10 +60,12 @@ export const getFirebase = () => {
   return null;
 }
 
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [customerId, setCustomerId] = useState(null);
-  const [currentPlan, setPlan] = useState(null);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if(JSON.parse(localStorage.getItem('user')) !== null){
@@ -79,6 +84,9 @@ function App() {
         if(snap.exists()){
           const id = snap.val()
           fetchCustomerData(id)
+        }
+        else{
+          dispatch(setStarter())
         }
       });
     }
@@ -100,14 +108,18 @@ function App() {
 
   const fetchCustomerData = async (id)=>{
     const res = await axios.post('https://connect-now-backend.herokuapp.com/get-customer-data', {subId: id});
-    var plan = ''
+    let plan = ''
     if(JSON.parse(res.data.subscriptionDetails).plan.id == "price_1JMwC7BqTzgw1Au76sejuZu4" && JSON.parse(res.data.subscriptionDetails).status == "active"){
       plan = 'Classroom'
-      setPlan(plan)
+      dispatch(setClassroom())
     }
     if(JSON.parse(res.data.subscriptionDetails).status == 'canceled'){
       plan = 'Starter'
-      setPlan(plan)
+      dispatch(setStarter())
+    }
+    if(JSON.parse(res.data.subscriptionDetails).status == 'inactive'){
+      plan = 'Starter'
+      dispatch(setStarter())
     }
 
     setCustomerId(JSON.parse(res.data.subscriptionDetails).customer)
@@ -127,33 +139,34 @@ function App() {
 
   return (
       <Router>
-    <div className="App">
-      <Nav isLoggedIn={isLoggedIn} customerId={customerId} plan={currentPlan}/>
-      <div style={{margin:'0 !important'}} id='navMargin'/>
-      <Background/>
-      <Switch>
-        <Route exact path='/' component={Home}/>
-        <Route exact path='/play' component={EnterCodeForm}/>
-        <Route path='/normal/:room/:gameid/:user/:maxpodium' component={GameRoom}/>
-        <Route path='/multi/:room/:gameid/:user/:maxpodium' component={MultiGameRoom}/>
-        <Route path='/newquiz' component={NewQuiz}/>
-        <Route path='/new-multi-quiz' component={NewMultiQuiz}/>
-        <Route path='/browsequizzes/:gamemode' component={BrowseQuizes}/>
-        <Route path='/browsequizzes/:gamemode/:classid' component={BrowseQuizes}/>
-        <Route path='/roomleave' component={AfterRoomLeave}/>
-        <Route path='/gamefinsihed/:room/:user' component={GameEnded}/>
-        <Route path='/plans' component={Plans}/>
-        <Route path='/subscription/:plan' component={StripeSubscriptions}/>
-        <Route path='/login' component={Login}/>
-        <Route path='/profile' component={MyProfile}/>
-        <Route path='/profiles/:id' component={Profile}/>
-        <Route path='/quiz/normal/:code' component={ViewQuiz}/>
-        <Route path='/quiz/multi/:code' component={ViewMultiQuiz}/>
-        <Route path='/class/:id' component={Classroom}/>
-        <Route path='/create-class' component={CreateClass}/>
-      </Switch>
-    </div>
-  </Router>
+        <div id='App' className="App">
+          <Nav isLoggedIn={isLoggedIn} customerId={customerId}/>
+          <div style={{margin:'0 !important'}} id='navMargin'/>
+          <Background/>
+          <Switch>
+            <Route exact path='/' component={Home}/>
+            <Route exact path='/play' component={EnterCodeForm}/>
+            <Route path='/normal/:room/:gameid/:user/:maxpodium' component={GameRoom}/>
+            <Route path='/multi/:room/:gameid/:user/:maxpodium' component={MultiGameRoom}/>
+            <Route path='/newquiz' component={NewQuiz}/>
+            <Route path='/new-multi-quiz' component={NewMultiQuiz}/>
+            <Route path='/browsequizzes/:gamemode' component={BrowseQuizes}/>
+            <Route path='/browsequizzes/:gamemode/:classid' component={BrowseQuizes}/>
+            <Route path='/roomleave' component={AfterRoomLeave}/>
+            <Route path='/gamefinsihed/:room/:user' component={GameEnded}/>
+            <Route path='/plans' component={Plans}/>
+            <Route path='/subscription/:plan' component={StripeSubscriptions}/>
+            <Route path='/login' component={Login}/>
+            <Route path='/profile' component={MyProfile}/>
+            <Route path='/profiles/:id' component={Profile}/>
+            <Route path='/quiz/normal/:code' component={ViewQuiz}/>
+            <Route path='/quiz/multi/:code' component={ViewMultiQuiz}/>
+            <Route path='/class/:id' component={Classroom}/>
+            <Route path='/view-class/:id' component={ViewClassroom}/>
+            <Route path='/create-class' component={CreateClass}/>
+          </Switch>
+        </div>
+      </Router>
   );
 }
 export default App;

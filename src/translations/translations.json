@@ -321,7 +321,7 @@
             "members": {
                 "title": "Members",
                 "add": "add member",
-                "cancel": "Annuler",
+                "cancel": "Cancel",
                 "remove": "remove member"
             },
             "addmember": {
