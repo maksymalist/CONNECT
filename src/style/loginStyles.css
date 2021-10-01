@@ -2,8 +2,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 50vh;
-    margin-top: 20vh;
+    height: 100vh;
+    margin-top: 200px;
 }
 .login-component-container{
     background-color: white;
