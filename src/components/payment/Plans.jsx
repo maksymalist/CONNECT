@@ -16,8 +16,11 @@ import Typography from '@material-ui/core/Typography'
 import { CheckRounded } from '@material-ui/icons'
 import Translations from '../../translations/translations.json'
 
+import { useSelector } from 'react-redux'
+
 export default function Plans() {
-    const [plan, setPlan] = useState("")
+    const plan = useSelector(state => state.plan)
+    // eslint-disable-next-line
     const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
 
     const selectClassroomPlan = ()=>{
@@ -30,24 +33,6 @@ export default function Plans() {
     }
     useEffect(() => {
         if(JSON.parse(localStorage.getItem('user')) == null) return
-        firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).on('value',(snap)=>{
-            if(snap.exists()){
-              const data = snap.val()
-
-              if(data.plan === "Starter"){
-                  setPlan("Starter")
-              }
-              if(data.plan === "Classroom" && data.planStatus === 'active'){
-                  setPlan("Classroom")
-              }
-            }
-            else{
-              toast.error(Translations[userLanguage].alerts.error)
-            }
-          });
-        return () => {
-            //cleanup
-        }
     }, [])
 
     return (

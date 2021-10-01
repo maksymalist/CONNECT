@@ -11,6 +11,7 @@ import '../../style/profileStyles.css'
 
 import Placeholder from '../../img/quizCoverPlaceholder.svg'
 import Translations from '../../translations/translations.json'
+import { useSelector } from 'react-redux';
 
 function MyProfile(props) {
 
@@ -26,7 +27,7 @@ function MyProfile(props) {
 
     const quizzesTab = useRef(null)
 
-    const [userPlan, setUserPlan] = useState('')
+    const plan = useSelector(state => state.plan)
 
     const [userClasses, setUserClasses] = useState([])
 
@@ -39,7 +40,6 @@ function MyProfile(props) {
         setUserName(JSON.parse(localStorage.getItem('user')).profileObj.name)
         setUserImage(JSON.parse(localStorage.getItem('user')).profileObj.imageUrl)
         getMyQuizzes()
-        getPlan()
         getClasses()
     }, [])
 
@@ -98,14 +98,6 @@ function MyProfile(props) {
                 window.location.href = `/quiz/normal/${key}`
                 return
             }
-        })
-    }
-
-    const getPlan = () => {
-        firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/plan`).on('value', (snapshot) => {
-            const data = snapshot.val()
-            setUserPlan(data)
-
         })
     }
 
@@ -247,7 +239,7 @@ function MyProfile(props) {
                         <Divider style={{marginLeft:'10px', marginRight:'10px'}}/>
                         <br></br>
                         {
-                            userPlan === 'Classroom' ?
+                            plan === 'Classroom' ?
                             <div style={{display:'flex', justifyContent:'flex-end', width:'100%', alignItems:'center'}}>
                                 <Button variant='contained' size='small' color='primary' style={{margin:'10px'}} onClick={()=>window.location = '/create-class'}>{Translations[userLanguage].classroom.createbutton}</Button>
                             </div>
