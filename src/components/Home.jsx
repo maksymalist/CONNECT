@@ -4,7 +4,8 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import { Star, School, Group } from '@material-ui/icons'
-import HomePageImage from '../img/HomePageImage1.svg'
+import HomePageImage from '../img/HomePageImage.svg'
+import HomePageWave from '../img/HomePageWave.svg'
 import BigStripe from '../img/BigStripe.svg'
 import HostVideo from '../video/hostvideogif.gif'
 import JoinVideo from '../video/joinvideogf.gif'
@@ -59,9 +60,8 @@ export default function HomePage() {
                     <path d="M58.3355 27.5923C55.1701 21.2553 66.7662 27.6167 66.7662 27.6167L66.6937 34.2739L56.2197 34.8898C56.2197 34.8898 61.5008 33.9293 58.3355 27.5923Z" fill="#6C63FF"/>
                 </svg>
             </div>
-            <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
             <div id='homePageDivWhite' className='homePageDivWhite'>
-            <br></br><br></br><br></br><br></br>
+            <img style={{width:'100vw', height:'auto', marginTop:'-40px'}} src={HomePageWave} className='homePageWave' alt='homePageWave'/>
             <h2 className='homepage-text-medium' style={{maxWidth:'250px'}}>{Translations[userLanguage].home.sub1}</h2>
             <br /><br /><br /><br /><br /><br /><br />
             <h3 className='homepage-text-small' style={{maxWidth:'250px'}}>{Translations[userLanguage].home.sub2}</h3>

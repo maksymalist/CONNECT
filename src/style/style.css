@@ -714,10 +714,13 @@ input:hover {
 
 
 .homepage-text{
-    float: left;
+    padding-left: 5vw;
+    padding-bottom: 10px;
     color: rgb(255, 255, 255);
-    margin-left: 5vw;
     font-size: 3.5em;
+    background-color:#6C63FF;
+    width: 100vw;
+    z-index: 10;
 }
 .homepage-text-medium{
     float: left;
@@ -813,7 +816,6 @@ input:hover {
     background-color: white;
     height: 100%;
     justify-content: start;
-    border-radius: 90px 0 0;
     z-index: 0;
 }
 .newdiv2 {
