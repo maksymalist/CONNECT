@@ -134,7 +134,24 @@ export default function MemberRoom() {
     }, [])
 
     const handleSetFinalists = (finalists) => {
-        setFinalists(finalists)
+        const newFinalistsArr = []
+        finalists.map((finalist) => {
+            firebase.database().ref(`users/${finalists[finalists.indexOf(finalist)].playerID}`).on('value',(snap)=>{
+                const playerData = snap.val()
+                newFinalistsArr.push({
+                    name: playerData.UserName,
+                    profileImg: playerData.imageUrl,
+                    player: finalist.player,
+                    playerID: finalist.playerID,
+                    position: finalist.position,
+                    time: finalist.time
+                })
+            })
+        })
+
+        console.log(newFinalistsArr)
+        setFinalists([...newFinalistsArr])
+        console.log([...finalists])
     }
 
 
@@ -270,26 +287,16 @@ export default function MemberRoom() {
                             <div className="classroom__finalists">
                                 {
                                     finalists.map((finalist,index) => {
-                                        const playerObject = {
-                                            name: "",
-                                            profileImg: null,
-                                        }
-                                        firebase.database().ref(`users/${finalist.playerID}`).on('value',(snap)=>{
-                                            const playerData = snap.val()
-
-                                            playerObject.name = playerData.UserName
-                                            playerObject.profileImg = playerData.imageUrl
-                                        })
                                         return (
                                             <div className="classroom__finalists__card" key={index}>
-                                                <Avatar src={playerObject.profileImg || null} alt="member" className="classroom__finalists__card__img"/>
+                                                <Avatar src={finalist.profileImg || null} alt="member" className="classroom__finalists__card__img"/>
                                                 <div style={{display:'flex', flexDirection:'column'}}>
-                                                    <Typography variant='sub1' className="classroom__finalists__card__name">{playerObject.name}</Typography>
+                                                    <Typography variant='sub1' className="classroom__finalists__card__name">{finalist.name}</Typography>
                                                     <Typography variant='sub1' className="classroom__finalists__card__name">{`" ${finalist.player}"`}</Typography>
                                                 </div>
-                                                {finalist.position === '1' && <img draggable='false' src={FirstPlaceIcon} alt="first-badge" className="classroom__finalist__card__rank"/>}
-                                                {finalist.position === '2' && <img draggable='false' src={SecondPlaceIcon} alt="second-badge" className="classroom__finalist__card__rank"/>}
-                                                {finalist.position === '3' && <img draggable='false' src={ThirdPlaceIcon} alt="third-badge" className="classroom__finalist__card__rank"/>}
+                                                {finalist.position == 1 && <img draggable='false' src={FirstPlaceIcon} alt="first-badge" className="classroom__finalist__card__rank"/>}
+                                                {finalist.position == 2 && <img draggable='false' src={SecondPlaceIcon} alt="second-badge" className="classroom__finalist__card__rank"/>}
+                                                {finalist.position == 3 && <img draggable='false' src={ThirdPlaceIcon} alt="third-badge" className="classroom__finalist__card__rank"/>}
                                             </div>
                                         )
                                     })

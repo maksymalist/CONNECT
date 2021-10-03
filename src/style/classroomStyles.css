@@ -285,7 +285,7 @@
 .classroom__finalist__card__rank{
     width: 50px;
     height: 50px;
-    z-index: -1;
+    z-index: 0;
 }
 
 /*dashboard-div*/
