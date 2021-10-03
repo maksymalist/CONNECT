@@ -428,7 +428,9 @@ export default function MemberRoom() {
                             <Button variant="contained" color="primary" className="classroom__reward__button">Set Reward</Button>
                         </div> */}
                     </div>
-                    <div className="classroom__recent__games">
+                    
+                </div>
+                <div className="classroom__recent__games">
                         <div className="classroom__recent__games__games">
                         <div style={{position:'sticky', top:'0', backgroundColor:'white', width:'100%', zIndex: "10"}}>
                             <Typography variant='h3' className="classroom__recent__games__title">{Translations[userLanguage].classroom.recentGames.title}</Typography>
@@ -527,7 +529,6 @@ export default function MemberRoom() {
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
             }
         </div>
