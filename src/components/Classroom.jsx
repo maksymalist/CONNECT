@@ -504,7 +504,7 @@ export default function MemberRoom() {
                                             name: "",
                                             profileImg: null,
                                         }
-                                        firebase.database().ref(`users/${finalist.playerID}`).on('value',(snap)=>{
+                                        firebase.database().ref(`users/${finalist.playerID}`).once('value',(snap)=>{
                                             const playerData = snap.val()
 
                                             playerObject.name = playerData.UserName

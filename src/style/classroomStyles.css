@@ -88,13 +88,17 @@
 .classroom__addmember__div{
     display: flex;
     flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     align-items: center;
     background-color: white;
     border: 2px solid black;
     box-shadow: 10px 10px 0 #262626;
     padding: 10px;
     width: 400px;
-    z-index: 100;
+    z-index: 1000;
     height: auto;
 
 }
@@ -178,13 +182,13 @@
 .classroom__hall__of__fame__card__img{
     width: 125px !important;
     height: 125px !important;
+    position: unset !important;
 }
 .classroom__hall__of__fame__card__rank{
     width: 75px;
     height: 75px;
-    position: relative;
-    top: -35px;
-    left: 130px;
+    margin-bottom: -10px;
+    margin-right: -190px;
 }
 .classroom__reward__date__container{
     display: flex;
@@ -276,10 +280,12 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    z-index: 0;
 }
 .classroom__finalist__card__rank{
     width: 50px;
     height: 50px;
+    z-index: -1;
 }
 
 /*dashboard-div*/
