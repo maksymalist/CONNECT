@@ -709,13 +709,9 @@ input:hover {
     box-shadow: 5px 5px 0 #262626;
     padding: 5px;
 }
-
-
-
-
 .homepage-text{
     padding-left: 5vw;
-    padding-bottom: 10px;
+    padding-bottom: 25px;
     color: rgb(255, 255, 255);
     font-size: 3.5em;
     background-color:#6C63FF;
@@ -929,6 +925,14 @@ input:hover {
     background-repeat: no-repeat;
 
 
+}
+.about__container{
+    width: 300px;
+    height: 400px;
+    padding: 5px;
+    background-color: white;
+    border: 2px solid black;
+    box-shadow: 10px 10px 0 #262626;
 }
 
 .MuiButton-containedPrimary{
