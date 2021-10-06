@@ -434,6 +434,16 @@ button{
         padding-bottom: 25px;
     }*/
 }
+@media only screen and (max-width: 1450px) {
+    #plan1,
+    #plan2,
+    #plan3{
+        width: 350px;
+        margin: 20px !important;
+        margin-top:200px;
+
+    }
+}
 
     @media (pointer:none), (pointer:coarse) {
         .nav-links{
@@ -741,6 +751,29 @@ input:hover {
     min-height: 300px;
 }
 
+.about__main__div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+.about__card{
+    width: 350px;
+    height: fit-content;
+    margin: 10px;
+    padding: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.about__card > * {
+    color: white;
+    margin: 10px;
+}
+
 @media (pointer:none), (pointer:coarse) {
     .about{
         position: relative;
@@ -769,24 +802,6 @@ input:hover {
 #aboutContainer{
     display: flex;
     flex-direction: row;
-}
-@media only screen and (max-width: 654px) {
-    #big-stripe{
-        margin-top: 40px !important;
-    }
-
-}
-@media only screen and (max-width: 620px) {
-    #big-stripe-top{
-        max-height: 100px;
-    }
-
-}
-@media only screen and (max-width: 340px) {
-    #big-stripe{
-        margin-top: -20vw !important;
-    }
-
 }
 /* @media only screen and (max-width: 290px) {
     #big-stripe{
@@ -881,6 +896,10 @@ input:hover {
     justify-content: center;
     margin-top: 100px;
 }
+.howitworks-div > *{
+    margin: 100px;
+}
+
 .iphone-div{
     background-image: url('../img/Iphone.svg');
     background-repeat: no-repeat;
@@ -920,21 +939,12 @@ input:hover {
 .purpleAboutDiv{
     background-color: #6C63FF;
     width: 100%;
-    height: 500px;
+    height: fit-content;
     background-image: url('../img/BigStripe.svg');
     background-repeat: no-repeat;
 
 
 }
-.about__container{
-    width: 300px;
-    height: 400px;
-    padding: 5px;
-    background-color: white;
-    border: 2px solid black;
-    box-shadow: 10px 10px 0 #262626;
-}
-
 .MuiButton-containedPrimary{
     background-color: #1BB978 !important;
 }

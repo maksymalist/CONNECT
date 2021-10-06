@@ -11,6 +11,10 @@ import HostVideo from '../video/hostvideogif.gif'
 import JoinVideo from '../video/joinvideogf.gif'
 import GameRoomVideo from '../video/gameroomvideogf.gif'
 
+import Connected from '../img/connected.svg'
+import Teacher from '../img/teacher.svg'
+import Books from '../img/books.svg'
+
 import Translations from '../translations/translations.json'
 
 import { Typography } from '@material-ui/core'
@@ -75,34 +79,33 @@ export default function HomePage() {
         </div>
         <br></br><br></br><br></br><br></br>
         <div className="newdiv2">
-        <img id='big-stripe-top' style={{minWidth:'1980px', transform:'rotate(-180deg)'}} src={BigStripe} alt='big-stripe'/>
+        <img id='big-stripe-top' style={{width:'calc(100% + 100px)', transform:'rotate(-180deg)'}} src={BigStripe} alt='big-stripe'/>
             <div className='purpleAboutDiv'>
-                <h1 className='aboutText' style={{color:'white', zIndex:'230'}}>{Translations[userLanguage].home.about.title}</h1>
-                <div className='aboutText' style={{color:'white', zIndex:'230'}}>
-                    <p className='aboutText' style={{color:'white', zIndex:'230'}}>{Translations[userLanguage].home.about.sub}</p>
-                    <p className='aboutText' style={{color:'white', zIndex:'230'}}>{Translations[userLanguage].home.about.sub2}</p>
-                </div>
-                <img id='big-stripe' style={{minWidth:'1980px'}} src={BigStripe} alt='big-stripe'/>
-            </div>
-            <div id='aboutContainer'>
-                <div className='about-card'>
-                    <School color='primary' style={{width:'100px', height:'100px'}}/>
-                    <h3>{Translations[userLanguage].home.cards.learning}</h3>
-                    <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
-                </div>
-                <div className='about-card'>
-                <Group color='primary' style={{width:'100px', height:'100px'}}/>
-                    <h3>{Translations[userLanguage].home.cards.collaboration}</h3>
-                    <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
-                </div>
-                <div className='about-card'>
-                    <span style={{fontSize:'72px'}}>🎉</span>
-                    <h3>{Translations[userLanguage].home.cards.fun}</h3>
-                    <Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/><Star color='primary'/>
+            <Typography variant='h2' style={{color:'white'}}><strong>{Translations[userLanguage].home.about.title}</strong></Typography>
+                <div className='about__main__div'>
+                    <div className='about__card'>
+                        <div className="about__card__img">
+                            <img width='400px' src={Connected} alt='about-image-1'/>
+                        </div>
+                        <Typography style={{textAlign:'left', width:'250px'}} variant='h4' className='about-text-medium'>{Translations[userLanguage].home.about.sub}</Typography>
+                    </div>
+                    <div className='about__card'>
+                        <div className="about__card__img">
+                            <img width='400px' src={Teacher} alt='about-image-1'/>
+                        </div>
+                        <Typography style={{textAlign:'left', width:'250px'}} variant='h4' className='about-text-medium'>{Translations[userLanguage].home.about.sub2}</Typography>
+                    </div>
+                    <div className='about__card'>
+                        <div className="about__card__img">
+                            <img width='400px' src={Books} alt='about-image-1'/>
+                        </div>
+                        <Typography style={{textAlign:'left'}} variant='h4' className='about-text-medium'>{Translations[userLanguage].home.about.sub3}</Typography>
+                    </div>
                 </div>
             </div>
+            <img id='big-stripe' style={{width:'calc(100% + 100px)'}} src={BigStripe} alt='big-stripe'/>
             <div classNam='howItWorks'>
-                <Typography variant='h4'>{Translations[userLanguage].home.howitworks.title} <Gears/></Typography>
+                <Typography variant='h2'><strong>{Translations[userLanguage].home.howitworks.title}</strong> <Gears/></Typography>
                 <div className='howitworks-div'>
                     <div style={{display:'flex', alignItems:'center', flexWrap:'wrap', justifyContent:'space-around', width:'70%', margin:'100px', minWidth:'350px', margin:'10px'}}>
                         <div className='iphone-div'>

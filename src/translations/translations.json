@@ -29,9 +29,10 @@
             "sub2":"CONNECT! helps you learn faster and together.",
             "buttonText":"Start Learning ➞",
             "about": {
-                "title": "About",
-                "sub": "CONNECT!’s goal is to make class learning easier and more fun for students and teachers from all around the world.",
-                "sub2": "For us, learning is the key to a better future and it is our priority to make learning more accessible and more engaging for everyone, everywhere."
+                "title": "What is CONNECT! ?",
+                "sub": "We keep you connected so you can learn together",
+                "sub2": "CONNECT! makes learning and teaching fun",
+                "sub3": "For us, learning is the key to a better future"
             },
             "cards": {
                 "learning": "Learning",
@@ -395,9 +396,10 @@
             "sub2":"CONNECT! vous aide à apprendre ensemble et rapidement.",
             "buttonText":"Allons-y ➞",
             "about": {
-                "title": "À propos",
-                "sub": "L'objectif de CONNECT ! est de rendre l'apprentissage en classe plus facile et plus amusant pour les étudiants et les enseignants du monde entier.",
-                "sub2": "Pour nous, l'apprentissage est la clé d'un avenir meilleur et notre priorité est de le rendre plus accessible et plus engageant pour tous, partout."
+                "title": "C'est quoi CONNECT! ?",
+                "sub": "Une plateforme qui sert a apprendre ensemble",
+                "sub2": "Nous rendons l'apprentissage et l'enseignement amusants.",
+                "sub3": "Pour nous, l'apprentissage est la clé d'un avenir meilleur"
             },
             "cards": {
                 "learning": "Apprentissage",
