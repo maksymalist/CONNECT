@@ -98,7 +98,7 @@ function ViewQuiz() {
                     :
                     <img style={{width:'100%', height:'400px'}} src={Placeholder} alt="quiz" className="view__quiz__image" />
                     }
-                <div style={{float:'left', padding:'10px'}}>
+                <div style={{ftextAlign:'left', padding:'10px'}}>
                     <Typography variant="h4" component='h4'>{quiz.name}</Typography>
                     <div style={{display:'flex', justifyContent:'flex-start', alignItems:'center'}}>
                         <br></br><StartButton code={code} />
