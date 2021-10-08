@@ -5,8 +5,7 @@ import ReactDOM from 'react-dom'
 import { toast } from 'react-toastify';
 import { Share, People } from '@material-ui/icons'
 
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
+import { Divider, Typography, Button } from '@material-ui/core';
 
 import GameEnded from './GameEnded'
 
@@ -42,24 +41,18 @@ const playersTime = []
 
 export default function HostRoom(props) {
 
-    var [podiumPlayers, setPodiumPLayers] = useState([])
-    var [podiumPlayerTimes, setpodiumPlayerTimes] = useState([])
     var [playerPodiumMax, setPlayerPodiumMax] = useState(props.podiumPlaces)
-    var [isActive, setIsActive] = useState("inactive")
     var [userLimit, setUserLimit] = useState(8)
     const podium = []
     var numArray = []
     var playerArr = []
     const podiumObj = {}
-    const [sortedPodium, setSortedPodium] = useState([])
-    var podiumClasses = ['first-place', 'second-place', 'third-place', 'other-place']
     var [currentPlace, setCurrentPlace] = useState(0)
     var [numberOfUsers, setNumberOfUsers] = useState(0)
 
     const [isCountdown, setIsCountdown] = useState(false)
     const [sharePopupActive, setSharePopupActive] = useState(false)
 
-    const [playerTimes, setPlayerTimes] = useState([])
     var gameStarted = false
 
     const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
@@ -112,14 +105,14 @@ export default function HostRoom(props) {
 
             if(playersTime.includes(data.user) == true){
 
-                document.getElementById(data.user).innerHTML = `${data.user} ${Translations[userLanguage].hostroom.time}: ${data.time}`
+                document.getElementById(data.user).innerHTML = `${data.user} <span style='color:#6976EA'>${data.time}s</span>`
             }
             else{
                 playersTime.push(data.user)
     
                 let newTime = document.createElement('h1')
     
-                newTime.innerHTML = `${data.user} ${Translations[userLanguage].hostroom.time}: ${data.time}`
+                newTime.innerHTML = `${data.user} <span style='color:#6976EA'>${data.time}s</span>`
                 newTime.id = data.user
                 newTime.className = 'time-box'
     
@@ -153,8 +146,6 @@ export default function HostRoom(props) {
                 id: data.id
             }
             handleUpdatePodium(data.user, data.time)
-            setpodiumPlayerTimes(podiumPlayerTimes => [...podiumPlayerTimes, data.time])
-            setPodiumPLayers(podiumPlayers =>[...podiumPlayers, data.user])
               //'first-place', 'second-place', 'third-place', 'other-place'
             setCurrentPlace(currentPlace++)
 
@@ -223,7 +214,10 @@ export default function HostRoom(props) {
         let podiumHeader = document.createElement('div')
         document.getElementById('podium').appendChild(podiumHeader)
         ReactDOM.render(
-            <h1 style={{borderBottom: '4px solid'}}>{Translations[userLanguage].hostroom.podium}<AssessmentRoundedIcon style={{width:"50px", height:"50px"}}/></h1>,
+            <>
+                <Typography variant='h3' style={{display:'flex', alignItems:'center', justifyContent:'center'}}>{Translations[userLanguage].hostroom.podium} <AssessmentRoundedIcon color='primary' style={{width:"50px", height:"50px"}}/></Typography>
+                <Divider light style={{marginTop:'10px', marginBottom:'10px', width:'100%'}}/>
+            </>,
             podiumHeader
         )
 
@@ -249,13 +243,15 @@ export default function HostRoom(props) {
             if(playerArr[i].place === 1){
                 ReactDOM.render(
                     <>
-                        <h1 
-                            className='first-place podium-time' 
-                            data-position={playerArr[i].place} 
-                            data-time={playerArr[i].time}
-                            data-playerid={playerArr[i].id} 
-                            id={playerArr[i].player+"⠀"}><img width='40' height='40' src={FirstPlaceIcon} alt='FirstPlaceIcon'/>{playerArr[i].player} {Translations[userLanguage].hostroom.time}: {playerArr[i].time} {Translations[userLanguage].hostroom.place}: {playerArr[i].place}
-                        </h1>
+                        <div className='first-place-sub-div'>
+                            <h1 
+                                className='first-place podium-time' 
+                                data-position={playerArr[i].place} 
+                                data-time={playerArr[i].time}
+                                data-playerid={playerArr[i].id} 
+                                id={playerArr[i].player+"⠀"}><img width='40' height='40' src={FirstPlaceIcon} alt='FirstPlaceIcon'/>{playerArr[i].player} {Translations[userLanguage].hostroom.time}: {playerArr[i].time} {Translations[userLanguage].hostroom.place}: {playerArr[i].place}
+                            </h1>
+                        </div>
                     </>,
                     document.getElementById('first-place-div')
                 )
@@ -593,15 +589,21 @@ export default function HostRoom(props) {
             <div style={{color:'white'}} id='userDiv'>
             </div>
             <div id='game-container' style={{visibility:'hidden'}}>
-                <div id='podium'>
-                    <h1 style={{borderBottom: '4px solid'}}>{Translations[userLanguage].hostroom.podium} <AssessmentRoundedIcon style={{width:"50px", height:"50px"}}/></h1>
-                    <div id='first-place-div'></div>
-                    <div id='second-place-div'></div>
-                    <div id='third-place-div'></div>
+                <div id='podium__container' className="podium__container">
+                    <div id='podium'>
+                    <Typography variant='h3' style={{display:'flex', alignItems:'center', justifyContent:'center'}}>{Translations[userLanguage].hostroom.podium} <AssessmentRoundedIcon color='primary' style={{width:"50px", height:"50px"}}/></Typography>
+                    <Divider light style={{marginTop:'10px', marginBottom:'10px', width:'100%'}}/>
+                        <div id='first-place-div'></div>
+                        <div id='second-place-div'></div>
+                        <div id='third-place-div'></div>
+                    </div>
                 </div>
-                <div id="times">
-                    <h1 style={{textAlign:'center', borderBottom: '4px solid'}}>{Translations[userLanguage].hostroom.playertimes} <TimerRoundedIcon style={{width:"50px", height:"50px"}}/></h1>
-                    <div id='time__div'></div>
+                <div style={{display:'flex', alignItems: 'center', justifyContent:'center'}}>
+                    <div id="times">
+                        <Typography variant='h3' style={{display:'flex', alignItems:'center', justifyContent:'center'}}>{Translations[userLanguage].hostroom.playertimes} <TimerRoundedIcon color='primary' style={{width:"50px", height:"50px"}}/></Typography>
+                        <Divider light style={{marginTop:'10px', marginBottom:'10px', width:'100%'}}/>
+                        <div id='time__div'></div>
+                    </div>
                 </div>
             </div>
 

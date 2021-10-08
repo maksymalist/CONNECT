@@ -565,13 +565,15 @@ button{
 #times{
     justify-content: center;
     text-align: center;
-    border-radius: 15px;
     width: 50%;
+    min-width: 350px;
     height: auto;
-    margin-left: 25%;
-    margin-bottom: 50px;
-    color: white;
-    text-align: left;
+    background-color: white;
+    border: 2px solid;
+    box-shadow: 10px 10px 0 #262626;
+    padding: 5px;
+    min-height: 500px;
+    margin-top: 100px;
 }
 
 #maxPlayersText{
@@ -586,12 +588,21 @@ button{
 #podium{
     justify-content: center;
     text-align: center;
-    border-radius: 15px;
     width: 50%;
-    height: 600px;
-    margin-left: 25%;
-    overflow-y: auto;
-    color: white;
+    min-width: 350px;
+    height: auto;
+    background-color: white;
+    border: 2px solid;
+    box-shadow: 10px 10px 0 #262626;
+    padding: 5px;
+    min-height: 500px;
+}
+.podium__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 .userDiv > * {
     color: white;
@@ -634,8 +645,7 @@ button{
 .other-place{
 
 }*/
-
-#first-place-div {
+.first-place-sub-div {
     color: #6976EA;
     background-color: white;
     box-shadow: 10px 10px 0 #262626;
@@ -645,9 +655,8 @@ button{
     padding: 1px;
 }
 /* .time-box{
-    color: #6976EA;
     background-color: white;
-    box-shadow: 10px 10px 0 #262626;
+    box-shadow: 2px 2px 0 #262626;
     border: 2px solid black;
     width: fit-content;
     padding: 1px;
