@@ -44,7 +44,7 @@
                 "host": {
                     "title": "Host",
                     "step1": "Select your desired game mode",
-                    "step2": "Type in the room name / code or click the “GENERATE NAME” button",
+                    "step2": "Type in the room name / code or click the “GENERATE CODE” button",
                     "step3": "Go to QUIZZES and find a game you would like to host copy that game’s code",
                     "step4": "Enter the amount of players you want in your room Starter plan users max out at 40 users whilst Classroom plan users get 90 users",
                     "step5": "Specify if the user nicknames should be friendly",
@@ -93,7 +93,7 @@
                     "maxplayers": "Max players",
                     "podiumplaces":"Podium Places",
                     "friendly": "Friendly nicknames",
-                    "button": "Generate Name",
+                    "button": "Generate Code",
                     "button2": "Host Room"
                 },
                 "private": "Private",
@@ -411,7 +411,7 @@
                 "host": {
                     "title": "Créer une salle",
                     "step1": "Sélectionnez le mode de jeu souhaité",
-                    "step2": "Écrivez le nom / code de la salle ou cliquez sur le bouton « GÉNÉRER LE NOM »",
+                    "step2": "Écrivez le nom / code de la salle ou cliquez sur le bouton « GÉNÉRER LE CODE »",
                     "step3": "Allez sur QUIZ et trouvez un quiz que vous souhaitez héberger.  copiez le code de ce quiz",
                     "step4": "Saisissez le nombre de joueurs que vous souhaitez dans votre salle. Le nombre d'utilisateurs du plan de départ est limité à 40 utilisateurs, tandis que les utilisateurs du plan de classe ont 90 utilisateurs.",
                     "step5": "Spécifiez si les pseudonymes des utilisateurs doivent être conviviaux",
@@ -460,7 +460,7 @@
                     "maxplayers": "Joueurs Maximum",
                     "podiumplaces":"Places de podium",
                     "friendly": "Surnoms filtrés",
-                    "button": "Générer le nom",
+                    "button": "Générer le code",
                     "button2": "Créer la salle"
                 },
                 "private": "Privé",
