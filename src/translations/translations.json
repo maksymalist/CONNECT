@@ -456,7 +456,7 @@
                 "input": "Nom de la salle",
                 "input2": "Entrez un code de quiz",
                 "presets": {
-                    "title": "Parametres",
+                    "title": "Paramètres",
                     "maxplayers": "Joueurs Maximum",
                     "podiumplaces":"Places de podium",
                     "friendly": "Surnoms filtrés",
