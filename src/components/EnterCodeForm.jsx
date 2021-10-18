@@ -32,8 +32,9 @@ const list = require('badwords-list')
 //https://connect-quiz-now.herokuapp.com/
 //http://localhost:3001
 //good one https://connect-now-backend.herokuapp.com/
+//https://connect-backend-2.herokuapp.com/
 
-export const socket = io('https://connect-now-backend.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
+export const socket = io('https://connect-backend-2.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
 
 export default function EnterCodeForm({match, location}) {
     //const classes = useStyles();
