@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Typography, Button, Tab, Tabs, Chip, Divider, Avatar} from '@material-ui/core'
+import { Typography, Button, Tab, Tabs, Chip, Divider, Avatar, CircularProgress } from '@material-ui/core'
 import { AccountCircle } from '@material-ui/icons'
-
-import firebase from "firebase"
-import "firebase/database";
 
 import { toast } from 'react-toastify'
 
@@ -13,13 +10,68 @@ import Placeholder from '../../img/quizCoverPlaceholder.svg'
 import Translations from '../../translations/translations.json'
 import { useSelector } from 'react-redux';
 
+import { useQuery, gql } from '@apollo/client'
+
+import axios from 'axios'
+
+//queries
+const GET_USER_PROFILE = gql`
+    query getUserProfile($id: ID!) {
+        user(id: $id) {
+            _id
+            name
+            email
+            imageUrl
+        }
+    }
+`
+const GET_USER_QUIZZES = gql`
+    query($userId: ID!){
+        allQuizzesByUser(userId: $userId) {
+            _id
+            name
+            coverImg
+            tags
+            userID
+            userName
+            userProfilePic
+            questions
+        }
+    }
+`
+const GET_USER_MULTIS = gql`
+    query allMultisByUser($userId: ID!){
+        allMultisByUser(userId: $userId) {
+            _id
+            name
+            coverImg
+            tags
+            userID
+            userName
+            userProfilePic
+        }
+    }
+`
+
 function MyProfile(props) {
 
-    const [userEmail, setUserEmail] = useState('')
-    const [userName, setUserName] = useState('')
-    const [userImage, setUserImage] = useState('')
+    const { loading, data } = useQuery(GET_USER_PROFILE, {
+        variables: {
+            id: JSON.parse(localStorage.getItem('user')).profileObj.googleId
+        }
+    })
 
-    const [userQuizzes, setUserQuizzes] = useState([])
+    const { loading: loadingQuizzes, data: quizzes } = useQuery(GET_USER_QUIZZES, {
+        variables: {
+            userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId
+        }
+    })
+
+    const { loading: loadingMultis, data: multis } = useQuery(GET_USER_MULTIS, {
+        variables: {
+            userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId
+        }
+    })
 
     const [value, setValue] = useState(0);
 
@@ -36,120 +88,89 @@ function MyProfile(props) {
     };
 
     useEffect(() => {
-        setUserEmail(JSON.parse(localStorage.getItem('user')).profileObj.email)
-        setUserName(JSON.parse(localStorage.getItem('user')).profileObj.name)
-        setUserImage(JSON.parse(localStorage.getItem('user')).profileObj.imageUrl)
-        getMyQuizzes()
         getClasses()
     }, [])
 
-    const getMyQuizzes = () => {
-        if(quizzesTab.current !== null) {
-            quizzesTab.current.innerHTML = ''
+    const handleQuizClick = (key, type) => {
+        if(type === 'Quiz') {
+            window.location = `/quiz/normal/${key}`
         }
-
-        firebase.database().ref('quizes').on('value', (snapshot) => {
-            console.log(snapshot.val())
-            const data = snapshot.val()
-            const keys = Object.keys(data)
-
-            keys.map((key) => {
-                console.log(data[key])
-                if( data[key].userID == JSON.parse(localStorage.getItem('user')).profileObj.googleId) {
-                    setUserQuizzes(prev => [...prev, {
-                        key: key,
-                        quiz: data[key],
-                    }])
-                }
-            })
-            userQuizzes.map((quiz)=>{
-                console.log(quiz)
-            })
-        })
-        firebase.database().ref('multiQuizzes').on('value', (snapshot) => {
-            console.log(snapshot.val())
-            const data = snapshot.val()
-            const keys = Object.keys(data)
-
-            keys.map((key) => {
-                console.log(data[key])
-                if( data[key].userID == JSON.parse(localStorage.getItem('user')).profileObj.googleId) {
-                    setUserQuizzes(prev => [...prev, {
-                        key: key,
-                        quiz: data[key],
-                    }])
-                }
-            })
-            userQuizzes.map((quiz)=>{
-                console.log(quiz)
-            })
-        })
+        if(type === 'Multi') {
+            window.location = `/quiz/multi/${key}`
+        }
     }
 
-    const handleQuizClick = (key) => {
-        firebase.database().ref(`multiQuizzes/${key}`).on('value', (snapshot) => {
-            if(snapshot.exists()) {
-                window.location.href = `/quiz/multi/${key}`
-                return
-            }
-        })
-        firebase.database().ref(`quizes/${key}`).on('value', (snapshot) => {
-            if(snapshot.exists()) {
-                window.location.href = `/quiz/normal/${key}`
-                return
-            }
-        })
+    const getClasses = async () => {
+
+        console.log('nefeifn')
+        const res = await axios.post('http://localhost:3001/get-user-classes', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId })
+
+        if(res.data){
+            setUserClasses(res.data)
+        }
     }
 
-    const getClasses = () => {
-        firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/classes`).on('value', (snapshot) => {
-            if(snapshot.val() == undefined) return
-            const data = snapshot.val()
-            const keys = Object.keys(data)
-
-            const classArr = []
-
-            for(let i = 0; i < keys.length; i++) {
-                const key = data[keys[i]].id
-                firebase.database().ref(`classes/${key}`).on('value', (snapshot) => {
-                    if(snapshot.val() == undefined) return
-                    const data = snapshot.val()
-                    console.log(data)
-
-                    classArr.push(data)
-
-                })
-            }
-
-            console.log(classArr)
-
-            setUserClasses(classArr)
-
-        })
-    }
-
-    const ClassCardComponent = ({name, banner, ownerName, ownerPfp, id }) => {
+    const ClassCardComponent = ({ data }) => {
+        const {name, banner, owner, _id } = data
+        console.log(_id)
         return(
-            <div className='profile__class__card' onClick={()=>window.location = `/class/${id}`}>
+            <div className='profile__class__card' onClick={()=>window.location = `/class/${_id}`}>
                 <Typography style={{fontWeight:'bold', margin:'20px'}} variant='h5'>{name}</Typography>
                 <img style={{width:'100%', height:'300px'}} src={banner|| Placeholder} alt='banner-img'/>
-                <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
-                    <Avatar src={ownerPfp} style={{margin:'20px'}} />
-                    <Typography style={{margin:'20px'}} variant='h6'>{ownerName}</Typography>
-                </div>
             </div>
         )
     }
+
+    const QuizCardComponent = ({ data }) => (
+        <div onClick={()=>{handleQuizClick(data._id, data.__typename)}} className='newQuiz' style={{overflowY:'auto', overflowX:'hidden', maxWidth:'300px'}}>
+        <img style={{width:'100%', height:'300px'}} src={data.coverImg || Placeholder} alt='cover-img'/>
+        <h2>{data.name}</h2>
+        <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+            {
+                data.userProfilePic == undefined ?
+                <AccountCircle style={{marginRight:'10px'}} color='primary'/>
+                :
+                <img 
+                    width='25px' 
+                    height='25px' 
+                    src={data.userProfilePic} 
+                    alt={data.userProfilePic}
+                    style={{
+                        borderRadius:'100%',
+                        marginRight:'10px'
+                    }}
+                />                       
+            }
+            <h3>{`${Translations[userLanguage].profile.quizzes.by} ${data.userName}`}</h3>
+        </div>
+        {/* <Button variant='contained' size='small' color='primary' style={{margin:'10px'}}>Edit</Button> */}
+        <div>
+            {
+                data.tags == undefined ?
+                null
+                :
+                <div>
+                    <br></br>
+                    {
+                        data.tags.map((tag,index)=>{
+                            return <Chip style={{margin:'5px'}} key={tag+index} label={tag} color="primary" />
+                        })
+                    }
+                </div>
+            }
+        </div>
+        </div>
+    )
 
     return (
         <div className="profile-container">
             <div className='profile-banner'></div>
             <div className='profile-wrapper'>
                 <div className='profile-info-bar'>
-                    <img alt='user-pfp' src={userImage} style={{borderRadius:'50%', marginTop:'-50px', width:'100px', height:'100px'}}/>
+                    <img alt='user-pfp' src={loading ? null : data.user == null ? null : data.user.imageUrl} style={{borderRadius:'50%', marginTop:'-50px', width:'100px', height:'100px'}}/>
                     <div className="profile-info-text">
-                        <Typography style={{fontWeight:'bold', margin:'20px'}} variant='h5'>{userName}</Typography>
-                        <Typography style={{margin:'20px'}} variant='h6'>{userEmail}</Typography>
+                        <Typography style={{fontWeight:'bold', margin:'20px'}} variant='h5'>{loading ? null : data.user == null ? null : data.user.name}</Typography>
+                        <Typography style={{margin:'20px'}} variant='h6'>{loading ? null : data.user == null ? null : data.user.email}</Typography>
                     </div>
                 </div>
                 <div className='profile-tabs-slider-container'>
@@ -174,50 +195,28 @@ function MyProfile(props) {
                         <Divider style={{marginLeft:'10px', marginRight:'10px'}}/>
                         <br></br>
                         <div className="profile-tab-quizzes" ref={quizzesTab}>
-                                {
-                                    userQuizzes.map((data, index) => {
-                                        return (
-                                                <div onClick={()=>{handleQuizClick(data.key)}} className='newQuiz' style={{overflowY:'auto', overflowX:'hidden', maxWidth:'300px'}}>
-                                                <img style={{width:'100%', height:'300px'}} src={data.quiz.coverImg || Placeholder} alt='cover-img'/>
-                                                <h2>{data.quiz.name}</h2>
-                                                <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
-                                                    {
-                                                        data.quiz.userProfilePic == undefined ?
-                                                        <AccountCircle style={{marginRight:'10px'}} color='primary'/>
-                                                        :
-                                                        <img 
-                                                            width='25px' 
-                                                            height='25px' 
-                                                            src={data.quiz.userProfilePic} 
-                                                            alt={data.quiz.userProfilePic}
-                                                            style={{
-                                                                borderRadius:'100%',
-                                                                marginRight:'10px'
-                                                            }}
-                                                        />                       
-                                                    }
-                                                    <h3>{`${Translations[userLanguage].profile.quizzes.by} ${data.quiz.userName}`}</h3>
-                                                </div>
-                                                {/* <Button variant='contained' size='small' color='primary' style={{margin:'10px'}}>Edit</Button> */}
-                                                <div>
-                                                    {
-                                                        data.quiz.tags == undefined ?
-                                                        null
-                                                        :
-                                                        <div>
-                                                            <br></br>
-                                                            {
-                                                                data.quiz.tags.map((tag,index)=>{
-                                                                    return <Chip style={{margin:'5px'}} key={tag+index} label={tag} color="primary" />
-                                                                })
-                                                            }
-                                                        </div>
-                                                    }
-                                                </div>
-                                                </div>
-                                        )
-                                    })
-                                }
+                            {
+                                loadingQuizzes ? <CircularProgress color='primary' size={150} thickness={3} style={{margin:'100px'}}/> 
+                                :
+                                quizzes ? quizzes.allQuizzesByUser.map((data, index) => {
+                                    return (
+                                        <QuizCardComponent key={index} data={data}/>
+                                    )
+                                })
+                                :
+                                null
+                            }
+                            {
+                                loadingMultis ? null
+                                :
+                                multis ? multis.allMultisByUser.map((data, index) => {
+                                    return (
+                                        <QuizCardComponent key={index} data={data}/>
+                                    )
+                                })
+                                :
+                                null
+                            }
                         </div>
                     </div>
                     :
@@ -250,19 +249,8 @@ function MyProfile(props) {
                             {
                                 userClasses.map((myclass, index) => {
 
-                                    const owner = {}
-
-                                    firebase.database().ref(`users/${myclass.owner}`).on('value', (snapshot) => {
-                                        if(snapshot.val() == undefined) return
-                                        const data = snapshot.val()
-
-                                        owner.name = data.UserName
-                                        owner.image = data.imageUrl
-                            
-                                    })
-
                                     return (
-                                        <ClassCardComponent key={index} name={myclass.name} banner={myclass.banner} ownerName={owner.name} ownerPfp={owner.image} id={myclass.id}/>
+                                        <ClassCardComponent key={index} data={myclass}/>
                                     )
 
                                 })

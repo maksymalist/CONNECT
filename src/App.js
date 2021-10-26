@@ -4,8 +4,6 @@ import React, {useEffect, useState} from 'react'
 
 
 import firebase from "firebase/app"
-import "firebase/auth";
-import "firebase/database";
 
 import Home from './components/Home'
 import EnterCodeForm from './components/EnterCodeForm'
@@ -39,6 +37,10 @@ import CreateClass from './components/CreateClass';
 //redux
 import { useDispatch, useSelector } from 'react-redux';
 import { setStarter, setClassroom, setEntreprise } from './actions/Plan'
+import { setIsLoggedIn, setIsLoggedOut } from './actions/IsLogged';
+
+//apollo
+import { useMutation, gql } from '@apollo/client';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAuhaVNdwDaivPThUZ6wxYKCkvs0tEDRNs",
@@ -60,37 +62,50 @@ export const getFirebase = () => {
   return null;
 }
 
+const UPDATE_USER_PROFILE = gql`
+  mutation updateUserProfile($id: ID!, $name: String!, $email: String!, $imageUrl: String!) {
+    updateUserProfile(id: $id, name: $name, email: $email, imageUrl: $imageUrl)
+  }
+`
+
+const UPDATE_USER_SUBSCRIPTION = gql`
+  mutation updateUserSubscription($id: ID!, $subscriptionDetails: String!, $plan: String!) {
+    updateUserSubscription(id: $id, subscriptionDetails: $subscriptionDetails, plan: $plan)
+  }
+`
+
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [customerId, setCustomerId] = useState(null);
+
+  const [updateUserProfile] = useMutation(UPDATE_USER_PROFILE);
+  const [updateUserSubscription] = useMutation(UPDATE_USER_SUBSCRIPTION);
+
+  const isLoggedIn = useSelector(state => state.isLogged)
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     if(JSON.parse(localStorage.getItem('user')) !== null){
       console.log(JSON.parse(localStorage.getItem('user')).profileObj)
-      setIsLoggedIn(true);
+      dispatch(setIsLoggedIn())
       document.getElementById('profilePic').removeAttribute('hidden')
       document.getElementById('profilePic').src = JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
 
-      firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).update({
-        UserName: `${JSON.parse(localStorage.getItem('user')).profileObj.givenName} ${JSON.parse(localStorage.getItem('user')).profileObj.familyName}`,
-        email: JSON.parse(localStorage.getItem('user')).profileObj.email,
-        imageUrl: JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
-      })
+      updateUserProfile({ variables: { name: JSON.parse(localStorage.getItem('user')).profileObj.name, email: JSON.parse(localStorage.getItem('user')).profileObj.email, id: JSON.parse(localStorage.getItem('user')).profileObj.googleId, imageUrl: JSON.parse(localStorage.getItem('user')).profileObj.imageUrl} })
 
-      firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/subscriptionObj/id`).on('value',(snap)=>{
-        if(snap.exists()){
-          const id = snap.val()
-          fetchCustomerData(id)
+      axios.post('http://localhost:3001/get-user-subscription-id', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId }).then(res => {
+        if(res.data.id !== null && res.data.id !== undefined){
+          fetchCustomerData(res.data.id)
+          console.log(res.data.id)
         }
         else{
           dispatch(setStarter())
         }
-      });
+      })
     }
     else{
+      dispatch(setIsLoggedOut())
       if(window.location.pathname == '/login') return
       const ToastContent = () => (
         <div className="toast-content">
@@ -124,17 +139,7 @@ function App() {
 
     setCustomerId(JSON.parse(res.data.subscriptionDetails).customer)
     console.log(JSON.parse(res.data.subscriptionDetails))
-    firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).update({
-      UserName: JSON.parse(localStorage.getItem('user')).profileObj.name,
-      email: JSON.parse(localStorage.getItem('user')).profileObj.email,
-      subscriptionObj: JSON.parse(res.data.subscriptionDetails),
-      planAtive: JSON.parse(res.data.subscriptionDetails).status,
-      planStatus: JSON.parse(res.data.subscriptionDetails).status,
-      plan: plan,
-      imageUrl: JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
-
-
-    }) 
+    updateUserSubscription({ variables: { id: JSON.parse(localStorage.getItem('user')).profileObj.googleId, subscriptionDetails: JSON.stringify(res.data.subscriptionDetails), plan: plan } })
   }
 
   return (

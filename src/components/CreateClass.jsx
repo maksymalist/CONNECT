@@ -9,6 +9,36 @@ import { toast } from 'react-toastify';
 
 import Translations from '../translations/translations.json'
 
+import axios from 'axios';
+
+import { useMutation, gql } from '@apollo/client'
+
+const CREATE_CLASS = gql`
+    mutation createClassroom($_id: ID!, $name: String!, $banner: String!, $owner: ID!) {
+        createClassroom(_id: $_id, name: $name, banner: $banner, owner: $owner)
+    }        
+`
+
+const CREATE_NOTIFICATION = gql`
+    mutation createNotification($userId: ID!, $type: String!, $message: String!, $data: String!) {
+        createNotification(userId: $userId, type: $type, message: $message, data: $data)
+    }
+`
+
+const CREATE_MEMBER_OWNER = gql`
+    mutation createMember($classId: ID!, $userId: ID!, $role: String!) {
+        createMember(classId: $classId, userId: $userId, role: $role)
+    }
+`
+const CREATE_MEMBER = gql`
+    mutation createMember($classId: ID!, $userId: ID!, $role: String!) {
+        createMember(classId: $classId, userId: $userId, role: $role)
+    }
+`
+
+const CLASSROOM_PREFIX = 'class:'
+const USERID_PREFIX = 'user:'
+
 function CreateClass() {
 
     const [className, setClassName] = useState("")
@@ -19,20 +49,24 @@ function CreateClass() {
 
     const imgRef = useRef(null)
 
-    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+    const [userLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+
+    const [createClassMutation] = useMutation(CREATE_CLASS)
+    const [createNotificationMutation] = useMutation(CREATE_NOTIFICATION)
+
+    const [createMemberOwnerMutation] = useMutation(CREATE_MEMBER_OWNER)
+    const [createMemberMutation] = useMutation(CREATE_MEMBER)
 
     useEffect(() => {
         getPlan()
     }, [])
 
-    const getPlan = () => {
-        firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/plan`).on('value', (snapshot) => {
-            const data = snapshot.val()
-            if(data === 'Starter'){
-                window.location.href = '/'
-            }
-
-        })
+    const getPlan = async () => {
+        const res = await axios.post('http://localhost:3001/user', {userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId})
+        if(!res.data) return
+        if(res.data.plan === 'Starter'){
+            window.location.href = '/'
+        }
     }
 
     const removeMember = (member) => {
@@ -43,37 +77,33 @@ function CreateClass() {
     }
 
     const createClass = () => {
-        const classID = uuidv4()
-        let memberArr = [...members]
-        if(members.length === 0){
-            memberArr = ""
-        }
+        const classID = CLASSROOM_PREFIX+uuidv4()
         const classData = {
-            "name": className,
-            "banner": imgRef.current ? imgRef.current.src : '',
-            "halloffame": "",
-            "next_reward": "",
-            "reward": "",
-            "recent_games": "",
-            "members": memberArr,
-            "owner": JSON.parse(localStorage.getItem('user')).profileObj.googleId,
-            "id": classID
+            _id: classID,
+            name: className || '',
+            banner: imgRef.current ? imgRef.current.src : '',
+            owner: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
         }
 
         /*create class*/
-        firebase.database().ref(`classes/${classID}`).set(classData)
+        createClassMutation({ variables: classData })
 
         /*notify owner*/
         const notification = {
-            "type": "class_created",
-            "class": classID,
-            "read": false,
-            "date": new Date().toLocaleString(),
-            "message": `You have succesfully created ${classData.name}!`
+            userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
+            type: "class_created",
+            message: `You have succesfully created ${classData.name}!`,
+            data: classID
         }
 
-        firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/classes`).push({"id":classID})
-        firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/notifications`).push(notification)
+        const ownerData = {
+            classId: classID,
+            userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
+            role: "owner"
+        }
+
+        createNotificationMutation({ variables: notification })
+        createMemberOwnerMutation({ variables: ownerData })
 
         /*notify members*/
 
@@ -82,47 +112,55 @@ function CreateClass() {
         membersArr.map((member) => {
             const memberID = member.id
             const notification = {
-                "type": "added_to_class",
-                "classid": classID,
-                "read": false,
-                "date": new Date().toLocaleString(),
-                "message": `${JSON.parse(localStorage.getItem('user')).profileObj.name} has added you to ${classData.name}!`
+                userId: memberID,
+                type: "added_to_class",
+                message: `${JSON.parse(localStorage.getItem('user')).profileObj.name} has added you to ${classData.name}!`,
+                data: classID
             }
 
-            firebase.database().ref(`users/${memberID}/classes`).push({"id":classID})
-            firebase.database().ref(`users/${memberID}/notifications`).push(notification)
+            const memberData = {
+                classId: classID,
+                userId: memberID,
+                role: "member"
+            }
+
+            createNotificationMutation({ variables: notification })
+            createMemberMutation({ variables: memberData })
         })
 
         window.location.href = `/class/${classID}`
 
     }
 
-    const addMember = (member) => {
-        firebase.database().ref(`users`).on('value', (snapshot) => {
-            const data = snapshot.val()
-            const users = Object.keys(data)
+    const addMember = async (member) => {
 
-            for(let i = 0; i < users.length; i++){
-                const memberID = member
-                const userId = users[i]
-                if(data[users[i]].email === member || data[users[i]].email === memberID.split('.').join('')){
-                    for(let i = 0; i < [...members].length; i++){
-                        if([...members][i].id === userId){
-                            toast.error(Translations[userLanguage].alerts.memberAlreadyExists)
-                            return
-                        }
-                        else{
-                            console.log([...members][i].id + " " + memberID)
-                        }
-                    }
-                    setMembers([...members, {"data": data[users[i]], "id": users[i], "points": 0}])
-                    setCurrentMember('')
+        const res = await axios.post('http://localhost:3001/user-by-email', {email: member})
+
+        const membersArr = [...members]
+
+        if(!res.data){
+            toast.error(Translations[userLanguage].alerts.thisUserDoesNotExist)
+            return
+        }
+
+        if(res.data._id === USERID_PREFIX+JSON.parse(localStorage.getItem('user')).profileObj.googleId){
+            toast.error(Translations[userLanguage].alerts.cannotAddYourself)
+            return
+        }
+
+        if(res.data){
+
+            membersArr.map((member) => {
+                if(member.id === res.data._id){
+                    toast.error(Translations[userLanguage].alerts.memberAlreadyExists)
                     return
                 }
-            }
-            toast.error(Translations[userLanguage].alerts.thisUserDoesNotExist)
-
-        })
+            })
+            setMembers([...members, {"data": res.data, "id": res.data._id}])
+            setCurrentMember('')
+            return
+        }
+    
     }
 
     return (
@@ -155,12 +193,12 @@ function CreateClass() {
                                         <Chip 
                                             style={{marginTop:'10px', margin:'2px'}} 
                                             key={member.data.email+index} 
-                                            id={member.data.UserName+index} 
-                                            label={member.data.UserName} 
+                                            id={member.data.name+index} 
+                                            label={member.data.name} 
                                             onDelete={()=>removeMember(member)} color="primary"
                                             avatar={   
                                                 member.data.imageUrl === undefined ?
-                                                <Avatar alt={member.data.UserName}>{member.data.UserName.charAt(0)}</Avatar>
+                                                <Avatar alt={member.data.name}>{member.data.name.charAt(0)}</Avatar>
                                                     :   
                                                 <Avatar alt='user-pfp' src={member.data.imageUrl}/>
                                             }

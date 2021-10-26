@@ -17,6 +17,8 @@ import { Typography } from '@material-ui/core'
 
 import Translations from '../translations/translations.json'
 
+import axios from 'axios';
+
 function MultiGameRoom({match}) {
     const [activeStep, setActiveStep] = useState(0);
 
@@ -34,24 +36,16 @@ function MultiGameRoom({match}) {
     var gameLeft = false
     var secondTimer = 0
 
-    var quiz2
-    var cardsLen = []
+    var quiz
 
     const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
 
     var [emitted, setEmitted] = useState(false)
     
     const getQuiz = async (currentQuiz, name) => {
-        quiz2 = currentQuiz
-        setName(name) //name = quiz2.name
-        console.log(Object.keys(quiz2).length - 1)
-        Object.keys(quiz2).map((key, index)=>{
-            console.log(key)
-            if(key != 'name' && key != 'userName' && key != 'userProfilePic' && key != 'coverImg' && key != 'userID' && key != 'tags'){
-              cardsLen.push(key)
-            }
-          })
-        setCardsFunction(cardsLen.length)
+        quiz = currentQuiz
+        setName(name) //name = quiz.name
+        setCardsFunction()
     }
 
 
@@ -59,7 +53,6 @@ function MultiGameRoom({match}) {
         if(GameOver === true) return
         updateTime(prev => time = Math.round((prev += 0.1) * 10) / 10)
         secondTimer++
-        console.log(secondTimer)
         if(secondTimer === 10){
             secondTimer = 0
             socket.emit('time', {
@@ -70,28 +63,23 @@ function MultiGameRoom({match}) {
         }
     }
 
-    const setCardsFunction = (numCards) => {
-        for(var i = 0; i < numCards; i++){
-            cards.push({
-                question: quiz2[`q${i}`].question,
-                ans: quiz2[`q${i}`].answer
-            })
-        }
-        console.log(randomArrayShuffle(cards))
-        GetCards()
+    const setCardsFunction = () => {
+        console.log(quiz)
 
+        const keys = Object.keys(quiz)
+  
+        keys.map((key, index)=>{
+            const question = quiz[key].question
+            const answer = quiz[key].answer
+          
+            cards.push({
+                question: question,
+                ans: answer
+            })
+          
+        })
+        GetCards()
     }
-    function randomArrayShuffle(array) {
-        var currentIndex = array.length, temporaryValue, randomIndex;
-        while (0 !== currentIndex) {
-          randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex -= 1;
-          temporaryValue = array[currentIndex];
-          array[currentIndex] = array[randomIndex];
-          array[randomIndex] = temporaryValue;
-        }
-        return array;
-      }
     
 
     var elements = 0
@@ -223,15 +211,13 @@ function MultiGameRoom({match}) {
         document.getElementById('cardContainer').innerHTML = ''
         elements = 0
         cards = []
-        cardsLen = []
         steps.map((step, index) => {
             if(index == activeStep) {
-                firebase.database().ref(`multiQuizzes/${match.params.gameid}`).on('value', (snapshot) => {
-                    console.log(snapshot.val())
-                return(
-                    getQuiz(snapshot.val().steps[step], snapshot.val().name)
-                )
+                axios.post('http://localhost:3001/get-multi', {multiID: match.params.gameid}).then(res => {
+                    const multi = res.data
+                    getQuiz(JSON.parse(multi.steps)[step], multi.name)
                 })
+
             }
         })
         return () => {
@@ -246,12 +232,12 @@ function MultiGameRoom({match}) {
     }
 
     useEffect(() => {
-        firebase.database().ref(`multiQuizzes/${match.params.gameid}`).on('value', (snapshot) => {
-            console.log(snapshot.val())
-        
+        axios.post('http://localhost:3001/get-multi', {multiID: match.params.gameid}).then(res => {
+            const multi = res.data
+
             const stepArr = []
-            console.log(Object.keys(snapshot.val().steps))
-            Object.keys(snapshot.val().steps).map((step, index) => {
+            console.log(Object.keys(multi.steps))
+            Object.keys(JSON.parse(multi.steps)).map((step, index) => {
                 console.log(step)
 
                 stepArr.push(step)

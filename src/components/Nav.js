@@ -22,6 +22,14 @@ import { Add, QuestionAnswerRounded, FilterNoneRounded, TranslateSharp, Notifica
 
 import NotificationBox from '../components/NotificationBox'
 
+import { useQuery, gql } from '@apollo/client';
+
+const GET_NOTIFICATION_LENGTH = gql`
+  query notificationNumber($userId: ID!) {
+    notificationNumber(userId: $userId)
+  }
+`
+
 function Nav({ isLoggedIn, customerId }) {
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -36,12 +44,17 @@ function Nav({ isLoggedIn, customerId }) {
 
     const [notificationBoxIsOpen, setNotificationBoxIsOpen] = useState(false)
 
+    const { loading, error, data } = useQuery(GET_NOTIFICATION_LENGTH, {
+        variables: {
+            userId: JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')).profileObj.googleId : null
+        }
+    })
+
     const navStyle = {
         color: "white"
     }
 
     useEffect(() => {
-      console.log(JSON.stringify(Translations))
       if(JSON.parse(localStorage.getItem('user')) === null) return
       setCurrentUsername(JSON.parse(localStorage.getItem('user')).profileObj.name)
       if(userLanguage != null){
@@ -114,17 +127,6 @@ function Nav({ isLoggedIn, customerId }) {
     setLanguage(lang)
     localStorage.setItem('connectLanguage', lang)
     window.location.reload()
-  }
-
-  const getNotifications = () => {
-    if(JSON.parse(localStorage.getItem('user')) === null) return
-    let number = 0
-    firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/notifications`).on('value',(snap)=>{
-      if(snap.val() == undefined) return
-      number = Object.keys(snap.val()).length
-
-    })
-    return number
   }
 
   return (
@@ -209,7 +211,7 @@ function Nav({ isLoggedIn, customerId }) {
               onClick={()=>{handleSetLanguage('french')}}>Français</MenuItem>
             </Menu>
             <div className="liright">
-            <Badge badgeContent={getNotifications()} color="primary" style={{color:'#1BB978'}}>
+            <Badge badgeContent={ loading ? 0 : data ? data.notificationNumber : 0} color="primary" style={{color:'#1BB978'}}>
               <NotificationsSharp
                 style={{color:'white', width:'30px', height:'30px', marginTop:'10px'}} 
                 className="liright" 

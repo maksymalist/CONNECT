@@ -16,6 +16,8 @@ import { Typography } from '@material-ui/core'
 
 import Translations from '../translations/translations.json'
 
+import axios from 'axios'
+
 export default function GameRoom({match}) {
     var [time, updateTime] = useState(0)
     var [selected, setSelected] = useState([])
@@ -27,24 +29,15 @@ export default function GameRoom({match}) {
     var gameLeft = false
     var secondTimer = 0
 
-    var quiz2
-    const cardsLen = []
+    let quiz = []
 
     const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
 
     const getQuiz = async () => {
-        const eventref = firebase.database().ref(`quizes/${match.params.gameid}`);
-        const snapshot = await eventref.once('value');
-        quiz2 = snapshot.val();
-        setName(name = quiz2.name)
-        console.log(Object.keys(snapshot.val()).length - 1)
-        Object.keys(snapshot.val()).map((key, index)=>{
-            console.log(key)
-            if(key != 'name' && key != 'userName' && key != 'userProfilePic' && key != 'coverImg' && key != 'userID' && key != 'tags'){
-              cardsLen.push(key)
-            }
-          })
-        setCardsFunction(cardsLen.length)
+        const response = await axios.post(`http://localhost:3001/get-quiz`, {quizID: match.params.gameid})
+        quiz = response.data
+        setName(name = quiz.name)
+        setCardsFunction()
     }
 
 
@@ -63,29 +56,17 @@ export default function GameRoom({match}) {
     }
     }
 
-    const setCardsFunction = (numCards) => {
-        for(var i = 0; i < numCards; i++){
-            console.log(i + '/' + numCards + '/' + cardsLen)
+    const setCardsFunction = () => {
+        quiz.questions.map((question, index) => {
+            question = JSON.parse(question)
             cards.push({
-                question: quiz2[`q${i}`].question,
-                ans: quiz2[`q${i}`].answer
+                question: question.question,
+                ans: question.answer
             })
-        }
-        console.log(randomArrayShuffle(cards))
+        })
         GetCards()
 
     }
-    function randomArrayShuffle(array) {
-        var currentIndex = array.length, temporaryValue, randomIndex;
-        while (0 !== currentIndex) {
-          randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex -= 1;
-          temporaryValue = array[currentIndex];
-          array[currentIndex] = array[randomIndex];
-          array[randomIndex] = temporaryValue;
-        }
-        return array;
-      }
     
 
     var elements = 0

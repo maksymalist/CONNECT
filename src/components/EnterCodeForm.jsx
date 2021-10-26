@@ -34,7 +34,8 @@ const list = require('badwords-list')
 //good one https://connect-now-backend.herokuapp.com/
 //https://connect-backend-2.herokuapp.com/
 
-export const socket = io('https://connect-backend-2.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
+export const socket = io('http://localhost:3001/', {transports: ['websocket', 'polling', 'flashsocket']});
+
 
 export default function EnterCodeForm({match, location}) {
     //const classes = useStyles();
@@ -62,8 +63,6 @@ export default function EnterCodeForm({match, location}) {
     const [classid, setClassid] = useState("null")
     const classID = new URLSearchParams(search).get('classid')
 
-    const classes = []
-
 
     useEffect(() => {
         console.log(getClasses())
@@ -82,16 +81,11 @@ export default function EnterCodeForm({match, location}) {
             setClassid(classID)
             console.log(classID)
             Generatecode()
-            firebase.database().ref(`/quizes/${gamecodeParam}`).on('value', (snapshot) => {
-                if(snapshot.val() !== null){
-                    setGameMode('normal')
-                }
-            })
-            firebase.database().ref(`/multiQuizzes/${gamecodeParam}`).on('value', (snapshot) => {
-                if(snapshot.val() !== null){
-                    setGameMode('multi')
-                }
-            })
+            const mode = new URLSearchParams(search).get('mode');
+            if(mode === null) return
+
+            if(mode === "quiz") setGameMode("normal")
+            if(mode === "multi") setGameMode("multi")
 
         }
 

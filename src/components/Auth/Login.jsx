@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import GoogleLogin from 'react-google-login'
 import { toast } from 'react-toastify';
 
@@ -14,45 +14,42 @@ import "firebase/database";
 import logo from '../../img/logo.svg'
 
 import Translations from '../../translations/translations.json'
+import { useMutation, gql } from '@apollo/client';
+import axios from 'axios';
 
 function Login() {
 
-  const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+  //mutations
+  const CREATE_USER = gql`
+    mutation createUser($id: ID!, $name: String!, $email: String!, $imageUrl: String!, $plan: String) {
+      createUser(id: $id, name: $name, email: $email, imageUrl: $imageUrl, plan: $plan)
+    }
+  `
 
-    function updateUsers(email, googleId, userName){
-        firebase.database().ref(`users/${googleId}`).set({
-          UserName: userName,
-          email: email,
-          planStatus: 'inactive',
-          plan: 'Starter',
-          clientSecret: 0,
-          customerObj: 0,
-          subscriptionObj: 0
-  
-    
-        })
+  //queries
+  const GET_USER = gql`
+    query($id: ID!) {
+      user(id: $id) {
+        _id
       }
+    }
+  `
+
+  const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+  const [createUser] = useMutation(CREATE_USER);
   
-  
-  
-      const responseGoogle = (response)=>{
-        console.log(response)
+      const responseGoogle = async (response)=>{
         localStorage.setItem('user', JSON.stringify(response))
-  
-        document.getElementById('profilePic').removeAttribute('hidden')
-        document.getElementById('profilePic').src = JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
-  
-        firebase.database().ref(`users/${response.profileObj.googleId}`).on('value',(snap)=>{
-          if(snap.exists()){
-            window.location.reload()
-            window.location = '/play'
-          }
-          else{
-            updateUsers(response.profileObj.email, response.profileObj.googleId, response.profileObj.name)
-            window.location.reload()
-            window.location = '/play'
-          }
-        });
+        const res = await axios.post('http://localhost:3001/user', { userId: response.profileObj.googleId })
+        if(res.data){
+          window.location.reload()
+          window.location.href = '/play'
+        }
+        else{
+          createUser({ variables: { name: response.profileObj.name, email: response.profileObj.email, id: response.profileObj.googleId, imageUrl: response.profileObj.imageUrl, plan: "Starter"} })
+          window.location.reload()
+          window.location.href = '/play'
+        }
       }
     return (
         <div className='login-main-container'>

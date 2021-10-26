@@ -308,7 +308,8 @@
             "memberAlreadyExists": "This user is already a member of your class!!!",
             "thisUserDoesNotExist": "This user does not exist",
             "cannotjoinprivate": "Cannot join private room",
-            "titlecantcontain": "Step title can't can't contain '.', '#', '$', '/', '[', or ']'"
+            "titlecantcontain": "Step title can't can't contain '.', '#', '$', '/', '[', or ']'",
+            "cannotAddYourself": "You cannot add your self"
         },
         "paymentform":{
             "title": "Payment Form",
@@ -674,7 +675,8 @@
             "memberAlreadyExists": "Cet utilisateur est déjà un membre de votre classe !!!",
             "thisUserDoesNotExist": "Cet utilisateur n'existe pas",
             "cannotjoinprivate": "Impossible de rejoindre la salle privée",
-            "titlecantcontain": "Le titre du sujet ne peut pas contenir '.', '#', '$', '/', '[', ou ']'"
+            "titlecantcontain": "Le titre du sujet ne peut pas contenir '.', '#', '$', '/', '[', ou ']'",
+            "cannotAddYourself": "Vous ne pouvez pas vous ajouter vous-même"
         },
         "paymentform":{
             "title": "Formulaire de paiement",
