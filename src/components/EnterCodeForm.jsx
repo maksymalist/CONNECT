@@ -25,7 +25,18 @@ import { QuestionAnswerRounded, FilterNoneRounded, LockSharp } from '@material-u
 
 import Translations from '../translations/translations.json'
 
+import axios from 'axios'
+
+import { useMutation, gql } from '@apollo/client'
+
 const list = require('badwords-list')
+
+
+const CREATE_NOTIFICATION = gql`
+    mutation createNotification($userId: ID!, $type: String!, $message: String!, $data: String!) {
+        createNotification(userId: $userId, type: $type, message: $message, data: $data)
+    }
+`
 
 
 //globals
@@ -63,9 +74,11 @@ export default function EnterCodeForm({match, location}) {
     const [classid, setClassid] = useState("null")
     const classID = new URLSearchParams(search).get('classid')
 
+    //mutations
+    const [createNotification] = useMutation(CREATE_NOTIFICATION)
+
 
     useEffect(() => {
-        console.log(getClasses())
         const Gamecode = new URLSearchParams(search).get('code');
         if(Gamecode !== null){
             setCode(Gamecode)
@@ -107,7 +120,7 @@ export default function EnterCodeForm({match, location}) {
             console.log(data)
         })
         
-        socket.on('roomcreated', (data)=>{
+        socket.on('roomcreated', async (data)=>{
             setRole(role = 'host')
 
             var validclassId = data.classId
@@ -146,25 +159,21 @@ export default function EnterCodeForm({match, location}) {
                     googleId: JSON.parse(localStorage.getItem('user')).profileObj.googleId
                 })
 
-                firebase.database().ref(`classes/${validclassId}/members`).once('value', (snapshot) => {
-                    if(snapshot.val() !== null){
-                        const members = snapshot.val() || []
+                const res = await axios.post('http://localhost:3001/get-members-of-class', { id: validclassId })
+                const members = res.data
 
-                        members.map((member) => {
-                            const memberID = member.id
-                            const notification = {
-                                "type": "invitation_to_room",
-                                "classid": validclassId,
-                                "room": data.room,
-                                "read": false,
-                                "date": new Date().toLocaleString(),
-                                "message": `${JSON.parse(localStorage.getItem('user')).profileObj.name} has invited you to play a game in room ${data.room}!`
-                            }
-                            firebase.database().ref(`users/${memberID}/notifications`).push(notification)
-                        })
-                        
+                members.map((member) => {
+                    const memberId = member.userId
+                    const notification = {
+                        userId: memberId.replace(/user:/g, ""),
+                        type: "invitation_to_room",
+                        message: `${JSON.parse(localStorage.getItem('user')).profileObj.name} has invited you to play a game in room ${data.room}!`,
+                        data: JSON.stringify({ "room": data.room, "classId": validclassId })
                     }
+
+                    createNotification({ variables: notification })
                 })
+
             }
 
         })
@@ -237,31 +246,9 @@ export default function EnterCodeForm({match, location}) {
 
     }, [])
 
-    const getClasses = () => {
-        const classes = []
-        firebase.database().ref(`/users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/classes`).on('value', (snapshot) => {
-            if(snapshot.exists()){
-                const data = snapshot.val()
-
-                const keys = Object.keys(data)
-
-                console.log(keys)
-
-                for(let i = 0; i < keys.length; i++){
-                    const key = keys[i]
-                    const currentClassId = data[key].id
-                    if(currentClassId !== null){
-                        classes.push(currentClassId)
-                    }
-                }
-            }
-        })
-        return classes
-    }
 
 
-
-    const JoinRoom = ()=>{
+    const JoinRoom = async ()=>{
         if(joinFormNickname === ""){ 
             toast.error(Translations[userLanguage].alerts.entername)
             return
@@ -270,16 +257,21 @@ export default function EnterCodeForm({match, location}) {
             toast.error(Translations[userLanguage].alerts.entercode)
             return
         }
+        const res = await axios.post('http://localhost:3001/get-user-classes', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId })
+        const classes = res.data
+
         socket.emit('joinroom', {
             code: joinFormCode, 
             name: joinFormNickname,
             profane: list.array.includes(joinFormNickname),
-            classes: getClasses()
+            classes: classes
         })
+
     }
+    
 
     
-    function CreateRoom(){
+    const CreateRoom = async () =>{
         if(document.getElementById('roomName').value === undefined){
             toast.error(Translations[userLanguage].alerts.enterroomname)
             return
@@ -294,38 +286,17 @@ export default function EnterCodeForm({match, location}) {
         }
         console.log(checked)
 
-        firebase.database().ref(`/classes/${classID}`).on('value', (snapshot) => {
-            if(snapshot.exists()){
-                const snapData = snapshot.val()
+        const res = await axios.post('http://localhost:3001/get-class', { id: classID })
+        console.log(res.data)
 
-                firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/plan`).on('value',(snap)=>{
-                    if(snap.val() !== null){
-                       if(snap.val() === 'Starter'){
-                        socket.emit('createroom', {
-                            room: document.getElementById('roomName').value,
-                            gamecode: gameCode,
-                            host: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
-                            friendly: checked,
-                            gamemode: gameMode,
-                            classId: null
-                        })
-                       }
-                       if(snap.val() === 'Classroom'){
-                        socket.emit('createroom', {
-                            room: document.getElementById('roomName').value || "",
-                            gamecode: gameCode,
-                            host: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
-                            friendly: checked,
-                            gamemode: gameMode,
-                            classId: snapData.id,
-                        })
-                       }
-        
-                    }
-                })
+        const data = res.data
 
-            }
-            else{
+
+        if(data !== null){
+            const user = await axios.post('http://localhost:3001/user', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId })
+            const userData = user.data
+            console.log(userData)
+            if(userData.plan === "Starter"){
                 socket.emit('createroom', {
                     room: document.getElementById('roomName').value,
                     gamecode: gameCode,
@@ -335,7 +306,28 @@ export default function EnterCodeForm({match, location}) {
                     classId: null
                 })
             }
-        })
+            if(userData.plan === "Classroom"){
+                socket.emit('createroom', {
+                    room: document.getElementById('roomName').value || "",
+                    gamecode: gameCode,
+                    host: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
+                    friendly: checked,
+                    gamemode: gameMode,
+                    classId: classID,
+                })
+            }
+        }
+        else{
+            socket.emit('createroom', {
+                room: document.getElementById('roomName').value,
+                gamecode: gameCode,
+                host: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
+                friendly: checked,
+                gamemode: gameMode,
+                classId: null
+            })
+        }
+
     }
 
     const Generatecode = () => {
@@ -354,16 +346,9 @@ export default function EnterCodeForm({match, location}) {
         setChecked((prev) => !prev);
       };
 
-    
-    const changeGamemode = (event) => {
-        event.preventDefault();
-        setGameMode(event.target.value);
-    }
-
 
     return (
-        <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
-            <div id='navMargin2'/>
+        <div id='main__container__wrapper' style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
             {
                 playMode?
                         <div id='mainConatainer'>
@@ -400,10 +385,6 @@ export default function EnterCodeForm({match, location}) {
                         <h2>{Translations[userLanguage].play.host.roomcode}</h2>
                         <input className='host-input' placeholder={Translations[userLanguage].play.host.input} type="text" id="roomName"/>
                         <input hidden value={gameCode} onChange={(event) => setGameCode(event.target.value)} style={{marginLeft:'8px'}} className='host-input' placeholder={Translations[userLanguage].play.host.input2} type="text" id="gameCode"/>
-                            {gameCode != '' ?
-                                null
-                                : <InfoOutlinedIcon onClick={()=>{window.location = '/browsequizzes/normal'}} style={{marginBottom:'-8px', marginRight:'-15px', position:'relative', left:'-30px'}} color='primary'/>
-                            }
                             <div>
                                 <h2>{Translations[userLanguage].play.host.presets.title}</h2>
                                 <label>{Translations[userLanguage].play.host.presets.maxplayers} </label><input ref={maxPlayers} id='max-players' type='number' min='0' max='40'/>

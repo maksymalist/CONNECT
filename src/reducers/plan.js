@@ -1,4 +1,4 @@
-const plan = (state = null, action) => {
+const plan = (state = 'Starter', action) => {
     switch (action.type) {
       case 'SET_STARTER':
         return state = 'Starter'

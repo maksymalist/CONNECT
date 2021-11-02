@@ -27,6 +27,13 @@ import { Redeem, AlternateEmail } from '@material-ui/icons'
 
 import Translations from '../../translations/translations.json'
 
+import { useMutation, gql } from '@apollo/client'
+
+const UPDATE_USER_SUBSCRIPTION = gql`
+    mutation($id: ID!, $plan: String!, $subscriptionDetails: String!){
+      updateUserSubscription(id: $id, plan: $plan, subscriptionDetails: $subscriptionDetails)
+    }
+`
 
 
 toast.configure()
@@ -58,7 +65,6 @@ function HomePage(props) {
   const [email, setEmail] = useState('');
   const [coupon, setCoupon] = useState('');
   const [activeCoupon, setActiveCoupon] = useState(false);
-  var [spinnerSize, setSpinnerSize] = useState(0)
   const [spinner, setSpinner] = useState(false)
 
   var [currentDiscount, setCurrentDiscount] = useState('this field is optional')
@@ -72,7 +78,9 @@ function HomePage(props) {
 
   const [open, setOpen] = useState(false);
 
-  const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+  const [userLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+
+  const [updateUserSubscriptionMutation] = useMutation(UPDATE_USER_SUBSCRIPTION)
 
   const stripe = useStripe();
   const elements = useElements();
@@ -88,9 +96,21 @@ function HomePage(props) {
     }
 }, [discount])
 
-useEffect(() => {
-  console.log(props.match)
-}, [])
+  useEffect(() => {
+    console.log(props.match)
+  }, [])
+
+  const handleUpdateUserSubscription = async (subscriptionDetails) => {
+    const subscriptionObj = {
+      id: JSON.parse(localStorage.getItem('user')).profileObj.googleId,
+      plan: 'Classroom',
+      subscriptionDetails: JSON.stringify(subscriptionDetails),
+    }
+  
+    updateUserSubscriptionMutation({
+      variables: subscriptionObj
+    })
+  }
 
   const handleSubmitPay = async (event) => {
     if (!stripe || !elements) {
@@ -121,7 +141,6 @@ useEffect(() => {
       if (result.paymentIntent.status === 'succeeded') {
         console.log('Money is in the bank!');
         renderAnimation()
-        setSpinnerSize(spinnerSize = 0)
         // Show a success message to your customer
         // There's a risk of the customer closing the window before callback
         // execution. Set up a webhook or plugin to listen for the
@@ -182,18 +201,7 @@ useEffect(() => {
               renderAnimation()
               setSpinner(false)
               console.log(result)
-              firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).set({
-                UserName: `${JSON.parse(localStorage.getItem('user')).profileObj.givenName} ${JSON.parse(localStorage.getItem('user')).profileObj.familyName}`,
-                email: JSON.parse(localStorage.getItem('user')).profileObj.email,
-                planStatus: 'active',
-                planDuration: 30,
-                plan: 'Classroom',
-                clientSecret: client_secret,
-                customerObj: JSON.parse(customer_obj),
-                subscriptionObj: JSON.parse(subscription_obj)
-        
-          
-              })
+              handleUpdateUserSubscription(JSON.parse(subscription_obj))
               // Show a success message to your customer
             }
           });
@@ -204,18 +212,7 @@ useEffect(() => {
           renderAnimation()
           setSpinner(false)
           console.log(result)
-          firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).set({
-            UserName: `${JSON.parse(localStorage.getItem('user')).profileObj.givenName} ${JSON.parse(localStorage.getItem('user')).profileObj.familyName}`,
-            email: JSON.parse(localStorage.getItem('user')).profileObj.email,
-            planStatus: 'active',
-            planDuration: 30,
-            plan: 'Classroom',
-            clientSecret: client_secret,
-            customerObj: JSON.parse(customer_obj),
-            subscriptionObj: JSON.parse(subscription_obj)
-    
-      
-          })
+          handleUpdateUserSubscription(JSON.parse(subscription_obj))
           // No additional information was needed
           // Show a success message to your customer
         }
@@ -243,17 +240,7 @@ useEffect(() => {
               renderAnimation()
               setSpinner(false)
               console.log(result)
-              firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).set({
-                UserName: `${JSON.parse(localStorage.getItem('user')).profileObj.givenName} ${JSON.parse(localStorage.getItem('user')).profileObj.familyName}`,
-                email: JSON.parse(localStorage.getItem('user')).profileObj.email,
-                planStatus: 'active',
-                planDuration: 30,
-                plan: 'Classroom',
-                customerObj: JSON.parse(customer_obj),
-                subscriptionObj: JSON.parse(subscription_obj)
-        
-          
-              })
+              handleUpdateUserSubscription(JSON.parse(subscription_obj))
               // Show a success message to your customer
             }
           });
@@ -264,17 +251,7 @@ useEffect(() => {
           renderAnimation()
           setSpinner(false)
           console.log(result)
-          firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`).set({
-            UserName: `${JSON.parse(localStorage.getItem('user')).profileObj.givenName} ${JSON.parse(localStorage.getItem('user')).profileObj.familyName}`,
-            email: JSON.parse(localStorage.getItem('user')).profileObj.email,
-            planStatus: 'active',
-            planDuration: 30,
-            plan: 'Classroom',
-            customerObj: JSON.parse(customer_obj),
-            subscriptionObj: JSON.parse(subscription_obj)
-    
-      
-          })
+          handleUpdateUserSubscription(JSON.parse(subscription_obj))
           // No additional information was needed
           // Show a success message to your customer
         }

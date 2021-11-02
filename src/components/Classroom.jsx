@@ -1,10 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import ReactDOM from 'react-dom';
 import { useParams } from 'react-router-dom'
-//firebase
-import firebase from "firebase/app"
-import "firebase/auth";
-import "firebase/database";
 
 
 //styles
@@ -33,6 +28,31 @@ import { toast } from 'react-toastify';
 //redux
 import { useSelector} from 'react-redux'
 
+//axios
+import axios from 'axios'
+
+//apollo
+import { useMutation, gql } from '@apollo/client'
+
+const ADD_MEMBER = gql`
+    mutation createMember($classId: ID!, $userId: ID!, $role: String!) {
+        createMember(classId: $classId, userId: $userId, role: $role)
+    }
+`
+
+const CREATE_NOTIFICATION = gql`
+    mutation createNotification($userId: ID!, $type: String!, $message: String!, $data: String!) {
+        createNotification(userId: $userId, type: $type, message: $message, data: $data)
+    }
+`
+
+const DELETE_MEMBER = gql`
+    mutation deleteMember($classId: ID!, $userId: ID!) {
+        deleteMember(classId: $classId, userId: $userId)
+    }
+`
+    
+
 
 export default function MemberRoom() {
     const plan = useSelector(state => state.plan)
@@ -44,10 +64,7 @@ export default function MemberRoom() {
     const [name, setName] = useState("")
     const [banner, setBanner] = useState("")
     const [hallOfFame, setHallOfFame] = useState([])
-    const [recentGames, setRecentGames] = useState({})
-
-    const [reward, setReward] = useState("")
-    const [rewardTime, setRewardTime] = useState("")
+    const [recentGames, setRecentGames] = useState([])
 
     const [newMembers, setNewMembers] = useState([])
 
@@ -62,215 +79,169 @@ export default function MemberRoom() {
     const [isAddMemberPopup, setIsAddMemberPopup] = useState(false)
     const [removeMode, setRemoveMode] = useState(false)
 
+    //mutations
+    const [addMemberMutation] = useMutation(ADD_MEMBER)
+    const [createNotification] = useMutation(CREATE_NOTIFICATION)
+    const [deleteMemberMutation] = useMutation(DELETE_MEMBER)
+
+    //prefixes
+    const USERID_PREFIX = 'user:'
 
 
-    const placeholderHallOfFame = [
-        {
-            name: "???",
-            points: "???",
-            rank: "1",
-            profileImg:""
-        },
-        {
-            name: "???",
-            points: "???",
-            rank: "2",
-            profileImg:""
-        },
-        {
-            name: "???",
-            points: "???",
-            rank: "3",
-            profileImg:""
-        }
-    ]
+    const handleRenderClassroom = async () => {
+        const res = await axios.post('http://localhost:3001/get-class', { id: id })
+        const data = res.data
+    
+         if(data.owner != JSON.parse(localStorage.getItem('user')).profileObj.googleId){
+             //window.location.href = `/view-class/${id}`
+             //return
+         }
+    
+         //set class attributes
+         setName(data.name)
+         setBanner(data.banner)
+    
+    
+         //set members
+         const members = data.members || []
+
+         console.log(members)
+    
+    
+         members.forEach( async (member) => {
+
+             const userObj = {
+                 points: member.points,
+                 id: member.userId,
+                 name: "",
+                 imageUrl: ""
+             }
+    
+             const res = await axios.post('http://localhost:3001/user-no-prefix', { userId: member.userId })
+             const data = res.data
+    
+             userObj.name = data.name
+             userObj.imageUrl = data.imageUrl
+             
+             setMembers(prevState => [...prevState, userObj])
+         })
+
+         //set hall of fame
+         const hallOfFameData = await axios.post('http://localhost:3001/get-hall-of-fame', { id: id })
+         setHallOfFame(hallOfFameData.data)
+    
+         //set recent games
+    
+         const games = await axios.post('http://localhost:3001/get-recent-games', { classId: id })
+
+         const recentGames = games.data
+    
+         setRecentGames(recentGames)
+     }
+
     
     useEffect(() => {
-
-          firebase.database().ref(`classes/${id}`).once('value',(snap)=>{
-            if(snap.exists()){
-                const data = snap.val()
-
-                if(data.owner != JSON.parse(localStorage.getItem('user')).profileObj.googleId){
-                    window.location.href = `/view-class/${id}`
-                    return
-                }
-
-                //set class attributes
-                setName(data.name)
-                setBanner(data.banner)
-
-
-                //set members
-                const members = data.members || []
-                
-                members.forEach(member => {
-                    const memberObj = {
-                        points: member.points,
-                        id: member.id,
-                        data: member.data
-                    }
-                    setMembers(prevState => [...prevState, memberObj])
-                })
-
-                //set hall of fame
-                const hallOfFame = []
-
-                members.forEach(member => {
-                    const userObj = {
-                        points: member.points,
-                        id: member.id,
-                        name: "",
-                        profileImg: ""
-                    }
-                    firebase.database().ref(`users/${member.id}`).once('value',(snap)=>{
-                        if(snap.exists()){
-                            const data = snap.val()
-                            userObj.name = data.UserName
-                            userObj.profileImg = data.imageUrl
-                            
-                        }
-                    });
-                    hallOfFame.push(userObj)
-                    hallOfFame.sort(function(a, b){return b.points-a.points})
-                })
-
-                if(hallOfFame.length === 0){
-                    setHallOfFame(placeholderHallOfFame)
-                }
-                else{
-                    setHallOfFame(hallOfFame)
-                    console.log(hallOfFame)
-                }
-
-                //set recent games
-
-                const recentGames = data.recent_games == "" || undefined ? [] : data.recent_games
-
-                setRecentGames(recentGames)
-
-                //set reward
-                setReward(data.reward)
-                setRewardTime(data.next_reward)
-
-
-
-                
-            }
-            else{
-                window.location.href = "/"
-            }
-          });
+        handleRenderClassroom()
     }, [])
 
     useEffect(() => {
-        if(plan === null) return
+        if(plan === null){
+            window.location.href = `/view-class/${id}`
+            return
+        }
         if(plan === 'Starter'){
             window.location.href = `/view-class/${id}`
             return
         }
     }, [plan])
 
-    const handleSetFinalists = (finalists) => {
+    const handleSetFinalists = async (finalists) => {
         const newFinalistsArr = []
-        finalists.map((finalist) => {
-            firebase.database().ref(`users/${finalists[finalists.indexOf(finalist)].playerID}`).on('value',(snap)=>{
-                const playerData = snap.val()
-                newFinalistsArr.push({
-                    name: playerData.UserName,
-                    profileImg: playerData.imageUrl,
-                    player: finalist.player,
-                    playerID: finalist.playerID,
-                    position: finalist.position,
-                    time: finalist.time
-                })
-            })
-        })
+        finalists.map( async (finalist) => {
+            const res = await axios.post('http://localhost:3001/user', { userId: finalist.playerID })
+            const playerData = res.data
 
-        console.log(newFinalistsArr)
-        setFinalists([...newFinalistsArr])
-        console.log([...finalists])
+            newFinalistsArr.push({
+                name: playerData.name,
+                profileImg: playerData.imageUrl,
+                player: finalist.player,
+                playerID: finalist.playerID,
+                position: finalist.position,
+                time: finalist.time
+            })
+
+            if(newFinalistsArr.length === finalists.length){
+                setFinalists(newFinalistsArr)
+            }
+        })
     }
 
     const handleRenderGames = () => {
         setIsBrowseQuizzes(!isBrowseQuizzes)
     }
 
-    const HandleSetReward = () => {
-        setReward("")
-        setRewardTime("")
-    }
-
     const handleAddMember = (member) => {
         setIsAddMemberPopup(true)
     }
 
-    const addMember = (member) => {
+    const addMember = async (member) => {
 
-        firebase.database().ref(`users`).once('value', (snapshot) => {
-            const data = snapshot.val()
-            const users = Object.keys(data)
-            console.log(users)
+        const res = await axios.post('http://localhost:3001/user-by-email', {email: member})
 
-            for(let i = 0; i < users.length; i++){
-                const memberID = member
-                const userId = users[i]
-                if(data[users[i]].email === member || data[users[i]].email === memberID.split('.').join('')){
-                    for(let i = 0; i < [...members].length; i++){
-                        if([...members][i].id === userId){
-                            toast.error(Translations[userLanguage].alerts.memberAlreadyExists)
-                            return
-                        }
-                    }
-                    for(let i = 0; i < [...newMembers].length; i++){
-                        if([...newMembers][i].id === userId){
-                            toast.error(Translations[userLanguage].alerts.memberAlreadyExists)
-                            return
-                        }
-                    }
-                    setNewMembers([...newMembers, {"data": data[users[i]], "id": users[i], "points": 0}])
-                    setCurrentMember('')
+        console.log(res.data)
+
+        const membersArr = [...members]
+
+        if(!res.data){
+            toast.error(Translations[userLanguage].alerts.thisUserDoesNotExist)
+            return
+        }
+
+        if(res.data._id === USERID_PREFIX+JSON.parse(localStorage.getItem('user')).profileObj.googleId){
+            toast.error(Translations[userLanguage].alerts.cannotAddYourself)
+            return
+        }
+
+        if(res.data){
+
+            membersArr.map((member) => {
+                if(member.id === res.data._id){
+                    toast.error(Translations[userLanguage].alerts.memberAlreadyExists)
                     return
                 }
-            }
-            toast.error(Translations[userLanguage].alerts.thisUserDoesNotExist)
-
-        })
+            })
+            setNewMembers([...newMembers, {"data": res.data, "id": res.data._id}])
+            setCurrentMember('')
+            return
+        }
+    
     }
 
     const handleAddMemberComfirm = () => {
-        firebase.database().ref(`classes/${id}/members`).once('value',(snap)=>{
-        if(snap.exists()){
-            const data = snap.val() || []
-            const addedMembers = [...data, ...newMembers]
 
-            console.log(addedMembers)
+        const membersArr = [...newMembers]
 
-            if(addedMembers.length > 0){
-                firebase.database().ref(`classes/${id}/members`).set(addedMembers)
+        membersArr.map((member) => {
 
-                /*notify members*/
+            const memberId = member.data._id
 
-                const membersArr = [...newMembers]
-
-                membersArr.map((member) => {
-                    const memberID = member.id
-                    const notification = {
-                        "type": "added_to_class",
-                        "classid": id,
-                        "read": false,
-                        "date": new Date().toLocaleString(),
-                        "message": `${JSON.parse(localStorage.getItem('user')).profileObj.name} has added you to ${name}!`
-                    }
-
-                    firebase.database().ref(`users/${memberID}/classes`).push({"id":id})
-                    firebase.database().ref(`users/${memberID}/notifications`).push(notification)
-
-                    window.location.reload()
-                })
+            const notification = {
+                userId: memberId.replace(/user:/g, ""),
+                type: "added_to_class",
+                message: `${JSON.parse(localStorage.getItem('user')).profileObj.name} has added you to ${name}!`,
+                data: id
             }
-        }
+
+            const memberData = {
+                classId: id,
+                userId: memberId,
+                role: "member"
+            }
+
+            addMemberMutation({ variables: memberData })
+            createNotification({ variables: notification })
         })
+        window.location.reload()
     }
 
     const removeNewMember = (member) => {
@@ -282,34 +253,27 @@ export default function MemberRoom() {
         setNewMembers(cloneArr)
     }
 
-    const removeMember = (index) => {
+    const removeMember = (index, memberId) => {
+        if(memberId === `user:${JSON.parse(localStorage.getItem('user')).profileObj.googleId}`){
+            toast.error(Translations[userLanguage].alerts.cannotRemoveYourself)
+            return
+        }
         const cloneMemberArr = [...members]
-        const memberID = cloneMemberArr[index].id
         cloneMemberArr.splice(index, 1)
-        console.log(cloneMemberArr)
         setMembers(cloneMemberArr)
-        firebase.database().ref(`users/${memberID}/classes`).once('value',(snap)=>{
-            if(snap.exists()){
-                const data = snap.val()
-                const keys = Object.keys(data)
-                for(let i = 0; i < keys.length; i++){
-                    if(data[keys[i]].id === id){
-                        const notification = {
-                            "type": "removed_from_class",
-                            "classid": id,
-                            "read": false,
-                            "date": new Date().toLocaleString(),
-                            "message": `${JSON.parse(localStorage.getItem('user')).profileObj.name} has removed you from ${name} :(`
-                        }
-                        firebase.database().ref(`classes/${id}/members`).set(cloneMemberArr)
-                        console.log(`users/${memberID}/classes/${keys[i]}`)
-                        firebase.database().ref(`users/${memberID}/classes/${keys[i]}`).remove()
-                        firebase.database().ref(`users/${memberID}/notifications`).push(notification)
-                        window.location.reload()
-                    }
-                }
-            }
-        })
+
+
+        const notification = {
+            userId: memberId.replace(/user:/g, ""),
+            type: "removed_from_class",
+            message: `${JSON.parse(localStorage.getItem('user')).profileObj.name} has removed you from ${name} :(`,
+            data: id
+        }
+
+        console.log(index, memberId)
+
+        createNotification({ variables: notification })
+        deleteMemberMutation({ variables: { classId: id, userId: memberId } })
     }
 
 
@@ -345,12 +309,12 @@ export default function MemberRoom() {
                                         <Chip 
                                             style={{marginTop:'10px', margin:'2px'}} 
                                             key={member.data.email+index} 
-                                            id={member.data.UserName+index} 
-                                            label={member.data.UserName} 
+                                            id={member.data.name+index} 
+                                            label={member.data.name} 
                                             onDelete={()=>removeNewMember(member)} color="primary"
                                             avatar={   
                                                 member.data.imageUrl === undefined ?
-                                                <Avatar alt={member.data.UserName}>{member.data.UserName.charAt(0)}</Avatar>
+                                                <Avatar alt={member.data.name}>{member.data.name.charAt(0)}</Avatar>
                                                     :   
                                                 <Avatar alt='user-pfp' src={member.data.imageUrl}/>
                                             }
@@ -377,12 +341,12 @@ export default function MemberRoom() {
                         members.map((member, index) => {
                             return (
                                 <div className="classroom__members__member" key={index}>
-                                    <img onClick={()=>window.location = `/profiles/${member.id}`} src={member.data.imageUrl || undefined} alt="member" className="classroom__members__member__img"/>
-                                    <Typography style={{minWidth:'150px'}} variant='subtitle1' className="classroom__members__member__name">{member.data.UserName || undefined}</Typography>
+                                    <img onClick={()=>window.location = `/profiles/${member.id.replace("user:", "")}`} src={member.imageUrl || undefined} alt="member" className="classroom__members__member__img"/>
+                                    <Typography style={{minWidth:'150px'}} variant='subtitle1' className="classroom__members__member__name">{member.name || undefined}</Typography>
                                     <div style={{display:'flex', width:'100%', justifyContent:'flex-end'}}>
                                     {
                                         removeMode &&
-                                        <CancelRounded style={{fontSize: '2rem', color: 'red', cursor: 'pointer'}} onClick={()=>removeMember(index)}/>
+                                        <CancelRounded style={{fontSize: '2rem', color: 'red', cursor: 'pointer'}} onClick={()=>removeMember(index, member.id)}/>
                                     }
                                     </div>
                                 </div>
@@ -432,7 +396,7 @@ export default function MemberRoom() {
                                         {(index + 1) === 1 && <img draggable='false' src={FirstPlaceIcon} alt="first-badge" className="classroom__hall__of__fame__card__rank"/>}
                                         {(index + 1) === 2 && <img draggable='false' src={SecondPlaceIcon} alt="second-badge" className="classroom__hall__of__fame__card__rank"/>}
                                         {(index + 1) === 3 && <img draggable='false' src={ThirdPlaceIcon} alt="third-badge" className="classroom__hall__of__fame__card__rank"/>}
-                                        <Avatar src={member.profileImg} alt="member" className="classroom__hall__of__fame__card__img"/>
+                                        <Avatar src={member.imageUrl} alt="member" className="classroom__hall__of__fame__card__img"/>
                                         <Typography variant='h4' className="classroom__hall__of__fame__card__name">{member.name}</Typography>
                                         <Typography variant='h6' className="classroom__hall__of__fame__card__points">{member.points} pts</Typography>
                                     </div>
@@ -459,8 +423,7 @@ export default function MemberRoom() {
                         </div>
                         <div className="classroom__recent__games__container">
                             {
-                                Object.keys(recentGames || []).map((key) => {
-                                    const game = recentGames[key]
+                                recentGames.map((game) => {
                                     return (
                                         <div className='classroom__recent__games__game' onClick={()=>handleSetFinalists(game.finalists || [])}>
                                         <img style={{width:'100%', height:'250px'}} src={game.coverImg || Placeholder} alt='cover-img'/>

@@ -132,22 +132,26 @@ function Nav({ isLoggedIn, customerId }) {
   return (
     <nav>
         <ul>
-            <img 
-              hidden 
-              aria-controls="simple-menu" 
-              aria-haspopup="true" 
-              onClick={handleClick} 
-              alt="profile-pic" 
-              style={{
-                borderRadius:'100px', 
-                marginLeft:'-20px',
-                margin:'5px',
-              }} 
-              className='liright' 
-              height='40px' 
-              width='40px' 
-              id='profilePic'>
-            </img>
+        {isLoggedIn ?
+                <img
+                  src={JSON.parse(localStorage.getItem('user')).profileObj.imageUrl}
+                  aria-controls="simple-menu" 
+                  aria-haspopup="true" 
+                  onClick={handleClick} 
+                  alt="profile-pic" 
+                  style={{
+                    borderRadius:'100px', 
+                    marginLeft:'-20px',
+                    margin:'5px',
+                  }} 
+                  className='liright' 
+                  height='40px' 
+                  width='40px' 
+                  id='profilePic'>
+              </img>
+                    :
+                    null
+              }
             <Menu
               id="simple-menu"
               anchorEl={anchorEl}
@@ -239,7 +243,7 @@ function Nav({ isLoggedIn, customerId }) {
               <button className="dropbtn"><MenuIcon /></button>
                 <div className="dropdown-content">
                   <a href="/play">{Translations[userLanguage].nav.dropdown.play}</a>
-                  <a href="/browsequizzes/normal">{Translations[userLanguage].nav.dropdown.quizzes}</a>
+                  <a href="/browsequizzes">{Translations[userLanguage].nav.dropdown.quizzes}</a>
                   <a href="/plans">{Translations[userLanguage].nav.dropdown.plans}</a>
                   <a href="/login">{Translations[userLanguage].nav.dropdown.login}</a>
                 </div>

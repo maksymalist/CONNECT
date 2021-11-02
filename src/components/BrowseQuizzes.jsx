@@ -51,7 +51,7 @@ const GET_MULTIS = gql`
     }
 `
 
-export default function BrowseQuizzes({ classID, gamemode }) {
+export default function BrowseQuizzes() {
 
     const [gameMode, setGameMode] = useState('normal')
     const [userLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
@@ -60,7 +60,7 @@ export default function BrowseQuizzes({ classID, gamemode }) {
     const { loading: multisLoading, data: multis } = useQuery(GET_MULTIS)
     
     const QuizCard = ({ data }) =>(
-        <div className='quizCard' onClick={()=>window.location = `/quiz/normal/${data._id}?classid=${classID}`} style={{overflowY:'auto', overflowX:'hidden'}}>
+        <div className='quizCard' onClick={()=>window.location = `/quiz/normal/${data._id}`} style={{overflowY:'auto', overflowX:'hidden'}}>
             <img style={{width:'100%', height:'250px'}} src={data.coverImg || Placeholder} alt='cover-img'/>
             <h2>{data.name}</h2>
             <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
@@ -101,7 +101,7 @@ export default function BrowseQuizzes({ classID, gamemode }) {
     )
 
     const MultiCard = ({ data }) =>(
-        <div className='quizCard' onClick={()=>window.location = `/quiz/multi/${data._id}?classid=${classID}`} style={{overflowY:'auto', overflowX:'hidden'}}>
+        <div className='quizCard' onClick={()=>window.location = `/quiz/multi/${data._id}`} style={{overflowY:'auto', overflowX:'hidden'}}>
             <img style={{width:'100%', height:'250px'}} src={data.coverImg || Placeholder} alt='cover-img'/>
             <h2>{data.name}</h2>
             <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>

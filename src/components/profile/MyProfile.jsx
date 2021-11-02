@@ -3,6 +3,7 @@ import { Typography, Button, Tab, Tabs, Chip, Divider, Avatar, CircularProgress 
 import { AccountCircle } from '@material-ui/icons'
 
 import { toast } from 'react-toastify'
+import { Link } from 'react-router-dom'
 
 import '../../style/profileStyles.css'
 
@@ -101,8 +102,6 @@ function MyProfile(props) {
     }
 
     const getClasses = async () => {
-
-        console.log('nefeifn')
         const res = await axios.post('http://localhost:3001/get-user-classes', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId })
 
         if(res.data){
@@ -122,7 +121,7 @@ function MyProfile(props) {
     }
 
     const QuizCardComponent = ({ data }) => (
-        <div onClick={()=>{handleQuizClick(data._id, data.__typename)}} className='newQuiz' style={{overflowY:'auto', overflowX:'hidden', maxWidth:'300px'}}>
+        <div onClick={()=>{handleQuizClick(data._id, data.__typename)}} className='quizCard' style={{overflowY:'auto', overflowX:'hidden', maxWidth:'300px'}}>
         <img style={{width:'100%', height:'300px'}} src={data.coverImg || Placeholder} alt='cover-img'/>
         <h2>{data.name}</h2>
         <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
@@ -240,7 +239,9 @@ function MyProfile(props) {
                         {
                             plan === 'Classroom' ?
                             <div style={{display:'flex', justifyContent:'flex-end', width:'100%', alignItems:'center'}}>
-                                <Button variant='contained' size='small' color='primary' style={{margin:'10px'}} onClick={()=>window.location = '/create-class'}>{Translations[userLanguage].classroom.createbutton}</Button>
+                                <Link to='/create-class' style={{width:'170px'}}>
+                                    <Button variant='contained' size='small' color='primary' style={{margin:'10px'}} >{Translations[userLanguage].classroom.createbutton}</Button>
+                                </Link>
                             </div>
                             :
                             null

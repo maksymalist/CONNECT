@@ -11,7 +11,7 @@ import GameRoom from './components/GameRoom'
 import MultiGameRoom from './components/MultiGameRoom'
 import Nav from './components/Nav'
 import NewQuiz from './components/NewQuiz'
-import BrowseQuizes from './components/BrowseQuizes'
+import BrowseQuizzes from './components/BrowseQuizzes'
 import AfterRoomLeave from './components/AfterRoomLeave'
 import GameEnded from './components/GameEnded'
 import StripeSubscriptions from './components/payment/StripeSubscriptions'
@@ -89,15 +89,14 @@ function App() {
     if(JSON.parse(localStorage.getItem('user')) !== null){
       console.log(JSON.parse(localStorage.getItem('user')).profileObj)
       dispatch(setIsLoggedIn())
-      document.getElementById('profilePic').removeAttribute('hidden')
-      document.getElementById('profilePic').src = JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
 
       updateUserProfile({ variables: { name: JSON.parse(localStorage.getItem('user')).profileObj.name, email: JSON.parse(localStorage.getItem('user')).profileObj.email, id: JSON.parse(localStorage.getItem('user')).profileObj.googleId, imageUrl: JSON.parse(localStorage.getItem('user')).profileObj.imageUrl} })
 
       axios.post('http://localhost:3001/get-user-subscription-id', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId }).then(res => {
-        if(res.data.id !== null && res.data.id !== undefined){
-          fetchCustomerData(res.data.id)
-          console.log(res.data.id)
+        if(res.data !== null && res.data !== undefined){
+          const subObj = JSON.parse(res.data)
+          fetchCustomerData(JSON.parse(subObj).id)
+          console.log(JSON.parse(subObj).id)
         }
         else{
           dispatch(setStarter())
@@ -107,13 +106,14 @@ function App() {
     else{
       dispatch(setIsLoggedOut())
       if(window.location.pathname == '/login') return
-      const ToastContent = () => (
-        <div className="toast-content">
-          <h3>You Have To Login If You Want To Use CONNECT!</h3>
-          <Button variant='contained' color='primary' onClick={()=>{window.location = '/login'}}>Login</Button>
-        </div>
-      )
-      toast.info(<ToastContent/>)
+      // const ToastContent = () => (
+      //   <div className="toast-content">
+      //     <h3>You Have To Login If You Want To Use CONNECT!</h3>
+      //     <Button variant='contained' color='primary' onClick={()=>{window.location = '/login'}}>Login</Button>
+      //   </div>
+      // )
+      // toast.info(<ToastContent/>)
+      window.location.href = '/login'
       return
     }
     return () => {
@@ -122,7 +122,8 @@ function App() {
   }, [])
 
   const fetchCustomerData = async (id)=>{
-    const res = await axios.post('https://connect-now-backend.herokuapp.com/get-customer-data', {subId: id});
+    const res = await axios.post('http://localhost:3001/get-customer-data', {subId: id})
+
     let plan = ''
     if(JSON.parse(res.data.subscriptionDetails).plan.id == "price_1JMwC7BqTzgw1Au76sejuZu4" && JSON.parse(res.data.subscriptionDetails).status == "active"){
       plan = 'Classroom'
@@ -155,8 +156,7 @@ function App() {
             <Route path='/multi/:room/:gameid/:user/:maxpodium' component={MultiGameRoom}/>
             <Route path='/newquiz' component={NewQuiz}/>
             <Route path='/new-multi-quiz' component={NewMultiQuiz}/>
-            <Route path='/browsequizzes/:gamemode' component={BrowseQuizes}/>
-            <Route path='/browsequizzes/:gamemode/:classid' component={BrowseQuizes}/>
+            <Route path='/browsequizzes' component={BrowseQuizzes}/>
             <Route path='/roomleave' component={AfterRoomLeave}/>
             <Route path='/gamefinsihed/:room/:user' component={GameEnded}/>
             <Route path='/plans' component={Plans}/>

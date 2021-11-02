@@ -33,8 +33,21 @@ import SharePopup from './SharePopup';
 
 import Translations from '../translations/translations.json'
 
+import axios from 'axios'
 
-//globals
+
+// //Mutations
+// const ADD_POINTS = gql`
+//     mutation addPoints($classId: ID!, $userId: ID!, $points: Int!){
+//         addPointsToMember(classId: $classId, userId: $userId, points: $points)
+//     }
+// `
+
+// const CREATE_RECENT_GAME = gql`
+//     mutation($classId: ID!, $quizId: ID!, $mode: String!, $roomCode: String!, $finalists: [String]!){
+//         createRecentGame(classId: $classId, quizId: $quizId, mode: $mode, roomCode: $roomCode, finalists: $finalists)
+//     }
+// `
 
 //const socket = io('http://localhost:3001')
 const playersTime = []
@@ -55,7 +68,10 @@ export default function HostRoom(props) {
 
     var gameStarted = false
 
-    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+    const [userLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+
+    // const [addPointsMutation] = useMutation(ADD_POINTS)
+    // const [createRecentGameMutation] = useMutation(CREATE_RECENT_GAME)
 
     useEffect(() => {
         console.log(props.friendlyroom)
@@ -311,38 +327,35 @@ export default function HostRoom(props) {
         })
     }
 
-    const CheckPlanStatus = () =>{
-        firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/plan`).on('value',(snap)=>{
-            if(snap.exists()){
-              const plan = snap.val()
+    const CheckPlanStatus = async () =>{
+        const res = await axios.post('http://localhost:3001/user', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId })
+        const plan = res.data.plan
 
-              if(plan === "Classroom"){
+        if(plan === "Classroom"){
+            setUserLimit(userLimit = 40)
+            if(props.maxPlayers > 40){
                 setUserLimit(userLimit = 40)
-                if(props.maxPlayers > 40){
-                    setUserLimit(userLimit = 40)
-                }
-                else{
-                    setUserLimit(userLimit = props.maxPlayers)
-                }
-                if(props.maxPlayers < 3){
-                    setUserLimit(userLimit = 3)
-                }
-                  
-              }
-              if(plan === "Starter"){
-                setUserLimit(userLimit = 8)
-                if(props.maxPlayers > 8){
-                    setUserLimit(userLimit = 8)
-                }
-                else{
-                    setUserLimit(userLimit = props.maxPlayers)
-                }
-                if(props.maxPlayers < 3){
-                    setUserLimit(userLimit = 3)
-                }
-              }
             }
-          });
+            else{
+                setUserLimit(userLimit = props.maxPlayers)
+            }
+            if(props.maxPlayers < 3){
+                setUserLimit(userLimit = 3)
+            }
+              
+          }
+          if(plan === "Starter"){
+            setUserLimit(userLimit = 8)
+            if(props.maxPlayers > 8){
+                setUserLimit(userLimit = 8)
+            }
+            else{
+                setUserLimit(userLimit = props.maxPlayers)
+            }
+            if(props.maxPlayers < 3){
+                setUserLimit(userLimit = 3)
+            }
+          }
     }
 
 
@@ -374,61 +387,27 @@ export default function HostRoom(props) {
         localStorage.removeItem(JSON.parse(localStorage.getItem('user')).profileObj.googleId);
     }
 
-    const addPoints = (Points, index) =>{
-        firebase.database().ref(`classes/${props.classid}/members/${index}/points`).transaction((points) => {
-            return points + Points
+    const addPoints = async (points, userId) =>{
+
+        await axios.post('http://localhost:3001/add-points', {
+            points: points,
+            userId: userId,
+            classId: props.classId 
         })
+
+
     }
 
-    const createRecentGame = () => {
+    const createRecentGame = async () => {
 
         const Podium = []
 
-        const owner = JSON.parse(localStorage.getItem('user')).profileObj.googleId
-
         const recentGame = {
-            "room": props.room,
-            "gamecode": props.gamecode,
-            "gamemode": props.gamemode,
-            "name": null,
-            "coverImg": null,
-            "tags": null,
-            "finalists": Podium,
-            "userProfilePic": null,
-            "userName": null,
-            "userID": null,
-            "date": new Date().toLocaleString()
-        }
-
-
-        if(props.gamemode === 'normal'){
-            firebase.database().ref(`quizes/${props.gamecode}`).on('value',(snap)=>{
-                if(snap.exists()){
-                    const data = snap.val()
-    
-                    recentGame.name = data.name || ""
-                    recentGame.coverImg = data.coverImg || ""
-                    recentGame.tags = data.tags || ""
-                    recentGame.userProfilePic = data.userProfilePic || ""
-                    recentGame.userName = data.userName || ""
-                    recentGame.userID = data.userID || ""
-                }
-            });
-        }
-
-        if(props.gamemode === 'multi'){
-            firebase.database().ref(`multiQuizzes/${props.gamecode}`).on('value',(snap)=>{
-                if(snap.exists()){
-                    const data = snap.val()
-    
-                    recentGame.name = data.name || ""
-                    recentGame.coverImg = data.coverImg || ""
-                    recentGame.tags = data.tags || ""
-                    recentGame.userProfilePic = data.userProfilePic || ""
-                    recentGame.userName = data.userName || ""
-                    recentGame.userID = data.userID || ""
-                }
-            });
+            mode: props.gamemode,
+            quizId: props.gamecode,
+            finalists: Podium,
+            roomCode: props.room,
+            classId: props.classid,
         }
 
         for(let i = 0; i < document.getElementsByClassName('podium-time').length; i++){
@@ -444,82 +423,59 @@ export default function HostRoom(props) {
         console.log(recentGame)
 
         if(props.classid !== null){
-            firebase.database().ref(`classes/${props.classid}/recent_games`).push(recentGame)
+            await axios.post('http://localhost:3001/create-recent-game', recentGame)
 
             //add points to winners
-            Podium.map((player) => {
+            Podium.map( async (player) => {
                 console.log(player)
                 if(player.position == 1){
-                    console.log('place filter check')
-                    firebase.database().ref(`classes/${props.classid}/members`).once("value", (snap) => {
-                        if(snap.exists()){
-                            console.log('members exist check')
-                            const data = snap.val() || []
-                            const index = data.findIndex(member => member.id === player.playerID)
-                            console.log(index)
-                            if(index !== undefined && index !== null && player.playerID !== owner){
-                                console.log('index error check')
-                                addPoints(100, index)
-                            }
+                    const userId  = player.playerID
+                    const res = await axios.post('http://localhost:3001/member', { userId: userId, classId: props.classid })
 
-                        }
-                    })
+                    if(res.data){
+                        addPoints(100, userId)
+                    }
                 }
             })
-            Podium.map((player) => {
+            Podium.map( async (player) => {
                 console.log(player)
                 if(player.position == 2){
-                    console.log('place filter check')
-                    firebase.database().ref(`classes/${props.classid}/members`).once("value", (snap) => {
-                        if(snap.exists()){
-                            console.log('members exist check')
-                            const data = snap.val() || []
-                            const index = data.findIndex(member => member.id === player.playerID)
-                            console.log(index)
-                            if(index !== undefined && index !== null && player.playerID !== owner){
-                                console.log('index error check')
-                                addPoints(50, index)
-                            }
+                    const userId  = player.playerID
+                    const res = await axios.post('http://localhost:3001/member', { userId: userId, classId: props.classid })
 
-                        }
-                    })
+                    if(res.data){
+                        addPoints(50, userId)
+                    }
                 }
             })
-            Podium.map((player) => {
+            Podium.map( async (player) => {
                 console.log(player)
                 if(player.position == 3){
-                    console.log('place filter check')
-                    firebase.database().ref(`classes/${props.classid}/members`).once("value", (snap) => {
-                        if(snap.exists()){
-                            console.log('members exist check')
-                            const data = snap.val() || []
-                            const index = data.findIndex(member => member.id === player.playerID)
-                            console.log(index)
-                            if(index !== undefined && index !== null && player.playerID !== owner){
-                                console.log('index error check')
-                                addPoints(20, index)
-                            }
+                    const userId  = player.playerID
+                    const res = await axios.post('http://localhost:3001/member', { userId: userId, classId: props.classid })
 
-                        }
-                    })
+                    if(res.data){
+                        addPoints(20, userId)
+                    }
                 }
             })
         }
 
     }
 
-    const GameOver = () => {
+    const GameOver = async () => {
         const Podium = []
-        firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/plan`).on('value',(snap)=>{
-            if(snap.val() !== null){
-               if(snap.val() === 'Classroom'){
-                   if(props.classid != "null" && props.classid !== null){
-                     createRecentGame() 
-                   }
-               }
 
+        const res = await axios.post('http://localhost:3001/user', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId })
+        const plan = res.data.plan
+        if(plan !== null && plan !== "" && plan !== undefined ){
+            if(plan === 'Classroom'){
+                if(props.classid != "null" && props.classid !== null){
+                  createRecentGame() 
+                }
             }
-        })
+
+        }
         for(var i = 0; i < document.getElementsByClassName('podium-time').length; i++){
             Podium.push({
                 time: document.getElementsByClassName('podium-time')[i].dataset.time,

@@ -124,7 +124,7 @@ function Profile() {
     }
 
     const QuizCardComponent = ({ data }) => (
-        <div onClick={()=>{handleQuizClick(data._id, data.__typename)}} className='newQuiz' style={{overflowY:'auto', overflowX:'hidden', maxWidth:'300px'}}>
+        <div onClick={()=>{handleQuizClick(data._id, data.__typename)}} className='quizCard' style={{overflowY:'auto', overflowX:'hidden', maxWidth:'300px'}}>
         <img style={{width:'100%', height:'300px'}} src={data.coverImg || Placeholder} alt='cover-img'/>
         <h2>{data.name}</h2>
         <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>

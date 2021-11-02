@@ -21,7 +21,7 @@ import { useSelector } from 'react-redux'
 export default function Plans() {
     const plan = useSelector(state => state.plan)
     // eslint-disable-next-line
-    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+    const [userLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
 
     const selectClassroomPlan = ()=>{
         if(plan == "Starter"){

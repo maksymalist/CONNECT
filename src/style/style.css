@@ -231,7 +231,7 @@ h1{
     justify-content: center
 }
 
-.newQuiz{
+.quizCard{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -244,7 +244,7 @@ h1{
     min-width: 360px;
     
 }
-.newQuiz:hover{
+.quizCard:hover{
     cursor: pointer;
     transition: all 0.2s ease;
     transform: scale(1.05);

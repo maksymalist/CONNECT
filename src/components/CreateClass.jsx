@@ -11,6 +11,9 @@ import Translations from '../translations/translations.json'
 
 import axios from 'axios';
 
+//redux
+import { useSelector } from 'react-redux';
+
 import { useMutation, gql } from '@apollo/client'
 
 const CREATE_CLASS = gql`
@@ -44,6 +47,8 @@ function CreateClass() {
     const [className, setClassName] = useState("")
     const [members, setMembers] = useState([])
 
+    const plan = useSelector(state => state.plan)
+
     //inputs
     const [currentMember, setCurrentMember] = useState("")
 
@@ -58,16 +63,10 @@ function CreateClass() {
     const [createMemberMutation] = useMutation(CREATE_MEMBER)
 
     useEffect(() => {
-        getPlan()
-    }, [])
-
-    const getPlan = async () => {
-        const res = await axios.post('http://localhost:3001/user', {userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId})
-        if(!res.data) return
-        if(res.data.plan === 'Starter'){
-            window.location.href = '/'
+        if(plan === "Starter"){
+            window.location.href = "/"
         }
-    }
+    }, [])
 
     const removeMember = (member) => {
         const cloneArr = [...members]
@@ -112,7 +111,7 @@ function CreateClass() {
         membersArr.map((member) => {
             const memberID = member.id
             const notification = {
-                userId: memberID,
+                userId: memberID.replace(/user:/g, ""),
                 type: "added_to_class",
                 message: `${JSON.parse(localStorage.getItem('user')).profileObj.name} has added you to ${classData.name}!`,
                 data: classID

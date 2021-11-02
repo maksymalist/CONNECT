@@ -309,7 +309,8 @@
             "thisUserDoesNotExist": "This user does not exist",
             "cannotjoinprivate": "Cannot join private room",
             "titlecantcontain": "Step title can't can't contain '.', '#', '$', '/', '[', or ']'",
-            "cannotAddYourself": "You cannot add your self"
+            "cannotAddYourself": "You cannot add your self",
+            "cannotRemoveYourself": "You cannot remove your self"
         },
         "paymentform":{
             "title": "Payment Form",
@@ -676,7 +677,8 @@
             "thisUserDoesNotExist": "Cet utilisateur n'existe pas",
             "cannotjoinprivate": "Impossible de rejoindre la salle privée",
             "titlecantcontain": "Le titre du sujet ne peut pas contenir '.', '#', '$', '/', '[', ou ']'",
-            "cannotAddYourself": "Vous ne pouvez pas vous ajouter vous-même"
+            "cannotAddYourself": "Vous ne pouvez pas vous ajouter vous-même",
+            "cannotRemoveYourself": "Vous ne pouvez pas vous retirer vous-même"
         },
         "paymentform":{
             "title": "Formulaire de paiement",
