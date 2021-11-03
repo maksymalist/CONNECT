@@ -40,7 +40,7 @@ function Login() {
   
       const responseGoogle = async (response)=>{
         localStorage.setItem('user', JSON.stringify(response))
-        const res = await axios.post('http://localhost:3001/user', { userId: response.profileObj.googleId })
+        const res = await axios.post('https://connect-backend-2.herokuapp.com/user', { userId: response.profileObj.googleId })
         if(res.data){
           window.location.reload()
           window.location.href = '/play'

@@ -104,7 +104,7 @@ function Profile() {
     }
 
     const getClasses = async () => {
-        const res = await axios.post('http://localhost:3001/get-user-classes', { userId: id })
+        const res = await axios.post('https://connect-backend-2.herokuapp.com/get-user-classes', { userId: id })
 
         console.log(res.data)
         if(res.data){

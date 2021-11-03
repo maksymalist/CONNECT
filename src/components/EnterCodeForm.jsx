@@ -45,7 +45,7 @@ const CREATE_NOTIFICATION = gql`
 //good one https://connect-now-backend.herokuapp.com/
 //https://connect-backend-2.herokuapp.com/
 
-export const socket = io('http://localhost:3001/', {transports: ['websocket', 'polling', 'flashsocket']});
+export const socket = io('https://connect-backend-2.herokuapp.com/', {transports: ['websocket', 'polling', 'flashsocket']});
 
 
 export default function EnterCodeForm({match, location}) {
@@ -159,7 +159,7 @@ export default function EnterCodeForm({match, location}) {
                     googleId: JSON.parse(localStorage.getItem('user')).profileObj.googleId
                 })
 
-                const res = await axios.post('http://localhost:3001/get-members-of-class', { id: validclassId })
+                const res = await axios.post('https://connect-backend-2.herokuapp.com/get-members-of-class', { id: validclassId })
                 const members = res.data
 
                 members.map((member) => {
@@ -257,7 +257,7 @@ export default function EnterCodeForm({match, location}) {
             toast.error(Translations[userLanguage].alerts.entercode)
             return
         }
-        const res = await axios.post('http://localhost:3001/get-user-classes', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId })
+        const res = await axios.post('https://connect-backend-2.herokuapp.com/get-user-classes', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId })
         const classes = res.data
 
         socket.emit('joinroom', {
@@ -286,14 +286,14 @@ export default function EnterCodeForm({match, location}) {
         }
         console.log(checked)
 
-        const res = await axios.post('http://localhost:3001/get-class', { id: classID })
+        const res = await axios.post('https://connect-backend-2.herokuapp.com/get-class', { id: classID })
         console.log(res.data)
 
         const data = res.data
 
 
         if(data !== null){
-            const user = await axios.post('http://localhost:3001/user', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId })
+            const user = await axios.post('https://connect-backend-2.herokuapp.com/user', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId })
             const userData = user.data
             console.log(userData)
             if(userData.plan === "Starter"){

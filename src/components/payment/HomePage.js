@@ -17,10 +17,6 @@ import ThanksForPurchasingAnimation from './ThanksForPurchasingAnimation'
 //toast
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-//firebase
-import firebase from "firebase/app"
-import "firebase/auth";
-import "firebase/database";
 
 //material-icons
 import { Redeem, AlternateEmail } from '@material-ui/icons'
@@ -120,7 +116,7 @@ function HomePage(props) {
     }
     //https://connect-quiz-now.herokuapp.com
 
-    const res = await axios.post('https://connect-now-backend.herokuapp.com/pay', {email: email});
+    const res = await axios.post('https://connect-backend-2.herokuapp.com/pay', {email: email});
 
     const clientSecret = res.data['client_secret'];
 
@@ -179,7 +175,7 @@ function HomePage(props) {
       setSpinner(false)
     } else {
         if(activeCoupon === false){
-        const res = await axios.post('https://connect-now-backend.herokuapp.com/sub', {'payment_method': result.paymentMethod.id, 'email': email});
+        const res = await axios.post('https://connect-backend-2.herokuapp.com/sub', {'payment_method': result.paymentMethod.id, 'email': email});
         // eslint-disable-next-line camelcase
         const {client_secret, status, customer_obj, subscription_obj} = res.data;
         console.log(JSON.parse(customer_obj).id)
@@ -218,7 +214,7 @@ function HomePage(props) {
         }
       }
       if(activeCoupon === true){
-        const res = await axios.post('https://connect-now-backend.herokuapp.com/sub-coupon', {'payment_method': result.paymentMethod.id, 'email': email, 'coupon': coupon});
+        const res = await axios.post('https://connect-backend-2.herokuapp.com/sub-coupon', {'payment_method': result.paymentMethod.id, 'email': email, 'coupon': coupon});
         // eslint-disable-next-line camelcase
         const {client_secret, status, customer_obj, subscription_obj} = res.data;
         console.log(JSON.parse(customer_obj).id)
@@ -274,7 +270,7 @@ function HomePage(props) {
       return
     }
     else{
-      const res = await axios.post(`https://connect-now-backend.herokuapp.com/get-coupon`, {coupon: coupon})
+      const res = await axios.post(`https://connect-backend-2.herokuapp.com/get-coupon`, {coupon: coupon})
       console.log(res.data)
       if(res.data === 'Invalid Coupon'){
         toast.error(Translations[userLanguage].alerts.entervalidcoupon)

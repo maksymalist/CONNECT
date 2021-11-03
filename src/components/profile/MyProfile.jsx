@@ -102,7 +102,7 @@ function MyProfile(props) {
     }
 
     const getClasses = async () => {
-        const res = await axios.post('http://localhost:3001/get-user-classes', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId })
+        const res = await axios.post('https://connect-backend-2.herokuapp.com/get-user-classes', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId })
 
         if(res.data){
             setUserClasses(res.data)

@@ -34,7 +34,7 @@ export default function GameRoom({match}) {
     const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
 
     const getQuiz = async () => {
-        const response = await axios.post(`http://localhost:3001/get-quiz`, {quizID: match.params.gameid})
+        const response = await axios.post(`https://connect-backend-2.herokuapp.com/get-quiz`, {quizID: match.params.gameid})
         quiz = response.data
         setName(name = quiz.name)
         setCardsFunction()

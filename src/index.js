@@ -16,7 +16,7 @@ const store = createStore(
 )
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3001/graphql',
+  uri: 'https://connect-backend-2.herokuapp.com/graphql',
   cache: new InMemoryCache()
 })
 

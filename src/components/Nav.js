@@ -98,7 +98,7 @@ function Nav({ isLoggedIn, customerId }) {
     }
     setAnchorEl(null);
 
-    const res = await axios.post('https://connect-now-backend.herokuapp.com/create-customer-portal-session', {customerId: customerId});
+    const res = await axios.post('https://connect-backend-2.herokuapp.com/create-customer-portal-session', {customerId: customerId});
 
     const {redirectUrl} = res.data;
     console.log(redirectUrl)

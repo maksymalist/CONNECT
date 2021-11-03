@@ -133,7 +133,7 @@ function CreateClass() {
 
     const addMember = async (member) => {
 
-        const res = await axios.post('http://localhost:3001/user-by-email', {email: member})
+        const res = await axios.post('https://connect-backend-2.herokuapp.com/user-by-email', {email: member})
 
         const membersArr = [...members]
 

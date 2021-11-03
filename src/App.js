@@ -92,7 +92,7 @@ function App() {
 
       updateUserProfile({ variables: { name: JSON.parse(localStorage.getItem('user')).profileObj.name, email: JSON.parse(localStorage.getItem('user')).profileObj.email, id: JSON.parse(localStorage.getItem('user')).profileObj.googleId, imageUrl: JSON.parse(localStorage.getItem('user')).profileObj.imageUrl} })
 
-      axios.post('http://localhost:3001/get-user-subscription-id', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId }).then(res => {
+      axios.post('https://connect-backend-2.herokuapp.com/get-user-subscription-id', { userId: JSON.parse(localStorage.getItem('user')).profileObj.googleId }).then(res => {
         if(res.data !== null && res.data !== undefined){
           const subObj = JSON.parse(res.data)
           fetchCustomerData(JSON.parse(subObj).id)
@@ -122,7 +122,7 @@ function App() {
   }, [])
 
   const fetchCustomerData = async (id)=>{
-    const res = await axios.post('http://localhost:3001/get-customer-data', {subId: id})
+    const res = await axios.post('https://connect-backend-2.herokuapp.com/get-customer-data', {subId: id})
 
     let plan = ''
     if(JSON.parse(res.data.subscriptionDetails).plan.id == "price_1JMwC7BqTzgw1Au76sejuZu4" && JSON.parse(res.data.subscriptionDetails).status == "active"){

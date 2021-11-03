@@ -43,7 +43,7 @@ export default function MemberRoom() {
 
 
     const handleRenderClassroom = async () => {
-        const res = await axios.post('http://localhost:3001/get-class', { id: id })
+        const res = await axios.post('https://connect-backend-2.herokuapp.com/get-class', { id: id })
         const data = res.data
     
          if(data.owner != JSON.parse(localStorage.getItem('user')).profileObj.googleId){
@@ -71,7 +71,7 @@ export default function MemberRoom() {
                  imageUrl: ""
              }
     
-             const res = await axios.post('http://localhost:3001/user-no-prefix', { userId: member.userId })
+             const res = await axios.post('https://connect-backend-2.herokuapp.com/user-no-prefix', { userId: member.userId })
              const data = res.data
     
              userObj.name = data.name
@@ -81,12 +81,12 @@ export default function MemberRoom() {
          })
 
          //set hall of fame
-         const hallOfFameData = await axios.post('http://localhost:3001/get-hall-of-fame', { id: id })
+         const hallOfFameData = await axios.post('https://connect-backend-2.herokuapp.com/get-hall-of-fame', { id: id })
          setHallOfFame(hallOfFameData.data)
     
          //set recent games
     
-         const games = await axios.post('http://localhost:3001/get-recent-games', { classId: id })
+         const games = await axios.post('https://connect-backend-2.herokuapp.com/get-recent-games', { classId: id })
 
          const recentGames = games.data
     
@@ -102,7 +102,7 @@ export default function MemberRoom() {
     const handleSetFinalists = async (finalists) => {
         const newFinalistsArr = []
         finalists.map( async (finalist) => {
-            const res = await axios.post('http://localhost:3001/user', { userId: finalist.playerID })
+            const res = await axios.post('https://connect-backend-2.herokuapp.com/user', { userId: finalist.playerID })
             const playerData = res.data
 
             newFinalistsArr.push({

@@ -213,7 +213,7 @@ function MultiGameRoom({match}) {
         cards = []
         steps.map((step, index) => {
             if(index == activeStep) {
-                axios.post('http://localhost:3001/get-multi', {multiID: match.params.gameid}).then(res => {
+                axios.post('https://connect-backend-2.herokuapp.com/get-multi', {multiID: match.params.gameid}).then(res => {
                     const multi = res.data
                     getQuiz(JSON.parse(multi.steps)[step], multi.name)
                 })
@@ -232,7 +232,7 @@ function MultiGameRoom({match}) {
     }
 
     useEffect(() => {
-        axios.post('http://localhost:3001/get-multi', {multiID: match.params.gameid}).then(res => {
+        axios.post('https://connect-backend-2.herokuapp.com/get-multi', {multiID: match.params.gameid}).then(res => {
             const multi = res.data
 
             const stepArr = []
