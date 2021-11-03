@@ -6,6 +6,8 @@ import { AccountCircle } from '@material-ui/icons'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 
+import { Link } from 'react-router-dom'
+
 import '../../style/profileStyles.css'
 
 import Placeholder from '../../img/quizCoverPlaceholder.svg'
@@ -116,8 +118,8 @@ function Profile() {
         const {name, banner, owner, _id } = data
         console.log(_id)
         return(
-            <div className='profile__class__card' onClick={()=>window.location = `/class/${_id}`}>
-                <Typography style={{fontWeight:'bold', margin:'20px'}} variant='h5'>{name}</Typography>
+            <div className='profile__class__card'>
+                <Typography style={{fontWeight:'bold', margin:'20px', color: "black"}} variant='h5'>{name}</Typography>
                 <img style={{width:'100%', height:'300px'}} src={banner|| Placeholder} alt='banner-img'/>
             </div>
         )
@@ -238,7 +240,9 @@ function Profile() {
                             userClasses.map((myclass, index) => {
 
                                 return (
-                                    <ClassCardComponent key={index} data={myclass}/>
+                                    <Link style={{width:'auto'}} to={`/class/${myclass._id}`} key={index+23}>
+                                        <ClassCardComponent key={index} data={myclass}/>
+                                    </Link>
                                 )
 
                             })

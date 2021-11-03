@@ -93,8 +93,8 @@ export default function MemberRoom() {
         const data = res.data
     
          if(data.owner != JSON.parse(localStorage.getItem('user')).profileObj.googleId){
-             //window.location.href = `/view-class/${id}`
-             //return
+             window.location.href = `/view-class/${id}`
+             return
          }
     
          //set class attributes
@@ -145,10 +145,6 @@ export default function MemberRoom() {
     }, [])
 
     useEffect(() => {
-        if(plan === null){
-            window.location.href = `/view-class/${id}`
-            return
-        }
         if(plan === 'Starter'){
             window.location.href = `/view-class/${id}`
             return
