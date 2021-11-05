@@ -9,7 +9,7 @@ export default function AfterRoomLeave(props) {
     const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
 
     return (
-        <div>
+        <div style={{textAlign:'center'}}>
             <h1 style={h1Style}>{Translations[userLanguage].leftroom.title}</h1>
             <Button style={{marginBottom:'1vh'}} variant="contained" color="primary" size='small' onClick={()=>{window.location = '/play'}}>{Translations[userLanguage].leftroom.button}</Button>
         </div>

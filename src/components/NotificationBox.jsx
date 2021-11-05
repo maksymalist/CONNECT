@@ -85,7 +85,7 @@ function NotificationBox() {
                             return <NotificationCard message={notification.message}/>
                         }
                         if(notification.type === 'invitation_to_room') {
-                            return <NotificationJoinCard code={notification.data} message={notification.message}/>
+                            return <NotificationJoinCard code={JSON.parse(notification.data).room} message={notification.message}/>
                         }
                     })
                 }
