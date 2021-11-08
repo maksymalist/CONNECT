@@ -10,6 +10,8 @@ import rootReducer from './reducers';
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
+import ReactPWAInstallProvider from "react-pwa-install";
+
 const store = createStore(
   rootReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -25,7 +27,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <Provider store={store}>
-        <App/>
+        <ReactPWAInstallProvider enableLogging>
+          <App/>
+        </ReactPWAInstallProvider>
       </Provider>
     </ApolloProvider>
   </React.StrictMode>,

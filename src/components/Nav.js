@@ -10,6 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import axios from 'axios';
 
 import logo from '../img/logo.svg'
+import longLogo from '../img/connect-text.svg'
 
 //firebase
 import firebase from "firebase/app"
@@ -23,6 +24,9 @@ import { Add, QuestionAnswerRounded, FilterNoneRounded, TranslateSharp, Notifica
 import NotificationBox from '../components/NotificationBox'
 
 import { useQuery, gql } from '@apollo/client';
+
+import { useReactPWAInstall } from "react-pwa-install";
+
 
 const GET_NOTIFICATION_LENGTH = gql`
   query notificationNumber($userId: ID!) {
@@ -49,6 +53,8 @@ function Nav({ isLoggedIn, customerId }) {
             userId: JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')).profileObj.googleId : null
         }
     })
+
+    const { pwaInstall, supported, isInstalled } = useReactPWAInstall();
 
     const navStyle = {
         color: "white"
@@ -115,6 +121,16 @@ function Nav({ isLoggedIn, customerId }) {
 
   };
 
+  const handlePWAClick = () => {
+    pwaInstall({
+      title: "Install CONNECT!",
+      logo: longLogo,
+
+      description: "Take learning to the next level.",
+    })
+      .then(() => toast.success("App installed successfully !"))
+  };
+
   const logOut = () => {
     localStorage.removeItem('user')
     window.location.reload()
@@ -163,6 +179,7 @@ function Nav({ isLoggedIn, customerId }) {
               <MenuItem style={{borderBottom:'1px solid grey', width:'150px', justifyContent:'center'}} onClick={handleClose}>{Translations[userLanguage].nav.profile.head}<br></br> {currentUsername}</MenuItem>
               <MenuItem onClick={()=>window.location = '/profile'}>{Translations[userLanguage].nav.profile.account}</MenuItem>
               <MenuItem onClick={openCustomerPortal}>{Translations[userLanguage].nav.profile.subscription}</MenuItem>
+              <MenuItem onClick={handlePWAClick}>Install App</MenuItem>
               <MenuItem style={{backgroundColor:'rgb(220, 0, 78)', color:'white', fontWeight:'bold', borderRadius:'5px'}} onClick={logOut}>{Translations[userLanguage].nav.profile.logout}</MenuItem>
             </Menu>
             <Add 
