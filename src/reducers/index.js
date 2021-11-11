@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux'
 
-import counter from './counter'
 import plan from './plan'
+import isLogged from './islogged'
 
 const rootReducer = combineReducers({
-    "counter": counter,
-    "plan": plan
+    "plan": plan,
+    "isLogged": isLogged
 })
 
 export default rootReducer

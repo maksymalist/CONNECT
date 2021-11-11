@@ -1,10 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import ReactDOM from 'react-dom';
 import { useParams } from 'react-router-dom'
-//firebase
-import firebase from "firebase/app"
-import "firebase/auth";
-import "firebase/database";
 
 
 //styles
@@ -23,22 +18,23 @@ import Translations from '../translations/translations.json'
 import { Typography, Button, Divider, Chip, Avatar, Backdrop, TextField } from '@material-ui/core';
 import { AccountCircle, CancelRounded } from '@material-ui/icons';
 
-//components
-import BrowseQuizzes from './BrowseQuizzesClassroom'
 
-//toast
-import { toast } from 'react-toastify';
+//redux
+import { useSelector} from 'react-redux'
 
+//axios
+import axios from 'axios'
 
 
 export default function MemberRoom() {
+    const plan = useSelector(state => state.plan)
     const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
 
     const [members, setMembers] = useState([])
     const [name, setName] = useState("")
     const [banner, setBanner] = useState("")
     const [hallOfFame, setHallOfFame] = useState([])
-    const [recentGames, setRecentGames] = useState({})
+    const [recentGames, setRecentGames] = useState([])
 
     const [finalists, setFinalists] = useState([])
 
@@ -46,113 +42,87 @@ export default function MemberRoom() {
 
 
 
-    const placeholderHallOfFame = [
-        {
-            name: "???",
-            points: "???",
-            rank: "1",
-            profileImg:""
-        },
-        {
-            name: "???",
-            points: "???",
-            rank: "2",
-            profileImg:""
-        },
-        {
-            name: "???",
-            points: "???",
-            rank: "3",
-            profileImg:""
-        }
-    ]
+    const handleRenderClassroom = async () => {
+        const res = await axios.post('https://connect-backend-2.herokuapp.com/get-class', { id: id })
+        const data = res.data
+    
+         if(data.owner != JSON.parse(localStorage.getItem('user')).profileObj.googleId){
+             //window.location.href = `/view-class/${id}`
+             //return
+         }
+    
+         //set class attributes
+         setName(data.name)
+         setBanner(data.banner)
+    
+    
+         //set members
+         const members = data.members || []
+
+         console.log(members)
+    
+    
+         members.forEach( async (member) => {
+
+             const userObj = {
+                 points: member.points,
+                 id: member.userId,
+                 name: "",
+                 imageUrl: ""
+             }
+    
+             const res = await axios.post('https://connect-backend-2.herokuapp.com/user-no-prefix', { userId: member.userId })
+             const data = res.data
+    
+             userObj.name = data.name
+             userObj.imageUrl = data.imageUrl
+             
+             setMembers(prevState => [...prevState, userObj])
+         })
+
+         //set hall of fame
+         const hallOfFameData = await axios.post('https://connect-backend-2.herokuapp.com/get-hall-of-fame', { id: id })
+         setHallOfFame(hallOfFameData.data)
+    
+         //set recent games
+    
+         const games = await axios.post('https://connect-backend-2.herokuapp.com/get-recent-games', { classId: id })
+
+         const recentGames = games.data
+    
+         setRecentGames(recentGames)
+     }
+
     
     useEffect(() => {
-
-          firebase.database().ref(`classes/${id}`).once('value',(snap)=>{
-            if(snap.exists()){
-                const data = snap.val()
-
-                //set class attributes
-                setName(data.name)
-                setBanner(data.banner)
-
-
-                //set members
-                const members = data.members || []
-                
-                members.forEach(member => {
-                    const memberObj = {
-                        points: member.points,
-                        id: member.id,
-                        data: member.data
-                    }
-                    setMembers(prevState => [...prevState, memberObj])
-                })
-
-                //set hall of fame
-                const hallOfFame = []
-
-                members.forEach(member => {
-                    const userObj = {
-                        points: member.points,
-                        id: member.id,
-                        name: "",
-                        profileImg: ""
-                    }
-                    firebase.database().ref(`users/${member.id}`).once('value',(snap)=>{
-                        if(snap.exists()){
-                            const data = snap.val()
-                            userObj.name = data.UserName
-                            userObj.profileImg = data.imageUrl
-                            
-                        }
-                    });
-                    hallOfFame.push(userObj)
-                    hallOfFame.sort(function(a, b){return b.points-a.points})
-                })
-
-                if(hallOfFame.length === 0){
-                    setHallOfFame(placeholderHallOfFame)
-                }
-                else{
-                    setHallOfFame(hallOfFame)
-                    console.log(hallOfFame)
-                }
-
-                //set recent games
-
-                const recentGames = data.recent_games == "" || undefined ? [] : data.recent_games
-
-                setRecentGames(recentGames)
-
-            }
-            else{
-                window.location.href = "/"
-            }
-          });
+        handleRenderClassroom()
     }, [])
 
-    const handleSetFinalists = (finalists) => {
-        const newFinalistsArr = []
-        finalists.map((finalist) => {
-            firebase.database().ref(`users/${finalists[finalists.indexOf(finalist)].playerID}`).on('value',(snap)=>{
-                const playerData = snap.val()
-                newFinalistsArr.push({
-                    name: playerData.UserName,
-                    profileImg: playerData.imageUrl,
-                    player: finalist.player,
-                    playerID: finalist.playerID,
-                    position: finalist.position,
-                    time: finalist.time
-                })
-            })
-        })
 
-        console.log(newFinalistsArr)
-        setFinalists([...newFinalistsArr])
-        console.log([...finalists])
+    const handleSetFinalists = async (finalists) => {
+        const newFinalistsArr = []
+        finalists.map( async (finalist) => {
+            const res = await axios.post('https://connect-backend-2.herokuapp.com/user', { userId: finalist.playerID })
+            const playerData = res.data
+
+            newFinalistsArr.push({
+                name: playerData.name,
+                profileImg: playerData.imageUrl,
+                player: finalist.player,
+                playerID: finalist.playerID,
+                position: finalist.position,
+                time: finalist.time
+            })
+
+            if(newFinalistsArr.length === finalists.length){
+                setFinalists(newFinalistsArr)
+            }
+        })
     }
+
+
+
+
 
 
     return (
@@ -171,8 +141,8 @@ export default function MemberRoom() {
                         members.map((member, index) => {
                             return (
                                 <div className="classroom__members__member" key={index}>
-                                    <img onClick={()=>window.location = `/profiles/${member.id}`} src={member.data.imageUrl || undefined} alt="member" className="classroom__members__member__img"/>
-                                    <Typography style={{minWidth:'150px'}} variant='subtitle1' className="classroom__members__member__name">{member.data.UserName || undefined}</Typography>
+                                    <img onClick={()=>window.location = `/profiles/${member.id.replace("user:", "")}`} src={member.imageUrl || undefined} alt="member" className="classroom__members__member__img"/>
+                                    <Typography style={{minWidth:'150px'}} variant='subtitle1' className="classroom__members__member__name">{member.name || undefined}</Typography>
                                     <div style={{display:'flex', width:'100%', justifyContent:'flex-end'}}>
                                     </div>
                                 </div>
@@ -181,11 +151,10 @@ export default function MemberRoom() {
                     }
                 </div>
             </div>
-
-                <div id='classroom__dashboard' className="classroom__dashboard">
+            <div id='classroom__dashboard' className="classroom__dashboard">
                 <div style={{position:'sticky', top:'0', backgroundColor:'white', width:'100%', zIndex:'11'}}>
                     <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-                        <Typography variant='h4' className="classroom__dashboard__title">{name}</Typography>
+                        <Typography variant='h4' className="classroom__dashboard__title">{name}</Typography> 
                     </div>
                     <div style={{width:'100%'}}>
                     <br></br>
@@ -206,14 +175,20 @@ export default function MemberRoom() {
                                         {(index + 1) === 1 && <img draggable='false' src={FirstPlaceIcon} alt="first-badge" className="classroom__hall__of__fame__card__rank"/>}
                                         {(index + 1) === 2 && <img draggable='false' src={SecondPlaceIcon} alt="second-badge" className="classroom__hall__of__fame__card__rank"/>}
                                         {(index + 1) === 3 && <img draggable='false' src={ThirdPlaceIcon} alt="third-badge" className="classroom__hall__of__fame__card__rank"/>}
-                                        <Avatar src={member.profileImg} alt="member" className="classroom__hall__of__fame__card__img"/>
+                                        <Avatar src={member.imageUrl} alt="member" className="classroom__hall__of__fame__card__img"/>
                                         <Typography variant='h4' className="classroom__hall__of__fame__card__name">{member.name}</Typography>
                                         <Typography variant='h6' className="classroom__hall__of__fame__card__points">{member.points} pts</Typography>
                                     </div>
                                 )
                             })
                         }
+                        {/* <div className="classroom__reward__date__container">
+                            {rewardTime !== null && rewardTime !== "" && <Typography variant='h6' className="classroom__reward__date">Next Reward is: {rewardTime}</Typography>}
+                            {reward !== null && reward !== "" && <Typography variant='h6' className="classroom__reward__date">Reward: {reward}</Typography>}
+                            <Button variant="contained" color="primary" className="classroom__reward__button">Set Reward</Button>
+                        </div> */}
                     </div>
+                    
                 </div>
                 <div className="classroom__recent__games">
                         <div className="classroom__recent__games__games">
@@ -227,8 +202,7 @@ export default function MemberRoom() {
                         </div>
                         <div className="classroom__recent__games__container">
                             {
-                                Object.keys(recentGames || []).map((key) => {
-                                    const game = recentGames[key]
+                                recentGames.map((game) => {
                                     return (
                                         <div className='classroom__recent__games__game' onClick={()=>handleSetFinalists(game.finalists || [])}>
                                         <img style={{width:'100%', height:'250px'}} src={game.coverImg || Placeholder} alt='cover-img'/>

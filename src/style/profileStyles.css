@@ -89,6 +89,7 @@
     margin: 10px;
     width: 100%;
     max-width: 340px;
+    padding-bottom: 100px;
 }
 
 .profile__class__card:hover{

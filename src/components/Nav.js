@@ -10,6 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import axios from 'axios';
 
 import logo from '../img/logo.svg'
+import longLogo from '../img/connect-text.svg'
 
 //firebase
 import firebase from "firebase/app"
@@ -21,6 +22,17 @@ import Translations from '../translations/translations.json'
 import { Add, QuestionAnswerRounded, FilterNoneRounded, TranslateSharp, NotificationsSharp } from '@material-ui/icons'
 
 import NotificationBox from '../components/NotificationBox'
+
+import { useQuery, gql } from '@apollo/client';
+
+import { useReactPWAInstall } from "react-pwa-install";
+
+
+const GET_NOTIFICATION_LENGTH = gql`
+  query notificationNumber($userId: ID!) {
+    notificationNumber(userId: $userId)
+  }
+`
 
 function Nav({ isLoggedIn, customerId }) {
 
@@ -36,12 +48,19 @@ function Nav({ isLoggedIn, customerId }) {
 
     const [notificationBoxIsOpen, setNotificationBoxIsOpen] = useState(false)
 
+    const { loading, error, data } = useQuery(GET_NOTIFICATION_LENGTH, {
+        variables: {
+            userId: JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')).profileObj.googleId : null
+        }
+    })
+
+    const { pwaInstall, supported, isInstalled } = useReactPWAInstall();
+
     const navStyle = {
         color: "white"
     }
 
     useEffect(() => {
-      console.log(JSON.stringify(Translations))
       if(JSON.parse(localStorage.getItem('user')) === null) return
       setCurrentUsername(JSON.parse(localStorage.getItem('user')).profileObj.name)
       if(userLanguage != null){
@@ -85,7 +104,7 @@ function Nav({ isLoggedIn, customerId }) {
     }
     setAnchorEl(null);
 
-    const res = await axios.post('https://connect-now-backend.herokuapp.com/create-customer-portal-session', {customerId: customerId});
+    const res = await axios.post('https://connect-backend-2.herokuapp.com/create-customer-portal-session', {customerId: customerId});
 
     const {redirectUrl} = res.data;
     console.log(redirectUrl)
@@ -102,6 +121,16 @@ function Nav({ isLoggedIn, customerId }) {
 
   };
 
+  const handlePWAClick = () => {
+    pwaInstall({
+      title: "Install CONNECT!",
+      logo: longLogo,
+
+      description: "Take learning to the next level.",
+    })
+      .then(() => toast.success("App installed successfully !"))
+  };
+
   const logOut = () => {
     localStorage.removeItem('user')
     window.location.reload()
@@ -116,36 +145,29 @@ function Nav({ isLoggedIn, customerId }) {
     window.location.reload()
   }
 
-  const getNotifications = () => {
-    if(JSON.parse(localStorage.getItem('user')) === null) return
-    let number = 0
-    firebase.database().ref(`users/${JSON.parse(localStorage.getItem('user')).profileObj.googleId}/notifications`).on('value',(snap)=>{
-      if(snap.val() == undefined) return
-      number = Object.keys(snap.val()).length
-
-    })
-    return number
-  }
-
   return (
     <nav>
         <ul>
-            <img 
-              hidden 
-              aria-controls="simple-menu" 
-              aria-haspopup="true" 
-              onClick={handleClick} 
-              alt="profile-pic" 
-              style={{
-                borderRadius:'100px', 
-                marginLeft:'-20px',
-                margin:'5px',
-              }} 
-              className='liright' 
-              height='40px' 
-              width='40px' 
-              id='profilePic'>
-            </img>
+        {isLoggedIn ?
+                <img
+                  src={JSON.parse(localStorage.getItem('user')).profileObj.imageUrl}
+                  aria-controls="simple-menu" 
+                  aria-haspopup="true" 
+                  onClick={handleClick} 
+                  alt="profile-pic" 
+                  style={{
+                    borderRadius:'100px', 
+                    marginLeft:'-20px',
+                    margin:'5px',
+                  }} 
+                  className='liright' 
+                  height='40px' 
+                  width='40px' 
+                  id='profilePic'>
+              </img>
+                    :
+                    null
+              }
             <Menu
               id="simple-menu"
               anchorEl={anchorEl}
@@ -157,6 +179,7 @@ function Nav({ isLoggedIn, customerId }) {
               <MenuItem style={{borderBottom:'1px solid grey', width:'150px', justifyContent:'center'}} onClick={handleClose}>{Translations[userLanguage].nav.profile.head}<br></br> {currentUsername}</MenuItem>
               <MenuItem onClick={()=>window.location = '/profile'}>{Translations[userLanguage].nav.profile.account}</MenuItem>
               <MenuItem onClick={openCustomerPortal}>{Translations[userLanguage].nav.profile.subscription}</MenuItem>
+              <MenuItem onClick={handlePWAClick}>Install App</MenuItem>
               <MenuItem style={{backgroundColor:'rgb(220, 0, 78)', color:'white', fontWeight:'bold', borderRadius:'5px'}} onClick={logOut}>{Translations[userLanguage].nav.profile.logout}</MenuItem>
             </Menu>
             <Add 
@@ -209,7 +232,7 @@ function Nav({ isLoggedIn, customerId }) {
               onClick={()=>{handleSetLanguage('french')}}>Français</MenuItem>
             </Menu>
             <div className="liright">
-            <Badge badgeContent={getNotifications()} color="primary" style={{color:'#1BB978'}}>
+            <Badge badgeContent={ loading ? 0 : data ? data.notificationNumber : 0} color="primary" style={{color:'#1BB978'}}>
               <NotificationsSharp
                 style={{color:'white', width:'30px', height:'30px', marginTop:'10px'}} 
                 className="liright" 
@@ -237,7 +260,7 @@ function Nav({ isLoggedIn, customerId }) {
               <button className="dropbtn"><MenuIcon /></button>
                 <div className="dropdown-content">
                   <a href="/play">{Translations[userLanguage].nav.dropdown.play}</a>
-                  <a href="/browsequizzes/normal">{Translations[userLanguage].nav.dropdown.quizzes}</a>
+                  <a href="/browsequizzes">{Translations[userLanguage].nav.dropdown.quizzes}</a>
                   <a href="/plans">{Translations[userLanguage].nav.dropdown.plans}</a>
                   <a href="/login">{Translations[userLanguage].nav.dropdown.login}</a>
                 </div>

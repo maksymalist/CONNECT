@@ -11,6 +11,14 @@ import UploadButton from './UploadButton';
 
 import Translations from '../translations/translations.json'
 
+import { useMutation, gql } from '@apollo/client'
+
+const CREATE_MULTI_QUIZ = gql`
+    mutation createMulti($name: String!, $coverImg: String!, $tags: [String], $userID: ID!, $userProfilePic: String!, $userName: String!, $steps: String!) {
+        createMulti(name: $name, coverImg: $coverImg, tags: $tags, userID: $userID, userProfilePic: $userProfilePic, userName: $userName, steps: $steps)
+    }
+`
+
 function NewMultiQuiz() {
     const [subjects, setSubjects] = useState([]);
     const [subjectIndex, setSubjectIndex] = useState(0);
@@ -30,12 +38,14 @@ function NewMultiQuiz() {
 
     const imgRef = useRef(null)
 
+    const [createMulti, { data, loading, error }] = useMutation(CREATE_MULTI_QUIZ)
+
     useEffect(() => {
         toast.info(Translations[userLanguage].alerts.eachansdifferent)
     }, [])
 
     const Submit = () => {
-        for(var i = 0; i < document.getElementsByClassName('userInput').length; i++){
+        for(let i = 0; i < document.getElementsByClassName('userInput').length; i++){
             console.log('userIn')
             if(document.getElementsByClassName('userInput')[i].value == ""){
                 toast.error(Translations[userLanguage].alerts.fieldleftempty)
@@ -47,41 +57,11 @@ function NewMultiQuiz() {
             toast.error(Translations[userLanguage].alerts.need1subject)
             return
         }
-        Object.keys(quizObj.steps).forEach(step => {
-            if(JSON.stringify(step).indexOf('.') !== -1){
-                toast.error(Translations[userLanguage].alerts.titlecantcontain)
-                return
-            }
-            if(JSON.stringify(step).indexOf('#') !== -1){
-                toast.error(Translations[userLanguage].alerts.titlecantcontain)
-                return
-            }
-            if(JSON.stringify(step).indexOf('$') !== -1){
-                toast.error(Translations[userLanguage].alerts.titlecantcontain)
-                return
-            }
-            if(JSON.stringify(step).indexOf('/') !== -1){
-                toast.error(Translations[userLanguage].alerts.titlecantcontain)
-                return
-            }
-            if(JSON.stringify(step).indexOf('[') !== -1){
-                toast.error(Translations[userLanguage].alerts.titlecantcontain)
-                return
-            }
-            if(JSON.stringify(step).indexOf(']') !== -1){
-                toast.error(Translations[userLanguage].alerts.titlecantcontain)
-                return
-            }
-
-            if(!JSON.stringify(step).indexOf('.') !== -1 && !JSON.stringify(step).indexOf('#') !== -1 && !JSON.stringify(step).indexOf('$') !== -1 && !JSON.stringify(step).indexOf('/') !== -1 && !JSON.stringify(step).indexOf('[') !== -1 && !JSON.stringify(step).indexOf(']') !== -1){
-                firebase.database().ref(`multiQuizzes/`).push(quizObj)
-
-                toast.success(Translations[userLanguage].alerts.quizcreated)
-                for(let i = 0; i < document.getElementsByClassName('userInput').length; i++){
-                    document.getElementsByClassName('userInput')[i].value = ""
-                }
-            }
-        })
+        createMulti({ variables: {name: quizObj.name, coverImg: quizObj.coverImg, tags: quizObj.tags, userID: quizObj.userID, userProfilePic: quizObj.userProfilePic, userName: quizObj.userName, steps: JSON.stringify(quizObj.steps)} })
+        toast.success(Translations[userLanguage].alerts.quizcreated)
+        for(let i = 0; i < document.getElementsByClassName('userInput').length; i++){
+            document.getElementsByClassName('userInput')[i].value = ""
+        }
 
         
     }
@@ -134,7 +114,6 @@ function NewMultiQuiz() {
     }
 
     var questions2 = []
-    var questionsCount = 0
 
     const getCards = (subjectIndex2) => {
         questions2 = []

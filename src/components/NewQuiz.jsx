@@ -14,6 +14,14 @@ import UploadButton from './UploadButton'
 
 import Translations from '../translations/translations.json'
 
+import { useMutation, gql } from '@apollo/client'
+
+const CREATE_QUIZ = gql`
+    mutation createQuiz($name: String!, $coverImg: String!, $tags: [String], $userID: ID!, $userProfilePic: String!, $userName: String!, $questions: [String]) {
+        createQuiz(name: $name, coverImg: $coverImg, tags: $tags, userID: $userID, userProfilePic: $userProfilePic, userName: $userName, questions: $questions)
+    }
+`
+
 export default function NewQuiz() {
 
     const [question, setQuestion] = useState(0)
@@ -26,24 +34,34 @@ export default function NewQuiz() {
 
     const imgRef = useRef(null)
 
+    const [createQuiz] = useMutation(CREATE_QUIZ)
 
-    const quizObj = {}
+
+    const quizObj = {
+        questions: [],
+        name: '',
+        coverImg: '',
+        tags: '',
+        userID: '',
+        userProfilePic: '',
+        userName: ''
+    }
 
     useEffect(() => {
         toast.info(Translations[userLanguage].alerts.eachansdifferent)
     }, [])
 
     const Submit = () => {
-        for(var i = 0; i < document.getElementsByClassName('userInput').length; i++){
+        for(let i = 0; i < document.getElementsByClassName('userInput').length; i++){
             console.log('userIn')
             if(document.getElementsByClassName('userInput')[i].value == ""){
                 toast.error(Translations[userLanguage].alerts.fieldleftempty)
                 return
             }
         }
-        firebase.database().ref(`quizes/`).push(quizObj)
+        createQuiz({ variables: {name: quizObj.name, coverImg: quizObj.coverImg, tags: quizObj.tags, userID: quizObj.userID, userProfilePic: quizObj.userProfilePic, userName: quizObj.userName, questions: quizObj.questions} })
         toast.success(Translations[userLanguage].alerts.quizcreated)
-        for(var i = 0; i < document.getElementsByClassName('userInput').length; i++){
+        for(let i = 0; i < document.getElementsByClassName('userInput').length; i++){
             document.getElementsByClassName('userInput')[i].value = ""
         }
 
@@ -65,19 +83,20 @@ export default function NewQuiz() {
         }
         console.log(document.getElementsByClassName('questions'))
 
-        quizObj.name = document.getElementById('quizName').value
-        quizObj.userName = JSON.parse(localStorage.getItem('user')).profileObj.name
-        quizObj.userProfilePic = JSON.parse(localStorage.getItem('user')).profileObj.imageUrl
-        quizObj.userID = JSON.parse(localStorage.getItem('user')).profileObj.googleId
-        quizObj.coverImg = imgRef.current ? imgRef.current.src : ""
-        quizObj.tags = getTags()
+        quizObj.name = document.getElementById('quizName').value || ''
+        quizObj.userName = JSON.parse(localStorage.getItem('user')).profileObj.name || ''
+        quizObj.userProfilePic = JSON.parse(localStorage.getItem('user')).profileObj.imageUrl || ''
+        quizObj.userID = JSON.parse(localStorage.getItem('user')).profileObj.googleId || ''
+        quizObj.coverImg = imgRef.current ? imgRef.current.src : "" || ''
+        quizObj.tags = getTags() || []
 
-        for(var i = 0; i < document.getElementsByClassName('questions').length; i++){
+        for(let i = 0; i < document.getElementsByClassName('questions').length; i++){
             console.log(document.getElementsByClassName('questions')[i].value + ' ' +  document.getElementsByClassName('questions')[i].value)
-            quizObj[`q${i}`] = {
+            quizObj.questions.push(JSON.stringify({
+                index: i,
                 question: document.getElementsByClassName('questions')[i].value,
                 answer: document.getElementsByClassName('answers')[i].value
-            } 
+            }))
         }
 
         console.log(quizObj)
