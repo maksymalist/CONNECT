@@ -226,8 +226,6 @@ reason, without notice. We have no obligation to monitor your Contributions.
 
 You acknowledge and agree that any questions, comments, suggestions, ideas, feedback, or
 other information regarding the Site ("Submissions") provided by you to us are non-confidential
-
-
 and shall become our sole property. We shall own exclusive rights, including all intellectual
 property rights, and shall be entitled to the unrestricted use and dissemination of these
 Submissions for any lawful purpose, commercial or otherwise, without acknowledgment or
@@ -360,8 +358,6 @@ its existence, validity, or termination, shall be referred to and finally resolv
 Commercial Arbitration Court under the European Arbitration Chamber (Belgium, Brussels,
 Avenue Louise, 146) according to the Rules of this ICAC, which, as a result of referring to it, is
 considered as the part of this clause. The number of arbitrators shall be three (3). The seat, or
-
-
 legal place, of arbitration shall be Montreal, Canada.The language of the proceedings shall be
 English. The governing law of the contract shall be the substantive law of Canada.
 
@@ -457,7 +453,6 @@ information on the Site at any time, without prior notice.
 ### IN NO EVENT WILL WE OR OUR DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE TO
 
 ### YOU OR ANY THIRD PARTY FOR ANY DIRECT, INDIRECT, CONSEQUENTIAL,
-
 
 ### EXEMPLARY, INCIDENTAL, SPECIAL, OR PUNITIVE DAMAGES, INCLUDING LOST PROFIT,
 
