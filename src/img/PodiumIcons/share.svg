@@ -1,13 +1,1 @@
-<svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="share">
-<g id="links">
-<rect id="link2" x="67.5823" y="10.4381" width="60.0251" height="5" transform="rotate(152.575 67.5823 10.4381)" fill="#00A3FF"/>
-<rect id="link1" x="52.5821" y="62.4609" width="47.3861" height="5" transform="rotate(-151.33 52.5821 62.4609)" fill="#00A3FF"/>
-</g>
-<g id="balls">
-<circle id="ball3" cx="62" cy="11" r="10" fill="#0066FF"/>
-<circle id="ball2" cx="10" cy="37" r="10" fill="#0066FF"/>
-<circle id="ball1" cx="62" cy="64" r="10" fill="#0066FF"/>
-</g>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" fill="none" viewBox="0 0 75 75"><g id="share"><g id="links"><rect id="link2" width="60.025" height="5" x="67.582" y="10.438" fill="#00A3FF" transform="rotate(152.575 67.5823 10.4381)"/><rect id="link1" width="47.386" height="5" x="52.582" y="62.461" fill="#00A3FF" transform="rotate(-151.33 52.5821 62.4609)"/></g><g id="balls"><circle id="ball3" cx="62" cy="11" r="10" fill="#06F"/><circle id="ball2" cx="10" cy="37" r="10" fill="#06F"/><circle id="ball1" cx="62" cy="64" r="10" fill="#06F"/></g></g></svg>
