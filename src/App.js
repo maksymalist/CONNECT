@@ -33,6 +33,7 @@ import ViewQuiz from './components/ViewQuiz';
 import ViewMultiQuiz from './components/ViewMultiQuiz';
 import CreateClass from './components/CreateClass';
 
+import Footer from './components/Footer';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -171,6 +172,7 @@ function App() {
             <Route path='/create-class' component={CreateClass}/>
           </Switch>
         </div>
+        <Footer />
       </Router>
   );
 }
