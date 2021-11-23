@@ -13,11 +13,7 @@
 #### *This video might not be an accurate representation of CONNECT! since it is changing often and we can't keep on making videos for every commit.
 
 
-
-https://user-images.githubusercontent.com/79988159/130988137-06399025-8712-478b-abf2-985e3a0df083.mp4
-
-#### The same video but on Youtube if you want to support CONNECT! on there
-https://youtu.be/tNxccQfbLvY
+https://user-images.githubusercontent.com/79988159/143145482-90441a17-1373-419e-b9ca-e565be603288.mp4
 
 #### Older version of CONNECT!
 #### *take a look if you want to see how the project evolved over time
