@@ -523,23 +523,29 @@ button{
 #waitingRoomDiv {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
     background-color: white;
-    height: 50%;
     margin-top: 100px;
-    width: 50% !important;
-    margin-left: 25%;
     border: 2px solid black;
     box-shadow: 10px 10px 0 #262626 !important;
+    padding: 5px;
+    width: 100%;
+    max-width: 720px;
+    height: 500px;
+    overflow-y: auto;
 
+}
+.waiting__room__player__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 100px;
 }
 @media only screen and (max-width: 730px) {
     #waitingRoomDiv {
-        width: 90% !important;
-        margin:0;
+        width: 100% !important;
         margin-top: 100px;
-        margin-left: 15px;
     }
 }
 
@@ -562,18 +568,54 @@ button{
 }
 
   /*times*/
-#times{
+#time__div {
+    display: flex;
     justify-content: center;
-    text-align: center;
-    width: 50%;
-    min-width: 350px;
-    height: auto;
+    flex-wrap: wrap;
+    width: 850px;
+}
+
+.time-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: white;
-    border: 2px solid;
-    box-shadow: 10px 10px 0 #262626;
+    border: 2px solid black;
+    box-shadow: 5px 5px 0 #262626;
     padding: 5px;
-    min-height: 500px;
-    margin-top: 100px;
+    margin: 10px;
+}
+
+.lowest-time-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 15px;
+    margin-left: 25px;
+    border-radius: 0px 0px 0px 50px;
+    text-align: center;
+}
+.lowest__time__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: rgb(108, 99, 255);
+    padding-left: 25px;
+    border: 2px solid;
+    box-shadow: 10px 10px #262626;
+}
+
+@media screen and (max-width: 630px) {
+    .lowest-time-box{
+        border-radius: 0px;
+        margin-left: 0;
+        margin: 10px;
+    }
+    .lowest__time__container{
+        padding-left: 0;
+    }
 }
 
 #maxPlayersText{
@@ -654,23 +696,7 @@ button{
     min-height: 2px;
     padding: 1px;
 }
-/* .time-box{
-    background-color: white;
-    box-shadow: 2px 2px 0 #262626;
-    border: 2px solid black;
-    width: fit-content;
-    padding: 1px;
-} */
 
-#time__div {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 90%;
-    min-width: 350px;
-    flex-direction: column;
-    align-items: center;
-}
 
 @media (pointer:none), (pointer:coarse) {
     #times{
