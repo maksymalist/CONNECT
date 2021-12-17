@@ -56,6 +56,7 @@ const CREATE_NOTIFICATION = gql`
 //http://localhost:3001
 //good one https://connect-now-backend.herokuapp.com/
 //https://connect-backend-2.herokuapp.com/
+//the one https://connect-socket-io.herokuapp.com/
 
 export const socket = io("https://connect-socket-io.herokuapp.com/", {
   transports: ["websocket", "polling", "flashsocket"],

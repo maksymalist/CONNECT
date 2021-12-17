@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { socket } from "./EnterCodeForm";
 import ReactDOM from "react-dom";
-import { Typography, Button } from "@material-ui/core";
+import { Typography, Button, Divider, emphasize } from "@material-ui/core";
 
 import GameEnded from "./GameEnded";
 
 import "../style/style.css";
 
 import Translations from "../translations/translations.json";
+import { EmojiEmotionsOutlined } from "@material-ui/icons";
 
 //globals
 
@@ -19,6 +20,7 @@ export default function WaitingRoom(props) {
   const [userLanguage] = useState(
     localStorage.getItem("connectLanguage") || "english"
   );
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     socket.emit("joinPlayerRoom", {
@@ -86,21 +88,39 @@ export default function WaitingRoom(props) {
       ReactDOM.render(
         <div>
           <GameEnded podium={data} />
-          <button
+          <Button
             onClick={() => {
-              window.location = "/";
+              window.location.href = "/";
             }}
+            variant="contained"
           >
             Return Home
-          </button>
+          </Button>
         </div>,
         document.getElementById("root")
       );
       sessionStorage.setItem("roomJoined", "false");
     });
 
+    socket.on("emote", (data) => {
+      console.log(data);
+      let emote = document.createElement("div");
+      emote.innerHTML = data.emote;
+      emote.className = "emote__icons";
+      document.body.appendChild(emote);
+      emote.style.position = "absolute";
+      emote.style.top = "0";
+      emote.style.left = Math.random() * 100 + "%";
+      emote.style.top = Math.random() * 100 + "%";
+      emote.style.fontSize = "2em";
+
+      setTimeout(() => {
+        emote.remove();
+      }, 5000);
+    });
+
     return () => {
-      //cleanup
+      sessionStorage.setItem("roomJoined", "false");
     };
   }, []);
 
@@ -142,16 +162,115 @@ export default function WaitingRoom(props) {
             alignItems: "flex-end",
           }}
         >
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            onClick={() => {
-              leaveRoom();
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              flexDirection: "column",
             }}
           >
-            {Translations[userLanguage].waitingroom.leavebutton}
-          </Button>
+            {isOpen ? (
+              <div
+                style={{
+                  backgroundColor: "e0e0e0",
+                  border: "1px solid lightgray",
+                  borderRadius: "5px",
+                  padding: "10px",
+                  marginBottom: "10px",
+                }}
+              >
+                <Typography variant="h6">Select Emote</Typography>
+                <Divider />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    marginTop: "10px",
+                  }}
+                >
+                  <div
+                    className="emote__card"
+                    onClick={() => {
+                      socket.emit("sendEmote", {
+                        room: props.room,
+                        user: props.user,
+                        emote: "😀",
+                      });
+                    }}
+                  >
+                    😀
+                  </div>
+                  <div
+                    className="emote__card"
+                    onClick={() => {
+                      socket.emit("sendEmote", {
+                        room: props.room,
+                        user: props.user,
+                        emote: "😐",
+                      });
+                    }}
+                  >
+                    😐
+                  </div>
+                  <div
+                    className="emote__card"
+                    onClick={() => {
+                      socket.emit("sendEmote", {
+                        room: props.room,
+                        user: props.user,
+                        emote: "🥱",
+                      });
+                    }}
+                  >
+                    🥱
+                  </div>
+                  <div
+                    className="emote__card"
+                    onClick={() => {
+                      socket.emit("sendEmote", {
+                        room: props.room,
+                        user: props.user,
+                        emote: "😡",
+                      });
+                    }}
+                  >
+                    😡
+                  </div>
+                </div>
+              </div>
+            ) : null}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexWrap: "wrap",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                variant="contained"
+                color="secondary"
+                size="large"
+                onClick={() => {
+                  leaveRoom();
+                }}
+              >
+                {Translations[userLanguage].waitingroom.leavebutton}
+              </Button>
+              <Button
+                endIcon={<EmojiEmotionsOutlined />}
+                style={{ marginLeft: "10px" }}
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                }}
+                color={isOpen ? "secondary" : "inherit"}
+              >
+                emote
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
       {/* <div style={{display:'flex', placeItems:'center', color:'white', flexDirection:'column'}}>
