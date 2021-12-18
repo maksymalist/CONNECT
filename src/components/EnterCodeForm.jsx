@@ -66,7 +66,7 @@ export default function EnterCodeForm({ match, location }) {
   //const classes = useStyles();
 
   var [role, setRole] = useState("");
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = useState(false);
   var [code, setCode] = useState("");
 
   const [gameCode, setGameCode] = useState("");
