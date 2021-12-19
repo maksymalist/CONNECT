@@ -1,739 +1,722 @@
 {
-    "english": {
-        "nav": {
-            "play": "Play",
-            "quizzes": "Quizzes",
-            "plans": "Plans",
-            "login": "Login",
-            "add":{
-                "normal": "New Quiz",
-                "multi": "New Multi"
-            },
-            "profile": {
-                "head": "Signed in as",
-                "account": "My account",
-                "subscription": "Subscription",
-                "class": "My class",
-                "logout": "Logout"
-            },
-            "dropdown":{
-                "play": "PLAY",
-                "quizzes": "QUIZZES",
-                "plans": "PLANS",
-                "login": "LOGIN"
-            }
-            
-        },
-        "home":{
-            "sub1":"Take learning to the next level.",
-            "sub2":"CONNECT! helps you learn faster and together.",
-            "buttonText":"Start Learning ➞",
-            "about": {
-                "title": "What is CONNECT! ?",
-                "sub": "We keep you connected so you can learn together",
-                "sub2": "CONNECT! makes learning and teaching fun",
-                "sub3": "For us, learning is the key to a better future"
-            },
-            "cards": {
-                "learning": "Learning",
-                "collaboration": "Collaboration",
-                "fun": "Fun"
-            },
-            "howitworks":{
-                "title": "How it works",
-                "host": {
-                    "title": "Host",
-                    "step1": "Select your desired game mode",
-                    "step2": "Type in the room name / code or click the “GENERATE CODE” button",
-                    "step3": "Go to QUIZZES and find a game you would like to host copy that game’s code",
-                    "step4": "Enter the amount of players you want in your room Starter plan users max out at 40 users whilst Classroom plan users get 90 users",
-                    "step5": "Specify if the user nicknames should be friendly",
-                    "step6": "Start the game!!!",
-                    "next": "Next",
-                    "back": "Back"
-                },
-                "join":{
-                    "title": "Join",
-                    "step1": "Enter your nickname",
-                    "step2": "Enter a valid room name / code",
-                    "step3": "Join your game and have fun !!!",
-                    "next": "Next",
-                    "back": "Back"
-                },
-                "play":{
-                    "title": "Play",
-                    "step1": "Match the question cards with their answers",
-                    "step2": "If you match the wrong cards 5s will be added to your timer",
-                    "step3": "The goal is to get the lowest time to have the highest place on the podium.",
-                    "next": "Next",
-                    "back": "Back"
-                    
-                }
-            }
-        },
-        "play":{
-            "join":{
-                "title": "Join Game",
-                "input": "Enter room code",
-                "input2": "Enter your nickname",
-                "button": "Next",
-                "button2": "Join"
-            },
-            "host":{
-                "title": "Host Room",
-                "gamemode": {
-                    "title": "Game Mode",
-                    "normal": "Normal",
-                    "multi": "Multi"
-                },
-                "input": "Give your room a name",
-                "input2": "Enter game code",
-                "presets": {
-                    "title": "Presets",
-                    "maxplayers": "Max players",
-                    "podiumplaces":"Podium Places",
-                    "friendly": "Friendly nicknames",
-                    "button": "Generate Code",
-                    "button2": "Host Room"
-                },
-                "private": "Private",
-                "roomcode": "Room Code"
-
-            }
-        },
-        "quizzes":{
-            "bar": {
-                "title": "Explore Content",
-                "gamemode": {
-                    "title": "Game Mode",
-                    "normal": "Normal",
-                    "multi": "Multi"
-                }
-            },
-            "by":"by"
-        },
-        "plans":{
-            "starter": {
-                "title": "Starter",
-                "price": "Free",
-                "features": {
-                    "title": "Features",
-                    "feature1": "Acces to The Multiplayer Card Games",
-                    "feature2": "Have 40 or Less People in Your Rooms",
-                    "feature3": "You Can Create Quizzes"
-                },
-                "button": "View",
-                "buttonsubscribed": "Selected ✓"
-
-            },
-            "classroom": {
-                "title": "Classroom",
-                "price": "$10.00 monthly",
-                "features": {
-                    "title": "Features",
-                    "feature1": "Have 90 or Less People in Your Rooms",
-                    "feature2": "Access to player analytics",
-                    "feature3": "You can create classes",
-                    "feature4": "Google Classroom integration",
-                    "feature5": "Microsoft Teams integration"
-                },
-                "button": "Select",
-                "buttonsubscribed": "Selected ✓"
-            },
-            "entreprise":{
-                "title": "Enterprise",
-                "price": "$100.00 monthly",
-                "features": {
-                    "title": "Features",
-                    "feature1": "Have 200 or Less People in Your Rooms",
-                    "feature2": "Access to player analytics",
-                    "feature3": "You can create classes",
-                    "feature4": "Google Classroom integration",
-                    "feature5": "Microsoft Teams integration"
-    
-                },
-                "button": "Select",
-                "buttonsubscribed": "Selected ✓"
-            }
-        },
-        "waitingroom":{
-            "title": "Waiting Room",
-            "leavebutton": "Leave room"
-        },
-        "hostroom":{
-            "sharebutton": "Share",
-            "podium": "Podium",
-            "playertimes": "Player Times",
-            "time": "Time",
-            "place": "Place",
-            "private": "Private"
-
-        },
-        "finishedscreen":{
-            "title": "You're done!",
-            "sub": "Wait For More People To Finish"
-        },
-        "gameended":{
-            "title": "Game Has Ended",
-            "button": "Return home"
-        },
-        "leftroom": {
-            "title": "You Have Left the Room",
-            "button": "Return home"
-        },
-        "newquiz":{
-            "title": "Create a Quiz",
-            "step1": "1. Give your quiz a title",
-            "input": "Title",
-            "step2": "2. Upload your cover Image",
-            "step3": "3. Give your quiz some tags",
-            "tags":{
-                "title": "Tags",
-                "input": "Tag Name",
-                "button": "Add Tag",
-                "helpertext":"tags left"
-            },
-            "step4": "4. Come up with some interesting questions",
-            "questions":{
-                "title": "Question",
-                "question": "Question",
-                "answer": "Answer"
-            },
-            "button":"Submit"
-        },
-        "newmultiquiz":{
-            "title": "Create a Multi Quiz",
-            "step1": "1. Give your quiz a title",
-            "input": "Title",
-            "step2": "2. Upload your cover Image",
-            "step3": "3. Give your quiz some tags",
-            "tags":{
-                "title": "Tags",
-                "input": "Tag Name",
-                "button": "Add Tag",
-                "helpertext":"tags left"
-            },
-            "step4": "4. Come up with some interesting questions",
-            "questions":{
-                "title": "Question",
-                "question": "Question",
-                "answer": "Answer"
-            },
-            "subjects":{
-                "input": "Subject Name",
-                "value": "My cool subject name"
-            },
-            "button":"Submit"
-        },
-        "profile":{
-            "quizzes":{
-                "title":"Quizzes",
-                "by": "by"
-            },
-            "saved":{
-                "title":"Saved"
-            },
-            "class":{
-                "title":"Classes"
-            }
-
-        },
-        "quiz":{
-            "questions": "Questions",
-            "showanswers": "Show Answers",
-            "hideanswers": "Hide Answers",
-            "by": "by"
-        },
-        "multiquiz":{
-            "steps": "Steps",
-            "showanswers": "Show Answers",
-            "hideanswers": "Hide Answers",
-            "by": "by"
-        },
-        "countdown":{
-            "ready": "Ready?",
-            "go":"GO!!!"
-        },
-        "uploadbox":{
-            "upload": "Upload"
-        },
-        "login":{
-            "title": "Sign into CONNECT!",
-            "googlebutton": "Login with google"
-        },
-        "sharepopup":{
-            "title": "Share Code",
-            "sub": "Share this link via",
-            "sub2": "Or copy link",
-            "button": "Copy"
-        },
-        "thanksforpurchasing":{
-            "title": "Purchase Successful!",
-            "button": "Continue"
-        },
-        "alerts":{
-            "loginalert": "You Have To Login If You Want To Use CONNECT!",
-            "roomalreadyexists": "A Room With This Name Already Exists Choose Another Name",
-            "gamealreadystarted": "The Game has Already Started in Room",
-            "entername": "Please Enter a Name",
-            "entercode": "Please Enter a Code",
-            "enterroomname": "Please Enter a Room Name",
-            "entergamecode": "Please Enter a Game Code",
-            "entergamemode": "Please Enter a Game Mode",
-            "roomterminated": "You have succesfuly terminated",
-            "terminate": {
-                "text1": "You are Already Hosting a Room",
-                "text2": "Do you Want to Terminate that Room?",
-                "button": "Terminate"
-            },
-            "playerfinishedgame": " Has finished their game!",
-            "maxpodiumlimitreached": "Players Have Finished Their Quiz You Might Want To End The Game!",
-            "buyplanseeinfo": "You Need To Buy A Plan To See This Information!",
-            "eachansdifferent": "Please make sure each answer is different or the quiz will not work!",
-            "fieldleftempty": "Please Fill In All Fields!",
-            "need1subject": "You Need At Least 1 Subject!",
-            "quizcreated": "Quiz Created!",
-            "logincreatequiz": "Please Login To Create A Quiz!",
-            "copiedinvitation": "Invitation Link Copied To Clipboard!",
-            "copyerr": "Error Copying Link!",
-            "uploadedpic": "Picture Uploaded!",
-            "loginbeforebuy": "Please Login Before Buying a Plan!",
-            "wowsoeasy": "Wow So Easy!",
-            "entervalidcoupon": "Please Enter a Valid Coupon Code!",
-            "couponapplied": "Coupon Applied!",
-            "purchasefailed": "Purchase Failed!",
-            "alreadyhaveplan": "You Already Have this Plan!",
-            "error": "Error!",
-            "entercoupon": "Please Enter a Coupon Code!",
-            "memberAlreadyExists": "This user is already a member of your class!!!",
-            "thisUserDoesNotExist": "This user does not exist",
-            "cannotjoinprivate": "Cannot join private room",
-            "titlecantcontain": "Step title can't can't contain '.', '#', '$', '/', '[', or ']'",
-            "cannotAddYourself": "You cannot add your self",
-            "cannotRemoveYourself": "You cannot remove your self"
-        },
-        "paymentform":{
-            "title": "Payment Form",
-            "plan": "Classroom Plan",
-            "price": "$10 monthly",
-            "button": "Apply",
-            "button2": "Subscribe"
-        },
-        "classroom": {
-            "createbutton": "Create Class",
-            "members": {
-                "title": "Members",
-                "add": "add member",
-                "cancel": "Cancel",
-                "remove": "remove member"
-            },
-            "addmember": {
-                "title": "Add Member",
-                "input": "Member Email",
-                "members": "Members",
-                "button": "Add Member",
-                "confirm": "confirm"
-            },
-            "play": {
-                "playbutton": "Play Games",
-                "backbutton": "Back"
-            },
-            "halloffame": {
-                "title": "Hall of Fame"
-            },
-            "recentGames":{
-                "title": "Recent Games"
-            },
-            "finalists": {
-                "title": "Finalists"
-            }
-        },
-        "createclass":{
-            "title": "Create Class",
-            "steps": {
-                "step1": "1. Enter your class name",
-                "input1": "Name",
-                "step2": "2. Upload class banner",
-                "step3": "3. Add members",
-                "addbutton": "Add Member",
-                "memberinput": "Member Email",
-                "members": "Members",
-                "createclassbutton": "Create Class"
-            }
-        },
-        "notifications": {
-            "title": "Notifications",
-            "clear": "Clear Notifications"
-        }
-
-        
+  "english": {
+    "nav": {
+      "play": "Play",
+      "quizzes": "Quizzes",
+      "plans": "Plans",
+      "login": "Login",
+      "add": {
+        "normal": "New Quiz",
+        "multi": "New Multi"
+      },
+      "profile": {
+        "head": "Signed in as",
+        "account": "My account",
+        "subscription": "Subscription",
+        "class": "My class",
+        "logout": "Logout"
+      },
+      "dropdown": {
+        "play": "PLAY",
+        "quizzes": "QUIZZES",
+        "plans": "PLANS",
+        "login": "LOGIN"
+      }
     },
-    "french":{
-        "nav": {
-            "play": "Jouer",
-            "quizzes": "Quiz",
-            "plans": "Forfaits",
-            "login": "Connexion",
-            "add":{
-                "normal": "Créer Quiz",
-                "multi": "Créer Multi"
-            },
-            "profile": {
-                "head": "Connecté avec",
-                "account": "Mon compte",
-                "subscription": "Abonnement",
-                "class": "Ma classe",
-                "logout": "Déconnexion"
-            },
-            "dropdown":{
-                "play": "JOUER",
-                "quizzes": "QUIZ",
-                "plans": "Forfait",
-                "login": "Connexion"
-            }
-            
+    "home": {
+      "sub1": "Take learning to the next level.",
+      "sub2": "CONNECT! helps you learn faster and together.",
+      "buttonText": "Start Learning ➞",
+      "about": {
+        "title": "What is CONNECT! ?",
+        "sub": "We keep you connected so you can learn together",
+        "sub2": "CONNECT! makes learning and teaching fun",
+        "sub3": "For us, learning is the key to a better future"
+      },
+      "cards": {
+        "learning": "Learning",
+        "collaboration": "Collaboration",
+        "fun": "Fun"
+      },
+      "howitworks": {
+        "title": "How it works",
+        "host": {
+          "title": "Host",
+          "step1": "Select your desired game mode",
+          "step2": "Type in the room name / code or click the “GENERATE CODE” button",
+          "step3": "Go to QUIZZES and find a game you would like to host copy that game’s code",
+          "step4": "Enter the amount of players you want in your room Starter plan users max out at 40 users whilst Classroom plan users get 90 users",
+          "step5": "Specify if the user nicknames should be friendly",
+          "step6": "Start the game!!!",
+          "next": "Next",
+          "back": "Back"
         },
-        "home":{
-            "sub1":"L'apprentissage au niveau supérieur.",
-            "sub2":"CONNECT! vous aide à apprendre ensemble et rapidement.",
-            "buttonText":"Allons-y ➞",
-            "about": {
-                "title": "C'est quoi CONNECT! ?",
-                "sub": "Une plateforme qui sert a apprendre ensemble",
-                "sub2": "Nous rendons l'apprentissage et l'enseignement amusants.",
-                "sub3": "Pour nous, l'apprentissage est la clé d'un avenir meilleur"
-            },
-            "cards": {
-                "learning": "Apprentissage",
-                "collaboration": "Collaboration",
-                "fun": "Fun"
-            },
-            "howitworks":{
-                "title": "Fonctionnement",
-                "host": {
-                    "title": "Créer une salle",
-                    "step1": "Sélectionnez le mode de jeu souhaité",
-                    "step2": "Écrivez le nom / code de la salle ou cliquez sur le bouton « GÉNÉRER LE CODE »",
-                    "step3": "Allez sur QUIZ et trouvez un quiz que vous souhaitez héberger.  copiez le code de ce quiz",
-                    "step4": "Saisissez le nombre de joueurs que vous souhaitez dans votre salle. Le nombre d'utilisateurs du plan de départ est limité à 40 utilisateurs, tandis que les utilisateurs du plan de classe ont 90 utilisateurs.",
-                    "step5": "Spécifiez si les pseudonymes des utilisateurs doivent être conviviaux",
-                    "step6": "Commencez le jeu!!!",
-                    "next": "Suivant",
-                    "back": "Retour"
-                },
-                "join":{
-                    "title": "Rejoindre une classe",
-                    "step1": "Entrez votre surnom",
-                    "step2": "Entrez un nom de salle valide",
-                    "step3": "Rejoignez la salle et amusez-vous !!!",
-                    "next": "Suivant",
-                    "back": "Retour"
-                },
-                "play":{
-                    "title": "Jouer",
-                    "step1": "Associez les cartes de questions à leurs réponses",
-                    "step2": "Si vous faites correspondre les mauvaises cartes, 5s seront ajoutés à votre minuteur",
-                    "step3": "L'objectif est d'obtenir le temps le plus bas pour avoir la plus haute place sur le podium !!!",
-                    "next": "Suivant",
-                    "back": "Retour"
-
-                }
-            }
+        "join": {
+          "title": "Join",
+          "step1": "Enter your nickname",
+          "step2": "Enter a valid room name / code",
+          "step3": "Join your game and have fun !!!",
+          "next": "Next",
+          "back": "Back"
         },
-        "play":{
-            "join":{
-                "title": "Rejoindre une partie",
-                "input": "Nom de salle",
-                "input2": "Pseudonymes",
-                "button": "Suivant",
-                "button2": "Rejoindre"
-            },
-            "host":{
-                "title": "Créer une salle ",
-                "gamemode": {
-                    "title": "Mode",
-                    "normal": "Normal",
-                    "multi": "Multi"
-                },
-                "input": "Nom de la salle",
-                "input2": "Entrez un code de quiz",
-                "presets": {
-                    "title": "Paramètres",
-                    "maxplayers": "Joueurs Maximum",
-                    "podiumplaces":"Places de podium",
-                    "friendly": "Surnoms filtrés",
-                    "button": "Générer le code",
-                    "button2": "Créer la salle"
-                },
-                "private": "Privé",
-                "roomcode": "Code de salle"
-
-            }
-        },
-        "quizzes":{
-            "bar": {
-                "title": "Explorer Contenu",
-                "gamemode": {
-                    "title": "Mode de jeu",
-                    "normal": "Normal",
-                    "multi": "Multi"
-                }
-            },
-            "by":"par"
-        },
-        "plans":{
-            "starter": {
-                "title": "Forfait Débutant",
-                "price": "Gratuit",
-                "features": {
-                    "title": "Avantages",
-                    "feature1": "Accès aux jeux de cartes multijoueurs",
-                    "feature2": "Avoir 40 personnes ou moins dans vos salles",
-                    "feature3": "Vous pouvez créer des quiz"
-                },
-                "button": "Voir",
-                "buttonsubscribed": "Selectionné ✓"
-
-            },
-            "classroom": {
-                "title": "Forfait de classe",
-                "price": "10,00 $ par mois",
-                "features": {
-                    "title": "Avantages",
-                    "feature1": "Avoir 90 personnes ou moins dans vos salles",
-                    "feature2": "Accès aux analyses des joueurs",
-                    "feature3": "Vous pouvez créer des classes",
-                    "feature4": "Intégration de Google Classroom",
-                    "feature5": "Intégration de Microsoft Teams"
-                },
-                "button": "Sélectionner",
-                "buttonsubscribed": "Selectionné ✓"
-            },
-            "entreprise":{
-                "title": "Forfait d'Enterprise",
-                "price": "100,00 $ par mois",
-                "features": {
-                    "title": "Avantages",
-                    "feature1": "Avoir 200 personnes ou moins dans vos salles",
-                    "feature2": "Accès aux analyses des joueurs",
-                    "feature3": "Vous pouvez créer des classes",
-                    "feature4": "Intégration de Google Classroom",
-                    "feature5": "Intégration de Microsoft Teams"
-                },
-                "button": "Sélectionner",
-                "buttonsubscribed": "Selectionné ✓"
-            }
-        },
-        "waitingroom":{
-            "title": "Salle d'attente",
-            "leavebutton": "Quitter Salle"
-        },
-        "hostroom":{
-            "sharebutton": "Partager",
-            "podium": "Podium",
-            "playertimes": "Temps des Joueurs",
-            "time": "Temps",
-            "place": "Place",
-            "private": "Privé"
-
-        },
-        "finishedscreen":{
-            "title": "Vous avez terminé!",
-            "sub": "Attendez que plus de personnes finissent"
-        },
-        "gameended":{
-            "title": "Le jeu est terminé",
-            "button": "Revenir à l'accueil"
-        },
-        "leftroom": {
-            "title": "Vous avez quitté la salle",
-            "button": "Revenir à l'accueil"
-        },
-        "newquiz":{
-            "title": "Créer un quiz",
-            "step1": "1. Donnez un titre à votre quiz",
-            "input": "Titre",
-            "step2": "2. Téléchargez votre image de couverture",
-            "step3": "3. Donnez des mots clés à votre quiz",
-            "tags":{
-                "title": "Mots clés",
-                "input": "Nom du mots clés",
-                "button": "Rajouter",
-                "helpertext":"mots clés restant"
-            },
-            "step4": "4. Proposez des questions intéressantes",
-            "questions":{
-                "title": "Question",
-                "question": "Question",
-                "answer": "Réponse"
-            },
-            "button":"Partager"
-        },
-        "newmultiquiz":{
-            "title": "Créer un multi-quiz",
-            "step1": "1. Donnez un titre à votre quiz",
-            "input": "Titre",
-            "step2": "2. Téléchargez votre image de couverture",
-            "step3": "3. Donnez des mots clés à votre quiz",
-            "tags":{
-                "title": "Mots clés",
-                "input": "Nom du mots clés",
-                "button": "Rajouter",
-                "helpertext":"mots clés restant"
-            },
-            "step4": "4. Proposez des questions intéressantes",
-            "questions":{
-                "title": "Question",
-                "question": "Question",
-                "answer": "Réponse"
-            },
-            "subjects":{
-                "input": "Nom du sujet",
-                "value": "Mon sujet"
-            },
-            "button":"Partager"
-        },
-        "profile":{
-            "quizzes":{
-                "title":"Quiz",
-                "by": "par"
-            },
-            "saved":{
-                "title":"Enregistré"
-            },
-            "class":{
-                "title":"Classes"
-            }
-
-        },
-        "quiz":{
-            "questions": "Questions",
-            "showanswers": "Montrer réponses",
-            "hideanswers": "Cacher réponses",
-            "by": "par"
-        },
-        "multiquiz":{
-            "steps": "Étapes",
-            "showanswers": "Montrer réponses",
-            "hideanswers": "Cacher réponses",
-            "by": "par"
-        },
-        "countdown":{
-            "ready": "Prêt?",
-            "go":"GO!!!"
-        },
-        "uploadbox":{
-            "upload": "Télécharger"
-        },
-        "login":{
-            "title": "Connectez-vous à CONNECT!",
-            "googlebutton": "Connectez-vous avec Google"
-        },
-        "sharepopup":{
-            "title": "Partager le code",
-            "sub": "Partagez ce lien via",
-            "sub2": "Ou copier le lien",
-            "button": "Copier"
-        },
-        "thanksforpurchasing":{
-            "title": "Achat réussi!",
-            "button": "Continuer"
-        },
-        "alerts":{
-            "loginalert": "Vous devez vous connecter si vous souhaitez utiliser CONNECT !",
-            "roomalreadyexists": "Une salle avec ce nom existe déjà choisissez un autre nom",
-            "gamealreadystarted": "Le jeu a déjà commencé dans la salle",
-            "entername": "Veuillez entrer un nom",
-            "entercode": "Veuillez entrez un code",
-            "enterroomname": "Veuillez entrer un nom de salle",
-            "entergamecode": "Veuillez entrer un code de jeu",
-            "entergamemode": "Veuillez entrer dans un mode de jeu",
-            "roomterminated": "Vous avez supprimé avec succès",
-            "terminate": {
-                "text1": "Vous hébergez déjà une salle",
-                "text2": "Voulez-vous mettre fin à cette salle ?",
-                "button": "Mettre fin"
-            },
-            "playerfinishedgame": " a fini son jeu !",
-            "maxpodiumlimitreached": "joueurs ont terminé leur quiz, vous voudrez peut-être terminer le jeu !",
-            "buyplanseeinfo": "Vous devez acheter un plan pour voir ces informations !",
-            "eachansdifferent": "Veuillez vous assurer que chaque réponse est différente ou le quiz ne fonctionnera pas !",
-            "fieldleftempty": "Merci de remplir tous les champs!",
-            "need1subject": "Vous avez besoin d'au moins 1 sujet !",
-            "quizcreated": "Quiz créé !",
-            "logincreatequiz": "Veuillez vous connecter pour créer un quiz !",
-            "copiedinvitation": "Lien d'invitation copié !",
-            "copyerr": "Erreur lors de la copie du lien !",
-            "uploadedpic": "Image téléchargée !",
-            "loginbeforebuy": "Veuillez vous connecter avant d'acheter un forfait !",
-            "wowsoeasy": "Ouah si facile !",
-            "entervalidcoupon": "Veuillez entrer un code de coupon valide !",
-            "couponapplied": "Coupon appliqué !",
-            "purchasefailed": "Achat raté!",
-            "alreadyhaveplan": "Vous avez déjà ce forfait !",
-            "error": "Error!",
-            "entercoupon": "Veuillez entrer un code de coupon !",
-            "memberAlreadyExists": "Cet utilisateur est déjà un membre de votre classe !!!",
-            "thisUserDoesNotExist": "Cet utilisateur n'existe pas",
-            "cannotjoinprivate": "Impossible de rejoindre la salle privée",
-            "titlecantcontain": "Le titre du sujet ne peut pas contenir '.', '#', '$', '/', '[', ou ']'",
-            "cannotAddYourself": "Vous ne pouvez pas vous ajouter vous-même",
-            "cannotRemoveYourself": "Vous ne pouvez pas vous retirer vous-même"
-        },
-        "paymentform":{
-            "title": "Formulaire de paiement",
-            "plan": "Forfait de classe",
-            "price": "10 $ par mois",
-            "button": "Appliquer",
-            "button2": "S'abonner"
-        },
-        "classroom": {
-            "createbutton": "Créer Classe",
-            "members": {
-                "title": "Membres",
-                "add": "Ajouter",
-                "cancel": "Annuler",
-                "remove": "retirer"
-            },
-            "play": {
-                "playbutton": "Jouer",
-                "backbutton": "retourner"
-            },
-            "addmember": {
-                "title": "Ajouter des membres",
-                "input": "Courriel du membre",
-                "members": "Membres",
-                "button": "Ajouter",
-                "confirm": "confirmer"
-            },
-            "halloffame": {
-                "title": "Temple de la renommée"
-            },
-            "recentGames":{
-                "title": "Jeux récents"
-            },
-            "finalists": {
-                "title": "Finalistes"
-            }
-        },
-        "createclass":{
-            "title": "Créer Classe",
-            "steps": {
-                "step1": "1. Entrez votre nom de classe",
-                "input1": "Nom",
-                "step2": "2. Télécharger la bannière de classe",
-                "step3": "3. Ajouter des membres",
-                "addbutton": "Ajouter",
-                "memberinput": "Courriel du membre",
-                "members": "Membres",
-                "createclassbutton": "Créer Classe"
-            }
-        },
-        "notifications": {
-            "title": "Notifications",
-            "clear": "Effacer notifications"
+        "play": {
+          "title": "Play",
+          "step1": "Match the question cards with their answers",
+          "step2": "If you match the wrong cards 5s will be added to your timer",
+          "step3": "The goal is to get the lowest time to have the highest place on the podium.",
+          "next": "Next",
+          "back": "Back"
         }
-
-        
+      }
+    },
+    "play": {
+      "join": {
+        "title": "Join Game",
+        "input": "Enter room code",
+        "input2": "Enter your nickname",
+        "button": "Next",
+        "button2": "Join"
+      },
+      "host": {
+        "title": "Host Room",
+        "gamemode": {
+          "title": "Game Mode",
+          "normal": "Normal",
+          "multi": "Multi"
+        },
+        "input": "Give your room a name",
+        "input2": "Enter game code",
+        "presets": {
+          "title": "Presets",
+          "maxplayers": "Max players",
+          "podiumplaces": "Podium Places",
+          "friendly": "Friendly nicknames",
+          "button": "Generate Code",
+          "button2": "Host Room"
+        },
+        "private": "Private",
+        "roomcode": "Room Code"
+      }
+    },
+    "quizzes": {
+      "bar": {
+        "title": "Explore Content",
+        "gamemode": {
+          "title": "Game Mode",
+          "normal": "Normal",
+          "multi": "Multi"
+        }
+      },
+      "by": "by"
+    },
+    "plans": {
+      "starter": {
+        "title": "Starter",
+        "price": "Free",
+        "features": {
+          "title": "Features",
+          "feature1": "Acces to The Multiplayer Card Games",
+          "feature2": "Have 40 or Less People in Your Rooms",
+          "feature3": "You Can Create Quizzes"
+        },
+        "button": "View",
+        "buttonsubscribed": "Selected ✓"
+      },
+      "classroom": {
+        "title": "Classroom",
+        "price": "$10.00 monthly",
+        "features": {
+          "title": "Features",
+          "feature1": "Have 90 or Less People in Your Rooms",
+          "feature2": "Access to player analytics",
+          "feature3": "You can create classes",
+          "feature4": "Google Classroom integration",
+          "feature5": "Microsoft Teams integration"
+        },
+        "button": "Select",
+        "buttonsubscribed": "Selected ✓"
+      },
+      "entreprise": {
+        "title": "Enterprise",
+        "price": "$100.00 monthly",
+        "features": {
+          "title": "Features",
+          "feature1": "Have 200 or Less People in Your Rooms",
+          "feature2": "Access to player analytics",
+          "feature3": "You can create classes",
+          "feature4": "Google Classroom integration",
+          "feature5": "Microsoft Teams integration"
+        },
+        "button": "Select",
+        "buttonsubscribed": "Selected ✓"
+      }
+    },
+    "waitingroom": {
+      "title": "Waiting Room",
+      "leavebutton": "Leave room"
+    },
+    "hostroom": {
+      "sharebutton": "Share",
+      "podium": "Podium",
+      "playertimes": "Player Times",
+      "time": "Time",
+      "place": "Place",
+      "private": "Private"
+    },
+    "finishedscreen": {
+      "title": "You're done!",
+      "sub": "Wait For More People To Finish"
+    },
+    "gameended": {
+      "title": "Game Has Ended",
+      "button": "Return home"
+    },
+    "leftroom": {
+      "title": "You Have Left the Room",
+      "button": "Return home"
+    },
+    "newquiz": {
+      "title": "Create a Quiz",
+      "step1": "1. Give your quiz a title",
+      "input": "Title",
+      "step2": "2. Upload your cover Image",
+      "step3": "3. Give your quiz some tags",
+      "tags": {
+        "title": "Tags",
+        "input": "Tag Name",
+        "button": "Add Tag",
+        "helpertext": "tags left"
+      },
+      "step4": "4. Come up with some interesting questions",
+      "questions": {
+        "title": "Question",
+        "question": "Question",
+        "answer": "Answer"
+      },
+      "button": "Create Quiz"
+    },
+    "newmultiquiz": {
+      "title": "Create a Multi Quiz",
+      "step1": "1. Give your quiz a title",
+      "input": "Title",
+      "step2": "2. Upload your cover Image",
+      "step3": "3. Give your quiz some tags",
+      "tags": {
+        "title": "Tags",
+        "input": "Tag Name",
+        "button": "Add Tag",
+        "helpertext": "tags left"
+      },
+      "step4": "4. Come up with some interesting questions",
+      "questions": {
+        "title": "Question",
+        "question": "Question",
+        "answer": "Answer"
+      },
+      "subjects": {
+        "input": "Subject Name",
+        "value": "My cool subject name"
+      },
+      "button": "Create Quiz"
+    },
+    "profile": {
+      "quizzes": {
+        "title": "Quizzes",
+        "by": "by"
+      },
+      "saved": {
+        "title": "Saved"
+      },
+      "class": {
+        "title": "Classes"
+      }
+    },
+    "quiz": {
+      "questions": "Questions",
+      "showanswers": "Show Answers",
+      "hideanswers": "Hide Answers",
+      "by": "by"
+    },
+    "multiquiz": {
+      "steps": "Steps",
+      "showanswers": "Show Answers",
+      "hideanswers": "Hide Answers",
+      "by": "by"
+    },
+    "countdown": {
+      "ready": "Ready?",
+      "go": "GO!!!"
+    },
+    "uploadbox": {
+      "upload": "Upload"
+    },
+    "login": {
+      "title": "Sign into CONNECT!",
+      "googlebutton": "Login with google"
+    },
+    "sharepopup": {
+      "title": "Share Code",
+      "sub": "Share this link via",
+      "sub2": "Or copy link",
+      "button": "Copy"
+    },
+    "thanksforpurchasing": {
+      "title": "Purchase Successful!",
+      "button": "Continue"
+    },
+    "alerts": {
+      "loginalert": "You Have To Login If You Want To Use CONNECT!",
+      "roomalreadyexists": "A Room With This Name Already Exists Choose Another Name",
+      "gamealreadystarted": "The Game has Already Started in Room",
+      "entername": "Please Enter a Name",
+      "entercode": "Please Enter a Code",
+      "enterroomname": "Please Enter a Room Name",
+      "entergamecode": "Please Enter a Game Code",
+      "entergamemode": "Please Enter a Game Mode",
+      "roomterminated": "You have succesfuly terminated",
+      "terminate": {
+        "text1": "You are Already Hosting a Room",
+        "text2": "Do you Want to Terminate that Room?",
+        "button": "Terminate"
+      },
+      "playerfinishedgame": " Has finished their game!",
+      "maxpodiumlimitreached": "Players Have Finished Their Quiz You Might Want To End The Game!",
+      "buyplanseeinfo": "You Need To Buy A Plan To See This Information!",
+      "eachansdifferent": "Please make sure each answer is different or the quiz will not work!",
+      "fieldleftempty": "Please Fill In All Fields!",
+      "need1subject": "You Need At Least 1 Subject!",
+      "quizcreated": "Quiz Created!",
+      "logincreatequiz": "Please Login To Create A Quiz!",
+      "copiedinvitation": "Invitation Link Copied To Clipboard!",
+      "copyerr": "Error Copying Link!",
+      "uploadedpic": "Picture Uploaded!",
+      "loginbeforebuy": "Please Login Before Buying a Plan!",
+      "wowsoeasy": "Wow So Easy!",
+      "entervalidcoupon": "Please Enter a Valid Coupon Code!",
+      "couponapplied": "Coupon Applied!",
+      "purchasefailed": "Purchase Failed!",
+      "alreadyhaveplan": "You Already Have this Plan!",
+      "error": "Error!",
+      "entercoupon": "Please Enter a Coupon Code!",
+      "memberAlreadyExists": "This user is already a member of your class!!!",
+      "thisUserDoesNotExist": "This user does not exist",
+      "cannotjoinprivate": "Cannot join private room",
+      "titlecantcontain": "Step title can't can't contain '.', '#', '$', '/', '[', or ']'",
+      "cannotAddYourself": "You cannot add your self",
+      "cannotRemoveYourself": "You cannot remove your self"
+    },
+    "paymentform": {
+      "title": "Payment Form",
+      "plan": "Classroom Plan",
+      "price": "$10 monthly",
+      "button": "Apply",
+      "button2": "Subscribe"
+    },
+    "classroom": {
+      "createbutton": "Create Class",
+      "members": {
+        "title": "Members",
+        "add": "add member",
+        "cancel": "Cancel",
+        "remove": "remove member"
+      },
+      "addmember": {
+        "title": "Add Member",
+        "input": "Member Email",
+        "members": "Members",
+        "button": "Add Member",
+        "confirm": "confirm"
+      },
+      "play": {
+        "playbutton": "Play Games",
+        "backbutton": "Back"
+      },
+      "halloffame": {
+        "title": "Hall of Fame"
+      },
+      "recentGames": {
+        "title": "Recent Games"
+      },
+      "finalists": {
+        "title": "Finalists"
+      }
+    },
+    "createclass": {
+      "title": "Create Class",
+      "steps": {
+        "step1": "1. Enter your class name",
+        "input1": "Name",
+        "step2": "2. Upload class banner",
+        "step3": "3. Add members",
+        "addbutton": "Add Member",
+        "memberinput": "Member Email",
+        "members": "Members",
+        "createclassbutton": "Create Class"
+      }
+    },
+    "notifications": {
+      "title": "Notifications",
+      "clear": "Clear Notifications"
     }
+  },
+  "french": {
+    "nav": {
+      "play": "Jouer",
+      "quizzes": "Quiz",
+      "plans": "Forfaits",
+      "login": "Connexion",
+      "add": {
+        "normal": "Créer Quiz",
+        "multi": "Créer Multi"
+      },
+      "profile": {
+        "head": "Connecté avec",
+        "account": "Mon compte",
+        "subscription": "Abonnement",
+        "class": "Ma classe",
+        "logout": "Déconnexion"
+      },
+      "dropdown": {
+        "play": "JOUER",
+        "quizzes": "QUIZ",
+        "plans": "Forfait",
+        "login": "Connexion"
+      }
+    },
+    "home": {
+      "sub1": "L'apprentissage au niveau supérieur.",
+      "sub2": "CONNECT! vous aide à apprendre ensemble et rapidement.",
+      "buttonText": "Allons-y ➞",
+      "about": {
+        "title": "C'est quoi CONNECT! ?",
+        "sub": "Une plateforme qui sert a apprendre ensemble",
+        "sub2": "Nous rendons l'apprentissage et l'enseignement amusants.",
+        "sub3": "Pour nous, l'apprentissage est la clé d'un avenir meilleur"
+      },
+      "cards": {
+        "learning": "Apprentissage",
+        "collaboration": "Collaboration",
+        "fun": "Fun"
+      },
+      "howitworks": {
+        "title": "Fonctionnement",
+        "host": {
+          "title": "Créer une salle",
+          "step1": "Sélectionnez le mode de jeu souhaité",
+          "step2": "Écrivez le nom / code de la salle ou cliquez sur le bouton « GÉNÉRER LE CODE »",
+          "step3": "Allez sur QUIZ et trouvez un quiz que vous souhaitez héberger.  copiez le code de ce quiz",
+          "step4": "Saisissez le nombre de joueurs que vous souhaitez dans votre salle. Le nombre d'utilisateurs du plan de départ est limité à 40 utilisateurs, tandis que les utilisateurs du plan de classe ont 90 utilisateurs.",
+          "step5": "Spécifiez si les pseudonymes des utilisateurs doivent être conviviaux",
+          "step6": "Commencez le jeu!!!",
+          "next": "Suivant",
+          "back": "Retour"
+        },
+        "join": {
+          "title": "Rejoindre une classe",
+          "step1": "Entrez votre surnom",
+          "step2": "Entrez un nom de salle valide",
+          "step3": "Rejoignez la salle et amusez-vous !!!",
+          "next": "Suivant",
+          "back": "Retour"
+        },
+        "play": {
+          "title": "Jouer",
+          "step1": "Associez les cartes de questions à leurs réponses",
+          "step2": "Si vous faites correspondre les mauvaises cartes, 5s seront ajoutés à votre minuteur",
+          "step3": "L'objectif est d'obtenir le temps le plus bas pour avoir la plus haute place sur le podium !!!",
+          "next": "Suivant",
+          "back": "Retour"
+        }
+      }
+    },
+    "play": {
+      "join": {
+        "title": "Rejoindre une partie",
+        "input": "Nom de salle",
+        "input2": "Pseudonymes",
+        "button": "Suivant",
+        "button2": "Rejoindre"
+      },
+      "host": {
+        "title": "Créer une salle ",
+        "gamemode": {
+          "title": "Mode",
+          "normal": "Normal",
+          "multi": "Multi"
+        },
+        "input": "Nom de la salle",
+        "input2": "Entrez un code de quiz",
+        "presets": {
+          "title": "Paramètres",
+          "maxplayers": "Joueurs Maximum",
+          "podiumplaces": "Places de podium",
+          "friendly": "Surnoms filtrés",
+          "button": "Générer le code",
+          "button2": "Créer la salle"
+        },
+        "private": "Privé",
+        "roomcode": "Code de salle"
+      }
+    },
+    "quizzes": {
+      "bar": {
+        "title": "Explorer Contenu",
+        "gamemode": {
+          "title": "Mode de jeu",
+          "normal": "Normal",
+          "multi": "Multi"
+        }
+      },
+      "by": "par"
+    },
+    "plans": {
+      "starter": {
+        "title": "Forfait Débutant",
+        "price": "Gratuit",
+        "features": {
+          "title": "Avantages",
+          "feature1": "Accès aux jeux de cartes multijoueurs",
+          "feature2": "Avoir 40 personnes ou moins dans vos salles",
+          "feature3": "Vous pouvez créer des quiz"
+        },
+        "button": "Voir",
+        "buttonsubscribed": "Selectionné ✓"
+      },
+      "classroom": {
+        "title": "Forfait de classe",
+        "price": "10,00 $ par mois",
+        "features": {
+          "title": "Avantages",
+          "feature1": "Avoir 90 personnes ou moins dans vos salles",
+          "feature2": "Accès aux analyses des joueurs",
+          "feature3": "Vous pouvez créer des classes",
+          "feature4": "Intégration de Google Classroom",
+          "feature5": "Intégration de Microsoft Teams"
+        },
+        "button": "Sélectionner",
+        "buttonsubscribed": "Selectionné ✓"
+      },
+      "entreprise": {
+        "title": "Forfait d'Enterprise",
+        "price": "100,00 $ par mois",
+        "features": {
+          "title": "Avantages",
+          "feature1": "Avoir 200 personnes ou moins dans vos salles",
+          "feature2": "Accès aux analyses des joueurs",
+          "feature3": "Vous pouvez créer des classes",
+          "feature4": "Intégration de Google Classroom",
+          "feature5": "Intégration de Microsoft Teams"
+        },
+        "button": "Sélectionner",
+        "buttonsubscribed": "Selectionné ✓"
+      }
+    },
+    "waitingroom": {
+      "title": "Salle d'attente",
+      "leavebutton": "Quitter Salle"
+    },
+    "hostroom": {
+      "sharebutton": "Partager",
+      "podium": "Podium",
+      "playertimes": "Temps des Joueurs",
+      "time": "Temps",
+      "place": "Place",
+      "private": "Privé"
+    },
+    "finishedscreen": {
+      "title": "Vous avez terminé!",
+      "sub": "Attendez que plus de personnes finissent"
+    },
+    "gameended": {
+      "title": "Le jeu est terminé",
+      "button": "Revenir à l'accueil"
+    },
+    "leftroom": {
+      "title": "Vous avez quitté la salle",
+      "button": "Revenir à l'accueil"
+    },
+    "newquiz": {
+      "title": "Créer un quiz",
+      "step1": "1. Donnez un titre à votre quiz",
+      "input": "Titre",
+      "step2": "2. Téléchargez votre image de couverture",
+      "step3": "3. Donnez des mots clés à votre quiz",
+      "tags": {
+        "title": "Mots clés",
+        "input": "Nom du mots clés",
+        "button": "Rajouter",
+        "helpertext": "mots clés restant"
+      },
+      "step4": "4. Proposez des questions intéressantes",
+      "questions": {
+        "title": "Question",
+        "question": "Question",
+        "answer": "Réponse"
+      },
+      "button": "Partager"
+    },
+    "newmultiquiz": {
+      "title": "Créer un multi-quiz",
+      "step1": "1. Donnez un titre à votre quiz",
+      "input": "Titre",
+      "step2": "2. Téléchargez votre image de couverture",
+      "step3": "3. Donnez des mots clés à votre quiz",
+      "tags": {
+        "title": "Mots clés",
+        "input": "Nom du mots clés",
+        "button": "Rajouter",
+        "helpertext": "mots clés restant"
+      },
+      "step4": "4. Proposez des questions intéressantes",
+      "questions": {
+        "title": "Question",
+        "question": "Question",
+        "answer": "Réponse"
+      },
+      "subjects": {
+        "input": "Nom du sujet",
+        "value": "Mon sujet"
+      },
+      "button": "Partager"
+    },
+    "profile": {
+      "quizzes": {
+        "title": "Quiz",
+        "by": "par"
+      },
+      "saved": {
+        "title": "Enregistré"
+      },
+      "class": {
+        "title": "Classes"
+      }
+    },
+    "quiz": {
+      "questions": "Questions",
+      "showanswers": "Montrer réponses",
+      "hideanswers": "Cacher réponses",
+      "by": "par"
+    },
+    "multiquiz": {
+      "steps": "Étapes",
+      "showanswers": "Montrer réponses",
+      "hideanswers": "Cacher réponses",
+      "by": "par"
+    },
+    "countdown": {
+      "ready": "Prêt?",
+      "go": "GO!!!"
+    },
+    "uploadbox": {
+      "upload": "Télécharger"
+    },
+    "login": {
+      "title": "Connectez-vous à CONNECT!",
+      "googlebutton": "Connectez-vous avec Google"
+    },
+    "sharepopup": {
+      "title": "Partager le code",
+      "sub": "Partagez ce lien via",
+      "sub2": "Ou copier le lien",
+      "button": "Copier"
+    },
+    "thanksforpurchasing": {
+      "title": "Achat réussi!",
+      "button": "Continuer"
+    },
+    "alerts": {
+      "loginalert": "Vous devez vous connecter si vous souhaitez utiliser CONNECT !",
+      "roomalreadyexists": "Une salle avec ce nom existe déjà choisissez un autre nom",
+      "gamealreadystarted": "Le jeu a déjà commencé dans la salle",
+      "entername": "Veuillez entrer un nom",
+      "entercode": "Veuillez entrez un code",
+      "enterroomname": "Veuillez entrer un nom de salle",
+      "entergamecode": "Veuillez entrer un code de jeu",
+      "entergamemode": "Veuillez entrer dans un mode de jeu",
+      "roomterminated": "Vous avez supprimé avec succès",
+      "terminate": {
+        "text1": "Vous hébergez déjà une salle",
+        "text2": "Voulez-vous mettre fin à cette salle ?",
+        "button": "Mettre fin"
+      },
+      "playerfinishedgame": " a fini son jeu !",
+      "maxpodiumlimitreached": "joueurs ont terminé leur quiz, vous voudrez peut-être terminer le jeu !",
+      "buyplanseeinfo": "Vous devez acheter un plan pour voir ces informations !",
+      "eachansdifferent": "Veuillez vous assurer que chaque réponse est différente ou le quiz ne fonctionnera pas !",
+      "fieldleftempty": "Merci de remplir tous les champs!",
+      "need1subject": "Vous avez besoin d'au moins 1 sujet !",
+      "quizcreated": "Quiz créé !",
+      "logincreatequiz": "Veuillez vous connecter pour créer un quiz !",
+      "copiedinvitation": "Lien d'invitation copié !",
+      "copyerr": "Erreur lors de la copie du lien !",
+      "uploadedpic": "Image téléchargée !",
+      "loginbeforebuy": "Veuillez vous connecter avant d'acheter un forfait !",
+      "wowsoeasy": "Ouah si facile !",
+      "entervalidcoupon": "Veuillez entrer un code de coupon valide !",
+      "couponapplied": "Coupon appliqué !",
+      "purchasefailed": "Achat raté!",
+      "alreadyhaveplan": "Vous avez déjà ce forfait !",
+      "error": "Error!",
+      "entercoupon": "Veuillez entrer un code de coupon !",
+      "memberAlreadyExists": "Cet utilisateur est déjà un membre de votre classe !!!",
+      "thisUserDoesNotExist": "Cet utilisateur n'existe pas",
+      "cannotjoinprivate": "Impossible de rejoindre la salle privée",
+      "titlecantcontain": "Le titre du sujet ne peut pas contenir '.', '#', '$', '/', '[', ou ']'",
+      "cannotAddYourself": "Vous ne pouvez pas vous ajouter vous-même",
+      "cannotRemoveYourself": "Vous ne pouvez pas vous retirer vous-même"
+    },
+    "paymentform": {
+      "title": "Formulaire de paiement",
+      "plan": "Forfait de classe",
+      "price": "10 $ par mois",
+      "button": "Appliquer",
+      "button2": "S'abonner"
+    },
+    "classroom": {
+      "createbutton": "Créer Classe",
+      "members": {
+        "title": "Membres",
+        "add": "Ajouter",
+        "cancel": "Annuler",
+        "remove": "retirer"
+      },
+      "play": {
+        "playbutton": "Jouer",
+        "backbutton": "retourner"
+      },
+      "addmember": {
+        "title": "Ajouter des membres",
+        "input": "Courriel du membre",
+        "members": "Membres",
+        "button": "Ajouter",
+        "confirm": "confirmer"
+      },
+      "halloffame": {
+        "title": "Temple de la renommée"
+      },
+      "recentGames": {
+        "title": "Jeux récents"
+      },
+      "finalists": {
+        "title": "Finalistes"
+      }
+    },
+    "createclass": {
+      "title": "Créer Classe",
+      "steps": {
+        "step1": "1. Entrez votre nom de classe",
+        "input1": "Nom",
+        "step2": "2. Télécharger la bannière de classe",
+        "step3": "3. Ajouter des membres",
+        "addbutton": "Ajouter",
+        "memberinput": "Courriel du membre",
+        "members": "Membres",
+        "createclassbutton": "Créer Classe"
+      }
+    },
+    "notifications": {
+      "title": "Notifications",
+      "clear": "Effacer notifications"
+    }
+  }
 }

@@ -1,340 +1,410 @@
-import React, { useState, useEffect } from 'react';
-import { socket } from './EnterCodeForm'
-import ReactDOM from 'react-dom'
+import React, { useState, useEffect } from "react";
+import { socket } from "./EnterCodeForm";
+import ReactDOM from "react-dom";
 
-import firebase from "firebase"
+import firebase from "firebase";
 import "firebase/database";
 
-import FinishedScreen from './FinishedScreen'
-import GameEnded from './GameEnded'
+import FinishedScreen from "./FinishedScreen";
+import GameEnded from "./GameEnded";
 
-import '../style/style.css'
-import { toast } from 'react-toastify'
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import { Typography } from '@material-ui/core'
+import "../style/style.css";
+import { toast } from "react-toastify";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import { Typography } from "@material-ui/core";
 
-import Translations from '../translations/translations.json'
+import Translations from "../translations/translations.json";
 
-import axios from 'axios';
+import axios from "axios";
 
-function MultiGameRoom({match}) {
-    const [activeStep, setActiveStep] = useState(0);
+function MultiGameRoom({ match }) {
+  const [activeStep, setActiveStep] = useState(0);
 
-    const [steps, setSteps] = useState([]);
+  const [steps, setSteps] = useState([]);
 
-    var [maxSteps, setMaxSteps] = useState();
+  var [maxSteps, setMaxSteps] = useState();
 
-    var [time, updateTime] = useState(0)
-    var [selected, setSelected] = useState([])
-    const [name, setName] = useState('')
-    var cards = []
+  var [time, updateTime] = useState(0);
+  var [selected, setSelected] = useState([]);
+  const [name, setName] = useState("");
+  var cards = [];
 
-    var CurrentRoom = match.params.room
-    var [GameOver, setGameOver] = useState(false)
-    var gameLeft = false
-    var secondTimer = 0
+  var CurrentRoom = match.params.room;
+  var [GameOver, setGameOver] = useState(false);
+  var gameLeft = false;
+  var secondTimer = 0;
 
-    var quiz
+  var quiz;
 
-    const [userLanguage, setUserLanguage] = useState(localStorage.getItem('connectLanguage') || 'english')
+  const [userLanguage] = useState(
+    localStorage.getItem("connectLanguage") || "english"
+  );
 
-    var [emitted, setEmitted] = useState(false)
-    
-    const getQuiz = async (currentQuiz, name) => {
-        quiz = currentQuiz
-        setName(name) //name = quiz.name
-        setCardsFunction()
+  var [emitted, setEmitted] = useState(false);
+
+  const getQuiz = async (currentQuiz, name) => {
+    quiz = currentQuiz;
+    setName(name); //name = quiz.name
+    setCardsFunction();
+  };
+
+  const UpdateTimeFunction = () => {
+    if (GameOver === true) return;
+    updateTime((prev) => (time = Math.round((prev += 0.1) * 10) / 10));
+    secondTimer++;
+    if (secondTimer === 10) {
+      secondTimer = 0;
+      socket.emit("time", {
+        time: time,
+        room: CurrentRoom,
+        user: match.params.user,
+      });
     }
+  };
 
+  const setCardsFunction = () => {
+    console.log(quiz);
 
-    const UpdateTimeFunction = () => {
-        if(GameOver === true) return
-        updateTime(prev => time = Math.round((prev += 0.1) * 10) / 10)
-        secondTimer++
-        if(secondTimer === 10){
-            secondTimer = 0
-            socket.emit('time', {
-                time: time,
-                room: CurrentRoom,
-                user: match.params.user
-            })
-        }
+    const keys = Object.keys(quiz);
+
+    keys.map((key, index) => {
+      const question = quiz[key].question;
+      const answer = quiz[key].answer;
+
+      cards.push({
+        question: question,
+        ans: answer,
+      });
+    });
+    GetCards();
+  };
+
+  var elements = 0;
+  const numberOfCardsArr = [];
+  var randomNum = []; //[0,1,2,3,4,5].sort( () => .5 - Math.random() )
+  const GetCards = () => {
+    cards.map((card, i) => {
+      numberOfCardsArr.push(i);
+    });
+    randomNum = numberOfCardsArr.sort(() => 0.5 - Math.random());
+    for (var i = 0; i < cards.length; i++) {
+      let newCard = document.createElement("div");
+      let newCard2 = document.createElement("div");
+      const item = cards[randomNum[i]].question;
+      const ans = cards[randomNum[i]].ans;
+      newCard.id = "cardDiv";
+      document.getElementById("cardContainer").appendChild(newCard);
+
+      ReactDOM.render(
+        <>
+          <div
+            className="card quest-card"
+            id={item}
+            onClick={() => {
+              CardClick(item, ans, item, i);
+            }}
+          >
+            {item}
+          </div>
+        </>,
+        newCard
+      );
     }
+    const randomNum2 = numberOfCardsArr.sort(() => 0.5 - Math.random());
+    for (var i = 0; i < cards.length; i++) {
+      let newCard2 = document.createElement("div");
+      const item = cards[randomNum2[i]].question;
+      const ans = cards[randomNum2[i]].ans;
+      newCard2.id = "cardDiv2";
+      document.getElementById("cardContainer").appendChild(newCard2);
 
-    const setCardsFunction = () => {
-        console.log(quiz)
+      ReactDOM.render(
+        <>
+          <div
+            className="card ans-card"
+            id={ans}
+            onClick={() => {
+              CardClick(item, ans, ans, i + 10);
+            }}
+          >
+            {ans}
+          </div>
+        </>,
+        newCard2
+      );
 
-        const keys = Object.keys(quiz)
-  
-        keys.map((key, index)=>{
-            const question = quiz[key].question
-            const answer = quiz[key].answer
-          
-            cards.push({
-                question: question,
-                ans: answer
-            })
-          
-        })
-        GetCards()
+      elements += 2;
     }
-    
+  };
+  var memory = [];
+  function CardClick(ques, ans, id, index) {
+    setSelected((selected) => [
+      ...selected,
+      {
+        question: ques,
+        ans: ans,
+      },
+    ]);
+    document.getElementById(id).style = "box-shadow: 0px 0px 5px royalblue;";
 
-    var elements = 0
-    const numberOfCardsArr = []
-    var randomNum = [] //[0,1,2,3,4,5].sort( () => .5 - Math.random() )
-    const GetCards = () => {
-        cards.map((card, i) => {
-            numberOfCardsArr.push(i)
-        })
-        randomNum = numberOfCardsArr.sort( () => .5 - Math.random() )
-        for(var i = 0; i < cards.length; i++){
-            let newCard = document.createElement('div')
-            let newCard2 = document.createElement('div')
-            const item = cards[randomNum[i]].question
-            const ans = cards[randomNum[i]].ans
-            newCard.id = 'cardDiv'
-            document.getElementById('cardContainer').appendChild(newCard)
+    memory.push({
+      question: ques,
+      ans: ans,
+      index: index,
+    });
 
-            ReactDOM.render(
-                <>
-                <div className='card quest-card' id={item} onClick={()=>{CardClick(item, ans, item, i)}}>{item}</div>
-                </>,
-                newCard
-            )
-
- 
-
+    if (memory.length == 2) {
+      for (var i = 0; i < document.getElementsByClassName("card").length; i++) {
+        document.getElementById(
+          document.getElementsByClassName("card")[i].id
+        ).style = "box-shadow: 0px 0px 0px royalblue;";
+      }
+      if (memory[0].question == memory[1].question) {
+        if (memory[0].index == memory[1].index) {
+          updateTime((prev) => (time = prev += 5));
+          memory = [];
+          setSelected((selected = []));
+          return;
         }
-        const randomNum2 =  numberOfCardsArr.sort( () => .5 - Math.random() )
-        for(var i = 0; i < cards.length; i++){
-            let newCard2 = document.createElement('div')
-            const item = cards[randomNum2[i]].question
-            const ans = cards[randomNum2[i]].ans
-            newCard2.id = 'cardDiv2'
-            document.getElementById('cardContainer').appendChild(newCard2)
 
-            ReactDOM.render(
-                <>
-                <div className='card ans-card' id={ans} onClick={()=>{CardClick(item, ans, ans, (i + 10))}}>{ans}</div>
-                </>,
-                newCard2
-            )
+        console.log(memory[0].question, memory[1].ans);
+        document.getElementById(memory[0].question).remove();
+        document.getElementById(memory[1].ans).remove();
 
-            
-            elements += 2
- 
+        elements -= 2;
 
+        if (elements == 0) {
+          setActiveStep(activeStep + 1);
         }
+      } else {
+        updateTime((prev) => (time = prev += 5));
+      }
+
+      memory = [];
+      setSelected((selected = []));
     }
-    var memory = []
-    function CardClick(ques, ans, id, index){
-        setSelected(selected =>[...selected, {
-            question: ques,
-            ans: ans
-        }])
-        document.getElementById(id).style = 'box-shadow: 0px 0px 5px royalblue;'
+  }
 
-        memory.push({
-            question: ques,
-            ans: ans,
-            index: index
-        })
+  useEffect(() => {
+    if (steps.length <= 0) return;
+    if (activeStep === maxSteps) {
+      setGameOver(true);
+      setGameOver(true);
 
-        if(memory.length == 2){
-
-            for(var i = 0; i < document.getElementsByClassName('card').length; i++){
-                document.getElementById(document.getElementsByClassName('card')[i].id).style = 'box-shadow: 0px 0px 0px royalblue;'
-            }
-            if(memory[0].question == memory[1].question){
-                if(memory[0].index == memory[1].index){
-                    updateTime(prev => time = prev += 5)
-                    memory = []
-                    setSelected(selected = [])
-                    return
-                }
-            
-                console.log(memory[0].question, memory[1].ans)
-                document.getElementById(memory[0].question).remove()
-                document.getElementById(memory[1].ans).remove()
-
-                elements -= 2
-
-                if(elements == 0){
-                    setActiveStep(activeStep + 1)
-                }
-            }
-            else{
-                updateTime(prev => time = prev += 5)
-            }
-
-
-
-
-
-
-            memory = []
-            setSelected(selected = [])
-        }
-
-
-        
+      if (emitted === false) {
+        socket.emit("PlayerFinsihed", {
+          room: match.params.room,
+          user: match.params.user,
+          time: time,
+          id: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+        });
+        setEmitted(true);
+      }
+      document.getElementById("popUp").removeAttribute("hidden");
+      document.getElementById("gameContent").hidden = true;
+      ReactDOM.render(
+        <FinishedScreen user={match.params.user} />,
+        document.getElementById("popUp")
+      );
+      document.getElementById("quizTextDiv").remove();
+      document.getElementById("stepRef").hidden = true;
     }
+    document.getElementById("cardContainer").innerHTML = "";
+    elements = 0;
+    cards = [];
+    steps.map((step, index) => {
+      if (index == activeStep) {
+        axios
+          .post("https://connect-backend-2.herokuapp.com/get-multi-all-types", {
+            multiID: match.params.gameid,
+          })
+          .then((res) => {
+            const multi = res.data;
+            getQuiz(JSON.parse(multi.steps)[step], multi.name);
+          });
+      }
+    });
+    return () => {
+      // cleanup
+    };
+  }, [activeStep, steps]);
 
-    useEffect(() => {
-        if(steps.length <= 0) return
-        if(activeStep === maxSteps){
-            setGameOver(true)
-            setGameOver(true)
+  const startTime = () => {
+    setInterval(() => {
+      UpdateTimeFunction();
+    }, 100);
+  };
 
-            if(emitted === false){
-                socket.emit('PlayerFinsihed', {
-                    room: match.params.room,
-                    user: match.params.user,
-                    time: time,
-                    id: JSON.parse(localStorage.getItem('user')).profileObj.googleId
-                })
-                setEmitted(true)
-            }
-            document.getElementById('popUp').removeAttribute('hidden')
-            document.getElementById('gameContent').hidden = true
-            ReactDOM.render(
-                <FinishedScreen user={match.params.user}/>,
-                document.getElementById('popUp')
+  useEffect(() => {
+    axios
+      .post("https://connect-backend-2.herokuapp.com/get-multi-all-types", {
+        multiID: match.params.gameid,
+      })
+      .then((res) => {
+        const multi = res.data;
 
-            )
-            document.getElementById('quizTextDiv').remove()
-            document.getElementById('stepRef').hidden = true
-        }
-        document.getElementById('cardContainer').innerHTML = ''
-        elements = 0
-        cards = []
-        steps.map((step, index) => {
-            if(index == activeStep) {
-                axios.post('https://connect-backend-2.herokuapp.com/get-multi', {multiID: match.params.gameid}).then(res => {
-                    const multi = res.data
-                    getQuiz(JSON.parse(multi.steps)[step], multi.name)
-                })
+        const stepArr = [];
+        console.log(Object.keys(multi.steps));
+        Object.keys(JSON.parse(multi.steps)).map((step, index) => {
+          console.log(step);
 
-            }
-        })
-        return () => {
-            // cleanup
-        }
-    }, [activeStep, steps])
+          stepArr.push(step);
+        });
+        console.log(stepArr);
+        console.log(stepArr.length);
+        setSteps((prev) => (prev = stepArr));
+        setMaxSteps(stepArr.length);
+        startTime();
+      });
 
-    const startTime = () => {
-        setInterval(()=>{
-            UpdateTimeFunction()    
-        }, 100)
-    }
+    document.querySelector("nav").hidden = true;
 
-    useEffect(() => {
-        axios.post('https://connect-backend-2.herokuapp.com/get-multi', {multiID: match.params.gameid}).then(res => {
-            const multi = res.data
+    socket.on("joinedGameRoom", (data) => {
+      console.log(data);
+    });
+    socket.emit("joinGame", {
+      room: match.params.room,
+      user: match.params.user,
+    });
 
-            const stepArr = []
-            console.log(Object.keys(multi.steps))
-            Object.keys(JSON.parse(multi.steps)).map((step, index) => {
-                console.log(step)
+    socket.on("timeBoard", (data) => {
+      //console.log(data.time, data.user)
+    });
+    socket.on("PlayerFinished2", (data) => {
+      toast.success(
+        `${data} ${Translations[userLanguage].alerts.playerfinishedgame}`
+      );
+    });
 
-                stepArr.push(step)
-            })
-            console.log(stepArr)
-            console.log(stepArr.length)
-            setSteps(prev => prev = stepArr)
-            setMaxSteps(stepArr.length)
-            startTime()
-        })
+    socket.on("EndedGame", (data) => {
+      if (gameLeft) return;
+      socket.emit("leaveRoom", {
+        room: match.params.room,
+        user: match.params.user,
+      });
+      setGameOver(true);
+      window.location = "/roomleave";
+      sessionStorage.setItem("roomJoined", "false");
+    });
+    socket.on("GameIsOver", (data) => {
+      gameLeft = true;
+      socket.emit("leaveRoom", {
+        room: match.params.room,
+        user: match.params.user,
+      });
+      ReactDOM.render(
+        <GameEnded podium={data} maxPodiumPlayers={match.params.maxpodium} />,
+        document.getElementById("root")
+      );
+      sessionStorage.setItem("roomJoined", "false");
+    });
+    return () => {
+      setGameOver(true);
+      socket.emit("leaveRoom", {
+        room: match.params.room,
+        user: match.params.user,
+      });
+      sessionStorage.setItem("roomJoined", "false");
+    };
+  }, []);
 
-        document.querySelector('nav').hidden = true
-
-        socket.on('joinedGameRoom', (data)=>{
-            console.log(data)
-        })
-        socket.emit('joinGame', {
-            room: match.params.room,
-            user: match.params.user
-        })
-
-        socket.on('timeBoard', (data)=>{
-            //console.log(data.time, data.user)
-        })
-        socket.on('PlayerFinished2', (data)=>{
-            toast.success(`${data} ${Translations[userLanguage].alerts.playerfinishedgame}`)
-        })
-
-        socket.on('EndedGame', (data)=>{
-            if(gameLeft) return
-            socket.emit('leaveRoom', {
-                room: match.params.room,
-                user: match.params.user
-            })
-            setGameOver(true)
-            window.location = '/roomleave'
-            sessionStorage.setItem('roomJoined', 'false')
-        })
-        socket.on('GameIsOver', (data)=>{
-            gameLeft = true
-            socket.emit('leaveRoom', {
-                room: match.params.room,
-                user: match.params.user
-            })
-            ReactDOM.render(
-                <GameEnded podium={data} maxPodiumPlayers={match.params.maxpodium}/>,
-                document.getElementById('root')
-            )
-            sessionStorage.setItem('roomJoined', 'false')
-        })
-        return () => {
-            setGameOver(true)
-            socket.emit('leaveRoom', {
-                room: match.params.room,
-                user: match.params.user
-            })
-            sessionStorage.setItem('roomJoined', 'false')
-        }
-    }, [])
-
-
-    return (
+  return (
+    <div>
+      <div>
+        <div id="gameContent">
+          <div id="quizTextDiv">
+            <Typography
+              variant="h2"
+              style={{ marginTop: "100px", color: "white" }}
+            >
+              {name}
+            </Typography>
+            <Typography
+              variant="h3"
+              style={{ marginTop: "10px", color: "white" }}
+            >
+              {steps[activeStep]}
+            </Typography>
+            <Typography
+              variant="h3"
+              style={{ marginTop: "10px", color: "white" }}
+            >
+              {time}
+            </Typography>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              width: "100%",
+              justifyContent: "center",
+            }}
+          >
+            <Stepper
+              id="stepRef"
+              style={{
+                width: "100%",
+                maxWidth: "400px",
+                margin: "20px",
+                border: "2px solid black",
+                boxShadow: "10px 10px 0 #262626",
+                overflowX: "auto",
+              }}
+              activeStep={activeStep}
+            >
+              {steps.map((step, index) => {
+                return (
+                  <Step key={index}>
+                    <StepLabel>{step}</StepLabel>
+                  </Step>
+                );
+              })}
+            </Stepper>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              width: "100%",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                marginTop: "0",
+                position: "unset",
+                transform: "none",
+                marginBottom: "100px",
+              }}
+              id="cardContainer"
+            ></div>
+            <h1 hidden>{JSON.stringify(selected)}</h1>
+          </div>
+        </div>
         <div>
-            <div>
-            <div id='gameContent'>
-                <div id='quizTextDiv'>
-                    <Typography variant='h2' style={{marginTop:'100px',color:'white'}}>{name}</Typography>
-                    <Typography variant='h3' style={{marginTop:'10px',color:'white'}}>{steps[activeStep]}</Typography>
-                    <Typography variant='h3' style={{marginTop:'10px',color:'white'}}>{time}</Typography>
-                </div>
-                <div style={{display:'flex', alignItems:'center', width:'100%', justifyContent:'center'}}>
-                <Stepper id='stepRef' style={{width:'100%', maxWidth:'400px', margin:'20px', border:'2px solid black', boxShadow:'10px 10px 0 #262626', overflowX:'auto'}} activeStep={activeStep}>
-                    {steps.map((step, index) => {
-                        return (
-                            <Step key={index}>
-                                <StepLabel>{step}</StepLabel>
-                            </Step>
-                        )
-                    })}
-                </Stepper>
+          <nav style={{ height: "50px" }}>
+            <div
+              style={{
+                float: "left",
+                color: "white",
+                marginLeft: "10px",
+                marginTop: "-10px",
+              }}
+            >
+              <h2>{match.params.user}</h2>
             </div>
-                <div style={{display:'flex', alignItems:'center', width:'100%', justifyContent:'center'}}>
-                <div style={{marginTop:'0', position:'unset', transform:'none', marginBottom:'100px'}} id='cardContainer'></div>
-                    <h1 hidden>{JSON.stringify(selected)}</h1>
-                </div>
-            </div>
-            <div>
-                <nav style={{height:'50px'}}>
-                    <div style={{float:'left', color:'white', marginLeft:'10px', marginTop:'-10px'}}>
-                        <h2>{match.params.user}</h2>
-                    </div>
-                </nav>
-            </div>
-            <div hidden style={{width:'100%', height:'100vh', zIndex:'500'}} id='popUp'></div>
+          </nav>
         </div>
-        </div>
-    )
+        <div
+          hidden
+          style={{ width: "100%", height: "100vh", zIndex: "500" }}
+          id="popUp"
+        ></div>
+      </div>
+    </div>
+  );
 }
 
-export default MultiGameRoom
+export default MultiGameRoom;
