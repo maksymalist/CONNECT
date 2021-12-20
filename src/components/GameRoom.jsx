@@ -269,7 +269,7 @@ export default function GameRoom({ match }) {
             variant="h2"
             style={{ marginTop: "100px", color: "white" }}
           >
-            {name}
+            <b>{name}</b>
           </Typography>
           <Typography
             variant="h3"

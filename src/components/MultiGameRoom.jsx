@@ -313,16 +313,16 @@ function MultiGameRoom({ match }) {
               variant="h2"
               style={{ marginTop: "100px", color: "white" }}
             >
-              {name}
+              <b>{name}</b>
             </Typography>
             <Typography
-              variant="h3"
+              variant="h4"
               style={{ marginTop: "10px", color: "white" }}
             >
               {steps[activeStep]}
             </Typography>
             <Typography
-              variant="h3"
+              variant="h4"
               style={{ marginTop: "10px", color: "white" }}
             >
               {time}
