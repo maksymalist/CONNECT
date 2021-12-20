@@ -1,4 +1,3 @@
-import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
@@ -26,7 +25,6 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import Login from "./components/Auth/Login";
 import NewMultiQuiz from "./components/NewMultiQuiz";
-import { Button } from "@material-ui/core";
 import MyProfile from "./components/profile/MyProfile";
 import ViewQuiz from "./components/ViewQuiz";
 import ViewMultiQuiz from "./components/ViewMultiQuiz";
@@ -84,6 +82,11 @@ const UPDATE_USER_SUBSCRIPTION = gql`
     )
   }
 `;
+
+toast.configure({
+  autoClose: 5000,
+  draggable: true,
+});
 
 function App() {
   const [customerId, setCustomerId] = useState(null);

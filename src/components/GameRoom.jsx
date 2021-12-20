@@ -12,7 +12,7 @@ import GameEnded from "./GameEnded";
 import "../style/style.css";
 import { toast } from "react-toastify";
 
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 
 import Translations from "../translations/translations.json";
 

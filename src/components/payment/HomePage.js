@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
 // MUI Components
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 import {
   TextField,
   InputAdornment,
@@ -12,12 +12,12 @@ import {
   Divider,
   Backdrop,
   Paper,
-} from "@material-ui/core";
+} from "@mui/material";
 // stripe
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 // Util imports
-import { makeStyles } from "@material-ui/core/styles";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { makeStyles } from "@mui/material/styles";
+import CircularProgress from "@mui/material/CircularProgress";
 // Custom Components
 import CardInput from "./CardInput";
 import ThanksForPurchasingAnimation from "./ThanksForPurchasingAnimation";
@@ -26,7 +26,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 //material-icons
-import { Redeem, AlternateEmail } from "@material-ui/icons";
+import { Redeem, AlternateEmail } from "@mui/icons-material";
 
 import Translations from "../../translations/translations.json";
 
@@ -44,31 +44,7 @@ const UPDATE_USER_SUBSCRIPTION = gql`
   }
 `;
 
-toast.configure();
-
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 500,
-    margin: "35vh auto",
-  },
-  content: {
-    display: "flex",
-    flexDirection: "column",
-    alignContent: "flex-start",
-  },
-  div: {
-    display: "flex",
-    flexDirection: "row",
-    alignContent: "flex-start",
-    justifyContent: "space-between",
-  },
-  button: {
-    margin: "2em auto 1em",
-  },
-});
-
 function HomePage(props) {
-  const classes = useStyles();
   const plan = useSelector((state) => state.plan);
   // State
   const [email, setEmail] = useState("");
@@ -440,109 +416,118 @@ function HomePage(props) {
   };
 
   return (
-    <Card
-      id="paymentFormCard"
-      className={classes.root}
+    <div
       style={{
-        padding: "10px",
-        border: "2px solid black",
-        boxShadow: "10px 10px 0px #262626",
-        borderRadius: "0px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+        width: "100vw",
       }}
     >
-      <CardContent className={classes.content}>
-        <Typography variant="h4" component="h4">
-          {Translations[userLanguage].paymentform.title}
-        </Typography>
-        <br></br>
-        <Typography variant="h5">
-          {props.match.params.plan === "classroom"
-            ? Translations[userLanguage].paymentform.plan
-            : "Premium Plan"}
-        </Typography>
-        <br></br>
-        <Divider />
-        <br></br>
-        <TextField
-          label="Email"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <AlternateEmail style={{ color: "c4c4c4", opacity: "90%" }} />
-              </InputAdornment>
-            ),
-          }}
-          id="outlined-email-input"
-          helperText={`Email you'll recive updates and receipts on`}
-          margin="normal"
-          variant="outlined"
-          type="email"
-          required
-          onChange={(e) => setEmail(e.target.value)}
-          fullWidth
-        />
-        <div style={{ display: "flex", alignItems: "center" }}>
+      <Card
+        id="paymentFormCard"
+        style={{
+          padding: "30px",
+          border: "2px solid black",
+          boxShadow: "10px 10px 0px #262626",
+          borderRadius: "0px",
+          maxWidth: "500px",
+        }}
+      >
+        <CardContent>
+          <Typography variant="h4" component="h4">
+            {Translations[userLanguage].paymentform.title}
+          </Typography>
+          <br></br>
+          <Typography variant="h5">
+            {props.match.params.plan === "classroom"
+              ? Translations[userLanguage].paymentform.plan
+              : "Premium Plan"}
+          </Typography>
+          <br></br>
+          <Divider />
+          <br></br>
           <TextField
-            label="Coupon Code *"
+            label="Email"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Redeem style={{ color: "c4c4c4", opacity: "90%" }} />
+                  <AlternateEmail style={{ color: "c4c4c4", opacity: "90%" }} />
                 </InputAdornment>
               ),
             }}
-            id="outlined-coupon-input"
-            helperText={currentDiscount}
+            id="outlined-email-input"
+            helperText={`Email you'll recive updates and receipts on`}
             margin="normal"
             variant="outlined"
-            size={"small"}
-            onChange={(e) => setCoupon(e.target.value)}
+            type="email"
+            required
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
           />
-          <Button
-            variant="contained"
-            color="primary"
-            style={{ marginTop: "-12px", marginLeft: "5px" }}
-            onClick={() => handleApplyCoupon()}
-          >
-            {Translations[userLanguage].paymentform.button}
-          </Button>
-        </div>
-        <CardInput />
-        <div className={classes.div}>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            onClick={() => {
-              handleToggle();
-            }}
-          >
-            {spinner ? (
-              <CircularProgress
-                style={{ marginLeft: "32px", marginRight: "32px" }}
-                size={20}
-              />
-            ) : (
-              Translations[userLanguage].paymentform.button2
-            )}
-          </Button>
-        </div>
-      </CardContent>
-      <Backdrop
-        style={{ zIndex: "1000" }}
-        open={open}
-        onClick={() => {
-          handleClose();
-        }}
-      >
-        <ComfirmPurchase
-          discount={discount}
-          discountName={discountName}
-          price={price}
-          callback={handleComfirmPurchase}
-        />
-      </Backdrop>
-    </Card>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <TextField
+              label="Coupon Code *"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Redeem style={{ color: "c4c4c4", opacity: "90%" }} />
+                  </InputAdornment>
+                ),
+              }}
+              id="outlined-coupon-input"
+              helperText={currentDiscount}
+              margin="normal"
+              variant="outlined"
+              size={"small"}
+              onChange={(e) => setCoupon(e.target.value)}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ marginTop: "-12px", marginLeft: "5px" }}
+              onClick={() => handleApplyCoupon()}
+            >
+              {Translations[userLanguage].paymentform.button}
+            </Button>
+          </div>
+          <CardInput />
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                handleToggle();
+              }}
+            >
+              {spinner ? (
+                <CircularProgress
+                  style={{ marginLeft: "32px", marginRight: "32px" }}
+                  size={20}
+                />
+              ) : (
+                Translations[userLanguage].paymentform.button2
+              )}
+            </Button>
+          </div>
+        </CardContent>
+        <Backdrop
+          style={{ zIndex: "1000" }}
+          open={open}
+          onClick={() => {
+            handleClose();
+          }}
+        >
+          <ComfirmPurchase
+            discount={discount}
+            discountName={discountName}
+            price={price}
+            callback={handleComfirmPurchase}
+          />
+        </Backdrop>
+      </Card>
+    </div>
   );
 }
 

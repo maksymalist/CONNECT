@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "../style/viewQuizStyles.css";
 
-import { Divider, Typography, Button, Chip } from "@material-ui/core";
+import { Divider, Typography, Button, Chip } from "@mui/material";
 
-import { AccountCircle } from "@material-ui/icons";
+import { AccountCircle } from "@mui/icons-material";
 
 import "firebase/database";
 import Placeholder from "../img/quizCoverPlaceholder.svg";
@@ -17,7 +17,7 @@ import { useLocation } from "react-router-dom";
 
 import { useQuery, gql } from "@apollo/client";
 
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress } from "@mui/material";
 
 const GET_QUIZ = gql`
   query privateQuiz($id: ID!) {

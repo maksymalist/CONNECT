@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { socket } from "./EnterCodeForm";
 import ReactDOM from "react-dom";
-import { Typography, Button, Divider, emphasize } from "@material-ui/core";
+import { Typography, Button, Divider } from "@mui/material";
 
 import GameEnded from "./GameEnded";
 
 import "../style/style.css";
 
 import Translations from "../translations/translations.json";
-import { EmojiEmotionsOutlined } from "@material-ui/icons";
+import { EmojiEmotionsOutlined } from "@mui/icons-material";
 
 //globals
 

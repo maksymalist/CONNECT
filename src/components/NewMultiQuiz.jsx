@@ -8,12 +8,12 @@ import {
   Typography,
   Divider,
   Switch,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import firebase from "firebase";
 import "firebase/database";
 import { toast } from "react-toastify";
-import { AddCircleRounded, DeleteRounded } from "@material-ui/icons";
+import { AddCircleRounded } from "@mui/icons-material";
 import UploadButton from "./UploadButton";
 
 import Translations from "../translations/translations.json";

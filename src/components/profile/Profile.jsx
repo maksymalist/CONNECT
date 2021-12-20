@@ -9,8 +9,8 @@ import {
   Avatar,
   Divider,
   CircularProgress,
-} from "@material-ui/core";
-import { AccountCircle, Lock } from "@material-ui/icons";
+} from "@mui/material";
+import { AccountCircle, Lock } from "@mui/icons-material";
 
 import { toast } from "react-toastify";
 import axios from "axios";

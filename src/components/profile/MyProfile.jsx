@@ -8,8 +8,8 @@ import {
   Divider,
   Avatar,
   CircularProgress,
-} from "@material-ui/core";
-import { AccountCircle, Lock } from "@material-ui/icons";
+} from "@mui/material";
+import { AccountCircle, Lock } from "@mui/icons-material";
 
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";

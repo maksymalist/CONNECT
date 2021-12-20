@@ -3,6 +3,9 @@ html,
 body {
   max-width: 100%;
 }
+body {
+  margin: 0;
+}
 #root {
   padding: 10px;
   overflow-x: hidden;
@@ -13,6 +16,9 @@ body {
   animation: gradient 15s ease infinite;
   width: 100%;
   height: 90vh;
+}
+.App {
+  text-align: center;
 }
 nav {
   background: #4e54c8;
@@ -1001,9 +1007,11 @@ input:hover {
 }
 .MuiButton-containedPrimary {
   background-color: #1bb978 !important;
+  color: white !important;
 }
-.MuiBadge-colorPrimary {
-  background-color: #1bb978 !important;
+.MuiButton-containedSecondary {
+  background-color: rgb(220, 0, 78) !important;
+  color: white !important;
 }
 
 .ans-card {

@@ -9,23 +9,9 @@ import Background from "./Background";
 import "../style/style.css";
 import { toast } from "react-toastify";
 
-import Button from "@material-ui/core/Button";
-import Switch from "@material-ui/core/Switch";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import { InputLabel, FormControl, Typography } from "@material-ui/core";
+import { Button, Switch, Typography } from "@mui/material";
 
-import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-import CasinoRoundedIcon from "@material-ui/icons/CasinoRounded";
-
-import firebase from "firebase";
-import "firebase/database";
-
-import {
-  QuestionAnswerRounded,
-  FilterNoneRounded,
-  LockSharp,
-} from "@material-ui/icons";
+import CasinoRoundedIcon from "@mui/icons-material/CasinoRounded";
 
 import Translations from "../translations/translations.json";
 
@@ -33,7 +19,7 @@ import axios from "axios";
 
 import { useMutation, gql } from "@apollo/client";
 
-const list = require("badwords-list");
+import list from "badwords-list";
 
 const CREATE_NOTIFICATION = gql`
   mutation createNotification(

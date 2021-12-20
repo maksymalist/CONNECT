@@ -2,18 +2,12 @@ import React, { useState, useEffect } from "react";
 import { socket } from "./EnterCodeForm";
 import ReactDOM from "react-dom";
 
-import firebase from "firebase";
-import "firebase/database";
-
 import FinishedScreen from "./FinishedScreen";
 import GameEnded from "./GameEnded";
 
 import "../style/style.css";
 import { toast } from "react-toastify";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import { Typography } from "@material-ui/core";
+import { Typography, Stepper, Step, StepLabel } from "@mui/material";
 
 import Translations from "../translations/translations.json";
 
@@ -351,6 +345,8 @@ function MultiGameRoom({ match }) {
                 border: "2px solid black",
                 boxShadow: "10px 10px 0 #262626",
                 overflowX: "auto",
+                backgroundColor: "white",
+                padding: "15px",
               }}
               activeStep={activeStep}
             >

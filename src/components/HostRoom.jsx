@@ -3,10 +3,10 @@ import { io } from "socket.io-client";
 import { socket } from "./EnterCodeForm";
 import ReactDOM from "react-dom";
 import { toast } from "react-toastify";
-import { Share, People } from "@material-ui/icons";
+import { Share, People } from "@mui/icons-material";
 import AfterRoomLeave from "./AfterRoomLeave";
 
-import { Divider, Typography, Button } from "@material-ui/core";
+import { Divider, Typography, Button } from "@mui/material";
 
 //Icons
 import FirstPlaceIcon from "../img/PodiumIcons/firstPlace.svg";
@@ -14,8 +14,8 @@ import SecondPlaceIcon from "../img/PodiumIcons/secondPlace.svg";
 import ThirdPlaceIcon from "../img/PodiumIcons/thirdPlace.svg";
 
 //Material Ui
-import AssessmentRoundedIcon from "@material-ui/icons/AssessmentRounded";
-import TimerRoundedIcon from "@material-ui/icons/TimerRounded";
+import AssessmentRoundedIcon from "@mui/icons-material/AssessmentRounded";
+import TimerRoundedIcon from "@mui/icons-material/TimerRounded";
 
 import "react-toastify/dist/ReactToastify.css";
 import "../style/style.css";
