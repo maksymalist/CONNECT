@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { io } from "socket.io-client";
 import { socket } from "./EnterCodeForm";
 import ReactDOM from "react-dom";
 
-import firebase from "firebase";
-import "firebase/database";
-
 import FinishedScreen from "./FinishedScreen";
-import GameEnded from "./GameEnded";
 
 import "../style/style.css";
 import { toast } from "react-toastify";
@@ -221,7 +216,7 @@ export default function GameRoom({ match }) {
         user: match.params.user,
       });
       GameOver = true;
-      window.location = "/roomleave";
+      window.location = "/roomleave/ended";
       sessionStorage.setItem("roomJoined", "false");
     });
     socket.on("GameIsOver", (data) => {
@@ -230,10 +225,13 @@ export default function GameRoom({ match }) {
         room: match.params.room,
         user: match.params.user,
       });
-      ReactDOM.render(
-        <GameEnded podium={data} maxPodiumPlayers={match.params.maxpodium} />,
-        document.getElementById("root")
+      const pos = data.find(
+        (player) =>
+          player.playerID ===
+            JSON.parse(localStorage.getItem("user")).profileObj.googleId &&
+          player.player === match.params.user + "⠀"
       );
+      window.location = `/roomleave/gameover?position=${pos && pos.position}`;
       sessionStorage.setItem("roomJoined", "false");
     });
     return () => {

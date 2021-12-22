@@ -4,7 +4,7 @@ import { socket } from "./EnterCodeForm";
 import ReactDOM from "react-dom";
 import { toast } from "react-toastify";
 import { Share, People } from "@mui/icons-material";
-import AfterRoomLeave from "./AfterRoomLeave";
+import GameEnded from "./GameEnded";
 
 import { Divider, Typography, Button } from "@mui/material";
 
@@ -66,6 +66,8 @@ export default function HostRoom(props) {
   const [isRoomLeft, setIsRoomLeft] = useState(false);
 
   const [lowestTimeState, setLowestTime] = useState({});
+
+  const [finalPodium, setFinalPodium] = useState([]);
 
   useEffect(() => {
     if (props.friendlyroom === true) {
@@ -569,6 +571,8 @@ export default function HostRoom(props) {
       googleId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
     });
     gameStarted = false;
+    console.log(Podium);
+    setFinalPodium(Podium);
     setIsRoomLeft(true);
     localStorage.removeItem(
       JSON.parse(localStorage.getItem("user")).profileObj.googleId
@@ -581,7 +585,7 @@ export default function HostRoom(props) {
   return (
     <div>
       {isRoomLeft ? (
-        <AfterRoomLeave />
+        <GameEnded podium={finalPodium} maxPodiumPlayers={playerPodiumMax} />
       ) : (
         <div>
           {isCountdown ? (

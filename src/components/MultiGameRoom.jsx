@@ -279,7 +279,7 @@ function MultiGameRoom({ match }) {
         user: match.params.user,
       });
       setGameOver(true);
-      window.location = "/roomleave";
+      window.location = "/roomleave/ended";
       sessionStorage.setItem("roomJoined", "false");
     });
     socket.on("GameIsOver", (data) => {
@@ -288,10 +288,13 @@ function MultiGameRoom({ match }) {
         room: match.params.room,
         user: match.params.user,
       });
-      ReactDOM.render(
-        <GameEnded podium={data} maxPodiumPlayers={match.params.maxpodium} />,
-        document.getElementById("root")
+      const pos = data.find(
+        (player) =>
+          player.playerID ===
+            JSON.parse(localStorage.getItem("user")).profileObj.googleId &&
+          player.player === match.params.user + "⠀"
       );
+      window.location = `/roomleave/gameover?position=${pos && pos.position}`;
       sessionStorage.setItem("roomJoined", "false");
     });
     return () => {

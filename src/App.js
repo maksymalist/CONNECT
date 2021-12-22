@@ -192,18 +192,12 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/play" component={EnterCodeForm} />
-          <Route
-            path="/normal/:room/:gameid/:user/:maxpodium"
-            component={GameRoom}
-          />
-          <Route
-            path="/multi/:room/:gameid/:user/:maxpodium"
-            component={MultiGameRoom}
-          />
+          <Route path="/normal/:room/:gameid/:user" component={GameRoom} />
+          <Route path="/multi/:room/:gameid/:user" component={MultiGameRoom} />
           <Route path="/newquiz" component={NewQuiz} />
           <Route path="/new-multi-quiz" component={NewMultiQuiz} />
           <Route path="/browsequizzes" component={BrowseQuizzes} />
-          <Route path="/roomleave" component={AfterRoomLeave} />
+          <Route path="/roomleave/:type" component={AfterRoomLeave} />
           <Route path="/gamefinsihed/:room/:user" component={GameEnded} />
           <Route path="/plans" component={Plans} />
           <Route path="/subscription/:plan" component={StripeSubscriptions} />

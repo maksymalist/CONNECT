@@ -46,7 +46,7 @@ export default function WaitingRoom(props) {
 
     socket.on("gameStarted", (data) => {
       if (gameStatus == false) {
-        window.location = `/${data.gamemode}/${props.room}/${data.gamecode}/${props.user}/${data.maxPodium}`; //multi //normal
+        window.location = `/${data.gamemode}/${props.room}/${data.gamecode}/${props.user}`; //multi //normal
       }
       setGameStatus((gameStatus = true));
     });
@@ -66,7 +66,7 @@ export default function WaitingRoom(props) {
           room: props.room,
           user: props.user,
         });
-        window.location = "/roomleave";
+        window.location = "/roomleave/kicked";
         sessionStorage.setItem("roomJoined", "false");
       }
     });
@@ -76,7 +76,7 @@ export default function WaitingRoom(props) {
         room: props.room,
         user: props.user,
       });
-      window.location = "/roomleave";
+      window.location = "/roomleave/ended";
       sessionStorage.setItem("roomJoined", "false");
     });
 
@@ -129,7 +129,7 @@ export default function WaitingRoom(props) {
       room: props.room,
       user: props.user,
     });
-    window.location = "/roomleave";
+    window.location = "/roomleave/left";
     sessionStorage.setItem("roomJoined", "false");
   };
   return (

@@ -83,7 +83,6 @@ function PodiumAnimation({ maxPodiumPlayers, podium }) {
     backgroundColor: "white",
     padding: "15px",
     color: "#fff",
-    width: "150px",
     fontSize: "1.2rem",
     margin: "10px",
     opacity: "0",
