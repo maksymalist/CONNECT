@@ -1,4 +1,4 @@
-![Component 31 (1)](https://user-images.githubusercontent.com/79988159/128874212-42576756-19a1-426b-8e22-f7bcaac2e910.png)
+![Component 50](https://user-images.githubusercontent.com/79988159/147132814-bf97c9d9-5afb-4a69-bf1b-3173612eca62.png)
 
 # CONNECT!
 <a href="https://www.codefactor.io/repository/github/john8790909/connect/overview/main"><img src="https://www.codefactor.io/repository/github/john8790909/connect/badge/main" alt="CodeFactor" /></a> [![Netlify Status](https://api.netlify.com/api/v1/badges/2730b6cc-54d6-4e6a-843a-5513838d48ca/deploy-status)](https://app.netlify.com/sites/quiz-connect/deploys)
@@ -20,13 +20,17 @@ https://user-images.githubusercontent.com/79988159/143145482-90441a17-1373-419e-
 https://youtu.be/9A2tYQTLsKg
 
 
-### CONNECT Website 🌐
+### CONNECT! Website 🌐
 
 https://quiz-connect.netlify.app/
 
 ### Future Designs 🎨
 
  https://www.figma.com/file/1FEav29TlUJhwIPgM2U2sj/Untitled
+ 
+ ### CONNECT! Stats 📊
+ 
+ https://connect1.retool.com/apps/CONNECT%20%7C%20Dashboard
 
 ### Available Scripts 👨‍💻
 
