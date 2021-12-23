@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../style/notificationStyles.css";
 
-import firebase from "firebase/app";
-import "firebase/database";
-
-import { Typography, Button, Divider, CircularProgress } from "@mui/material";
+import {
+  Typography,
+  Button,
+  Divider,
+  CircularProgress,
+  ClickAwayListener,
+} from "@mui/material";
 
 import Translations from "../translations/translations.json";
 
@@ -28,7 +31,7 @@ const CLEAR_NOTIFICATIONS = gql`
   }
 `;
 
-function NotificationBox() {
+function NotificationBox({ close }) {
   const [userLanguage] = useState(
     localStorage.getItem("connectLanguage") || "english"
   );
@@ -75,52 +78,54 @@ function NotificationBox() {
   };
 
   return (
-    <div className="notification__box">
-      <div className="notification__header">
-        <Typography variant="h6" className="notification__title">
-          <b>{Translations[userLanguage].notifications.title}</b>
-        </Typography>
-        <div style={{ width: "90%" }}>
-          <Divider light />
+    <ClickAwayListener onClickAway={close}>
+      <div className="notification__box">
+        <div className="notification__header">
+          <Typography variant="h6" className="notification__title">
+            <b>{Translations[userLanguage].notifications.title}</b>
+          </Typography>
+          <div style={{ width: "90%" }}>
+            <Divider light />
+          </div>
+        </div>
+        <div className="notification__scroll__section">
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            data.allNotificationsByUser.map((notification) => {
+              if (notification.type === "class_created") {
+                return <NotificationCard message={notification.message} />;
+              }
+              if (notification.type === "added_to_class") {
+                return <NotificationCard message={notification.message} />;
+              }
+              if (notification.type === "removed_from_class") {
+                return <NotificationCard message={notification.message} />;
+              }
+              if (notification.type === "invitation_to_room") {
+                return (
+                  <NotificationJoinCard
+                    code={JSON.parse(notification.data).room}
+                    message={notification.message}
+                  />
+                );
+              }
+            })
+          )}
+        </div>
+        <div>
+          <Button
+            style={{ margin: "10px" }}
+            variant="contained"
+            color="secondary"
+            className="notification__card__button"
+            onClick={() => handleClearNotifications()}
+          >
+            {Translations[userLanguage].notifications.clear}
+          </Button>
         </div>
       </div>
-      <div className="notification__scroll__section">
-        {loading ? (
-          <CircularProgress />
-        ) : (
-          data.allNotificationsByUser.map((notification) => {
-            if (notification.type === "class_created") {
-              return <NotificationCard message={notification.message} />;
-            }
-            if (notification.type === "added_to_class") {
-              return <NotificationCard message={notification.message} />;
-            }
-            if (notification.type === "removed_from_class") {
-              return <NotificationCard message={notification.message} />;
-            }
-            if (notification.type === "invitation_to_room") {
-              return (
-                <NotificationJoinCard
-                  code={JSON.parse(notification.data).room}
-                  message={notification.message}
-                />
-              );
-            }
-          })
-        )}
-      </div>
-      <div>
-        <Button
-          style={{ margin: "10px" }}
-          variant="contained"
-          color="secondary"
-          className="notification__card__button"
-          onClick={() => handleClearNotifications()}
-        >
-          {Translations[userLanguage].notifications.clear}
-        </Button>
-      </div>
-    </div>
+    </ClickAwayListener>
   );
 }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { socket } from "./EnterCodeForm";
 import ReactDOM from "react-dom";
-import { Typography, Button, Divider } from "@mui/material";
+import { Typography, Button, Divider, ClickAwayListener } from "@mui/material";
 
 import GameEnded from "./GameEnded";
 
@@ -172,74 +172,76 @@ export default function WaitingRoom(props) {
             }}
           >
             {isOpen ? (
-              <div
-                style={{
-                  backgroundColor: "e0e0e0",
-                  border: "1px solid lightgray",
-                  borderRadius: "5px",
-                  padding: "10px",
-                  marginBottom: "10px",
-                }}
-              >
-                <Typography variant="h6">Select Emote</Typography>
-                <Divider />
+              <ClickAwayListener onClickAway={() => setIsOpen(false)}>
                 <div
                   style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginTop: "10px",
+                    backgroundColor: "e0e0e0",
+                    border: "1px solid lightgray",
+                    borderRadius: "5px",
+                    padding: "10px",
+                    marginBottom: "10px",
                   }}
                 >
+                  <Typography variant="h6">Select Emote</Typography>
+                  <Divider />
                   <div
-                    className="emote__card"
-                    onClick={() => {
-                      socket.emit("sendEmote", {
-                        room: props.room,
-                        user: props.user,
-                        emote: "😀",
-                      });
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      marginTop: "10px",
                     }}
                   >
-                    😀
-                  </div>
-                  <div
-                    className="emote__card"
-                    onClick={() => {
-                      socket.emit("sendEmote", {
-                        room: props.room,
-                        user: props.user,
-                        emote: "😐",
-                      });
-                    }}
-                  >
-                    😐
-                  </div>
-                  <div
-                    className="emote__card"
-                    onClick={() => {
-                      socket.emit("sendEmote", {
-                        room: props.room,
-                        user: props.user,
-                        emote: "🥱",
-                      });
-                    }}
-                  >
-                    🥱
-                  </div>
-                  <div
-                    className="emote__card"
-                    onClick={() => {
-                      socket.emit("sendEmote", {
-                        room: props.room,
-                        user: props.user,
-                        emote: "😡",
-                      });
-                    }}
-                  >
-                    😡
+                    <div
+                      className="emote__card"
+                      onClick={() => {
+                        socket.emit("sendEmote", {
+                          room: props.room,
+                          user: props.user,
+                          emote: "😀",
+                        });
+                      }}
+                    >
+                      😀
+                    </div>
+                    <div
+                      className="emote__card"
+                      onClick={() => {
+                        socket.emit("sendEmote", {
+                          room: props.room,
+                          user: props.user,
+                          emote: "😐",
+                        });
+                      }}
+                    >
+                      😐
+                    </div>
+                    <div
+                      className="emote__card"
+                      onClick={() => {
+                        socket.emit("sendEmote", {
+                          room: props.room,
+                          user: props.user,
+                          emote: "🥱",
+                        });
+                      }}
+                    >
+                      🥱
+                    </div>
+                    <div
+                      className="emote__card"
+                      onClick={() => {
+                        socket.emit("sendEmote", {
+                          room: props.room,
+                          user: props.user,
+                          emote: "😡",
+                        });
+                      }}
+                    >
+                      😡
+                    </div>
                   </div>
                 </div>
-              </div>
+              </ClickAwayListener>
             ) : null}
             <div
               style={{

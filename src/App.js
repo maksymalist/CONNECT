@@ -7,7 +7,7 @@ import Home from "./components/Home";
 import EnterCodeForm from "./components/EnterCodeForm";
 import GameRoom from "./components/GameRoom";
 import MultiGameRoom from "./components/MultiGameRoom";
-import Nav from "./components/Nav";
+import Nav from "./components/Nav.jsx";
 import NewQuiz from "./components/NewQuiz";
 import BrowseQuizzes from "./components/BrowseQuizzes";
 import AfterRoomLeave from "./components/AfterRoomLeave";
