@@ -21,7 +21,7 @@ export default function FinishedScreen({ match, user }) {
         flexDirection: "column",
       }}
     >
-      <h1 style={{ color: "white" }}>
+      <h1 style={{ color: "white", fontWeight: "bold" }}>
         {Translations[userLanguage].finishedscreen.title}
       </h1>
       <h2 style={{ color: "white", textAlign: "center" }}>
