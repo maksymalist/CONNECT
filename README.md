@@ -12,8 +12,7 @@
 ### CONNECT Demo Video 🎥
 #### *This video might not be an accurate representation of CONNECT! since it is changing often and we can't keep on making videos for every commit.
 
-
-https://user-images.githubusercontent.com/79988159/143145482-90441a17-1373-419e-b9ca-e565be603288.mp4
+https://user-images.githubusercontent.com/79988159/153647478-8604949c-fd07-4c42-a871-abb00d540756.mov
 
 #### Older version of CONNECT!
 #### *take a look if you want to see how the project evolved over time
