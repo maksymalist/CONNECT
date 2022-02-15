@@ -8,7 +8,6 @@
 .login-component-container {
   background-color: white;
   height: auto;
-  padding: 25px;
   display: flex;
   align-items: center;
   flex-direction: column;
