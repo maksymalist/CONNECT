@@ -13,6 +13,9 @@ import ThirdPlaceIcon from "../img/PodiumIcons/thirdPlace.svg";
 //translations
 import Translations from "../translations/translations.json";
 
+//config
+import config from "../config.json";
+
 //material-ui
 import {
   Typography,
@@ -104,10 +107,9 @@ export default function MemberRoom() {
   const USERID_PREFIX = "user:";
 
   const handleRenderClassroom = async () => {
-    const res = await axios.post(
-      "https://connect-backend-2.herokuapp.com/get-class",
-      { id: id }
-    );
+    const res = await axios.post(`${config["api-server"]}/get-class`, {
+      id: id,
+    });
     const data = res.data;
 
     if (
@@ -134,10 +136,9 @@ export default function MemberRoom() {
         imageUrl: "",
       };
 
-      const res = await axios.post(
-        "https://connect-backend-2.herokuapp.com/user-no-prefix",
-        { userId: member.userId }
-      );
+      const res = await axios.post(`${config["api-server"]}/user-no-prefix`, {
+        userId: member.userId,
+      });
       const data = res.data;
 
       userObj.name = data.name;
@@ -148,17 +149,16 @@ export default function MemberRoom() {
 
     //set hall of fame
     const hallOfFameData = await axios.post(
-      "https://connect-backend-2.herokuapp.com/get-hall-of-fame",
+      `${config["api-server"]}/get-hall-of-fame`,
       { id: id }
     );
     setHallOfFame(hallOfFameData.data);
 
     //set recent games
 
-    const games = await axios.post(
-      "https://connect-backend-2.herokuapp.com/get-recent-games",
-      { classId: id }
-    );
+    const games = await axios.post(`${config["api-server"]}/get-recent-games`, {
+      classId: id,
+    });
 
     const recentGames = games.data;
 
@@ -179,10 +179,9 @@ export default function MemberRoom() {
   const handleSetFinalists = async (finalists) => {
     const newFinalistsArr = [];
     finalists.map(async (finalist) => {
-      const res = await axios.post(
-        "https://connect-backend-2.herokuapp.com/user",
-        { userId: finalist.playerID }
-      );
+      const res = await axios.post(`${config["api-server"]}/user`, {
+        userId: finalist.playerID,
+      });
       const playerData = res.data;
 
       newFinalistsArr.push({
@@ -209,10 +208,9 @@ export default function MemberRoom() {
   };
 
   const addMember = async (member) => {
-    const res = await axios.post(
-      "https://connect-backend-2.herokuapp.com/user-by-email",
-      { email: member }
-    );
+    const res = await axios.post(`${config["api-server"]}/user-by-email`, {
+      email: member,
+    });
 
     console.log(res.data);
 

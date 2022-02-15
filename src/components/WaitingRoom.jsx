@@ -25,6 +25,7 @@ export default function WaitingRoom(props) {
   useEffect(() => {
     socket.emit("joinPlayerRoom", {
       room: props.room,
+      name: props.user,
     });
     setPeopleInRoom(props.usersInRoom);
 

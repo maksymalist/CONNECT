@@ -37,6 +37,7 @@ import { setIsLoggedIn, setIsLoggedOut } from "./actions/IsLogged";
 
 //apollo
 import { useMutation, gql } from "@apollo/client";
+import config from "./config.json";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAuhaVNdwDaivPThUZ6wxYKCkvs0tEDRNs",
@@ -114,13 +115,9 @@ function App() {
       });
 
       axios
-        .post(
-          "https://connect-backend-2.herokuapp.com/get-user-subscription-id",
-          {
-            userId: JSON.parse(localStorage.getItem("user")).profileObj
-              .googleId,
-          }
-        )
+        .post(`${config["api-server"]}/get-user-subscription-id`, {
+          userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+        })
         .then((res) => {
           if (res.data !== null && res.data !== undefined) {
             const subObj = JSON.parse(res.data);
@@ -149,10 +146,9 @@ function App() {
   }, []);
 
   const fetchCustomerData = async (id) => {
-    const res = await axios.post(
-      "https://connect-backend-2.herokuapp.com/get-customer-data",
-      { subId: id }
-    );
+    const res = await axios.post(`${config["api-server"]}/get-customer-data`, {
+      subId: id,
+    });
 
     let plan = "";
     if (

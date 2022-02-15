@@ -25,6 +25,8 @@ import Translations from "../../translations/translations.json";
 
 import { useQuery, gql } from "@apollo/client";
 
+import config from "../../config.json";
+
 //queries
 const GET_USER_PROFILE = gql`
   query getUserProfile($id: ID!) {
@@ -174,10 +176,9 @@ function Profile() {
   };
 
   const getClasses = async () => {
-    const res = await axios.post(
-      "https://connect-backend-2.herokuapp.com/get-user-classes",
-      { userId: id }
-    );
+    const res = await axios.post(`${config["api-server"]}/get-user-classes`, {
+      userId: id,
+    });
 
     console.log(res.data);
     if (res.data) {

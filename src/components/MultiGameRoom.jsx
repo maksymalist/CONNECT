@@ -13,6 +13,8 @@ import Translations from "../translations/translations.json";
 
 import axios from "axios";
 
+import config from "../config.json";
+
 function MultiGameRoom({ match }) {
   const [activeStep, setActiveStep] = useState(0);
 
@@ -211,7 +213,7 @@ function MultiGameRoom({ match }) {
     steps.map((step, index) => {
       if (index == activeStep) {
         axios
-          .post("https://connect-backend-2.herokuapp.com/get-multi-all-types", {
+          .post(`${config["api-server"]}/get-multi-all-types`, {
             multiID: match.params.gameid,
           })
           .then((res) => {
@@ -233,7 +235,7 @@ function MultiGameRoom({ match }) {
 
   useEffect(() => {
     axios
-      .post("https://connect-backend-2.herokuapp.com/get-multi-all-types", {
+      .post(`${config["api-server"]}/get-multi-all-types`, {
         multiID: match.params.gameid,
       })
       .then((res) => {

@@ -230,7 +230,7 @@ export default function BrowseQuizzes() {
               style={{ margin: "100px", color: "white" }}
             />
           ) : (
-            quizzes.allQuizzes.map((quiz, index) => {
+            quizzes?.allQuizzes?.map((quiz, index) => {
               return <QuizCard key={quiz.id + index} data={quiz} />;
             })
           )
@@ -243,7 +243,7 @@ export default function BrowseQuizzes() {
               style={{ margin: "100px", color: "white" }}
             />
           ) : (
-            multis.allMultis.map((quiz, index) => {
+            multis?.allMultis?.map((quiz, index) => {
               return <MultiCard key={quiz.id + index} data={quiz} />;
             })
           )

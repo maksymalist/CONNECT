@@ -28,6 +28,8 @@ import Translations from "../translations/translations.json";
 
 import axios from "axios";
 
+import config from "../config.json";
+
 // //Mutations
 // const ADD_POINTS = gql`
 //     mutation addPoints($classId: ID!, $userId: ID!, $points: Int!){
@@ -80,16 +82,20 @@ export default function HostRoom(props) {
       room: props.room,
     });
     socket.on("addeduser", (data) => {
-      var RoomUsers = [];
+      // var RoomUsers = [];
 
-      for (var i = 0; i < data.names.length; i++) {
-        if (data.UserRooms[i] == undefined) return;
-        if (data.currentRoom == data.UserRooms[i]) {
-          RoomUsers.push(data.names[i]);
-        }
-      }
-      document.getElementById("userList").innerHTML = data.UsersInRoom;
-      setNumberOfUsers((numberOfUsers = numberOfUsers += 1));
+      // for (var i = 0; i < data.names.length; i++) {
+      //   if (data.UserRooms[i] == undefined) return;
+      //   if (data.currentRoom == data.UserRooms[i]) {
+      //     RoomUsers.push(data.names[i]);
+      //   }
+      // }
+      // document.getElementById("userList").innerHTML = data.UsersInRoom;
+      console.log(`
+        Here it the number of users: ${data.UsersInRoom.length}
+        Here is the limit: ${userLimit}
+      `);
+      setNumberOfUsers(data.UsersInRoom.length);
       updateUserDiv(data.UsersInRoom);
       if (numberOfUsers >= userLimit) {
         socket.emit("roomLimitReached", props.room);
@@ -126,7 +132,7 @@ export default function HostRoom(props) {
 
     socket.on("playerLeftRoom", (data) => {
       document.getElementById("userList").innerHTML = data.UsersInRoom;
-      setNumberOfUsers((numberOfUsers = data.UsersInRoom.length));
+      setNumberOfUsers(data.UsersInRoom.length);
       updateUserDiv(data.UsersInRoom);
     });
 
@@ -372,10 +378,9 @@ export default function HostRoom(props) {
   };
 
   const CheckPlanStatus = async () => {
-    const res = await axios.post(
-      "https://connect-backend-2.herokuapp.com/user",
-      { userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId }
-    );
+    const res = await axios.post(`${config["api-server"]}/user`, {
+      userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+    });
     const plan = res.data.plan;
 
     if (plan === "Classroom") {
@@ -453,14 +458,11 @@ export default function HostRoom(props) {
   };
 
   const addPoints = async (points, userId) => {
-    const res = await axios.post(
-      "https://connect-backend-2.herokuapp.com/add-points",
-      {
-        points: points,
-        userId: userId,
-        classId: props.classid,
-      }
-    );
+    const res = await axios.post(`${config["api-server"]}/add-points`, {
+      points: points,
+      userId: userId,
+      classId: props.classid,
+    });
   };
 
   const createRecentGame = async () => {
@@ -491,7 +493,7 @@ export default function HostRoom(props) {
 
     if (props.classid !== null) {
       await axios.post(
-        "https://connect-backend-2.herokuapp.com/create-recent-game",
+        `${config["api-server"]}/create-recent-game`,
         recentGame
       );
 
@@ -499,10 +501,10 @@ export default function HostRoom(props) {
       Podium.map(async (player) => {
         if (player.position == 1) {
           const userId = player.playerID;
-          const res = await axios.post(
-            "https://connect-backend-2.herokuapp.com/member",
-            { userId: userId, classId: props.classid }
-          );
+          const res = await axios.post(`${config["api-server"]}/member`, {
+            userId: userId,
+            classId: props.classid,
+          });
           if (res.data) {
             addPoints(100, userId);
           }
@@ -511,10 +513,10 @@ export default function HostRoom(props) {
       Podium.map(async (player) => {
         if (player.position == 2) {
           const userId = player.playerID;
-          const res = await axios.post(
-            "https://connect-backend-2.herokuapp.com/member",
-            { userId: userId, classId: props.classid }
-          );
+          const res = await axios.post(`${config["api-server"]}/member`, {
+            userId: userId,
+            classId: props.classid,
+          });
           if (res.data) {
             addPoints(50, userId);
           }
@@ -523,10 +525,10 @@ export default function HostRoom(props) {
       Podium.map(async (player) => {
         if (player.position == 3) {
           const userId = player.playerID;
-          const res = await axios.post(
-            "https://connect-backend-2.herokuapp.com/member",
-            { userId: userId, classId: props.classid }
-          );
+          const res = await axios.post(`${config["api-server"]}/member`, {
+            userId: userId,
+            classId: props.classid,
+          });
           if (res.data) {
             addPoints(20, userId);
           }
@@ -538,10 +540,9 @@ export default function HostRoom(props) {
   const GameOver = async () => {
     const Podium = [];
 
-    const res = await axios.post(
-      "https://connect-backend-2.herokuapp.com/user",
-      { userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId }
-    );
+    const res = await axios.post(`${config["api-server"]}/user`, {
+      userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+    });
     const plan = res.data.plan;
     if (plan !== null && plan !== "" && plan !== undefined) {
       if (plan === "Classroom") {
