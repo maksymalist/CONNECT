@@ -1,20 +1,17 @@
-.login-main-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin-top: 200px;
+.login-main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin-top: 200px;
 }
-.login-component-container{
-    background-color: white;
-    width: 20%;
-    min-width: 300px;
-    height: auto;
-    padding: 25px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    box-shadow: 10px 10px 0px #262626;
-    border: 1px solid black;
-
+.login-component-container {
+  background-color: white;
+  height: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 10px 10px 0px #262626;
+  border: 1px solid black;
+  padding: 50px;
 }

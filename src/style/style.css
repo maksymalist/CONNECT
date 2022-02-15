@@ -1,7 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Staatliches&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@500&display=swap");
 html,
 body {
   max-width: 100%;
+  font-family: "Saira Semi Condensed", sans-serif;
 }
 body {
   margin: 0;
@@ -1027,4 +1028,24 @@ input:hover {
   background-image: url("../img/CardBackGround/questionCard.svg");
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+footer {
+  display: flex;
+  flex: 1;
+  padding: 2rem 0;
+  border-top: 1px solid #eaeaea;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100vw;
+  background-color: white;
+}
+
+footer a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  color: #000;
 }

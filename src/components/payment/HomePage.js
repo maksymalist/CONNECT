@@ -34,6 +34,8 @@ import { useMutation, gql } from "@apollo/client";
 
 import { useSelector } from "react-redux";
 
+import config from "../../config.json";
+
 const UPDATE_USER_SUBSCRIPTION = gql`
   mutation ($id: ID!, $plan: String!, $subscriptionDetails: String!) {
     updateUserSubscription(
@@ -115,10 +117,9 @@ function HomePage(props) {
     }
     //https://connect-quiz-now.herokuapp.com
 
-    const res = await axios.post(
-      "https://connect-backend-2.herokuapp.com/pay",
-      { email: email }
-    );
+    const res = await axios.post(`${config["api-server"]}/pay`, {
+      email: email,
+    });
 
     const clientSecret = res.data["client_secret"];
 
@@ -176,10 +177,10 @@ function HomePage(props) {
         setSpinner(false);
       } else {
         if (activeCoupon === false) {
-          const res = await axios.post(
-            "https://connect-backend-2.herokuapp.com/sub",
-            { payment_method: result.paymentMethod.id, email: email }
-          );
+          const res = await axios.post(`${config["api-server"]}/sub`, {
+            payment_method: result.paymentMethod.id,
+            email: email,
+          });
           // eslint-disable-next-line camelcase
           const { client_secret, status, customer_obj, subscription_obj } =
             res.data;
@@ -219,14 +220,11 @@ function HomePage(props) {
           }
         }
         if (activeCoupon === true) {
-          const res = await axios.post(
-            "https://connect-backend-2.herokuapp.com/sub-coupon",
-            {
-              payment_method: result.paymentMethod.id,
-              email: email,
-              coupon: coupon,
-            }
-          );
+          const res = await axios.post(`${config["api-server"]}/sub-coupon`, {
+            payment_method: result.paymentMethod.id,
+            email: email,
+            coupon: coupon,
+          });
           // eslint-disable-next-line camelcase
           const { client_secret, status, customer_obj, subscription_obj } =
             res.data;
@@ -282,10 +280,9 @@ function HomePage(props) {
       toast.error(Translations[userLanguage].alerts.entercoupon);
       return;
     } else {
-      const res = await axios.post(
-        `https://connect-backend-2.herokuapp.com/get-coupon`,
-        { coupon: coupon }
-      );
+      const res = await axios.post(`${config["api-server"]}/get-coupon`, {
+        coupon: coupon,
+      });
       console.log(res.data);
       if (res.data === "Invalid Coupon") {
         toast.error(Translations[userLanguage].alerts.entervalidcoupon);

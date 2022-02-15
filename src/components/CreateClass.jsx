@@ -18,6 +18,8 @@ import Translations from "../translations/translations.json";
 
 import axios from "axios";
 
+import config from "../config.json";
+
 //redux
 import { useSelector } from "react-redux";
 
@@ -156,10 +158,9 @@ function CreateClass() {
   };
 
   const addMember = async (member) => {
-    const res = await axios.post(
-      "https://connect-backend-2.herokuapp.com/user-by-email",
-      { email: member }
-    );
+    const res = await axios.post(`${config["api-server"]}/user-by-email`, {
+      email: member,
+    });
 
     const membersArr = [...members];
 

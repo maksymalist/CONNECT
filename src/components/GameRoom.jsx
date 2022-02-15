@@ -13,6 +13,8 @@ import Translations from "../translations/translations.json";
 
 import axios from "axios";
 
+import config from "../config.json";
+
 export default function GameRoom({ match }) {
   var [time, updateTime] = useState(0);
   var [selected, setSelected] = useState([]);
@@ -32,7 +34,7 @@ export default function GameRoom({ match }) {
 
   const getQuiz = async () => {
     const response = await axios.post(
-      `https://connect-backend-2.herokuapp.com/get-quiz-all-types`,
+      `${config["api-server"]}/get-quiz-all-types`,
       { quizID: match.params.gameid }
     );
     quiz = response.data;

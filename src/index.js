@@ -13,13 +13,15 @@ import ReactPWAInstallProvider from "react-pwa-install";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+import config from "./config.json";
+
 const store = createStore(
   rootReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 const client = new ApolloClient({
-  uri: "https://connect-backend-2.herokuapp.com/graphql",
+  uri: `${config["api-server"]}/graphql`,
   cache: new InMemoryCache(),
 });
 

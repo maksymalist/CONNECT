@@ -27,6 +27,8 @@ import { useQuery, gql } from "@apollo/client";
 
 import { useReactPWAInstall } from "react-pwa-install";
 
+import config from "../config.json";
+
 const GET_NOTIFICATION_LENGTH = gql`
   query notificationNumber($userId: ID!) {
     notificationNumber(userId: $userId)
@@ -106,7 +108,7 @@ function Nav({ isLoggedIn, customerId }) {
     setAnchorEl(null);
 
     const res = await axios.post(
-      "https://connect-backend-2.herokuapp.com/create-customer-portal-session",
+      `${config["api-server"]}/create-customer-portal-session`,
       { customerId: customerId }
     );
 
@@ -177,189 +179,193 @@ function Nav({ isLoggedIn, customerId }) {
             id="profilePic"
           ></img>
         ) : null}
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-          style={{
-            width: "150px",
-            marginTop: "30px",
-            padding: "5px",
-            display: "flex",
-            alignItems: "center",
-            marginRight: "10px",
-          }}
-        >
-          <MenuItem
-            style={{
-              borderBottom: "1px solid grey",
-              width: "150px",
-              justifyContent: "center",
-            }}
-            onClick={handleClose}
-          >
-            {Translations[userLanguage].nav.profile.head}
-            <br></br> {currentUsername}
-          </MenuItem>
-          <MenuItem onClick={() => (window.location = "/profile")}>
-            {Translations[userLanguage].nav.profile.account}
-          </MenuItem>
-          <MenuItem onClick={openCustomerPortal}>
-            {Translations[userLanguage].nav.profile.subscription}
-          </MenuItem>
-          <MenuItem onClick={handlePWAClick}>Install App</MenuItem>
-          <MenuItem
-            style={{
-              backgroundColor: "rgb(220, 0, 78)",
-              color: "white",
-              fontWeight: "bold",
-              borderRadius: "5px",
-            }}
-            onClick={logOut}
-          >
-            {Translations[userLanguage].nav.profile.logout}
-          </MenuItem>
-        </Menu>
-        <Add
-          style={{
-            color: "white",
-            width: "30px",
-            height: "30px",
-            marginTop: "10px",
-            marginLeft: "10px",
-          }}
-          className="liright nav-links"
-          aria-controls="simple-menu"
-          aria-haspopup="true"
-          onClick={handleClick2}
-        />
-        <Menu
-          id="simple-menu2"
-          anchorEl={anchorEl2}
-          keepMounted
-          open={Boolean(anchorEl2)}
-          onClose={handleClose2}
-          style={{
-            width: "150px",
-            marginTop: "30px",
-            padding: "5px",
-            display: "flex",
-            alignItems: "center",
-            marginRight: "10px",
-          }}
-        >
-          <MenuItem
-            onClick={() => {
-              window.location = "/newquiz";
-            }}
-          >
-            <QuestionAnswerRounded
-              style={{ marginRight: "10px" }}
-              color="primary"
-            />{" "}
-            {Translations[userLanguage].nav.add.normal}
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              window.location = "/new-multi-quiz";
-            }}
-          >
-            <FilterNoneRounded
-              style={{ marginRight: "10px" }}
-              color="primary"
-            />{" "}
-            {Translations[userLanguage].nav.add.multi}
-          </MenuItem>
-        </Menu>
-        <TranslateSharp
-          style={{
-            color: "white",
-            width: "30px",
-            height: "30px",
-            marginTop: "10px",
-            marginLeft: "10px",
-          }}
-          className="liright nav-links"
-          aria-controls="simple-menu"
-          aria-haspopup="true"
-          onClick={handleClick3}
-        />
-        <Menu
-          id="simple-menu3"
-          anchorEl={anchorEl3}
-          keepMounted
-          open={Boolean(anchorEl3)}
-          onClose={handleClose3}
-          style={{
-            width: "150px",
-            marginTop: "30px",
-            padding: "5px",
-            display: "flex",
-            alignItems: "center",
-            marginRight: "10px",
-          }}
-        >
-          <MenuItem
-            style={language === "english" ? selectedColors : regularColors}
-            onClick={() => {
-              handleSetLanguage("english");
-            }}
-          >
-            English
-          </MenuItem>
-
-          <MenuItem
-            style={language === "french" ? selectedColors : regularColors}
-            onClick={() => {
-              handleSetLanguage("french");
-            }}
-          >
-            Français
-          </MenuItem>
-        </Menu>
-        <div className="liright">
-          <Badge
-            badgeContent={loading ? 0 : data ? data.notificationNumber : 0}
-            color="primary"
-            style={{ color: "#1BB978" }}
-          >
-            <NotificationsSharp
+        {isLoggedIn ? (
+          <>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+              style={{
+                width: "150px",
+                marginTop: "30px",
+                padding: "5px",
+                display: "flex",
+                alignItems: "center",
+                marginRight: "10px",
+              }}
+            >
+              <MenuItem
+                style={{
+                  borderBottom: "1px solid grey",
+                  width: "150px",
+                  justifyContent: "center",
+                }}
+                onClick={handleClose}
+              >
+                {Translations[userLanguage].nav.profile.head}
+                <br></br> {currentUsername}
+              </MenuItem>
+              <MenuItem onClick={() => (window.location = "/profile")}>
+                {Translations[userLanguage].nav.profile.account}
+              </MenuItem>
+              <MenuItem onClick={openCustomerPortal}>
+                {Translations[userLanguage].nav.profile.subscription}
+              </MenuItem>
+              <MenuItem onClick={handlePWAClick}>Install App</MenuItem>
+              <MenuItem
+                style={{
+                  backgroundColor: "rgb(220, 0, 78)",
+                  color: "white",
+                  fontWeight: "bold",
+                  borderRadius: "5px",
+                }}
+                onClick={logOut}
+              >
+                {Translations[userLanguage].nav.profile.logout}
+              </MenuItem>
+            </Menu>
+            <Add
               style={{
                 color: "white",
                 width: "30px",
                 height: "30px",
                 marginTop: "10px",
+                marginLeft: "10px",
               }}
-              className="liright"
-              onClick={() => {
-                setNotificationBoxIsOpen(
-                  (notificationBoxIsOpen) => !notificationBoxIsOpen
-                );
-              }}
+              className="liright nav-links"
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleClick2}
             />
-          </Badge>
-          <div
-            style={
-              notificationBoxIsOpen
-                ? {
-                    display: "flex",
-                    flexDirection: "column",
-                    padding: "10px",
-                    width: "350px",
-                    position: "absolute",
-                    top: "50px",
-                    marginLeft: "-190px",
-                  }
-                : null
-            }
-          >
-            {notificationBoxIsOpen && (
-              <NotificationBox close={handleNotificationClose} />
-            )}
-          </div>
-        </div>
+            <Menu
+              id="simple-menu2"
+              anchorEl={anchorEl2}
+              keepMounted
+              open={Boolean(anchorEl2)}
+              onClose={handleClose2}
+              style={{
+                width: "150px",
+                marginTop: "30px",
+                padding: "5px",
+                display: "flex",
+                alignItems: "center",
+                marginRight: "10px",
+              }}
+            >
+              <MenuItem
+                onClick={() => {
+                  window.location = "/newquiz";
+                }}
+              >
+                <QuestionAnswerRounded
+                  style={{ marginRight: "10px" }}
+                  color="primary"
+                />{" "}
+                {Translations[userLanguage].nav.add.normal}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  window.location = "/new-multi-quiz";
+                }}
+              >
+                <FilterNoneRounded
+                  style={{ marginRight: "10px" }}
+                  color="primary"
+                />{" "}
+                {Translations[userLanguage].nav.add.multi}
+              </MenuItem>
+            </Menu>
+            <TranslateSharp
+              style={{
+                color: "white",
+                width: "30px",
+                height: "30px",
+                marginTop: "10px",
+                marginLeft: "10px",
+              }}
+              className="liright nav-links"
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleClick3}
+            />
+            <Menu
+              id="simple-menu3"
+              anchorEl={anchorEl3}
+              keepMounted
+              open={Boolean(anchorEl3)}
+              onClose={handleClose3}
+              style={{
+                width: "150px",
+                marginTop: "30px",
+                padding: "5px",
+                display: "flex",
+                alignItems: "center",
+                marginRight: "10px",
+              }}
+            >
+              <MenuItem
+                style={language === "english" ? selectedColors : regularColors}
+                onClick={() => {
+                  handleSetLanguage("english");
+                }}
+              >
+                English
+              </MenuItem>
+
+              <MenuItem
+                style={language === "french" ? selectedColors : regularColors}
+                onClick={() => {
+                  handleSetLanguage("french");
+                }}
+              >
+                Français
+              </MenuItem>
+            </Menu>
+            <div className="liright">
+              <Badge
+                badgeContent={loading ? 0 : data ? data.notificationNumber : 0}
+                color="primary"
+                style={{ color: "#1BB978" }}
+              >
+                <NotificationsSharp
+                  style={{
+                    color: "white",
+                    width: "30px",
+                    height: "30px",
+                    marginTop: "10px",
+                  }}
+                  className="liright"
+                  onClick={() => {
+                    setNotificationBoxIsOpen(
+                      (notificationBoxIsOpen) => !notificationBoxIsOpen
+                    );
+                  }}
+                />
+              </Badge>
+              <div
+                style={
+                  notificationBoxIsOpen
+                    ? {
+                        display: "flex",
+                        flexDirection: "column",
+                        padding: "10px",
+                        width: "350px",
+                        position: "absolute",
+                        top: "50px",
+                        marginLeft: "-190px",
+                      }
+                    : null
+                }
+              >
+                {notificationBoxIsOpen && (
+                  <NotificationBox close={handleNotificationClose} />
+                )}
+              </div>
+            </div>
+          </>
+        ) : null}
         {isLoggedIn ? null : (
           <Link to="/login">
             <li className="liright nav-links">
