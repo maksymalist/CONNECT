@@ -490,6 +490,7 @@ function HomePage(props) {
             </Button>
           </div>
           <CardInput />
+          <br></br>
           <div>
             <Button
               variant="contained"

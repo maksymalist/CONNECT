@@ -1,8 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@500&display=swap");
 html,
 body {
   max-width: 100%;
-  font-family: "Saira Semi Condensed", sans-serif;
 }
 body {
   margin: 0;
