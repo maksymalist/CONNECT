@@ -42,8 +42,6 @@ export default function Plans() {
             display: "flex",
             flexDirection: "column",
             textAlign: "start",
-            height: "270px",
-            overflowY: "auto",
           }}
         >
           <Typography variant="subtitle1" className="features">
@@ -65,20 +63,6 @@ export default function Plans() {
           width="220px"
           src={StarterImg}
         ></img>
-        <div>
-          <Button
-            id="Starter"
-            className="sub-button"
-            style={{ marginBottom: "1vh" }}
-            variant="contained"
-            color="primary"
-            size="medium"
-          >
-            {plan === "Starter"
-              ? Translations[userLanguage].plans.starter.buttonsubscribed
-              : Translations[userLanguage].plans.starter.button}
-          </Button>
-        </div>
       </div>
       <div id="plan2">
         <h1>{Translations[userLanguage].plans.classroom.title}</h1>
@@ -89,8 +73,6 @@ export default function Plans() {
             display: "flex",
             flexDirection: "column",
             textAlign: "start",
-            height: "270px",
-            overflowY: "auto",
           }}
         >
           <Typography variant="subtitle1" className="features">
@@ -145,8 +127,6 @@ export default function Plans() {
             display: "flex",
             flexDirection: "column",
             textAlign: "start",
-            height: "270px",
-            overflowY: "auto",
           }}
         >
           <Typography variant="subtitle1" className="features">

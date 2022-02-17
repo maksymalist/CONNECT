@@ -11,7 +11,7 @@ import "firebase/auth";
 import "firebase/database";
 
 //imgs
-import logo from "../../img/logo.svg";
+import logo from "../../img/logo-filled.svg";
 
 import Translations from "../../translations/translations.json";
 import { useMutation, gql } from "@apollo/client";

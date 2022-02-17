@@ -58,7 +58,7 @@ function Nav({ isLoggedIn, customerId }) {
     },
   });
 
-  const { pwaInstall, supported, isInstalled } = useReactPWAInstall();
+  const { pwaInstall } = useReactPWAInstall();
 
   const navStyle = {
     color: "white",
@@ -380,12 +380,16 @@ function Nav({ isLoggedIn, customerId }) {
           }}
           className="nav-links lileft"
           alt="connect-logo"
-          width={50}
-          height={50}
+          width={46}
+          height={46}
           src={logo}
+          style={{
+            marginLeft: "5px",
+            marginTop: "1px",
+          }}
         />
         <Link to="/play">
-          <li className="nav-links lileft">
+          <li className="nav-links lileft" style={{ color: "white" }}>
             {Translations[userLanguage].nav.play}
           </li>
         </Link>

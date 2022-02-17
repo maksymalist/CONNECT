@@ -385,11 +385,11 @@ function MultiGameRoom({ match }) {
           </div>
         </div>
         <div>
-          <nav style={{ height: "50px" }}>
+          <nav style={{ height: "50px", backgroundColor: "white" }}>
             <div
               style={{
                 float: "left",
-                color: "white",
+                color: "black",
                 marginLeft: "10px",
                 marginTop: "-10px",
               }}

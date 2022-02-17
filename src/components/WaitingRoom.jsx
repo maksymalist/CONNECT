@@ -161,6 +161,8 @@ export default function WaitingRoom(props) {
             height: "100%",
             justifyContent: "center",
             alignItems: "flex-end",
+            position: "sticky",
+            bottom: "0",
           }}
         >
           <div
@@ -170,6 +172,8 @@ export default function WaitingRoom(props) {
               flexWrap: "wrap",
               justifyContent: "center",
               flexDirection: "column",
+              backgroundColor: "white",
+              width: "100%",
             }}
           >
             {isOpen ? (
@@ -281,11 +285,11 @@ export default function WaitingRoom(props) {
             <h1>Players</h1>
         </div> */}
       <div>
-        <nav style={{ height: "50px" }}>
+        <nav style={{ height: "50px", backgroundColor: "white" }}>
           <div
             style={{
               float: "left",
-              color: "white",
+              color: "black",
               marginLeft: "10px",
               marginTop: "-10px",
             }}
