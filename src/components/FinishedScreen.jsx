@@ -33,11 +33,11 @@ export default function FinishedScreen({ match, user }) {
         style={{ color: "white", margin: "100px" }}
       />
       <div>
-        <nav style={{ height: "50px" }}>
+        <nav style={{ height: "50px", backgroundColor: "white" }}>
           <div
             style={{
               float: "left",
-              color: "white",
+              color: "black",
               marginLeft: "10px",
               marginTop: "-10px",
             }}

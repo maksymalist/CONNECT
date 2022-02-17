@@ -112,7 +112,7 @@
     "plans": {
       "starter": {
         "title": "Starter",
-        "price": "Free",
+        "price": "✨ Free ✨",
         "features": {
           "title": "Features",
           "feature1": "Acces to The Multiplayer Card Games",
@@ -472,7 +472,7 @@
     "plans": {
       "starter": {
         "title": "Forfait Débutant",
-        "price": "Gratuit",
+        "price": "✨ Gratuit ✨",
         "features": {
           "title": "Avantages",
           "feature1": "Accès aux jeux de cartes multijoueurs",
