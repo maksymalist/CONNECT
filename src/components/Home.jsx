@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import HomePageImage from "../img/HomePageImage.svg";
+import HomePageImage from "../img/HomePageImg.svg";
 import HomePageWave from "../img/HomePageWave.svg";
 import BigStripe from "../img/BigStripe.svg";
 import HostVideo from "../video/hostvideogif.gif";
