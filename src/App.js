@@ -5,30 +5,30 @@ import firebase from "firebase/app";
 
 import Home from "./components/Home";
 import EnterCodeForm from "./components/EnterCodeForm";
-import GameRoom from "./components/GameRoom";
-import MultiGameRoom from "./components/MultiGameRoom";
-import Nav from "./components/Nav.jsx";
-import NewQuiz from "./components/NewQuiz";
-import BrowseQuizzes from "./components/BrowseQuizzes";
-import AfterRoomLeave from "./components/AfterRoomLeave";
-import GameEnded from "./components/GameEnded";
+import GameRoom from "./components/game/player/GameRoom";
+import MultiGameRoom from "./components/game/player/MultiGameRoom";
+import Nav from "./components/nav/Nav.jsx";
+import NewQuiz from "./components/creation-system/NewQuiz";
+import BrowseQuizzes from "./components/browse/BrowseQuizzes";
+import AfterRoomLeave from "./components/game/player/AfterRoomLeave";
+import GameEnded from "./components/game/host/GameEnded";
 import StripeSubscriptions from "./components/payment/StripeSubscriptions";
 import Plans from "./components/payment/Plans";
-import Background from "./components/Background";
+import Background from "./components/misc/Background";
 import Profile from "./components/profile/Profile";
-import Classroom from "./components/Classroom";
-import ViewClassroom from "./components/ViewClassroom";
-import ViewMultiPrivate from "./components/ViewMultiPrivate";
-import ViewQuizPrivate from "./components/ViewQuizPrivate";
+import Classroom from "./components/classroom/Classroom";
+import ViewClassroom from "./components/view/ViewClassroom";
+import ViewMultiPrivate from "./components/view/ViewMultiPrivate";
+import ViewQuizPrivate from "./components/view/ViewQuizPrivate";
 
 import { toast } from "react-toastify";
 import axios from "axios";
-import Login from "./components/Auth/Login";
-import NewMultiQuiz from "./components/NewMultiQuiz";
+import Login from "./components/auth/Login";
+import NewMultiQuiz from "./components/creation-system/NewMultiQuiz";
 import MyProfile from "./components/profile/MyProfile";
-import ViewQuiz from "./components/ViewQuiz";
-import ViewMultiQuiz from "./components/ViewMultiQuiz";
-import CreateClass from "./components/CreateClass";
+import ViewQuiz from "./components/view/ViewQuiz";
+import ViewMultiQuiz from "./components/view/ViewMultiQuiz";
+import CreateClass from "./components/creation-system/CreateClass";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";

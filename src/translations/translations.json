@@ -26,12 +26,12 @@
     "home": {
       "sub1": "Take learning to the next level.",
       "sub2": "CONNECT! helps you learn faster and together.",
-      "buttonText": "Start Learning ➞",
+      "buttonText": "Start Learning 🚀",
       "about": {
         "title": "What is CONNECT! ?",
-        "sub": "We keep you connected so you can learn together",
-        "sub2": "CONNECT! makes learning and teaching fun",
-        "sub3": "For us, learning is the key to a better future"
+        "sub": "A new way to study in groups 📚",
+        "sub2": "A tool that makes learning and teaching fun 🎉",
+        "sub3": "A platform for learning and sharing knowledge 🔗"
       },
       "cards": {
         "learning": "Learning",
@@ -72,10 +72,10 @@
     "play": {
       "join": {
         "title": "Join Game",
-        "input": "Enter room code",
-        "input2": "Enter your nickname",
-        "button": "Next",
-        "button2": "Join"
+        "input": "enter room code",
+        "input2": "enter your nickname 🏷",
+        "button": "Next ⏭",
+        "button2": "Join 🚀"
       },
       "host": {
         "title": "Host Room",
@@ -84,23 +84,23 @@
           "normal": "Normal",
           "multi": "Multi"
         },
-        "input": "Give your room a name",
-        "input2": "Enter game code",
+        "input": "give your room a name",
+        "input2": "enter game code",
         "presets": {
-          "title": "Presets",
-          "maxplayers": "Max players",
-          "podiumplaces": "Podium Places",
-          "friendly": "Friendly nicknames",
-          "button": "Generate Code",
-          "button2": "Host Room"
+          "title": "Presets ⚙️",
+          "maxplayers": "Max players 👥",
+          "podiumplaces": "Podium Places 🏆",
+          "friendly": "Friendly nicknames ✨",
+          "button": "Generate Code 🎲",
+          "button2": "Host Room 🚀"
         },
-        "private": "Private",
+        "private": "Private 🔐",
         "roomcode": "Room Code"
       }
     },
     "quizzes": {
       "bar": {
-        "title": "Explore Content",
+        "title": "Explore Content 🧭",
         "gamemode": {
           "title": "Game Mode",
           "normal": "Normal",
@@ -110,6 +110,7 @@
       "by": "by"
     },
     "plans": {
+      "month": "month",
       "starter": {
         "title": "Starter",
         "price": "✨ Free ✨",
@@ -124,7 +125,7 @@
       },
       "classroom": {
         "title": "Classroom",
-        "price": "$10.00 monthly",
+        "price": "$10.00 /",
         "features": {
           "title": "Features",
           "feature1": "Have 90 or Less People in Your Rooms",
@@ -138,7 +139,7 @@
       },
       "entreprise": {
         "title": "Enterprise",
-        "price": "$100.00 monthly",
+        "price": "$100.00 /",
         "features": {
           "title": "Features",
           "feature1": "Have 200 or Less People in Your Rooms",
@@ -152,16 +153,16 @@
       }
     },
     "waitingroom": {
-      "title": "Waiting Room",
+      "title": "Waiting Room 💤",
       "leavebutton": "Leave room"
     },
     "hostroom": {
-      "sharebutton": "Share",
+      "sharebutton": "Share ✈️",
       "podium": "Podium",
       "playertimes": "Player Times",
       "time": "Time",
       "place": "Place",
-      "private": "Private"
+      "private": "Private 🔐"
     },
     "finishedscreen": {
       "title": "You're done!",
@@ -182,7 +183,7 @@
       "step2": "2. Upload your cover Image",
       "step3": "3. Give your quiz some tags",
       "tags": {
-        "title": "Tags",
+        "title": "Tags 🏷 (optional)",
         "input": "Tag Name",
         "button": "Add Tag",
         "helpertext": "tags left"
@@ -193,7 +194,8 @@
         "question": "Question",
         "answer": "Answer"
       },
-      "button": "Create Quiz"
+      "private": "Private 🔐",
+      "button": "Create Quiz 🎉"
     },
     "newmultiquiz": {
       "title": "Create a Multi Quiz",
@@ -202,7 +204,7 @@
       "step2": "2. Upload your cover Image",
       "step3": "3. Give your quiz some tags",
       "tags": {
-        "title": "Tags",
+        "title": "Tags 🏷 (optional)",
         "input": "Tag Name",
         "button": "Add Tag",
         "helpertext": "tags left"
@@ -217,7 +219,8 @@
         "input": "Subject Name",
         "value": "My cool subject name"
       },
-      "button": "Create Quiz"
+      "private": "Private 🔐",
+      "button": "Create Quiz 🎉"
     },
     "profile": {
       "quizzes": {
@@ -233,13 +236,13 @@
     },
     "quiz": {
       "questions": "Questions",
-      "showanswers": "Show Answers",
+      "showanswers": "Show Answers 👀",
       "hideanswers": "Hide Answers",
       "by": "by"
     },
     "multiquiz": {
       "steps": "Steps",
-      "showanswers": "Show Answers",
+      "showanswers": "Show Answers 👀",
       "hideanswers": "Hide Answers",
       "by": "by"
     },
@@ -248,7 +251,7 @@
       "go": "GO!!!"
     },
     "uploadbox": {
-      "upload": "Upload"
+      "upload": "Upload 🏙"
     },
     "login": {
       "title": "Sign into CONNECT!",
@@ -355,7 +358,7 @@
       }
     },
     "notifications": {
-      "title": "Notifications",
+      "title": "Notifications 🔔",
       "clear": "Clear Notifications"
     }
   },
@@ -386,12 +389,12 @@
     "home": {
       "sub1": "L'apprentissage au niveau supérieur.",
       "sub2": "CONNECT! vous aide à apprendre ensemble et rapidement.",
-      "buttonText": "Allons-y ➞",
+      "buttonText": "Allons-y 🚀",
       "about": {
         "title": "C'est quoi CONNECT! ?",
-        "sub": "Une plateforme qui sert a apprendre ensemble",
-        "sub2": "Nous rendons l'apprentissage et l'enseignement amusants.",
-        "sub3": "Pour nous, l'apprentissage est la clé d'un avenir meilleur"
+        "sub": "Une nouvelle façon d'étudier en groupe 📚",
+        "sub2": "Un outil qui rend l'apprentissage et l'enseignement amusants 🎉",
+        "sub3": "Une plateforme d'apprentissage et de partage des connaissances 🔗"
       },
       "cards": {
         "learning": "Apprentissage",
@@ -432,10 +435,10 @@
     "play": {
       "join": {
         "title": "Rejoindre une partie",
-        "input": "Nom de salle",
-        "input2": "Pseudonymes",
-        "button": "Suivant",
-        "button2": "Rejoindre"
+        "input": "code de salle",
+        "input2": "pseudonymes 🏷",
+        "button": "Suivant ⏭",
+        "button2": "Rejoindre 🚀"
       },
       "host": {
         "title": "Créer une salle ",
@@ -444,23 +447,23 @@
           "normal": "Normal",
           "multi": "Multi"
         },
-        "input": "Nom de la salle",
-        "input2": "Entrez un code de quiz",
+        "input": "code de la salle",
+        "input2": "entrez un code de quiz",
         "presets": {
-          "title": "Paramètres",
-          "maxplayers": "Joueurs Maximum",
-          "podiumplaces": "Places de podium",
-          "friendly": "Surnoms filtrés",
-          "button": "Générer le code",
-          "button2": "Créer la salle"
+          "title": "Paramètres ⚙️",
+          "maxplayers": "Joueurs Maximum 👥",
+          "podiumplaces": "Places de podium 🏆",
+          "friendly": "Surnoms filtrés ✨",
+          "button": "Générer le code 🎲",
+          "button2": "Créer la salle 🚀"
         },
-        "private": "Privé",
+        "private": "Privé 🔐",
         "roomcode": "Code de salle"
       }
     },
     "quizzes": {
       "bar": {
-        "title": "Explorer Contenu",
+        "title": "Explorer Contenu 🧭",
         "gamemode": {
           "title": "Mode de jeu",
           "normal": "Normal",
@@ -470,6 +473,7 @@
       "by": "par"
     },
     "plans": {
+      "month": "mois",
       "starter": {
         "title": "Forfait Débutant",
         "price": "✨ Gratuit ✨",
@@ -484,7 +488,7 @@
       },
       "classroom": {
         "title": "Forfait de classe",
-        "price": "10,00 $ par mois",
+        "price": "$10,00 /",
         "features": {
           "title": "Avantages",
           "feature1": "Avoir 90 personnes ou moins dans vos salles",
@@ -498,7 +502,7 @@
       },
       "entreprise": {
         "title": "Forfait d'Enterprise",
-        "price": "100,00 $ par mois",
+        "price": "$100,00 /",
         "features": {
           "title": "Avantages",
           "feature1": "Avoir 200 personnes ou moins dans vos salles",
@@ -512,16 +516,16 @@
       }
     },
     "waitingroom": {
-      "title": "Salle d'attente",
-      "leavebutton": "Quitter Salle"
+      "title": "Salle d'attente 💤",
+      "leavebutton": "Quitter Salle 🚪"
     },
     "hostroom": {
-      "sharebutton": "Partager",
+      "sharebutton": "Partager ✈️",
       "podium": "Podium",
       "playertimes": "Temps des Joueurs",
       "time": "Temps",
       "place": "Place",
-      "private": "Privé"
+      "private": "Privé 🔐"
     },
     "finishedscreen": {
       "title": "Vous avez terminé!",
@@ -542,18 +546,19 @@
       "step2": "2. Téléchargez votre image de couverture",
       "step3": "3. Donnez des mots clés à votre quiz",
       "tags": {
-        "title": "Mots clés",
+        "title": "Mots clés 🏷 (optionnel)",
         "input": "Nom du mots clés",
         "button": "Rajouter",
         "helpertext": "mots clés restant"
       },
-      "step4": "4. Proposez des questions intéressantes",
+      "step4": "4. Composez des questions intéressantes",
       "questions": {
         "title": "Question",
         "question": "Question",
         "answer": "Réponse"
       },
-      "button": "Partager"
+      "private": "Privé 🔐",
+      "button": "Partager ✈️"
     },
     "newmultiquiz": {
       "title": "Créer un multi-quiz",
@@ -562,12 +567,12 @@
       "step2": "2. Téléchargez votre image de couverture",
       "step3": "3. Donnez des mots clés à votre quiz",
       "tags": {
-        "title": "Mots clés",
+        "title": "Mots clés 🏷 (optionnel)",
         "input": "Nom du mots clés",
         "button": "Rajouter",
         "helpertext": "mots clés restant"
       },
-      "step4": "4. Proposez des questions intéressantes",
+      "step4": "4. Composez des questions intéressantes",
       "questions": {
         "title": "Question",
         "question": "Question",
@@ -577,7 +582,8 @@
         "input": "Nom du sujet",
         "value": "Mon sujet"
       },
-      "button": "Partager"
+      "private": "Privé 🔐",
+      "button": "Partager ✈️"
     },
     "profile": {
       "quizzes": {
@@ -593,13 +599,13 @@
     },
     "quiz": {
       "questions": "Questions",
-      "showanswers": "Montrer réponses",
+      "showanswers": "Montrer réponses 👀",
       "hideanswers": "Cacher réponses",
       "by": "par"
     },
     "multiquiz": {
       "steps": "Étapes",
-      "showanswers": "Montrer réponses",
+      "showanswers": "Montrer réponses 👀",
       "hideanswers": "Cacher réponses",
       "by": "par"
     },
@@ -608,7 +614,7 @@
       "go": "GO!!!"
     },
     "uploadbox": {
-      "upload": "Télécharger"
+      "upload": "Télécharger 🏙"
     },
     "login": {
       "title": "Connectez-vous à CONNECT!",
@@ -715,7 +721,7 @@
       }
     },
     "notifications": {
-      "title": "Notifications",
+      "title": "Notifications 🔔",
       "clear": "Effacer notifications"
     }
   }

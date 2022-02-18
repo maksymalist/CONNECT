@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { useLocation } from "react-router-dom";
 import { io } from "socket.io-client";
-import WaitingRoom from "./WaitingRoom";
-import HostRoom from "./HostRoom";
-import Background from "./Background";
+import WaitingRoom from "./game/player/WaitingRoom";
+import HostRoom from "./game/host/HostRoom";
+import Background from "./misc/Background";
 
 import "../style/style.css";
 import { toast } from "react-toastify";
@@ -22,6 +22,7 @@ import { useMutation, gql } from "@apollo/client";
 import list from "badwords-list";
 
 import config from "../config.json";
+import socket from "../socket-io";
 
 const CREATE_NOTIFICATION = gql`
   mutation createNotification(
@@ -39,21 +40,7 @@ const CREATE_NOTIFICATION = gql`
   }
 `;
 
-//globals
-//https://connect-quiz-now.herokuapp.com/
-//http://localhost:3001
-//good one https://connect-now-backend.herokuapp.com/
-//https://connect-backend-2.herokuapp.com/
-//the one https://connect-socket-io.herokuapp.com/
-//the one one https://quiz-connect-socketio.herokuapp.com/
-
-export const socket = io(config["socket-server"], {
-  transports: ["websocket", "polling", "flashsocket"],
-});
-
 export default function EnterCodeForm({ match, location }) {
-  //const classes = useStyles();
-
   var [role, setRole] = useState("");
   const [checked, setChecked] = useState(false);
   var [code, setCode] = useState("");
@@ -194,15 +181,6 @@ export default function EnterCodeForm({ match, location }) {
     });
 
     socket.on("addeduser", (data) => {
-      /*var RoomUsers = []
-        
-            for(var i = 0; i < data.names.length; i++){
-                if(data.UserRooms[i] == undefined) return
-                if(data.currentRoom == data.UserRooms[i]){
-                    RoomUsers.push(data.names[i])
-                }
-            }*/
-      //document.getElementById('userList').innerHTML = RoomUsers
       if (role !== "host") {
         setRole("player");
         if (sessionStorage.getItem("roomJoined") !== "true") {
@@ -456,7 +434,6 @@ export default function EnterCodeForm({ match, location }) {
             </div>
           )}
           <h1>{Translations[userLanguage].play.host.title}</h1>
-          <h2>{Translations[userLanguage].play.host.roomcode}</h2>
           <input
             className="host-input"
             placeholder={Translations[userLanguage].play.host.input}
@@ -524,7 +501,6 @@ export default function EnterCodeForm({ match, location }) {
             }}
           >
             {Translations[userLanguage].play.host.presets.button}{" "}
-            <CasinoRoundedIcon style={{ marginLeft: "10px" }} />
           </Button>
           <br></br>
           <Button
