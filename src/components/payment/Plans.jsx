@@ -45,15 +45,15 @@ export default function Plans() {
           }}
         >
           <Typography variant="subtitle1" className="features">
-            <CheckRounded style={{ color: "#1a7f37" }} />⠀
+            {"✅ "}
             {Translations[userLanguage].plans.starter.features.feature1}
           </Typography>
           <Typography variant="subtitle1" className="features">
-            <CheckRounded style={{ color: "#1a7f37" }} />⠀
+            {"✅ "}
             {Translations[userLanguage].plans.starter.features.feature2}
           </Typography>
           <Typography variant="subtitle1" className="features">
-            <CheckRounded style={{ color: "#1a7f37" }} />⠀
+            {"✅ "}
             {Translations[userLanguage].plans.starter.features.feature3}
           </Typography>
         </div>
@@ -66,7 +66,12 @@ export default function Plans() {
       </div>
       <div id="plan2">
         <h1>{Translations[userLanguage].plans.classroom.title}</h1>
-        <h2>{Translations[userLanguage].plans.classroom.price}</h2>
+        <h2>
+          {Translations[userLanguage].plans.classroom.price}
+          <span style={{ fontSize: "15px" }}>
+            {Translations[userLanguage].plans.month}
+          </span>
+        </h2>
         <h2>{Translations[userLanguage].plans.classroom.features.title}</h2>
         <div
           style={{
@@ -76,23 +81,23 @@ export default function Plans() {
           }}
         >
           <Typography variant="subtitle1" className="features">
-            <CheckRounded style={{ color: "#1a7f37" }} />⠀
+            {"✅ "}
             {Translations[userLanguage].plans.classroom.features.feature1}
           </Typography>
           <Typography variant="subtitle1" className="features">
-            <CheckRounded style={{ color: "#1a7f37" }} />⠀
+            {"✅ "}
             {Translations[userLanguage].plans.classroom.features.feature2}
           </Typography>
           <Typography variant="subtitle1" className="features">
-            <CheckRounded style={{ color: "#1a7f37" }} />⠀
+            {"✅ "}
             {Translations[userLanguage].plans.classroom.features.feature3}
           </Typography>
           <Typography variant="subtitle1" className="features">
-            <CheckRounded style={{ color: "#1a7f37" }} />⠀
+            {"✅ "}
             {Translations[userLanguage].plans.classroom.features.feature4}
           </Typography>
           <Typography variant="subtitle1" className="features">
-            <CheckRounded style={{ color: "#1a7f37" }} />⠀
+            {"✅ "}
             {Translations[userLanguage].plans.classroom.features.feature5}
           </Typography>
         </div>
@@ -120,7 +125,12 @@ export default function Plans() {
       </div>
       <div id="plan3">
         <h1>{Translations[userLanguage].plans.entreprise.title}</h1>
-        <h2>{Translations[userLanguage].plans.entreprise.price}</h2>
+        <h2>
+          {Translations[userLanguage].plans.entreprise.price}
+          <span style={{ fontSize: "15px" }}>
+            {Translations[userLanguage].plans.month}
+          </span>
+        </h2>
         <h2>{Translations[userLanguage].plans.entreprise.features.title}</h2>
         <div
           style={{
@@ -130,23 +140,23 @@ export default function Plans() {
           }}
         >
           <Typography variant="subtitle1" className="features">
-            <CheckRounded style={{ color: "#1a7f37" }} />⠀
+            {"✅ "}
             {Translations[userLanguage].plans.entreprise.features.feature1}
           </Typography>
           <Typography variant="subtitle1" className="features">
-            <CheckRounded style={{ color: "#1a7f37" }} />⠀
+            {"✅ "}
             {Translations[userLanguage].plans.entreprise.features.feature2}
           </Typography>
           <Typography variant="subtitle1" className="features">
-            <CheckRounded style={{ color: "#1a7f37" }} />⠀
+            {"✅ "}
             {Translations[userLanguage].plans.entreprise.features.feature3}
           </Typography>
           <Typography variant="subtitle1" className="features">
-            <CheckRounded style={{ color: "#1a7f37" }} />⠀
+            {"✅ "}
             {Translations[userLanguage].plans.entreprise.features.feature4}
           </Typography>
           <Typography variant="subtitle1" className="features">
-            <CheckRounded style={{ color: "#1a7f37" }} />⠀
+            {"✅ "}
             {Translations[userLanguage].plans.entreprise.features.feature5}
           </Typography>
         </div>

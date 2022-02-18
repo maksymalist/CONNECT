@@ -138,7 +138,7 @@ export default function HomePage() {
             <br></br>
             <br></br>
             <Button
-              style={{ zIndex: "2" }}
+              style={{ zIndex: "2", width: "220px" }}
               id="button-start"
               variant="contained"
               color="primary"
