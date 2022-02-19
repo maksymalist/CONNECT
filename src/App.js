@@ -23,7 +23,7 @@ import ViewQuizPrivate from "./components/view/ViewQuizPrivate";
 
 import { toast } from "react-toastify";
 import axios from "axios";
-import Login from "./components/auth/Login";
+import Login from "./components/Auth/Login";
 import NewMultiQuiz from "./components/creation-system/NewMultiQuiz";
 import MyProfile from "./components/profile/MyProfile";
 import ViewQuiz from "./components/view/ViewQuiz";
