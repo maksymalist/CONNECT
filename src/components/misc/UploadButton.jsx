@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 
 import Translations from "../../translations/translations.json";
 
+import "firebase/storage";
+
 const UploadButton = ({ imgRef }) => {
   const firebase = getFirebase();
   const ref = useRef(undefined);
