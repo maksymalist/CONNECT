@@ -272,15 +272,6 @@ h1 {
   border-radius: 25px;
 }
 
-textarea {
-  margin: 10px;
-  resize: vertical;
-  background-color: transparent;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 5vh;
-  border: none;
-  outline: none;
-}
 button {
   background-color: black;
   padding: 8px;
@@ -928,7 +919,6 @@ input:hover {
 }
 .upload-box {
   border: 2px dashed black;
-  box-shadow: 10px 10px 0 #262626;
   width: 80vw;
   padding: 30px;
   max-width: 700px;
@@ -939,8 +929,6 @@ input:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 50px;
-  margin-top: 50px;
 }
 .upload-box:hover {
   cursor: pointer;

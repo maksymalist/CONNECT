@@ -183,14 +183,14 @@
       "step2": "2. Upload your cover Image",
       "step3": "3. Give your quiz some tags",
       "tags": {
-        "title": "Tags 🏷 (optional)",
+        "title": "Tags (optional)",
         "input": "Tag Name",
         "button": "Add Tag",
         "helpertext": "tags left"
       },
       "step4": "4. Come up with some interesting questions",
       "questions": {
-        "title": "Question",
+        "title": "Q/A",
         "question": "Question",
         "answer": "Answer"
       },
@@ -204,14 +204,14 @@
       "step2": "2. Upload your cover Image",
       "step3": "3. Give your quiz some tags",
       "tags": {
-        "title": "Tags 🏷 (optional)",
+        "title": "Tags (optional)",
         "input": "Tag Name",
         "button": "Add Tag",
         "helpertext": "tags left"
       },
       "step4": "4. Come up with some interesting questions",
       "questions": {
-        "title": "Question",
+        "title": "Q/A",
         "question": "Question",
         "answer": "Answer"
       },
@@ -287,6 +287,8 @@
       "buyplanseeinfo": "You Need To Buy A Plan To See This Information!",
       "eachansdifferent": "Please make sure each answer is different or the quiz will not work!",
       "fieldleftempty": "Please Fill In All Fields!",
+      "min6questions": "Please Make At Least 6 Questions!",
+      "quiznameempty": "Please Enter a Quiz Name!",
       "need1subject": "You Need At Least 1 Subject!",
       "quizcreated": "Quiz Created!",
       "logincreatequiz": "Please Login To Create A Quiz!",
@@ -546,14 +548,14 @@
       "step2": "2. Téléchargez votre image de couverture",
       "step3": "3. Donnez des mots clés à votre quiz",
       "tags": {
-        "title": "Mots clés 🏷 (optionnel)",
+        "title": "Mots clés (optionnel)",
         "input": "Nom du mots clés",
         "button": "Rajouter",
         "helpertext": "mots clés restant"
       },
       "step4": "4. Composez des questions intéressantes",
       "questions": {
-        "title": "Question",
+        "title": "Q/R",
         "question": "Question",
         "answer": "Réponse"
       },
@@ -567,14 +569,14 @@
       "step2": "2. Téléchargez votre image de couverture",
       "step3": "3. Donnez des mots clés à votre quiz",
       "tags": {
-        "title": "Mots clés 🏷 (optionnel)",
+        "title": "Mots clés (optionnel)",
         "input": "Nom du mots clés",
         "button": "Rajouter",
         "helpertext": "mots clés restant"
       },
       "step4": "4. Composez des questions intéressantes",
       "questions": {
-        "title": "Question",
+        "title": "Q/R",
         "question": "Question",
         "answer": "Réponse"
       },
@@ -650,6 +652,8 @@
       "buyplanseeinfo": "Vous devez acheter un plan pour voir ces informations !",
       "eachansdifferent": "Veuillez vous assurer que chaque réponse est différente ou le quiz ne fonctionnera pas !",
       "fieldleftempty": "Merci de remplir tous les champs!",
+      "min6questions": "Vous devez avoir au moins 6 questions pour créer un quiz !",
+      "quiznameempty": "Veuillez entrer un nom de quiz!",
       "need1subject": "Vous avez besoin d'au moins 1 sujet !",
       "quizcreated": "Quiz créé !",
       "logincreatequiz": "Veuillez vous connecter pour créer un quiz !",

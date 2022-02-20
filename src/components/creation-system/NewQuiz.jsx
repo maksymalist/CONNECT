@@ -8,15 +8,17 @@ import {
   Typography,
   Divider,
   Switch,
+  TextareaAutosize,
 } from "@mui/material";
 
 import { toast } from "react-toastify";
-import { AddCircleRounded, DeleteRounded } from "@mui/icons-material";
+import { AddCircleRounded, DeleteRounded, SaveAs } from "@mui/icons-material";
 import UploadButton from "../misc/UploadButton";
 
 import Translations from "../../translations/translations.json";
 
 import { useMutation, gql } from "@apollo/client";
+import "react-quill/dist/quill.snow.css";
 
 const CREATE_QUIZ = gql`
   mutation createQuiz(
@@ -63,8 +65,8 @@ const CREATE_PRIVATE_QUIZ = gql`
 `;
 
 export default function NewQuiz() {
-  const [question, setQuestion] = useState(0);
-  const [questionArray, setQuestionArray] = useState([1, 2, 3, 4, 5, 6]);
+  const [name, setName] = useState("");
+  const [questionArray, setQuestionArray] = useState([]);
 
   const [tags, setTags] = useState([]);
   const [currentTag, setCurrentTag] = useState("");
@@ -132,13 +134,10 @@ export default function NewQuiz() {
       });
     }
     toast.success(Translations[userLanguage].alerts.quizcreated);
-    for (
-      let i = 0;
-      i < document.getElementsByClassName("userInput").length;
-      i++
-    ) {
-      document.getElementsByClassName("userInput")[i].value = "";
-    }
+    setName("");
+    setQuestionArray([]);
+    setTags([]);
+    imgRef.current.src = "";
   };
   const getTags = () => {
     const newTagArr = [];
@@ -148,15 +147,34 @@ export default function NewQuiz() {
     return newTagArr;
   };
 
-  const setQuizObj = (isPrivate) => {
+  const setQuizObj = (isPrivate, name) => {
     if (JSON.parse(localStorage.getItem("user")) == null) {
       window.location = "/login";
       toast.error(Translations[userLanguage].alerts.logincreatequiz);
       return;
     }
-    console.log(document.getElementsByClassName("questions"));
+    if (name === "") {
+      toast.error(Translations[userLanguage].alerts.quiznameempty);
+      return;
+    }
+    const newQuestionArray = [...questionArray];
+    if (newQuestionArray.length < 6) {
+      toast.error(Translations[userLanguage].alerts.min6questions);
+      return;
+    }
+    if (newQuestionArray.length > 12) {
+      return;
+    }
 
-    quizObj.name = document.getElementById("quizName").value || "";
+    for (let i = 0; i < newQuestionArray.length; i++) {
+      const data = newQuestionArray[i];
+      if (data.question == "" || data.answer == "") {
+        toast.error(Translations[userLanguage].alerts.fieldleftempty);
+        return;
+      }
+    }
+
+    quizObj.name = name || "";
     quizObj.userName =
       JSON.parse(localStorage.getItem("user")).profileObj.name || "";
     quizObj.userProfilePic =
@@ -166,21 +184,13 @@ export default function NewQuiz() {
     quizObj.coverImg = imgRef.current ? imgRef.current.src : "" || "";
     quizObj.tags = getTags() || [];
 
-    for (
-      let i = 0;
-      i < document.getElementsByClassName("questions").length;
-      i++
-    ) {
-      console.log(
-        document.getElementsByClassName("questions")[i].value +
-          " " +
-          document.getElementsByClassName("questions")[i].value
-      );
+    for (let i = 0; i < newQuestionArray.length; i++) {
+      const data = newQuestionArray[i];
       quizObj.questions.push(
         JSON.stringify({
           index: i,
-          question: document.getElementsByClassName("questions")[i].value,
-          answer: document.getElementsByClassName("answers")[i].value,
+          question: data.question,
+          answer: data.answer,
         })
       );
     }
@@ -189,30 +199,107 @@ export default function NewQuiz() {
     Submit(isPrivate);
   };
 
-  const Card = ({ questionNumber }) => (
-    <div className="card2" id={`question${questionNumber}card`}>
-      <h1>
-        {Translations[userLanguage].newquiz.questions.title} {questionNumber}
-      </h1>
-      <input
-        className="questions userInput"
-        id={`question${questionNumber}`}
-        type="text"
-        placeholder={Translations[userLanguage].newquiz.questions.question}
-      />
-      <br></br>
-      <input
-        className="answers userInput"
-        id={`answer${questionNumber}`}
-        type="text"
-        placeholder={Translations[userLanguage].newquiz.questions.answer}
-      />
-    </div>
-  );
+  const Card = ({ data, index }) => {
+    const [question, setQuestion] = useState(data.question);
+    const [answer, setAnswer] = useState(data.answer);
+
+    return (
+      <div className="card2">
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            height: "100%",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
+          <div>
+            <Typography variant="h3" style={{ textAlign: "right" }}>
+              {index + 1}
+            </Typography>
+            <input
+              className="questions userInput"
+              onChange={(e) => setQuestion(e.target.value)}
+              value={question}
+              type="text"
+              placeholder={
+                Translations[userLanguage].newquiz.questions.question + " 💭"
+              }
+            />
+            <br></br>
+            <TextareaAutosize
+              className="answers userInput"
+              onChange={(e) => setAnswer(e.target.value)}
+              value={answer}
+              style={{
+                minWidth: "160px",
+                width: "160px",
+                height: "100px",
+                maxHeight: "150px",
+                borderRadius: "5px",
+                border: "1px solid #e0e0e0",
+              }}
+              placeholder={
+                Translations[userLanguage].newquiz.questions.answer + "💡"
+              }
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "flex-end",
+            }}
+          >
+            <SaveAs
+              htmlColor="#1bb978"
+              style={{ width: "30px", height: "30px" }}
+              onClick={() => SaveQuestion(question, answer, index)}
+            />
+            <div style={{ width: "10px", height: "10px" }} />
+            <DeleteRounded
+              color="secondary"
+              style={{ width: "30px", height: "30px" }}
+              onClick={() => DeleteQuestion(index)}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   const AddQuestion = () => {
-    setQuestion(question + 1);
-    setQuestionArray([...questionArray, question]);
+    const len = [...questionArray].length;
+    if (len >= 12) {
+      return;
+    }
+    const obj = {
+      question: "",
+      answer: "",
+    };
+    setQuestionArray([...questionArray, obj]);
+  };
+
+  const SaveQuestion = (question, answer, index) => {
+    const newQuestionArray = [...questionArray];
+    newQuestionArray[index].question = question;
+    newQuestionArray[index].answer = answer;
+    setQuestionArray(newQuestionArray);
+
+    toast.success("Saved ✨", {
+      autoClose: 500,
+    });
+  };
+
+  const DeleteQuestion = (index) => {
+    const newQuestionArray = [...questionArray];
+    newQuestionArray.splice(index, 1);
+    setQuestionArray(newQuestionArray);
+
+    toast.error("Deleted ❌", {
+      autoClose: 500,
+    });
   };
 
   const AddTag = (tag) => {
@@ -259,12 +346,10 @@ export default function NewQuiz() {
           <br></br>
           <Divider style={{ width: "90vw" }} light />
           <br></br>
-          <Typography variant="h5" style={{ margin: "10px" }}>
-            {Translations[userLanguage].newquiz.step1}
-          </Typography>
           <input
-            className="userInput"
-            id={"quizName"}
+            className="userInput quizName"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
             type="text"
             placeholder={Translations[userLanguage].newquiz.input}
           ></input>
@@ -275,17 +360,11 @@ export default function NewQuiz() {
             display: "flex",
             alignItems: "center",
             flexDirection: "column",
-            marginTop: "100px",
+            marginTop: "10px",
           }}
         >
-          <Typography variant="h5" style={{ margin: "10px" }}>
-            {Translations[userLanguage].newquiz.step2}
-          </Typography>
           <UploadButton imgRef={imgRef} />
         </div>
-        <Typography variant="h5" style={{ margin: "10px", marginTop: "100px" }}>
-          {Translations[userLanguage].newquiz.step3}
-        </Typography>
         <div
           style={{
             backgroundColor: "white",
@@ -293,11 +372,11 @@ export default function NewQuiz() {
             border: "2px solid black",
             boxShadow: "10px 10px 0 #262626",
             width: "80vw",
-            maxWidth: "600px",
-            marginTop: "50px",
+            maxWidth: "700px",
+            marginTop: "10px",
           }}
         >
-          <Typography variant="h3">
+          <Typography variant="h4">
             {Translations[userLanguage].newquiz.tags.title}
           </Typography>
           <br></br>
@@ -340,15 +419,18 @@ export default function NewQuiz() {
             />
           ))}
         </div>
-        <Typography variant="h5" style={{ margin: "10px", marginTop: "100px" }}>
-          {Translations[userLanguage].newquiz.step4}
+        <Typography variant="h4" style={{ margin: "10px", marginTop: "50px" }}>
+          Questions / Answers
         </Typography>
+        <br></br>
+        <Divider style={{ width: "90vw" }} light />
+        <br></br>
         <div
           className="cardContainer2"
           style={{ margin: "1%", marginTop: "10px" }}
         >
-          {questionArray.map((question, i) => (
-            <Card key={i} questionNumber={i + 1} />
+          {questionArray.map((data, i) => (
+            <Card key={i} index={i} data={data} />
           ))}
           <div
             onClick={() => {
@@ -401,7 +483,7 @@ export default function NewQuiz() {
             color="primary"
             size="large"
             onClick={() => {
-              setQuizObj(isPrivate);
+              setQuizObj(isPrivate, name);
             }}
           >
             {Translations[userLanguage].newquiz.button}

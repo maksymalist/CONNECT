@@ -25,8 +25,6 @@ import NotificationBox from "./NotificationBox";
 
 import { useQuery, gql } from "@apollo/client";
 
-import { useReactPWAInstall } from "react-pwa-install";
-
 import config from "../../config.json";
 
 const GET_NOTIFICATION_LENGTH = gql`
@@ -57,8 +55,6 @@ function Nav({ isLoggedIn, customerId }) {
         : null,
     },
   });
-
-  const { pwaInstall } = useReactPWAInstall();
 
   const navStyle = {
     color: "white",
@@ -123,15 +119,6 @@ function Nav({ isLoggedIn, customerId }) {
     } else {
       //
     }
-  };
-
-  const handlePWAClick = () => {
-    pwaInstall({
-      title: "Install CONNECT!",
-      logo: longLogo,
-
-      description: "Take learning to the next level.",
-    }).then(() => toast.success("App installed successfully !"));
   };
 
   const logOut = () => {
@@ -213,7 +200,6 @@ function Nav({ isLoggedIn, customerId }) {
               <MenuItem onClick={openCustomerPortal}>
                 {Translations[userLanguage].nav.profile.subscription}
               </MenuItem>
-              <MenuItem onClick={handlePWAClick}>Install App</MenuItem>
               <MenuItem
                 style={{
                   backgroundColor: "rgb(220, 0, 78)",

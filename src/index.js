@@ -9,8 +9,6 @@ import rootReducer from "./reducers";
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
-import ReactPWAInstallProvider from "react-pwa-install";
-
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import config from "./config.json";
@@ -42,11 +40,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <Provider store={store}>
-        <ReactPWAInstallProvider enableLogging>
-          <ThemeProvider theme={theme}>
-            <App />
-          </ThemeProvider>
-        </ReactPWAInstallProvider>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </Provider>
     </ApolloProvider>
   </React.StrictMode>,

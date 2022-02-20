@@ -8,9 +8,10 @@ import {
   Typography,
   Divider,
   Switch,
+  TextareaAutosize,
 } from "@mui/material";
 import { toast } from "react-toastify";
-import { AddCircleRounded } from "@mui/icons-material";
+import { AddCircleRounded, SaveAs, DeleteRounded } from "@mui/icons-material";
 import UploadButton from "../misc/UploadButton";
 
 import Translations from "../../translations/translations.json";
@@ -62,10 +63,8 @@ const CREATE_PRIVATE_MULTI_QUIZ = gql`
 `;
 
 function NewMultiQuiz() {
-  const [subjects, setSubjects] = useState([]);
-  const [subjectIndex, setSubjectIndex] = useState(0);
-  const [questions, setQuestions] = useState([]);
-
+  const [name, setName] = useState("");
+  const [quizArray, setQuizArray] = useState([]);
   const [tags, setTags] = useState([]);
   const [currentTag, setCurrentTag] = useState("");
   const [tagNumber, setTagNumber] = useState(0);
@@ -75,7 +74,8 @@ function NewMultiQuiz() {
   );
 
   const quizObj = {};
-  var subjectArr = [];
+
+  const getCards = () => {};
 
   //
   const quizName = useRef(null);
@@ -95,23 +95,228 @@ function NewMultiQuiz() {
     toast.info(Translations[userLanguage].alerts.eachansdifferent);
   }, []);
 
+  const Card = ({ subIndex, data, index }) => {
+    const [question, setQuestion] = useState(data.question);
+    const [answer, setAnswer] = useState(data.answer);
+
+    return (
+      <div className="card2">
+        <Typography variant="h3" style={{ textAlign: "right" }}>
+          {index + 1}
+        </Typography>
+        <input
+          className="questions userInput"
+          onChange={(e) => setQuestion(e.target.value)}
+          value={question}
+          type="text"
+          placeholder={
+            Translations[userLanguage].newquiz.questions.question + " 💭"
+          }
+        />
+        <br></br>
+        <TextareaAutosize
+          className="answers userInput"
+          onChange={(e) => setAnswer(e.target.value)}
+          value={answer}
+          style={{
+            minWidth: "160px",
+            width: "160px",
+            height: "100px",
+            maxHeight: "150px",
+            borderRadius: "5px",
+            border: "1px solid #e0e0e0",
+          }}
+          placeholder={
+            Translations[userLanguage].newquiz.questions.answer + "💡"
+          }
+        />
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "flex-end",
+          }}
+        >
+          <SaveAs
+            htmlColor="#1bb978"
+            style={{ width: "30px", height: "30px" }}
+            onClick={() => SaveQuestion(subIndex, index, question, answer)}
+          />
+          <div style={{ width: "10px", height: "10px" }} />
+          <DeleteRounded
+            color="secondary"
+            style={{ width: "30px", height: "30px" }}
+            onClick={() => DeleteQuestion(subIndex, index)}
+          />
+        </div>
+      </div>
+    );
+  };
+
+  const Subject = ({ index, name, cards }) => {
+    const [subjectName, setSubjectName] = useState(name);
+    const [subjectCards] = useState(cards);
+
+    return (
+      <div className="subject-container">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <input
+            className="subject-name"
+            onChange={(e) => setSubjectName(e.target.value)}
+            value={subjectName}
+            type="text"
+            placeholder={Translations[userLanguage].newmultiquiz.subjects.input}
+          />
+          <SaveAs
+            htmlColor="#1bb978"
+            style={{ width: "50px", height: "50px", marginLeft: "10px" }}
+            onClick={() => saveSubjectName(index, subjectName)}
+          />
+          <DeleteRounded
+            color="secondary"
+            style={{ width: "50px", height: "50px", marginLeft: "10px" }}
+            onClick={() => deleteSubject(index)}
+          />
+        </div>
+        <div className="cardContainer2" style={{ margin: "1%" }}>
+          {subjectCards.map((card, i) => (
+            <Card
+              key={card.question + index}
+              subIndex={index}
+              data={card}
+              index={i}
+            />
+          ))}
+          <div
+            onClick={() => {
+              AddQuestion(index);
+            }}
+            className="card2-2"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <AddCircleRounded
+              style={{ width: "75px", height: "75px" }}
+              color="primary"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const AddQuestion = (subjectIndex) => {
+    if (quizArray[subjectIndex].cards.length >= 12) return;
+    const card = {
+      question: "",
+      answer: "",
+    };
+    const newQuizArray = [...quizArray];
+    console.log(newQuizArray);
+    console.log(subjectIndex);
+    newQuizArray[subjectIndex].cards.push(card);
+    setQuizArray(newQuizArray);
+  };
+
+  const SaveQuestion = (subjectIndex, questionIndex, question, answer) => {
+    const newQuizArray = [...quizArray];
+    newQuizArray[subjectIndex].cards[questionIndex].question = question;
+    newQuizArray[subjectIndex].cards[questionIndex].answer = answer;
+    setQuizArray(newQuizArray);
+    toast.success("Saved ✨", {
+      autoClose: 500,
+    });
+  };
+  const DeleteQuestion = (subjectIndex, questionIndex) => {
+    const newQuizArray = [...quizArray];
+    newQuizArray[subjectIndex].cards.splice(questionIndex, 1);
+    setQuizArray(newQuizArray);
+    toast.error("Deleted ❌", {
+      autoClose: 500,
+    });
+  };
+
+  const AddSubject = () => {
+    const subjectObj = {
+      name: "",
+      cards: [],
+    };
+    setQuizArray([...quizArray, subjectObj]);
+  };
+
+  const saveSubjectName = (subjectIndex, name) => {
+    const newQuizArray = [...quizArray];
+    newQuizArray[subjectIndex].name = name;
+    setQuizArray(newQuizArray);
+    toast.success("Saved ✨", {
+      autoClose: 500,
+    });
+  };
+
+  const deleteSubject = (subjectIndex) => {
+    const newQuizArray = [...quizArray];
+    newQuizArray.splice(subjectIndex, 1);
+    setQuizArray(newQuizArray);
+    toast.error("Deleted ❌", {
+      autoClose: 500,
+    });
+  };
+
+  const getTags = () => {
+    const newTagArr = [];
+    tags.map((tag) => {
+      newTagArr.push(tag);
+    });
+    return newTagArr;
+  };
+
   const Submit = () => {
-    for (
-      let i = 0;
-      i < document.getElementsByClassName("userInput").length;
-      i++
-    ) {
-      console.log("userIn");
-      if (document.getElementsByClassName("userInput")[i].value == "") {
-        toast.error(Translations[userLanguage].alerts.fieldleftempty);
-        return;
-      }
+    console.log("submit");
+
+    const newQuizArray = [...quizArray];
+
+    if (name === "") {
+      toast.error(Translations[userLanguage].alerts.quiznameempty);
+      return;
     }
-    console.log(document.getElementsByClassName("subject-container"));
-    if (document.getElementsByClassName("subject-container").length == 0) {
+
+    if (newQuizArray.length === 0) {
       toast.error(Translations[userLanguage].alerts.need1subject);
       return;
     }
+
+    for (let i = 0; i < newQuizArray.length; i++) {
+      const subject = newQuizArray[i];
+      const cards = subject.cards;
+
+      if (cards.length < 6) {
+        toast.error(Translations[userLanguage].alerts.min6questions);
+        return;
+      }
+
+      if (subject.name === "") {
+        toast.error(Translations[userLanguage].alerts.fieldleftempty);
+        return;
+      }
+
+      for (let j = 0; j < cards.length; j++) {
+        const card = cards[j];
+        if (card.question === "" || card.answer === "") {
+          toast.error(Translations[userLanguage].alerts.fieldleftempty);
+          return;
+        }
+      }
+    }
+
     if (isPrivate) {
       createPrivateMulti({
         variables: {
@@ -138,119 +343,7 @@ function NewMultiQuiz() {
       });
     }
     toast.success(Translations[userLanguage].alerts.quizcreated);
-    for (
-      let i = 0;
-      i < document.getElementsByClassName("userInput").length;
-      i++
-    ) {
-      document.getElementsByClassName("userInput")[i].value = "";
-    }
-  };
-
-  const Card = ({ questionNumber, subIndex }) => (
-    <div className="card2" id={`question${questionNumber}card`}>
-      <h1>
-        {Translations[userLanguage].newmultiquiz.questions.title}{" "}
-        {questionNumber}
-      </h1>
-      <input
-        className={`questions userInput subQuest${subIndex}card${questionNumber}`}
-        id={`question${questionNumber}idx${subIndex}`}
-        type="text"
-        placeholder={Translations[userLanguage].newmultiquiz.questions.question}
-      />
-      <br></br>
-      <input
-        className={`answers userInput subAns${subIndex}card${questionNumber}`}
-        id={`answer${questionNumber}idx${subIndex}`}
-        type="text"
-        placeholder={Translations[userLanguage].newmultiquiz.questions.answer}
-      />
-    </div>
-  );
-
-  const Subject = ({ name, cards, index }) => (
-    <div className="subject-container">
-      <input
-        defaultValue={name}
-        className="subject-name"
-        type="text"
-        placeholder={Translations[userLanguage].newmultiquiz.subjects.input}
-      />
-      <div className="cardContainer2" style={{ margin: "1%" }}>
-        {cards.map((card) => (
-          <Card key={card} subIndex={index} questionNumber={card} />
-        ))}
-        <div
-          onClick={() => {
-            AddQuestion(index, cards.length + 1);
-          }}
-          className="card2-2"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <AddCircleRounded
-            style={{ width: "75px", height: "75px" }}
-            color="primary"
-          />
-        </div>
-      </div>
-    </div>
-  );
-
-  const AddQuestion = (subjectIndex, questionNum) => {
-    setQuestions([
-      ...questions,
-      { question: questionNum, subject: subjectIndex },
-    ]);
-  };
-
-  const AddSubject = () => {
-    setSubjects([
-      ...subjects,
-      {
-        subject: `${Translations[userLanguage].newmultiquiz.subjects.value} ${subjectIndex}`,
-        subjectIndex: subjectIndex,
-      },
-    ]);
-    setQuestions([
-      ...questions,
-      { question: "1", subject: subjectIndex },
-      { question: "2", subject: subjectIndex },
-      { question: "3", subject: subjectIndex },
-      { question: "4", subject: subjectIndex },
-      { question: "5", subject: subjectIndex },
-      { question: "6", subject: subjectIndex },
-    ]);
-    subjectArr.push({
-      subject: `My cool subject name ${subjectIndex}`,
-      subjectIndex: subjectIndex,
-    });
-    console.log(subjectArr);
-    setSubjectIndex(subjectIndex + 1);
-  };
-
-  var questions2 = [];
-
-  const getCards = (subjectIndex2) => {
-    questions2 = [];
-    questions.map((question) => {
-      if (question.subject === subjectIndex2) {
-        questions2.push(question.question);
-      }
-    });
-    return questions2;
-  };
-
-  const getTags = () => {
-    const newTagArr = [];
-    tags.map((tag) => {
-      newTagArr.push(tag);
-    });
-    return newTagArr;
+    //reset all the values
   };
 
   const setQuizObj = (isPrivate) => {
@@ -259,7 +352,7 @@ function NewMultiQuiz() {
       toast.error(Translations[userLanguage].alerts.logincreatequiz);
       return;
     }
-    quizObj.name = quizName.current.value;
+    quizObj.name = name;
     quizObj.userName = JSON.parse(localStorage.getItem("user")).profileObj.name;
     quizObj.userProfilePic = JSON.parse(
       localStorage.getItem("user")
@@ -270,45 +363,21 @@ function NewMultiQuiz() {
     quizObj.coverImg = imgRef.current ? imgRef.current.src : "";
     quizObj.tags = getTags();
 
-    var stepObj = {};
+    const stepObj = {};
 
-    for (
-      var subIndex = 0;
-      subIndex < document.getElementsByClassName("subject-name").length;
-      subIndex++
-    ) {
-      console.log(
-        document.getElementsByClassName("subject-name")[subIndex].value,
-        subIndex
-      );
+    const cloneQuizArray = [...quizArray];
+    console.log(cloneQuizArray);
+    for (let i = 0; i < cloneQuizArray.length; i++) {
+      const subject = cloneQuizArray[i];
+      const cards = cloneQuizArray[i].cards;
+      stepObj[subject.name] = {};
 
-      stepObj[document.getElementsByClassName("subject-name")[subIndex].value] =
-        {};
-
-      for (var i = 0; i < getCards(subIndex).length; i++) {
-        console.log("card" + getCards(subIndex)[i]);
-        console.log(
-          document.getElementById(
-            `question${getCards(subIndex)[i]}idx${subIndex}`
-          )
-        );
-        console.log(
-          document.getElementById(
-            `answer${getCards(subIndex)[i]}idx${subIndex}`
-          )
-        );
-        stepObj[
-          document.getElementsByClassName("subject-name")[subIndex].value
-        ][`q${i}`] = {
-          question: document.getElementById(
-            `question${getCards(subIndex)[i]}idx${subIndex}`
-          ).value,
-          answer: document.getElementById(
-            `answer${getCards(subIndex)[i]}idx${subIndex}`
-          ).value,
-        };
+      for (let j = 0; j < cards.length; j++) {
+        const card = cards[j];
+        stepObj[subject.name][`q${j}`] = card;
       }
     }
+
     console.log(stepObj);
     quizObj.steps = stepObj;
     console.log(quizObj);
@@ -359,13 +428,11 @@ function NewMultiQuiz() {
           <br></br>
           <Divider style={{ width: "90vw" }} light />
           <br></br>
-          <Typography variant="h5" style={{ margin: "10px" }}>
-            {Translations[userLanguage].newmultiquiz.step1}
-          </Typography>
           <input
             ref={quizName}
-            className="userInput"
-            id={"quizName"}
+            className="userInput quizName"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
             type="text"
             placeholder={Translations[userLanguage].newmultiquiz.input}
           ></input>
@@ -376,17 +443,11 @@ function NewMultiQuiz() {
             display: "flex",
             alignItems: "center",
             flexDirection: "column",
-            marginTop: "100px",
+            marginTop: "10px",
           }}
         >
-          <Typography variant="h5" style={{ margin: "10px" }}>
-            {Translations[userLanguage].newmultiquiz.step2}
-          </Typography>
           <UploadButton imgRef={imgRef} />
         </div>
-        <Typography variant="h5" style={{ margin: "10px", marginTop: "100px" }}>
-          {Translations[userLanguage].newmultiquiz.step3}
-        </Typography>
         <div
           style={{
             backgroundColor: "white",
@@ -394,11 +455,11 @@ function NewMultiQuiz() {
             border: "2px solid black",
             boxShadow: "10px 10px 0 #262626",
             width: "80vw",
-            maxWidth: "600px",
-            marginTop: "50px",
+            maxWidth: "700px",
+            marginTop: "10px",
           }}
         >
-          <Typography variant="h3">
+          <Typography variant="h4">
             {Translations[userLanguage].newmultiquiz.tags.title}
           </Typography>
           <br></br>
@@ -441,21 +502,24 @@ function NewMultiQuiz() {
             />
           ))}
         </div>
-        <Typography variant="h5" style={{ margin: "10px", marginTop: "100px" }}>
-          {Translations[userLanguage].newmultiquiz.step4}
+        <Typography variant="h4" style={{ margin: "10px", marginTop: "50px" }}>
+          Questions / Answers
         </Typography>
+        <br></br>
+        <Divider style={{ width: "90vw" }} light />
+        <br></br>
         <div
           className="cardContainer2-sub"
           id="cardContainer2-sub"
           style={{ margin: "1%", marginTop: "100px" }}
         >
-          {subjects.map((subject, index) => {
+          {quizArray.map((subject, index) => {
             return (
               <Subject
                 key={index}
-                name={subject.subject}
-                index={subject.subjectIndex}
-                cards={getCards(subject.subjectIndex)}
+                index={index}
+                name={subject.name}
+                cards={subject.cards}
               />
             );
           })}

@@ -57,7 +57,7 @@ const UploadButton = ({ imgRef }) => {
   const UploadBox = () => (
     <div onClick={() => handleClick()} className="upload-box">
       {file === null ? (
-        <Typography variant="h3">
+        <Typography variant="h4">
           {Translations[userLanguage].uploadbox.upload}
         </Typography>
       ) : (
