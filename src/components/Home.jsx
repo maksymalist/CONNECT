@@ -41,8 +41,8 @@ export default function HomePage() {
 
   const Gears = () => (
     <svg
-      width="75"
-      height="75"
+      width="50"
+      height="50"
       viewBox="0 0 75 75"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -231,10 +231,7 @@ export default function HomePage() {
           />
           <div classNam="howItWorks">
             <Typography variant="h2">
-              <strong>
-                {Translations[userLanguage].home.howitworks.title}
-              </strong>{" "}
-              <Gears />
+              {Translations[userLanguage].home.howitworks.title} <Gears />
             </Typography>
             <div className="howitworks-div">
               <div
@@ -630,7 +627,18 @@ export default function HomePage() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            © CONNECT!
+            © 2022 CONNECT! – All Rights Reserved
+          </a>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSey6V_tD3Sp4YDE9Q-PY5nuMFv6s5Q7_2BPfbFDXQ2CjoTfkg/viewform?usp=sf_link"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              textDecoration: "underline",
+              color: "#6c63ff",
+            }}
+          >
+            ✨Report Issue✨
           </a>
         </footer>
       </div>
