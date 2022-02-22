@@ -385,7 +385,7 @@ export default function EnterCodeForm({ match, location }) {
                 value={joinFormNickname}
                 onChange={(event) => setJoinFormNickname(event.target.value)}
                 style={{ width: "100%", height: "48px" }}
-                placeholder={"Enter Your Nickname"}
+                placeholder={Translations[userLanguage].play.join.input2}
                 type="text"
                 id="name"
               />

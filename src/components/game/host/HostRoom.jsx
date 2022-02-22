@@ -154,11 +154,14 @@ export default function HostRoom(props) {
       setCurrentPlace(currentPlace++);
 
       toast.success(
-        `${data.user} ${Translations[userLanguage].alerts.playerfinishedgame}`
+        `${data.user} ${Translations[userLanguage].alerts.playerfinishedgame}`,
+        {
+          autoClose: 750,
+        }
       );
 
       if (podium.length == playerPodiumMax) {
-        toast.success(
+        toast.info(
           `${playerPodiumMax} ${Translations[userLanguage].alerts.maxpodiumlimitreached}`
         );
       }

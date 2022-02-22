@@ -73,7 +73,7 @@
       "join": {
         "title": "Join Game",
         "input": "enter room code",
-        "input2": "enter your nickname 🏷",
+        "input2": "enter your nickname",
         "button": "Next ⏭",
         "button2": "Join 🚀"
       },
@@ -438,7 +438,7 @@
       "join": {
         "title": "Rejoindre une partie",
         "input": "code de salle",
-        "input2": "pseudonymes 🏷",
+        "input2": "pseudonyme",
         "button": "Suivant ⏭",
         "button2": "Rejoindre 🚀"
       },

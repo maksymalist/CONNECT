@@ -207,7 +207,10 @@ export default function GameRoom({ match }) {
     });
     socket.on("PlayerFinished2", (data) => {
       toast.success(
-        `${data} ${Translations[userLanguage].alerts.playerfinishedgame}`
+        `${data} ${Translations[userLanguage].alerts.playerfinishedgame}`,
+        {
+          autoClose: 750,
+        }
       );
     });
 
