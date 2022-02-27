@@ -120,10 +120,10 @@ function App() {
           userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
         })
         .then((res) => {
+          console.log(res.data);
           if (res.data !== null && res.data !== undefined) {
             const subObj = JSON.parse(res.data);
-            fetchCustomerData(JSON.parse(subObj).id);
-            console.log(JSON.parse(subObj).id);
+            fetchCustomerData(subObj.id);
           } else {
             dispatch(setStarter());
           }
@@ -174,7 +174,7 @@ function App() {
     updateUserSubscription({
       variables: {
         id: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
-        subscriptionDetails: JSON.stringify(res.data.subscriptionDetails),
+        subscriptionDetails: res.data.subscriptionDetails,
         plan: plan,
       },
     });

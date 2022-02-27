@@ -90,13 +90,13 @@ function HomePage(props) {
     };
   }, [discount]);
 
-  useEffect(() => {
-    if (plan === "Starter") return;
-    if (plan === "Classroom") {
-      window.location.href = "/plans";
-      toast.warn(Translations[userLanguage].alreadyhaveplan);
-    }
-  }, [plan]);
+  // useEffect(() => {
+  //   if (plan === "Starter") return;
+  //   if (plan === "Classroom") {
+  //     window.location.href = "/plans";
+  //     toast.warn(Translations[userLanguage].alreadyhaveplan);
+  //   }
+  // }, [plan]);
 
   const handleUpdateUserSubscription = async (subscriptionDetails) => {
     const subscriptionObj = {
@@ -497,6 +497,7 @@ function HomePage(props) {
             <Button
               variant="contained"
               color="primary"
+              size="large"
               onClick={() => {
                 handleToggle();
               }}
@@ -519,15 +520,17 @@ function HomePage(props) {
         <CardContent>
           <div>
             <Typography variant="h4" component="h4">
-              {Translations[userLanguage].plans.classroom.title}
-            </Typography>
-            <h2>
               {Translations[userLanguage].plans.classroom.price}
               <span style={{ fontSize: "15px" }}>
                 {Translations[userLanguage].plans.month}
               </span>
-            </h2>
-            <h2>{Translations[userLanguage].plans.classroom.features.title}</h2>
+            </Typography>
+            <br></br>
+            <Typography variant="h5">
+              {Translations[userLanguage].plans.classroom.features.title}
+            </Typography>
+            <br></br>
+            <Divider />
             <div
               style={{
                 display: "flex",
