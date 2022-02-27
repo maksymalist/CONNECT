@@ -117,7 +117,7 @@
         "features": {
           "title": "Features",
           "feature1": "Acces to The Multiplayer Card Games",
-          "feature2": "Have 40 or Less People in Your Rooms",
+          "feature2": "8 People in Your Rooms",
           "feature3": "You Can Create Quizzes"
         },
         "button": "View",
@@ -128,7 +128,7 @@
         "price": "$10.00 /",
         "features": {
           "title": "Features",
-          "feature1": "Have 90 or Less People in Your Rooms",
+          "feature1": "90 People in Your Rooms",
           "feature2": "Access to player analytics",
           "feature3": "You can create classes",
           "feature4": "Google Classroom integration",
@@ -142,7 +142,7 @@
         "price": "$100.00 /",
         "features": {
           "title": "Features",
-          "feature1": "Have 200 or Less People in Your Rooms",
+          "feature1": "200 People in Your Rooms",
           "feature2": "Access to player analytics",
           "feature3": "You can create classes",
           "feature4": "Google Classroom integration",
@@ -162,7 +162,8 @@
       "playertimes": "Player Times",
       "time": "Time",
       "place": "Place",
-      "private": "Private 🔐"
+      "private": "Private 🔐",
+      "joinat": "🚀 Join at "
     },
     "finishedscreen": {
       "title": "You're done!",
@@ -189,6 +190,7 @@
         "helpertext": "tags left"
       },
       "step4": "4. Come up with some interesting questions",
+      "qna": "Questions & Answers",
       "questions": {
         "title": "Q/A",
         "question": "Question",
@@ -210,6 +212,7 @@
         "helpertext": "tags left"
       },
       "step4": "4. Come up with some interesting questions",
+      "qna": "Questions & Answers",
       "questions": {
         "title": "Q/A",
         "question": "Question",
@@ -482,7 +485,7 @@
         "features": {
           "title": "Avantages",
           "feature1": "Accès aux jeux de cartes multijoueurs",
-          "feature2": "Avoir 40 personnes ou moins dans vos salles",
+          "feature2": "40 personnes dans vos salles",
           "feature3": "Vous pouvez créer des quiz"
         },
         "button": "Voir",
@@ -493,8 +496,8 @@
         "price": "$10,00 /",
         "features": {
           "title": "Avantages",
-          "feature1": "Avoir 90 personnes ou moins dans vos salles",
-          "feature2": "Accès aux analyses des joueurs",
+          "feature1": "90 personnes dans vos salles",
+          "feature2": "Accès aux analyses de joueurs",
           "feature3": "Vous pouvez créer des classes",
           "feature4": "Intégration de Google Classroom",
           "feature5": "Intégration de Microsoft Teams"
@@ -507,8 +510,8 @@
         "price": "$100,00 /",
         "features": {
           "title": "Avantages",
-          "feature1": "Avoir 200 personnes ou moins dans vos salles",
-          "feature2": "Accès aux analyses des joueurs",
+          "feature1": "200 personnes dans vos salles",
+          "feature2": "Accès aux analyses de joueurs",
           "feature3": "Vous pouvez créer des classes",
           "feature4": "Intégration de Google Classroom",
           "feature5": "Intégration de Microsoft Teams"
@@ -527,7 +530,8 @@
       "playertimes": "Temps des Joueurs",
       "time": "Temps",
       "place": "Place",
-      "private": "Privé 🔐"
+      "private": "Privé 🔐",
+      "joinat": "🚀 Rejoins sur "
     },
     "finishedscreen": {
       "title": "Vous avez terminé!",
@@ -554,6 +558,7 @@
         "helpertext": "mots clés restant"
       },
       "step4": "4. Composez des questions intéressantes",
+      "qna": "Questions & Réponses",
       "questions": {
         "title": "Q/R",
         "question": "Question",
@@ -575,6 +580,7 @@
         "helpertext": "mots clés restant"
       },
       "step4": "4. Composez des questions intéressantes",
+      "qna": "Questions & Réponses",
       "questions": {
         "title": "Q/R",
         "question": "Question",

@@ -420,7 +420,7 @@ export default function NewQuiz() {
           ))}
         </div>
         <Typography variant="h4" style={{ margin: "10px", marginTop: "50px" }}>
-          Questions / Answers
+          {Translations[userLanguage].newquiz.qna}
         </Typography>
         <br></br>
         <Divider style={{ width: "90vw" }} light />

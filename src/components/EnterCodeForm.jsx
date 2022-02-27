@@ -459,8 +459,8 @@ export default function EnterCodeForm({ match, location }) {
               ref={maxPlayers}
               id="max-players"
               type="number"
-              min="0"
-              max="40"
+              min="3"
+              max="90"
             />
             <br></br>
             <label>
@@ -471,7 +471,7 @@ export default function EnterCodeForm({ match, location }) {
               id="podium-places"
               type="number"
               min="3"
-              max="10"
+              max="90"
             />
             <br></br>
             <div>

@@ -503,7 +503,7 @@ function NewMultiQuiz() {
           ))}
         </div>
         <Typography variant="h4" style={{ margin: "10px", marginTop: "50px" }}>
-          Questions / Answers
+          {Translations[userLanguage].newmultiquiz.qna}
         </Typography>
         <br></br>
         <Divider style={{ width: "90vw" }} light />

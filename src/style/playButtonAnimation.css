@@ -1,54 +1,48 @@
 /*Play*/
 #dark2,
 #dark1,
-#light1{
-    transition: all 0.5s ease;
+#light1 {
+  transition: all 0.5s ease;
 }
-#playButtonSvg{
-    position: fixed;
-    right: 0;
-    top: -20px;
-    margin: 1vh;
+#dark2 {
+  transform: translateX(-100%);
 }
-#dark2{
-    transform: translateX(-100%)
-}
-#playButtonSvg:hover #light1{
-    transform: translateX(20%);
+#playButtonSvg:hover #light1 {
+  transform: translateX(20%);
 }
 
-#playButtonSvg:hover #dark1{
-    transform: translateX(40%);
-    opacity: 0;
+#playButtonSvg:hover #dark1 {
+  transform: translateX(40%);
+  opacity: 0;
 }
 
-#playButtonSvg:hover #dark2{
-    transform: translateX(0%);
+#playButtonSvg:hover #dark2 {
+  transform: translateX(0%);
 }
 /*Close*/
 #closeButtonSvg,
 #darkBar,
-#lightBar{
-    transition: all 0.5s cubic-bezier(0.25, 0.1, 0, 1.33);
+#lightBar {
+  transition: all 0.5s cubic-bezier(0.25, 0.1, 0, 1.33);
 }
 
-#closeButtonSvg{
-    position: fixed;
-    right: 0;
-    top: 0;
-    margin: 1vh;
+#closeButtonSvg {
+  position: fixed;
+  right: 0;
+  top: 0;
+  margin: 1vh;
 }
 
-#closeButtonSvg:hover{
-    transform: rotate(134deg);
+#closeButtonSvg:hover {
+  transform: rotate(134deg);
 }
-#closeButtonSvg:hover #darkBar{
-    transform: rotate(180deg);
+#closeButtonSvg:hover #darkBar {
+  transform: rotate(180deg);
 }
 /*Share*/
-#shareButtonSvg{
-    position: fixed;
-    right: 0;
-    top: 80px;
-    margin: 1vh;
+#shareButtonSvg {
+  position: fixed;
+  right: 0;
+  top: 80px;
+  margin: 1vh;
 }
