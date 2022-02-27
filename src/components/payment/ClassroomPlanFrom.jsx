@@ -35,6 +35,7 @@ import { useMutation, gql } from "@apollo/client";
 import { useSelector } from "react-redux";
 
 import config from "../../config.json";
+import TeacherImg from "../../img/teacher_sub.svg";
 
 const UPDATE_USER_SUBSCRIPTION = gql`
   mutation ($id: ID!, $plan: String!, $subscriptionDetails: String!) {
@@ -91,7 +92,7 @@ function HomePage(props) {
 
   useEffect(() => {
     if (plan === "Starter") return;
-    if (plan !== "Starter") {
+    if (plan === "Classroom") {
       window.location.href = "/plans";
       toast.warn(Translations[userLanguage].alreadyhaveplan);
     }
@@ -418,8 +419,6 @@ function HomePage(props) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "100vh",
-        width: "100vw",
       }}
     >
       <Card
@@ -429,7 +428,10 @@ function HomePage(props) {
           border: "2px solid black",
           boxShadow: "10px 10px 0px #262626",
           borderRadius: "0px",
-          maxWidth: "500px",
+          maxWidth: "900px",
+          display: "flex",
+          flexWrap: "wrap",
+          marginTop: "50px",
         }}
       >
         <CardContent>
@@ -490,7 +492,7 @@ function HomePage(props) {
             </Button>
           </div>
           <CardInput />
-          <br></br>
+          <div style={{ height: "40px" }} />
           <div>
             <Button
               variant="contained"
@@ -501,13 +503,65 @@ function HomePage(props) {
             >
               {spinner ? (
                 <CircularProgress
-                  style={{ marginLeft: "32px", marginRight: "32px" }}
+                  style={{
+                    marginLeft: "32px",
+                    marginRight: "32px",
+                    color: "white",
+                  }}
                   size={20}
                 />
               ) : (
                 Translations[userLanguage].paymentform.button2
               )}
             </Button>
+          </div>
+        </CardContent>
+        <CardContent>
+          <div>
+            <Typography variant="h4" component="h4">
+              {Translations[userLanguage].plans.classroom.title}
+            </Typography>
+            <h2>
+              {Translations[userLanguage].plans.classroom.price}
+              <span style={{ fontSize: "15px" }}>
+                {Translations[userLanguage].plans.month}
+              </span>
+            </h2>
+            <h2>{Translations[userLanguage].plans.classroom.features.title}</h2>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "start",
+              }}
+            >
+              <Typography variant="subtitle1" className="features">
+                {"✅ "}
+                {Translations[userLanguage].plans.classroom.features.feature1}
+              </Typography>
+              <Typography variant="subtitle1" className="features">
+                {"✅ "}
+                {Translations[userLanguage].plans.classroom.features.feature2}
+              </Typography>
+              <Typography variant="subtitle1" className="features">
+                {"✅ "}
+                {Translations[userLanguage].plans.classroom.features.feature3}
+              </Typography>
+              <Typography variant="subtitle1" className="features">
+                {"✅ "}
+                {Translations[userLanguage].plans.classroom.features.feature4}
+              </Typography>
+              <Typography variant="subtitle1" className="features">
+                {"✅ "}
+                {Translations[userLanguage].plans.classroom.features.feature5}
+              </Typography>
+            </div>
+            <img
+              alt="classroom-img"
+              height="220px"
+              width="220px"
+              src={TeacherImg}
+            ></img>
           </div>
         </CardContent>
         <Backdrop

@@ -87,17 +87,7 @@ export default function WaitingRoom(props) {
         user: props.user,
       });
       ReactDOM.render(
-        <div>
-          <GameEnded podium={data} />
-          <Button
-            onClick={() => {
-              window.location.href = "/";
-            }}
-            variant="contained"
-          >
-            Return Home
-          </Button>
-        </div>,
+        <GameEnded podium={data} />,
         document.getElementById("root")
       );
       sessionStorage.setItem("roomJoined", "false");

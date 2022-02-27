@@ -62,6 +62,7 @@ li {
 }
 .features {
   margin: 10px !important;
+  text-align: left;
 }
 a {
   padding: 10px;
@@ -362,9 +363,6 @@ button {
   width: 100%;
   margin: 50px;
   max-width: 420px;
-}
-.features {
-  text-align: center;
 }
 /*
 .sub-button{

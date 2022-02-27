@@ -3,32 +3,32 @@
   stroke-dashoffset: 0;
 }
 .circle {
-    -webkit-animation: dash .9s ease-in-out;
-    animation: dash .9s ease-in-out;
-  }
-  .line {
-    stroke-dashoffset: 1000;
-    -webkit-animation: dash .9s .35s ease-in-out forwards;
-    animation: dash .9s .35s ease-in-out forwards;
-  }
+  -webkit-animation: dash 0.9s ease-in-out;
+  animation: dash 0.9s ease-in-out;
+}
+.line {
+  stroke-dashoffset: 1000;
+  -webkit-animation: dash 0.9s 0.35s ease-in-out forwards;
+  animation: dash 0.9s 0.35s ease-in-out forwards;
+}
 .check {
-    stroke-dashoffset: -100;
-    -webkit-animation: dash-check .9s .35s ease-in-out forwards;
-    animation: dash-check .9s .35s ease-in-out forwards;
-  }
+  stroke-dashoffset: -100;
+  -webkit-animation: dash-check 0.9s 0.35s ease-in-out forwards;
+  animation: dash-check 0.9s 0.35s ease-in-out forwards;
+}
 
 p {
   text-align: center;
   margin: 20px 0 60px;
   font-size: 1.25em;
 }
-  .success {
-    color: #73AF55;
-  }
-  .error {
-    color: #D06079;
-  }
-
+.success {
+  color: #73af55;
+  margin-top: 20px !important;
+}
+.error {
+  color: #d06079;
+}
 
 @-webkit-keyframes dash {
   0% {
@@ -66,14 +66,16 @@ p {
   }
 }
 
-
-#popUpCard{
+#popUpCard {
   background-color: white;
   max-width: 550px !important;
   width: 100%;
-  border-radius: 15px;
-  padding-top: 50px;
+  height: 500px;
+  padding-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  border: 2px solid #000;
+  box-shadow: 10px 10px 0 #262626;
 }
