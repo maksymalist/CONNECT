@@ -237,7 +237,7 @@ function ViewMultiQuiz() {
                           className="view__quiz__content__question"
                         >
                           <Typography variant="h6" component="h6">
-                            {questions[question].question}
+                            {index + 1}. {questions[question].question}
                           </Typography>
                           {ansIsShown ? (
                             <div style={{ width: "100%" }}>
