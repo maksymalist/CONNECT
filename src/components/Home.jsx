@@ -144,7 +144,7 @@ export default function HomePage() {
               color="primary"
               size="large"
               onClick={() => {
-                window.location = "/play";
+                window.location.href = "/play";
               }}
             >
               {Translations[userLanguage].home.buttonText}

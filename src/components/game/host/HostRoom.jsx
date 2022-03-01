@@ -7,10 +7,18 @@ import {
   People,
   PlayArrow,
   ExitToAppRounded,
+  VolumeOffRounded,
+  VolumeUpRounded,
 } from "@mui/icons-material";
 import GameEnded from "./GameEnded";
 
-import { Divider, Typography, Button } from "@mui/material";
+import {
+  Divider,
+  Typography,
+  Button,
+  Slider,
+  ClickAwayListener,
+} from "@mui/material";
 
 //Icons
 import FirstPlaceIcon from "../../../img/PodiumIcons/firstPlace.svg";
@@ -36,6 +44,9 @@ import config from "../../../config.json";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import QRCode from "react-qr-code";
+
+import ReactHowler from "react-howler";
+import themeSong from "../../../audio/connect_theme.mp3";
 
 const playersTime = [];
 
@@ -64,9 +75,14 @@ export default function HostRoom(props) {
 
   const [finalPodium, setFinalPodium] = useState([]);
 
+  const [musicIsPlaying, setMusicIsPlaying] = useState(false);
+  const [isSlider, setIsSlider] = useState(false);
+  const [musicVolume, setMusicVolume] = useState(50);
+
   const smallScreen = useMediaQuery("(max-width:600px)");
 
   useEffect(() => {
+    setMusicIsPlaying(true);
     if (props.friendlyroom === true) {
       socket.emit("addFriendlyRoom", {
         room: props.room,
@@ -445,6 +461,7 @@ export default function HostRoom(props) {
     localStorage.removeItem(
       JSON.parse(localStorage.getItem("user")).profileObj.googleId
     );
+    mute();
   };
 
   const addPoints = async (points, userId) => {
@@ -562,6 +579,7 @@ export default function HostRoom(props) {
       googleId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
     });
     setGameStarted(false);
+    mute();
     console.log(Podium);
     setFinalPodium(Podium);
     setIsRoomLeft(true);
@@ -573,14 +591,69 @@ export default function HostRoom(props) {
     setSharePopupActive(!sharePopupActive);
   };
 
+  const mute = () => {
+    setMusicIsPlaying(false);
+  };
+
+  const unmute = () => {
+    setMusicIsPlaying(true);
+  };
+
+  const VolumeSlider = () => (
+    <div
+      style={{
+        backgroundColor: "white",
+        paddingTop: 8,
+        paddingBottom: 8,
+        paddingInline: isSlider ? 5 : 0,
+        marginTop: 10,
+        borderRadius: 45,
+        width: isSlider ? 150 : 45,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <div
+        onClick={() => setIsSlider(true)}
+        style={{ marginRight: isSlider ? 12 : 0 }}
+      >
+        <VolumeUpRounded />
+      </div>
+      {isSlider ? (
+        <ClickAwayListener onClickAway={() => setIsSlider(false)}>
+          <Slider
+            onChange={(e, value) => setMusicVolume(value)}
+            value={musicVolume}
+            min={0}
+            max={100}
+            color="secondary"
+          />
+        </ClickAwayListener>
+      ) : null}
+    </div>
+  );
+
   return (
     <div>
+      <ReactHowler
+        src={themeSong}
+        playing={musicIsPlaying}
+        loop={true}
+        volume={musicVolume / 100}
+      />
       {isRoomLeft ? (
         <GameEnded podium={finalPodium} maxPodiumPlayers={playerPodiumMax} />
       ) : (
         <div>
           {isCountdown ? (
-            <CountDown start={StartGame} room={props.room} />
+            <CountDown
+              start={StartGame}
+              room={props.room}
+              muteMusic={mute}
+              unmuteMusic={unmute}
+            />
           ) : null}
           {sharePopupActive ? (
             <SharePopup
@@ -679,18 +752,27 @@ export default function HostRoom(props) {
               alignItems: "flex-start",
             }}
           >
-            <Button
-              style={{ marginBottom: "1vh" }}
-              variant="contained"
-              color="primary"
-              size="medium"
-              id="playButtonSvg"
-              onClick={() => {
-                shareLink();
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "150px",
               }}
             >
-              {Translations[userLanguage].hostroom.sharebutton}
-            </Button>
+              <Button
+                style={{ width: "120px" }}
+                variant="contained"
+                color="primary"
+                size="medium"
+                id="playButtonSvg"
+                onClick={() => {
+                  shareLink();
+                }}
+              >
+                {Translations[userLanguage].hostroom.sharebutton}
+              </Button>
+              <VolumeSlider />
+            </div>
             {gameStarted ? (
               <Button
                 variant="contained"
@@ -709,7 +791,7 @@ export default function HostRoom(props) {
                   }}
                   variant="contained"
                 >
-                  <PlayArrow />
+                  {Translations[userLanguage].hostroom.startbutton}
                 </Button>
                 <div style={{ width: "10px", height: "10px" }} />
                 <Button

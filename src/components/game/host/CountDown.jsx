@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import "../../../style/countDownStyles.css";
 
 import Translations from "../../../translations/translations.json";
+import countdown_sfx from "../../../audio/countdown.mp3";
 
-function CountDown({ start, room }) {
-  var [number, setNumber] = useState(0);
-  var [isCountdown, setIsCountdown] = useState(true);
-  const [userLanguage, setUserLanguage] = useState(
+import ReactHowler from "react-howler";
+
+function CountDown({ start, room, muteMusic, unmuteMusic }) {
+  let [number, setNumber] = useState(0);
+  let [isCountdown, setIsCountdown] = useState(false);
+  const [userLanguage] = useState(
     localStorage.getItem("connectLanguage") || "english"
   );
   const [countDownText, setCountDownText] = useState(
@@ -14,12 +17,15 @@ function CountDown({ start, room }) {
   );
 
   useEffect(() => {
+    muteMusic();
+    setIsCountdown((isCountdown = true));
     setInterval(() => {
       if (isCountdown === false) return;
       setCountDownText(Translations[userLanguage].countdown.go);
       setNumber((number += 1));
       if (number === 4) {
         setIsCountdown((isCountdown = false));
+        unmuteMusic();
         start(room);
       }
     }, 1000);
@@ -27,6 +33,7 @@ function CountDown({ start, room }) {
 
   return (
     <>
+      <ReactHowler src={countdown_sfx} playing={isCountdown} volume={0.5} />
       {isCountdown ? (
         <div className="demo">
           <div className="demo__colored-blocks">
