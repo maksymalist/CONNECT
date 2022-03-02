@@ -605,14 +605,15 @@ export default function HostRoom(props) {
         backgroundColor: "white",
         paddingTop: 8,
         paddingBottom: 8,
-        paddingInline: isSlider ? 5 : 0,
+        paddingInline: 5,
         marginTop: 10,
-        borderRadius: 45,
         width: isSlider ? 150 : 45,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
+        border: "1px solid black",
+        boxShadow: "5px 5px 0 #262626",
       }}
     >
       <div
