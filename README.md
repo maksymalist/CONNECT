@@ -1,6 +1,5 @@
 ![Component 50](https://user-images.githubusercontent.com/79988159/147132814-bf97c9d9-5afb-4a69-bf1b-3173612eca62.png)
 
-# CONNECT!
 <a href="https://www.codefactor.io/repository/github/john8790909/connect/overview/main"><img src="https://www.codefactor.io/repository/github/john8790909/connect/badge/main" alt="CodeFactor" /></a> [![Netlify Status](https://api.netlify.com/api/v1/badges/2730b6cc-54d6-4e6a-843a-5513838d48ca/deploy-status)](https://app.netlify.com/sites/quiz-connect/deploys)
 
 
