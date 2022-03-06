@@ -168,7 +168,10 @@
     },
     "finishedscreen": {
       "title": "You're done!",
-      "sub": "Wait For More People To Finish"
+      "sub": "Wait For More People To Finish",
+      "WOW": "WOW!",
+      "sub2": "You finished in ",
+      "return": "Return home"
     },
     "gameended": {
       "title": "Game Has Ended",
@@ -176,7 +179,33 @@
     },
     "leftroom": {
       "title": "You Have Left the Room",
-      "button": "Return home"
+      "button": "Return home",
+      "kicked": {
+        "title": "You have been kicked from the room",
+        "sub": "WHAT HAVE YOU DONE???"
+      },
+      "ended": "Your host has ended the game :(",
+      "winner": {
+        "title": "You won the game!",
+        "sub": "Congrats!"
+      },
+      "second": {
+        "title": "You finished second",
+        "sub": "I know you can do better!"
+      },
+      "third": {
+        "title": "You finished third",
+        "sub": "At least you're on the podium!"
+      },
+      "loser": {
+        "title1": "You got ",
+        "title2": "th place",
+        "sub": "Better luck next time!"
+      },
+      "over": {
+        "title": "Game Over",
+        "sub": "Better luck next time!"
+      }
     },
     "newquiz": {
       "title": "Create a Quiz",
@@ -242,13 +271,17 @@
       "questions": "Questions",
       "showanswers": "Show Answers 👀",
       "hideanswers": "Hide Answers",
-      "by": "by"
+      "by": "by",
+      "play": "Play 🚀",
+      "practice": "Practice 🎯"
     },
     "multiquiz": {
       "steps": "Steps",
       "showanswers": "Show Answers 👀",
       "hideanswers": "Hide Answers",
-      "by": "by"
+      "by": "by",
+      "play": "Play 🚀",
+      "practice": "Practice 🎯"
     },
     "countdown": {
       "ready": "Ready?",
@@ -537,7 +570,10 @@
     },
     "finishedscreen": {
       "title": "Vous avez terminé!",
-      "sub": "Attendez que plus de personnes finissent"
+      "sub": "Attendez que plus de personnes finissent",
+      "WOW": "WOW!",
+      "sub2": "Vous avez fini en ",
+      "return": "Revenir à l'accueil"
     },
     "gameended": {
       "title": "Le jeu est terminé",
@@ -545,7 +581,33 @@
     },
     "leftroom": {
       "title": "Vous avez quitté la salle",
-      "button": "Revenir à l'accueil"
+      "button": "Revenir à l'accueil",
+      "kicked": {
+        "title": "Vous avez été expulsé de la salle",
+        "sub": "QU'AVEZ-VOUS FAIT ????"
+      },
+      "ended": "Le hôte a terminé le jeu",
+      "winner": {
+        "title": "Vous avez gagné",
+        "sub": "Bravo !"
+      },
+      "second": {
+        "title": "Vous êtes second",
+        "sub": "Je le sais, que vous aviez pu faire mieux!"
+      },
+      "third": {
+        "title": "Vous êtes troisième",
+        "sub": "Au moins vous êtes sur le podium !"
+      },
+      "loser": {
+        "title1": "Vous avez eu la ",
+        "title2": "iem place",
+        "sub": "Meilleur chance la prochaine fois !"
+      },
+      "over": {
+        "title": "Le jeu est terminé",
+        "sub": "Meilleur chance la prochaine fois !"
+      }
     },
     "newquiz": {
       "title": "Créer un quiz",
@@ -611,13 +673,17 @@
       "questions": "Questions",
       "showanswers": "Montrer réponses 👀",
       "hideanswers": "Cacher réponses",
-      "by": "par"
+      "by": "par",
+      "play": "Jouer 🚀",
+      "practice": "Pratique 🎯"
     },
     "multiquiz": {
       "steps": "Étapes",
       "showanswers": "Montrer réponses 👀",
       "hideanswers": "Cacher réponses",
-      "by": "par"
+      "by": "par",
+      "play": "Jouer 🚀",
+      "practice": "Pratique 🎯"
     },
     "countdown": {
       "ready": "Prêt?",

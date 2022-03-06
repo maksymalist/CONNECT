@@ -33,6 +33,10 @@ const theme = createTheme({
       main: "rgb(220, 0, 78)",
       contrastText: "#fff",
     },
+    info: {
+      main: "#29b6f6",
+      contrastText: "#fff",
+    },
   },
 });
 

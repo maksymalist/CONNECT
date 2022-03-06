@@ -29,6 +29,8 @@ import MyProfile from "./components/profile/MyProfile";
 import ViewQuiz from "./components/view/ViewQuiz";
 import ViewMultiQuiz from "./components/view/ViewMultiQuiz";
 import CreateClass from "./components/creation-system/CreateClass";
+import QuizPractice from "./components/game/practice/QuizPractice";
+import MultiPractice from "./components/game/practice/MultiPractice";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
@@ -191,6 +193,8 @@ function App() {
           <Route exact path="/play" component={EnterCodeForm} />
           <Route path="/normal/:room/:gameid/:user" component={GameRoom} />
           <Route path="/multi/:room/:gameid/:user" component={MultiGameRoom} />
+          <Route path="/practice/normal/:gameid" component={QuizPractice} />
+          <Route path="/practice/multi/:gameid" component={MultiPractice} />
           <Route path="/newquiz" component={NewQuiz} />
           <Route path="/new-multi-quiz" component={NewMultiQuiz} />
           <Route path="/browsequizzes" component={BrowseQuizzes} />

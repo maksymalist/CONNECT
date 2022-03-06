@@ -21,9 +21,11 @@ export default function AfterRoomLeave() {
       {type === "kicked" && (
         <div style={{ textAlign: "center" }}>
           <h1 style={white}>
-            <b>You have been kicked</b>
+            <b>{Translations[userLanguage].leftroom.kicked.title}</b>
           </h1>
-          <h2 style={white}>WHAT HAVE YOU DONE???</h2>
+          <h2 style={white}>
+            {Translations[userLanguage].leftroom.kicked.sub}
+          </h2>
           <Button
             style={{ marginBottom: "1vh" }}
             variant="contained"
@@ -40,7 +42,7 @@ export default function AfterRoomLeave() {
       {type === "ended" && (
         <div style={{ textAlign: "center" }}>
           <h1 style={white}>
-            <b>Your host has ended the game :(</b>
+            <b>{Translations[userLanguage].leftroom.ended}</b>
           </h1>
           <Button
             style={{ marginBottom: "1vh" }}
@@ -60,49 +62,65 @@ export default function AfterRoomLeave() {
           {position === "1" && (
             <>
               <h1 style={white}>
-                <b>You won the game!</b>
+                <b>{Translations[userLanguage].leftroom.winner.title}</b>
               </h1>
-              <h2 style={white}>Cheers!</h2>
+              <h2 style={white}>
+                {Translations[userLanguage].leftroom.winner.sub}
+              </h2>
             </>
           )}
           {position === "2" && (
             <>
               <h1 style={white}>
-                <b>You got second place</b>
+                <b>{Translations[userLanguage].leftroom.second.title}</b>
               </h1>
-              <h2 style={white}>Better luck next time!</h2>
+              <h2 style={white}>
+                {Translations[userLanguage].leftroom.second.sub}
+              </h2>
             </>
           )}
           {position === "3" && (
             <>
               <h1 style={white}>
-                <b>You got third place</b>
+                <b>{Translations[userLanguage].leftroom.third.title}</b>
               </h1>
-              <h2 style={white}>Better luck next time!</h2>
+              <h2 style={white}>
+                {Translations[userLanguage].leftroom.third.sub}
+              </h2>
             </>
           )}
           {position > 3 && (
             <>
               <h1 style={white}>
-                <b>You got {position}th place</b>
+                <b>
+                  {Translations[userLanguage].leftroom.loser.title1}
+                  {position}
+                  {Translations[userLanguage].leftroom.loser.title2}
+                </b>
               </h1>
-              <h2 style={white}>Better luck next time!</h2>
+              <h2 style={white}>
+                {Translations[userLanguage].leftroom.loser.sub}
+              </h2>
             </>
           )}
           {position === undefined && (
             <>
               <h1 style={white}>
-                <b>The game is over</b>
+                <b>{Translations[userLanguage].leftroom.over.title}</b>
               </h1>
-              <h2 style={white}>Better luck next time!</h2>
+              <h2 style={white}>
+                {Translations[userLanguage].leftroom.over.sub}
+              </h2>
             </>
           )}
           {position === "" && (
             <>
               <h1 style={white}>
-                <b>The game is over</b>
+                <b>{Translations[userLanguage].leftroom.over.title}</b>
               </h1>
-              <h2 style={white}>Better luck next time!</h2>
+              <h2 style={white}>
+                {Translations[userLanguage].leftroom.over.sub}
+              </h2>
             </>
           )}
           <Button

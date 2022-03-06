@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import socket from "../../../socket-io";
 import ReactDOM from "react-dom";
 
-import FinishedScreen from "./FinishedScreen";
+import FinishedScreen from "./FinishedSceen";
 
 import "../../../style/style.css";
 import { toast } from "react-toastify";
@@ -13,6 +12,9 @@ import Translations from "../../../translations/translations.json";
 import axios from "axios";
 
 import config from "../../../config.json";
+
+import ReactHowler from "react-howler";
+import themeSong from "../../../audio/connect_theme.mp3";
 
 function MultiGameRoom({ match }) {
   const [activeStep, setActiveStep] = useState(0);
@@ -26,9 +28,10 @@ function MultiGameRoom({ match }) {
   const [name, setName] = useState("");
   var cards = [];
 
-  var CurrentRoom = match.params.room;
+  const user = JSON.parse(localStorage.getItem("user")).profileObj.name;
+  const gameID = match.params.gameid;
   var [GameOver, setGameOver] = useState(false);
-  var gameLeft = false;
+  const [isMusic, setIsMusic] = useState(false);
   var secondTimer = 0;
 
   var quiz;
@@ -36,8 +39,6 @@ function MultiGameRoom({ match }) {
   const [userLanguage] = useState(
     localStorage.getItem("connectLanguage") || "english"
   );
-
-  var [emitted, setEmitted] = useState(false);
 
   const getQuiz = async (currentQuiz, name) => {
     quiz = currentQuiz;
@@ -51,11 +52,6 @@ function MultiGameRoom({ match }) {
     secondTimer++;
     if (secondTimer === 10) {
       secondTimer = 0;
-      socket.emit("time", {
-        time: time,
-        room: CurrentRoom,
-        user: match.params.user,
-      });
     }
   };
 
@@ -188,19 +184,10 @@ function MultiGameRoom({ match }) {
       setGameOver(true);
       setGameOver(true);
 
-      if (emitted === false) {
-        socket.emit("PlayerFinsihed", {
-          room: match.params.room,
-          user: match.params.user,
-          time: time,
-          id: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
-        });
-        setEmitted(true);
-      }
       document.getElementById("popUp").removeAttribute("hidden");
       document.getElementById("gameContent").hidden = true;
       ReactDOM.render(
-        <FinishedScreen user={match.params.user} />,
+        <FinishedScreen time={time} />,
         document.getElementById("popUp")
       );
       document.getElementById("quizTextDiv").remove();
@@ -213,7 +200,7 @@ function MultiGameRoom({ match }) {
       if (index == activeStep) {
         axios
           .post(`${config["api-server"]}/get-multi-all-types`, {
-            multiID: match.params.gameid,
+            multiID: gameID,
           })
           .then((res) => {
             const multi = res.data;
@@ -235,7 +222,7 @@ function MultiGameRoom({ match }) {
   useEffect(() => {
     axios
       .post(`${config["api-server"]}/get-multi-all-types`, {
-        multiID: match.params.gameid,
+        multiID: gameID,
       })
       .then((res) => {
         const multi = res.data;
@@ -252,159 +239,109 @@ function MultiGameRoom({ match }) {
         setSteps((prev) => (prev = stepArr));
         setMaxSteps(stepArr.length);
         startTime();
+        setIsMusic(true);
       });
 
     document.querySelector("nav").hidden = true;
-
-    socket.on("joinedGameRoom", (data) => {
-      console.log(data);
-    });
-    socket.emit("joinGame", {
-      room: match.params.room,
-      user: match.params.user,
-    });
-
-    socket.on("timeBoard", (data) => {
-      //console.log(data.time, data.user)
-    });
-    socket.on("PlayerFinished2", (data) => {
-      toast.success(
-        `${data} ${Translations[userLanguage].alerts.playerfinishedgame}`,
-        {
-          autoClose: 750,
-        }
-      );
-    });
-
-    socket.on("EndedGame", (data) => {
-      if (gameLeft) return;
-      socket.emit("leaveRoom", {
-        room: match.params.room,
-        user: match.params.user,
-      });
-      setGameOver(true);
-      window.location = "/roomleave/ended";
-      sessionStorage.setItem("roomJoined", "false");
-    });
-    socket.on("GameIsOver", (data) => {
-      gameLeft = true;
-      socket.emit("leaveRoom", {
-        room: match.params.room,
-        user: match.params.user,
-      });
-      const pos = data.find(
-        (player) =>
-          player.playerID ===
-            JSON.parse(localStorage.getItem("user")).profileObj.googleId &&
-          player.player === match.params.user + "⠀"
-      );
-      window.location = `/roomleave/gameover?position=${pos && pos.position}`;
-      sessionStorage.setItem("roomJoined", "false");
-    });
-    return () => {
-      setGameOver(true);
-      socket.emit("leaveRoom", {
-        room: match.params.room,
-        user: match.params.user,
-      });
-      sessionStorage.setItem("roomJoined", "false");
-    };
   }, []);
 
   return (
-    <div>
+    <>
+      <ReactHowler src={themeSong} playing={isMusic} loop={true} volume={1} />
       <div>
-        <div id="gameContent">
-          <div id="quizTextDiv">
-            <Typography
-              variant="h2"
-              style={{ marginTop: "100px", color: "white" }}
-            >
-              <b>{name}</b>
-            </Typography>
-            <Typography
-              variant="h4"
-              style={{ marginTop: "10px", color: "white" }}
-            >
-              {steps[activeStep]}
-            </Typography>
-            <Typography
-              variant="h4"
-              style={{ marginTop: "10px", color: "white" }}
-            >
-              {time}
-            </Typography>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              width: "100%",
-              justifyContent: "center",
-            }}
-          >
-            <Stepper
-              id="stepRef"
-              style={{
-                width: "100%",
-                maxWidth: "800px",
-                margin: "20px",
-                overflowX: "auto",
-                backgroundColor: "white",
-                padding: "15px",
-              }}
-              activeStep={activeStep}
-            >
-              {steps.map((step, index) => {
-                return (
-                  <Step key={index}>
-                    <StepLabel>{step}</StepLabel>
-                  </Step>
-                );
-              })}
-            </Stepper>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              width: "100%",
-              justifyContent: "center",
-            }}
-          >
-            <div
-              style={{
-                marginTop: "0",
-                position: "unset",
-                transform: "none",
-                marginBottom: "100px",
-              }}
-              id="cardContainer"
-            ></div>
-            <h1 hidden>{JSON.stringify(selected)}</h1>
-          </div>
-        </div>
         <div>
-          <nav style={{ height: "50px", backgroundColor: "white" }}>
+          <div id="gameContent">
+            <div id="quizTextDiv">
+              <Typography
+                variant="h2"
+                style={{ marginTop: "100px", color: "white" }}
+              >
+                <b>{name}</b>
+              </Typography>
+              <Typography
+                variant="h4"
+                style={{ marginTop: "10px", color: "white" }}
+              >
+                {steps[activeStep]}
+              </Typography>
+              <Typography
+                variant="h4"
+                style={{ marginTop: "10px", color: "white" }}
+              >
+                {time}
+              </Typography>
+            </div>
             <div
               style={{
-                float: "left",
-                color: "black",
-                marginLeft: "10px",
-                marginTop: "-10px",
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+                justifyContent: "center",
               }}
             >
-              <h2>{match.params.user}</h2>
+              <Stepper
+                id="stepRef"
+                style={{
+                  width: "100%",
+                  maxWidth: "800px",
+                  margin: "20px",
+                  overflowX: "auto",
+                  backgroundColor: "white",
+                  padding: "15px",
+                }}
+                activeStep={activeStep}
+              >
+                {steps.map((step, index) => {
+                  return (
+                    <Step key={index}>
+                      <StepLabel>{step}</StepLabel>
+                    </Step>
+                  );
+                })}
+              </Stepper>
             </div>
-          </nav>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                style={{
+                  marginTop: "0",
+                  position: "unset",
+                  transform: "none",
+                  marginBottom: "100px",
+                }}
+                id="cardContainer"
+              ></div>
+              <h1 hidden>{JSON.stringify(selected)}</h1>
+            </div>
+          </div>
+          <div>
+            <nav style={{ height: "50px", backgroundColor: "white" }}>
+              <div
+                style={{
+                  float: "left",
+                  color: "black",
+                  marginLeft: "10px",
+                  marginTop: "-10px",
+                }}
+              >
+                <h2>{user}</h2>
+              </div>
+            </nav>
+          </div>
+          <div
+            hidden
+            style={{ width: "100%", height: "100vh", zIndex: "500" }}
+            id="popUp"
+          ></div>
         </div>
-        <div
-          hidden
-          style={{ width: "100%", height: "100vh", zIndex: "500" }}
-          id="popUp"
-        ></div>
       </div>
-    </div>
+    </>
   );
 }
 

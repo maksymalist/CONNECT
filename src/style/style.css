@@ -1027,3 +1027,37 @@ footer a {
   flex-grow: 1;
   color: #000;
 }
+
+.MuiStepConnector-line {
+  border: none !important;
+  height: 1px !important;
+  background-color: #c4c4c4;
+}
+
+.MuiStepConnector-root.MuiStepConnector-horizontal.Mui-completed {
+  background-color: #6c63ff !important;
+  height: 4px !important;
+  border: none !important;
+  border-radius: 4px;
+  z-index: 100;
+}
+
+.MuiStepConnector-root.MuiStepConnector-horizontal.Mui-completed > * {
+  border: none !important;
+  height: 0px !important;
+  background-color: transparent !important;
+}
+
+.MuiStepConnector-root.MuiStepConnector-horizontal.Mui-active {
+  background-color: #6c63ff !important;
+  height: 4px !important;
+  border: none !important;
+  border-radius: 4px;
+  z-index: 100;
+}
+
+.MuiStepConnector-root.MuiStepConnector-horizontal.Mui-active > * {
+  border: none !important;
+  height: 0px !important;
+  background-color: transparent !important;
+}
