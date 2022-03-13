@@ -302,6 +302,31 @@ function Profile() {
             </Typography>
           </div>
         </div>
+        <div className="profile-chip-div">
+          {data?.user?.plan === "Classroom" && (
+            <Chip
+              className="mui-chip"
+              label={Translations[userLanguage].profile.tags.classroom}
+              color="primary"
+              variant="outlined"
+            />
+          )}
+          {quizzes?.allQuizzesByUser?.length > 0 ? (
+            <Chip
+              className="mui-chip"
+              label={Translations[userLanguage].profile.tags.creator}
+              color="primary"
+              variant="outlined"
+            />
+          ) : multis?.allMultiQuizzesByUser?.length > 0 ? (
+            <Chip
+              className="mui-chip"
+              label={Translations[userLanguage].profile.tags.creator}
+              color="primary"
+              variant="outlined"
+            />
+          ) : null}
+        </div>
         <div className="profile-tabs-slider-container">
           <Tabs
             value={value}

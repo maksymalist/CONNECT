@@ -265,6 +265,10 @@
       },
       "class": {
         "title": "Classes"
+      },
+      "tags": {
+        "classroom": "Classroom Plan 📚",
+        "creator": "Creator 🎨"
       }
     },
     "quiz": {
@@ -659,7 +663,7 @@
     },
     "profile": {
       "quizzes": {
-        "title": "Quiz",
+        "title": "Quizs",
         "by": "par"
       },
       "saved": {
@@ -667,6 +671,10 @@
       },
       "class": {
         "title": "Classes"
+      },
+      "tags": {
+        "classroom": "Forfait de Classe 📚",
+        "creator": "Créateur 🎨"
       }
     },
     "quiz": {

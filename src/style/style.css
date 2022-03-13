@@ -1061,3 +1061,17 @@ footer a {
   height: 0px !important;
   background-color: transparent !important;
 }
+.MuiStepConnector-root.MuiStepConnector-horizontal.Mui-completed {
+  background-color: #1bb978 !important;
+  height: 4px !important;
+  border: none !important;
+  border-radius: 4px;
+  z-index: 100;
+}
+.Mui-completed {
+  color: #1bb978 !important;
+}
+
+.mui-chip {
+  margin: 5px !important;
+}
