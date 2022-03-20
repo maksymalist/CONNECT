@@ -24,7 +24,7 @@ nav {
   position: fixed;
   top: 0;
   left: 0;
-  height: 50px !important;
+  height: 50px;
   width: 100%;
   z-index: 400;
 }
@@ -273,28 +273,11 @@ h1 {
   border-radius: 25px;
 }
 
-button {
-  background-color: black;
-  padding: 8px;
-  color: white;
-  outline: none;
-  border: none;
-  margin-top: 5px;
-  font-family: Arial, Helvetica, sans-serif;
+#quizTextDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-/*button {
-	box-shadow:inset 0px 1px 0px 0px #646fcb;
-	background:linear-gradient(to bottom, #8f94fb 5%, #4e54c8 100%);
-	background-color:#8f94fb;
-	border-radius:6px;
-	border:1px solid #646fcb;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-size:15px;
-	padding:6px 20px;
-	text-decoration:none;
-}*/
 
 .numberInput {
   outline: none;
@@ -465,6 +448,8 @@ button {
   display: inline-block;
   visibility: hidden;
   width: 0;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -615,10 +600,10 @@ button {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  background-color: rgb(108, 99, 255);
   padding-left: 25px;
   border: 2px solid;
   box-shadow: 10px 10px #262626;
+  margin: 10px;
 }
 
 @media screen and (max-width: 630px) {
@@ -675,6 +660,16 @@ button {
 #playersText {
   text-align: center;
 }
+
+.MuiLinearProgress-colorSuccess {
+  background-color: #6c63ff !important;
+  border-radius: 50px;
+}
+.MuiLinearProgress-barColorSuccess {
+  background-color: #1bb978 !important;
+  border: 50px;
+}
+
 /*'first-place', 'second-place', 'third-place', 'other-place'
 .first-place{
     background-image: linear-gradient(315deg, #fbee34 0%, #ffdd00 74%);
@@ -1028,6 +1023,10 @@ footer a {
   color: #000;
 }
 
+.MuiStepIcon-root {
+  color: #6c63ff !important;
+}
+
 .MuiStepConnector-line {
   border: none !important;
   height: 1px !important;
@@ -1068,6 +1067,7 @@ footer a {
   border-radius: 4px;
   z-index: 100;
 }
+
 .Mui-completed {
   color: #1bb978 !important;
 }

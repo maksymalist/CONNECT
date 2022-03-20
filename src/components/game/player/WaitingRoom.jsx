@@ -86,10 +86,7 @@ export default function WaitingRoom(props) {
         room: props.room,
         user: props.user,
       });
-      ReactDOM.render(
-        <GameEnded podium={data} />,
-        document.getElementById("root")
-      );
+      window.location = "/roomleave/ended";
       sessionStorage.setItem("roomJoined", "false");
     });
 

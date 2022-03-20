@@ -138,7 +138,8 @@ function MultiGameRoom({ match }) {
         ans: ans,
       },
     ]);
-    document.getElementById(id).style = "transform: scale(1.05)";
+    document.getElementById(id).style =
+      "color: rgb(99, 108, 255); font-weight: bold;";
 
     memory.push({
       question: ques,
@@ -247,29 +248,65 @@ function MultiGameRoom({ match }) {
 
   return (
     <>
+      <nav
+        style={{
+          height: "60px",
+          backgroundColor: "white",
+          paddingInline: "10px",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <h2>{user}</h2>
+          <div style={{ display: "flex", width: "150px" }}>
+            <Typography variant="h4">⏳</Typography>
+            <Typography variant="h4" style={{ textAlign: "left" }}>
+              {time}
+            </Typography>
+          </div>
+        </div>
+      </nav>
       <ReactHowler src={themeSong} playing={isMusic} loop={true} volume={1} />
       <div>
         <div>
           <div id="gameContent">
             <div id="quizTextDiv">
-              <Typography
-                variant="h2"
-                style={{ marginTop: "100px", color: "white" }}
-              >
-                <b>{name}</b>
-              </Typography>
-              <Typography
-                variant="h4"
-                style={{ marginTop: "10px", color: "white" }}
-              >
-                {steps[activeStep]}
-              </Typography>
-              <Typography
-                variant="h4"
-                style={{ marginTop: "10px", color: "white" }}
-              >
-                {time}
-              </Typography>
+              <div>
+                <Typography
+                  variant="h3"
+                  style={{
+                    backgroundColor: "white",
+                    padding: "15px",
+                    border: "2px solid black",
+                    boxShadow: "5px 5px 0 #262626",
+                    marginTop: "20px",
+                    color: "black",
+                  }}
+                >
+                  <b>{name}</b>
+                </Typography>
+              </div>
+              <div>
+                <Typography
+                  variant="h4"
+                  style={{
+                    backgroundColor: "white",
+                    padding: "15px",
+                    border: "2px solid black",
+                    boxShadow: "5px 5px 0 #262626",
+                    marginTop: "20px",
+                    color: "#636CFF",
+                  }}
+                >
+                  <b>{steps[activeStep]}</b>
+                </Typography>
+              </div>
             </div>
             <div
               style={{
@@ -319,20 +356,6 @@ function MultiGameRoom({ match }) {
               ></div>
               <h1 hidden>{JSON.stringify(selected)}</h1>
             </div>
-          </div>
-          <div>
-            <nav style={{ height: "50px", backgroundColor: "white" }}>
-              <div
-                style={{
-                  float: "left",
-                  color: "black",
-                  marginLeft: "10px",
-                  marginTop: "-10px",
-                }}
-              >
-                <h2>{user}</h2>
-              </div>
-            </nav>
           </div>
           <div
             hidden
