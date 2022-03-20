@@ -1,4 +1,4 @@
 {
-  "socket-server": "http://localhost:3001",
+  "socket-server": "https://quiz-connect-socketio.herokuapp.com",
   "api-server": "https://quiz-connect-api.herokuapp.com"
 }
