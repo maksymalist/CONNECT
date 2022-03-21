@@ -355,8 +355,8 @@ function MultiGameRoom({ match }) {
           isWaiting2 = false;
           setIsShowingPosition(true);
           isShowingPosition2 = true;
-          setPosition(parseInt(position.position));
-          position2 = parseInt(position.position);
+          setPosition(i + 1);
+          position2 = i + 1;
         }
       }
     });

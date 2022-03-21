@@ -465,7 +465,6 @@ export default function HostRoom(props) {
 
   const nextSection = () => {
     const positions = [];
-    const podiumLength = props.podiumPlaces;
     if (document.getElementsByClassName("time-box").length > 0) {
       for (
         let i = 0;
@@ -477,28 +476,20 @@ export default function HostRoom(props) {
           player: el.id,
           time: el.dataset.time,
           userId: el.dataset.userId,
-          position: i + 1,
         });
       }
       if (positions.length > 0) {
-        const compareDecimals = (a, b) => {
-          if (parseInt(a.time) === parseInt(b.time)) {
-            return 0;
-          }
-
-          return parseInt(a.time) < parseInt(b.time) ? -1 : 1;
-        };
-        positions.sort(compareDecimals);
+        positions.sort((a, b) => {
+          return a - b;
+        });
       }
     }
 
     console.log(positions);
-    console.log(podiumLength);
 
     socket.emit("nextSection", {
       room: props.room,
       positions: positions,
-      podiumLength: podiumLength,
     });
   };
 
