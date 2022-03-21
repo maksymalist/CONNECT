@@ -916,6 +916,7 @@ export default function HostRoom(props) {
                 variant="h4"
                 style={{
                   color: "white",
+                  textAlign: "center",
                 }}
               >
                 <b>{Translations[userLanguage].hostroom.quizcompleted}</b>
