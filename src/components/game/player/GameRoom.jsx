@@ -134,7 +134,8 @@ export default function GameRoom({ match }) {
         ans: ans,
       },
     ]);
-    document.getElementById(id).style = "transform: scale(1.1)";
+    document.getElementById(id).style =
+      "color: rgb(99, 108, 255); font-weight: bold;";
 
     memory.push({
       question: ques,
@@ -250,14 +251,31 @@ export default function GameRoom({ match }) {
   }, []);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
+    <div>
+      <nav
+        style={{
+          height: "60px",
+          backgroundColor: "white",
+          paddingInline: "10px",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <h2>{match.params.user}</h2>
+          <div style={{ display: "flex", width: "150px" }}>
+            <Typography variant="h4">⏳</Typography>
+            <Typography variant="h4" style={{ textAlign: "left" }}>
+              {time}
+            </Typography>
+          </div>
+        </div>
+      </nav>
       <div
         style={{
           display: "flex",
@@ -265,46 +283,42 @@ export default function GameRoom({ match }) {
           flexDirection: "column",
           alignItems: "center",
         }}
-        id="gameContent"
       >
-        <div>
-          <Typography
-            variant="h2"
-            style={{ marginTop: "100px", color: "white" }}
-          >
-            <b>{name}</b>
-          </Typography>
-          <Typography
-            variant="h3"
-            style={{ marginTop: "10px", color: "white" }}
-          >
-            {time}
-          </Typography>
-        </div>
-        <div>
-          <div style={{ marginTop: "50px" }} id="cardContainer"></div>
-          <h1 hidden>{JSON.stringify(selected)}</h1>
-        </div>
-      </div>
-      <div>
-        <nav style={{ height: "50px", backgroundColor: "white" }}>
-          <div
-            style={{
-              float: "left",
-              color: "black",
-              marginLeft: "10px",
-              marginTop: "-10px",
-            }}
-          >
-            <h2>{match.params.user}</h2>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+          id="gameContent"
+        >
+          <div>
+            <Typography
+              variant="h3"
+              style={{
+                backgroundColor: "white",
+                padding: "15px",
+                border: "2px solid black",
+                boxShadow: "5px 5px 0 #262626",
+                marginTop: "20px",
+                color: "#636CFF",
+              }}
+            >
+              <b>{name}</b>
+            </Typography>
           </div>
-        </nav>
+          <div>
+            <div style={{ marginTop: "50px" }} id="cardContainer"></div>
+            <h1 hidden>{JSON.stringify(selected)}</h1>
+          </div>
+        </div>
+        <div
+          hidden
+          style={{ width: "100%", height: "100vh", zIndex: "500" }}
+          id="popUp"
+        ></div>
       </div>
-      <div
-        hidden
-        style={{ width: "100%", height: "100vh", zIndex: "500" }}
-        id="popUp"
-      ></div>
     </div>
   );
 }

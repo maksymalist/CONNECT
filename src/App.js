@@ -41,6 +41,7 @@ import { setIsLoggedIn, setIsLoggedOut } from "./actions/IsLogged";
 import { useMutation, gql } from "@apollo/client";
 import config from "./config.json";
 import "firebase/storage";
+import PositionScreen from "./components/game/player/PositionScreen";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAuhaVNdwDaivPThUZ6wxYKCkvs0tEDRNs",

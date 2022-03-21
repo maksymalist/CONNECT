@@ -164,7 +164,26 @@
       "time": "Time",
       "place": "Place",
       "private": "Private 🔐",
-      "joinat": "🚀 Join at "
+      "joinat": "🚀 Join at ",
+      "finished": "Finished ✅",
+      "finish": "Finish 🎉",
+      "next": "Next ⏭",
+      "quizcompleted": "Quiz Completed 🎉",
+      "displayingwinners": "Displaying winners in...",
+      "nextup": "Next up"
+    },
+    "positionscreen": {
+      "wow": "WOW!",
+      "keepitup": "Keep it up!",
+      "yougot1st": "You got 1st place this round!",
+      "yougot2nd": "You got 2nd place this round!",
+      "yougot3rd": "You got 3rd place this round!",
+      "yougotother1": "You got",
+      "yougotother2": "th place this round!"
+    },
+    "waitforhost": {
+      "title": "You're done wait for the host",
+      "sub": "to continue..."
     },
     "finishedscreen": {
       "title": "You're done!",
@@ -570,7 +589,26 @@
       "time": "Temps",
       "place": "Place",
       "private": "Privé 🔐",
-      "joinat": "🚀 Rejoins sur "
+      "joinat": "🚀 Rejoins sur ",
+      "finished": "Terminés ✅",
+      "finish": "Finir 🎉",
+      "next": "Suivant ⏭",
+      "quizcompleted": "Quiz Complété 🎉",
+      "displayingwinners": "Afficher les vainqueurs dans...",
+      "nextup": "Prochain"
+    },
+    "positionscreen": {
+      "wow": "WOW!",
+      "keepitup": "Continue comme ça!",
+      "yougot1st": "Vous êtes en 1ère place ce round!",
+      "yougot2nd": "Vous êtes en la 2ème place ce round!",
+      "yougot3rd": "Vous êtes en la 3ème place ce round!",
+      "yougotother1": "Vous êtes en",
+      "yougotother2": "ème place ce round!"
+    },
+    "waitforhost": {
+      "title": "Vous avez terminé attendez que l'hôte",
+      "sub": "continue la partie..."
     },
     "finishedscreen": {
       "title": "Vous avez terminé!",

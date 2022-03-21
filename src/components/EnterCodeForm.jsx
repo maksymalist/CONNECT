@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { io } from "socket.io-client";
 import WaitingRoom from "./game/player/WaitingRoom";
 import HostRoom from "./game/host/HostRoom";
+import MultiHostRoom from "./game/host/MultiHostRoom";
 import Background from "./misc/Background";
 
 import "../style/style.css";
@@ -113,26 +114,41 @@ export default function EnterCodeForm({ match, location }) {
 
       var validclassId = data.classId;
 
-      console.log(data.friendly + "checked uit");
-      console.log("values below");
       if (maxPlayers.current == null || podiumPlaces.current == null) return;
-      console.log(maxPlayers.current.value);
-      console.log(podiumPlaces.current.value);
-      ReactDOM.render(
-        <div>
-          <HostRoom
-            maxPlayers={maxPlayers.current.value}
-            podiumPlaces={podiumPlaces.current.value}
-            room={data.room}
-            gamecode={data.gamecode}
-            friendlyroom={data.friendly}
-            gamemode={data.gamemode}
-            classid={validclassId}
-          />
-          <Background />
-        </div>,
-        document.getElementById("root")
-      );
+      if (data.gamemode === "normal") {
+        ReactDOM.render(
+          <div>
+            <HostRoom
+              maxPlayers={maxPlayers.current.value}
+              podiumPlaces={podiumPlaces.current.value}
+              room={data.room}
+              gamecode={data.gamecode}
+              friendlyroom={data.friendly}
+              gamemode={data.gamemode}
+              classid={validclassId}
+            />
+            <Background />
+          </div>,
+          document.getElementById("root")
+        );
+      }
+      if (data.gamemode === "multi") {
+        ReactDOM.render(
+          <div>
+            <MultiHostRoom
+              maxPlayers={maxPlayers.current.value}
+              podiumPlaces={podiumPlaces.current.value}
+              room={data.room}
+              gamecode={data.gamecode}
+              friendlyroom={data.friendly}
+              gamemode={data.gamemode}
+              classid={validclassId}
+            />
+            <Background />
+          </div>,
+          document.getElementById("root")
+        );
+      }
       localStorage.setItem(
         JSON.parse(localStorage.getItem("user")).profileObj.googleId,
         true
