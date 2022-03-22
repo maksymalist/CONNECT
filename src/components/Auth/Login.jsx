@@ -66,20 +66,16 @@ function Login() {
       window.location.href = "/play";
     }
   };
+
   return (
     <div className="login-main-container">
       <div className="login-component-container">
-        <img
-          id="home"
-          onClick={() => {
-            window.location = "/";
-          }}
-          className="nav-links lileft"
-          alt="connect-logo"
-          width={250}
-          height={250}
-          src={logo}
-        />
+        <iframe
+          src="https://my.spline.design/untitled-43e3b13cbfa571203bc1199dae5596e0/"
+          frameborder="0"
+          width="200px"
+          height="250px"
+        ></iframe>
         <br></br>
         <Typography variant="h5" className="login-title">
           <b>{Translations[userLanguage].login.title}</b>
