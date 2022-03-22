@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import GoogleLogin from "react-google-login";
 import { Typography } from "@mui/material";
+import Spline from "@splinetool/react-spline";
 
 //style
 import "../../style/loginStyles.css";
@@ -69,19 +70,11 @@ function Login() {
   return (
     <div className="login-main-container">
       <div className="login-component-container">
-        <img
-          id="home"
-          onClick={() => {
-            window.location = "/";
-          }}
-          className="nav-links lileft"
-          alt="connect-logo"
-          width={250}
-          height={250}
-          src={logo}
-        />
+        <div style={{ width: "250px", height: "250px" }}>
+          <Spline scene="https://draft.spline.design/x-auyQbM97sLc0dD/scene.spline" />
+        </div>
         <br></br>
-        <Typography variant="h5" className="login-title">
+        <Typography variant="h4" className="login-title">
           <b>{Translations[userLanguage].login.title}</b>
         </Typography>
         <br></br>
