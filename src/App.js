@@ -150,37 +150,44 @@ function App() {
   }, []);
 
   const fetchCustomerData = async (id) => {
-    const res = await axios.post(`${config["api-server"]}/get-customer-data`, {
-      subId: id,
-    });
+    try {
+      const res = await axios.post(
+        `${config["api-server"]}/get-customer-data`,
+        {
+          subId: id,
+        }
+      );
 
-    let plan = "";
-    if (
-      JSON.parse(res.data.subscriptionDetails).plan.id ==
-        "price_1JMwC7BqTzgw1Au76sejuZu4" &&
-      JSON.parse(res.data.subscriptionDetails).status == "active"
-    ) {
-      plan = "Classroom";
-      dispatch(setClassroom());
-    }
-    if (JSON.parse(res.data.subscriptionDetails).status == "canceled") {
-      plan = "Starter";
+      let plan = "";
+      if (
+        JSON.parse(res.data.subscriptionDetails).plan.id ==
+          "price_1JMwC7BqTzgw1Au76sejuZu4" &&
+        JSON.parse(res.data.subscriptionDetails).status == "active"
+      ) {
+        plan = "Classroom";
+        dispatch(setClassroom());
+      }
+      if (JSON.parse(res.data.subscriptionDetails).status == "canceled") {
+        plan = "Starter";
+        dispatch(setStarter());
+      }
+      if (JSON.parse(res.data.subscriptionDetails).status == "inactive") {
+        plan = "Starter";
+        dispatch(setStarter());
+      }
+
+      setCustomerId(JSON.parse(res.data.subscriptionDetails).customer);
+      console.log(JSON.parse(res.data.subscriptionDetails));
+      updateUserSubscription({
+        variables: {
+          id: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+          subscriptionDetails: res.data.subscriptionDetails,
+          plan: plan,
+        },
+      });
+    } catch (err) {
       dispatch(setStarter());
     }
-    if (JSON.parse(res.data.subscriptionDetails).status == "inactive") {
-      plan = "Starter";
-      dispatch(setStarter());
-    }
-
-    setCustomerId(JSON.parse(res.data.subscriptionDetails).customer);
-    console.log(JSON.parse(res.data.subscriptionDetails));
-    updateUserSubscription({
-      variables: {
-        id: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
-        subscriptionDetails: res.data.subscriptionDetails,
-        plan: plan,
-      },
-    });
   };
 
   return (
