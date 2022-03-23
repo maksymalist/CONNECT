@@ -123,7 +123,7 @@ function Nav({ isLoggedIn, customerId }) {
 
   const logOut = () => {
     localStorage.removeItem("user");
-    window.location.reload();
+    window.location = "/login";
   };
 
   const selectedColors = {

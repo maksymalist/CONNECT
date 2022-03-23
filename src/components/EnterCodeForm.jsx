@@ -71,6 +71,10 @@ export default function EnterCodeForm({ match, location }) {
   const [createNotification] = useMutation(CREATE_NOTIFICATION);
 
   useEffect(() => {
+    if (!localStorage.getItem("user")) {
+      window.location = "/login";
+    }
+
     const Gamecode = new URLSearchParams(search).get("code");
     if (Gamecode !== null) {
       setCode(Gamecode);
@@ -406,22 +410,46 @@ export default function EnterCodeForm({ match, location }) {
                 id="name"
               />
               <br></br>
-              <Button
+              <div
                 style={{
-                  marginTop: "1vh",
-                  width: "100%",
-                  fontSize: "1.2rem",
-                  height: "48px",
-                }}
-                variant="contained"
-                color="primary"
-                size="small"
-                onClick={() => {
-                  JoinRoom();
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                {Translations[userLanguage].play.join.button2}
-              </Button>
+                <Button
+                  style={{
+                    fontSize: "1.2rem",
+                    height: "48px",
+                    width: "100%",
+                    margin: "10px",
+                  }}
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  onClick={() => {
+                    JoinRoom();
+                  }}
+                >
+                  {Translations[userLanguage].play.join.button2}
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  style={{
+                    fontSize: "1.2rem",
+                    height: "48px",
+                    width: "100%",
+                  }}
+                  onClick={() => {
+                    setJoinFormStep(0);
+                  }}
+                >
+                  Back ⏮
+                </Button>
+              </div>
             </>
           )}
         </div>
