@@ -104,7 +104,11 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("user")) !== null) {
+    if (
+      JSON.parse(localStorage.getItem("user")) !== null &&
+      JSON.parse(localStorage.getItem("user")) !== undefined &&
+      JSON.parse(localStorage.getItem("user")).id !== ""
+    ) {
       console.log(JSON.parse(localStorage.getItem("user")).profileObj);
       dispatch(setIsLoggedIn());
 
@@ -126,10 +130,13 @@ function App() {
           console.log(res.data);
           if (res.data !== null && res.data !== undefined) {
             const subObj = JSON.parse(res.data);
-            fetchCustomerData(subObj.id);
+            fetchCustomerData(subObj?.id || null);
           } else {
             dispatch(setStarter());
           }
+        })
+        .catch((err) => {
+          dispatch(setStarter());
         });
     } else {
       dispatch(setIsLoggedOut());
@@ -150,6 +157,10 @@ function App() {
   }, []);
 
   const fetchCustomerData = async (id) => {
+    if (id === null) {
+      dispatch(setStarter());
+      return;
+    }
     try {
       const res = await axios.post(
         `${config["api-server"]}/get-customer-data`,
@@ -157,31 +168,34 @@ function App() {
           subId: id,
         }
       );
-
+      if (res.data == null || res.data == undefined) {
+        dispatch(setStarter());
+        return;
+      }
       let plan = "";
       if (
-        JSON.parse(res.data.subscriptionDetails).plan.id ==
+        JSON.parse(res?.data?.subscriptionDetails)?.plan?.id ==
           "price_1JMwC7BqTzgw1Au76sejuZu4" &&
-        JSON.parse(res.data.subscriptionDetails).status == "active"
+        JSON.parse(res?.data?.subscriptionDetails)?.status == "active"
       ) {
         plan = "Classroom";
         dispatch(setClassroom());
       }
-      if (JSON.parse(res.data.subscriptionDetails).status == "canceled") {
+      if (JSON.parse(res?.data?.subscriptionDetails)?.status == "canceled") {
         plan = "Starter";
         dispatch(setStarter());
       }
-      if (JSON.parse(res.data.subscriptionDetails).status == "inactive") {
+      if (JSON.parse(res?.data?.subscriptionDetails)?.status == "inactive") {
         plan = "Starter";
         dispatch(setStarter());
       }
 
-      setCustomerId(JSON.parse(res.data.subscriptionDetails).customer);
-      console.log(JSON.parse(res.data.subscriptionDetails));
+      setCustomerId(JSON.parse(res?.data?.subscriptionDetails)?.customer);
+      console.log(JSON.parse(res?.data?.subscriptionDetails));
       updateUserSubscription({
         variables: {
           id: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
-          subscriptionDetails: res.data.subscriptionDetails,
+          subscriptionDetails: res?.data?.subscriptionDetails,
           plan: plan,
         },
       });
