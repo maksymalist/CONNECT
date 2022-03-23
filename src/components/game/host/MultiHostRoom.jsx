@@ -480,7 +480,7 @@ export default function HostRoom(props) {
       }
       if (positions.length > 0) {
         positions.sort((a, b) => {
-          return a - b;
+          return a.time - b.time;
         });
       }
     }
