@@ -141,15 +141,8 @@ function App() {
     } else {
       dispatch(setIsLoggedOut());
       if (window.location.pathname == "/login") return;
-      // const ToastContent = () => (
-      //   <div className="toast-content">
-      //     <h3>You Have To Login If You Want To Use CONNECT!</h3>
-      //     <Button variant='contained' color='primary' onClick={()=>{window.location = '/login'}}>Login</Button>
-      //   </div>
-      // )
-      // toast.info(<ToastContent/>)
+      if (window.location.pathname == "/play") return;
       window.location.href = "/login";
-      return;
     }
     return () => {
       //cleanup

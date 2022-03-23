@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import GoogleLogin from "react-google-login";
 import { Typography } from "@mui/material";
 import Spline from "@splinetool/react-spline";
+import { useLocation } from "react-router-dom";
 
 //style
 import "../../style/loginStyles.css";
@@ -20,30 +21,34 @@ import axios from "axios";
 
 import config from "../../config.json";
 
-function Login() {
-  //mutations
-  const CREATE_USER = gql`
-    mutation createUser(
-      $id: ID!
-      $name: String!
-      $email: String!
-      $imageUrl: String!
-      $plan: String
-    ) {
-      createUser(
-        id: $id
-        name: $name
-        email: $email
-        imageUrl: $imageUrl
-        plan: $plan
-      )
-    }
-  `;
+//mutations
+const CREATE_USER = gql`
+  mutation createUser(
+    $id: ID!
+    $name: String!
+    $email: String!
+    $imageUrl: String!
+    $plan: String
+  ) {
+    createUser(
+      id: $id
+      name: $name
+      email: $email
+      imageUrl: $imageUrl
+      plan: $plan
+    )
+  }
+`;
 
+function Login() {
   const [userLanguage] = useState(
     localStorage.getItem("connectLanguage") || "english"
   );
   const [createUser] = useMutation(CREATE_USER);
+
+  const search = useLocation().search;
+
+  const Gamecode = new URLSearchParams(search).get("code");
 
   const responseGoogle = async (response) => {
     localStorage.setItem("user", JSON.stringify(response));
@@ -51,8 +56,13 @@ function Login() {
       userId: response.profileObj.googleId,
     });
     if (res.data) {
-      window.location.reload();
-      window.location.href = "/play";
+      if (Gamecode) {
+        window.location.reload();
+        window.location.href = `/play?code=${Gamecode}`;
+      } else {
+        window.location.reload();
+        window.location.href = "/play";
+      }
     } else {
       createUser({
         variables: {

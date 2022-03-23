@@ -71,11 +71,18 @@ export default function EnterCodeForm({ match, location }) {
   const [createNotification] = useMutation(CREATE_NOTIFICATION);
 
   useEffect(() => {
+    const Gamecode = new URLSearchParams(search).get("code");
+
     if (!localStorage.getItem("user")) {
-      window.location = "/login";
+      if (Gamecode !== null) {
+        window.location = `/login?code=${Gamecode}`;
+        return;
+      } else {
+        window.location = "/login";
+        return;
+      }
     }
 
-    const Gamecode = new URLSearchParams(search).get("code");
     if (Gamecode !== null) {
       setCode(Gamecode);
       setJoinFormCode(Gamecode);
