@@ -37,11 +37,17 @@ function PositionScreen({ position, player }) {
         variant="h2"
         style={{ color: "white", marginTop: "100px", marginBottom: "50px" }}
       >
-        <b>{Translations[userLanguage].positionscreen.wow}</b>
+        <b>
+          {position === 0
+            ? Translations[userLanguage].positionscreen.ohno
+            : Translations[userLanguage].positionscreen.wow}
+        </b>
       </Typography>
       <Typography variant="h3" style={{ color: "white" }}>
         <b>
-          {position === 1
+          {position === 0
+            ? Translations[userLanguage].positionscreen.notfinished
+            : position === 1
             ? Translations[userLanguage].positionscreen.yougot1st
             : position === 2
             ? Translations[userLanguage].positionscreen.yougot2nd
@@ -64,7 +70,9 @@ function PositionScreen({ position, player }) {
             className="lowest__time__container"
             style={{
               backgroundColor:
-                position === 1
+                position === 0
+                  ? "rgb(220, 0, 78)"
+                  : position === 1
                   ? "#FCC73E"
                   : position === 2
                   ? "#1594DB"
@@ -74,7 +82,9 @@ function PositionScreen({ position, player }) {
             }}
           >
             <Typography style={{ color: "white" }} variant="h3">
-              {position === 1
+              {position === 0
+                ? "👎😐"
+                : position === 1
                 ? "👑"
                 : position === 2
                 ? "🥈"
@@ -91,7 +101,11 @@ function PositionScreen({ position, player }) {
               variant="h3"
               style={{ color: "white", marginTop: "50px" }}
             >
-              <b>{Translations[userLanguage].positionscreen.keepitup}</b>
+              <b>
+                {position === 0
+                  ? Translations[userLanguage].positionscreen.dobetter
+                  : Translations[userLanguage].positionscreen.keepitup}
+              </b>
             </Typography>
           </div>
         </div>

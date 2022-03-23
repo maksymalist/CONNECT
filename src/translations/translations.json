@@ -174,7 +174,10 @@
     },
     "positionscreen": {
       "wow": "WOW!",
+      "ohno": "Oh no!",
       "keepitup": "Keep it up!",
+      "dobetter": "Do better next time!",
+      "notfinished": "You didn't finish this section!!",
       "yougot1st": "You got 1st place this round!",
       "yougot2nd": "You got 2nd place this round!",
       "yougot3rd": "You got 3rd place this round!",
@@ -599,7 +602,10 @@
     },
     "positionscreen": {
       "wow": "WOW!",
+      "ohno": "Oh non!",
       "keepitup": "Continue comme ça!",
+      "dobetter": "Faites mieux la prochain fois!",
+      "notfinished": "Vous n'avez pas terminé cette section!!!",
       "yougot1st": "Vous êtes en 1ère place ce round!",
       "yougot2nd": "Vous êtes en la 2ème place ce round!",
       "yougot3rd": "Vous êtes en la 3ème place ce round!",

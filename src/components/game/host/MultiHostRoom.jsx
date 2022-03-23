@@ -479,6 +479,10 @@ export default function HostRoom(props) {
         });
       }
       if (positions.length > 0) {
+        // positions = positions.filter((el) => {
+        //   return finished2.includes(el.player) === true;
+        // });
+
         positions.sort((a, b) => {
           return a.time - b.time;
         });
