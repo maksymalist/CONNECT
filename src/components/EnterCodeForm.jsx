@@ -41,6 +41,8 @@ const CREATE_NOTIFICATION = gql`
   }
 `;
 
+let joined = false;
+
 export default function EnterCodeForm({ match, location }) {
   var [role, setRole] = useState("");
   const [checked, setChecked] = useState(false);
@@ -104,8 +106,6 @@ export default function EnterCodeForm({ match, location }) {
       if (mode === "multi") setGameMode("multi");
     }
 
-    var joined = false;
-
     socket.on("myroom", (data) => {
       socket.emit("adduser", {
         name: data.name,
@@ -116,8 +116,10 @@ export default function EnterCodeForm({ match, location }) {
     socket.on("roomcallback", (data) => {
       if (data.joined == true) {
         joined = true;
+      } else {
+        if (joined == true) return;
+        toast.error("Room not found :(");
       }
-      console.log(data);
     });
 
     socket.on("roomcreated", async (data) => {
@@ -201,7 +203,11 @@ export default function EnterCodeForm({ match, location }) {
     });
 
     socket.on("changeName", (data) => {
-      //
+      if (sessionStorage.getItem("roomJoined") !== "true") {
+        if (role !== "host") {
+          toast.error("That name is already taken!");
+        }
+      }
     });
     socket.on("roomFull", (data) => {
       toast.warning(data.message);
@@ -210,17 +216,20 @@ export default function EnterCodeForm({ match, location }) {
     socket.on("addeduser", (data) => {
       if (role !== "host") {
         setRole("player");
-        ReactDOM.render(
-          <div>
-            <WaitingRoom
-              room={data.currentRoom}
-              usersInRoom={data.UsersInRoom}
-              user={data.name}
-            />
-            <Background />
-          </div>,
-          document.getElementById("root")
-        );
+        if (sessionStorage.getItem("roomJoined") !== "true") {
+          ReactDOM.render(
+            <div>
+              <WaitingRoom
+                room={data.currentRoom}
+                usersInRoom={data.UsersInRoom}
+                user={data.name}
+              />
+              <Background />
+            </div>,
+            document.getElementById("root")
+          );
+          sessionStorage.setItem("roomJoined", "true");
+        }
       }
     });
     const terminateRoomPopUp = (room) => (
