@@ -15,14 +15,16 @@ function PositionScreen({ position, player }) {
           style={{
             marginRight: "20px",
             marginTop: "20px",
-            backgroundColor: "#1bb978",
+            backgroundColor: position === 0 ? "rgb(220, 0, 78)" : "#1bb978",
             borderRadius: "5px",
             padding: "10px",
           }}
         >
           <Typography variant="sub1" style={{ color: "white" }}>
             <b>
-              {position === 1
+              {position === 0
+                ? "+15s"
+                : position === 1
                 ? "-15s"
                 : position === 2
                 ? "-10s"

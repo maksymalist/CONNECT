@@ -375,6 +375,10 @@ function MultiGameRoom({ match }) {
 
       console.log(position2);
 
+      if (position2 === 0) {
+        updateTime((prev) => (time = prev += 15));
+      }
+
       if (position2 === 1) {
         updateTime((prev) => (time = prev -= 15));
       }
