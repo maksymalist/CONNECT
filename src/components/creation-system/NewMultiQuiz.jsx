@@ -353,7 +353,9 @@ function NewMultiQuiz() {
       return;
     }
     quizObj.name = name;
-    quizObj.userName = JSON.parse(localStorage.getItem("user")).profileObj.name;
+    quizObj.userName = JSON.parse(
+      localStorage.getItem("user")
+    )?.profileObj.name;
     quizObj.userProfilePic = JSON.parse(
       localStorage.getItem("user")
     ).profileObj.imageUrl;

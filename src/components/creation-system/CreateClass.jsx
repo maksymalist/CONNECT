@@ -105,7 +105,7 @@ function CreateClass() {
       _id: classID,
       name: className || "",
       banner: imgRef.current ? imgRef.current.src : "",
-      owner: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+      owner: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
     };
 
     /*create class*/
@@ -113,7 +113,7 @@ function CreateClass() {
 
     /*notify owner*/
     const notification = {
-      userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+      userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
       type: "class_created",
       message: `You have succesfully created ${classData.name}!`,
       data: classID,
@@ -121,7 +121,7 @@ function CreateClass() {
 
     const ownerData = {
       classId: classID,
-      userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+      userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
       role: "owner",
     };
 
@@ -138,7 +138,7 @@ function CreateClass() {
         userId: memberID.replace(/user:/g, ""),
         type: "added_to_class",
         message: `${
-          JSON.parse(localStorage.getItem("user")).profileObj.name
+          JSON.parse(localStorage.getItem("user"))?.profileObj.name
         } has added you to ${classData.name}!`,
         data: classID,
       };
@@ -169,22 +169,22 @@ function CreateClass() {
     }
 
     if (
-      res.data._id ===
+      res.data?._id ===
       USERID_PREFIX +
-        JSON.parse(localStorage.getItem("user")).profileObj.googleId
+        JSON.parse(localStorage.getItem("user"))?.profileObj.googleId
     ) {
       toast.error(Translations[userLanguage].alerts.cannotAddYourself);
       return;
     }
 
     if (res.data) {
-      membersArr.map((member) => {
-        if (member.id === res.data._id) {
+      membersArr?.map((member) => {
+        if (member?.id === res.data?._id) {
           toast.error(Translations[userLanguage].alerts.memberAlreadyExists);
           return;
         }
       });
-      setMembers([...members, { data: res.data, id: res.data._id }]);
+      setMembers([...members, { data: res.data, id: res.data?._id }]);
       setCurrentMember("");
       return;
     }

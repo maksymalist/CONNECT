@@ -150,7 +150,7 @@ function Profile() {
   };
 
   useEffect(() => {
-    if (id == JSON.parse(localStorage.getItem("user")).profileObj.googleId) {
+    if (id == JSON.parse(localStorage.getItem("user"))?.profileObj.googleId) {
       window.location = "/profile";
       return;
     }
@@ -182,7 +182,7 @@ function Profile() {
 
     console.log(res.data);
     if (res.data) {
-      setUserClasses(res.data);
+      setUserClasses(res.data || []);
     }
   };
 

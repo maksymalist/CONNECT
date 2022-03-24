@@ -72,7 +72,7 @@ function MultiGameRoom({ match }) {
           time: time,
           room: CurrentRoom,
           user: match.params.user,
-          userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+          userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
         });
       }
     }
@@ -249,7 +249,7 @@ function MultiGameRoom({ match }) {
           socket.emit("finishedSection", {
             room: CurrentRoom,
             user: match.params.user,
-            userId: JSON.parse(localStorage.getItem("user")).profileObj
+            userId: JSON.parse(localStorage.getItem("user"))?.profileObj
               .googleId,
           });
           if (activeStep2 + 1 === steps2.length) {
@@ -262,7 +262,7 @@ function MultiGameRoom({ match }) {
                 room: match.params.room,
                 user: match.params.user,
                 time: time,
-                id: JSON.parse(localStorage.getItem("user")).profileObj
+                id: JSON.parse(localStorage.getItem("user"))?.profileObj
                   .googleId,
               });
               emitted = true;
@@ -328,7 +328,7 @@ function MultiGameRoom({ match }) {
     socket.on("showCurrentPosition", (data) => {
       console.log(data);
       const positions = data.positions;
-      const id = JSON.parse(localStorage.getItem("user")).profileObj.googleId;
+      const id = JSON.parse(localStorage.getItem("user"))?.profileObj.googleId;
       const user = match.params.user;
       console.log(positions);
 
@@ -437,7 +437,7 @@ function MultiGameRoom({ match }) {
       const pos = data.find(
         (player) =>
           player.playerID ===
-            JSON.parse(localStorage.getItem("user")).profileObj.googleId &&
+            JSON.parse(localStorage.getItem("user"))?.profileObj.googleId &&
           player.player === match.params.user + "⠀"
       );
       window.location = `/roomleave/gameover?position=${pos && pos.position}`;

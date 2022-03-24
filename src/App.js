@@ -107,24 +107,23 @@ function App() {
     if (
       JSON.parse(localStorage.getItem("user")) !== null &&
       JSON.parse(localStorage.getItem("user")) !== undefined &&
-      JSON.parse(localStorage.getItem("user")).id !== ""
+      JSON.parse(localStorage.getItem("user")) !== ""
     ) {
-      console.log(JSON.parse(localStorage.getItem("user")).profileObj);
       dispatch(setIsLoggedIn());
 
       updateUserProfile({
         variables: {
-          name: JSON.parse(localStorage.getItem("user")).profileObj.name,
-          email: JSON.parse(localStorage.getItem("user")).profileObj.email,
-          id: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
-          imageUrl: JSON.parse(localStorage.getItem("user")).profileObj
+          name: JSON.parse(localStorage.getItem("user"))?.profileObj.name,
+          email: JSON.parse(localStorage.getItem("user"))?.profileObj.email,
+          id: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+          imageUrl: JSON.parse(localStorage.getItem("user"))?.profileObj
             .imageUrl,
         },
       });
 
       axios
         .post(`${config["api-server"]}/get-user-subscription-id`, {
-          userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+          userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
         })
         .then((res) => {
           console.log(res.data);
@@ -187,7 +186,7 @@ function App() {
       console.log(JSON.parse(res?.data?.subscriptionDetails));
       updateUserSubscription({
         variables: {
-          id: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+          id: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
           subscriptionDetails: res?.data?.subscriptionDetails,
           plan: plan,
         },

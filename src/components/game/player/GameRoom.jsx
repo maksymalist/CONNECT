@@ -38,7 +38,7 @@ export default function GameRoom({ match }) {
       { quizID: match.params.gameid }
     );
     quiz = response.data;
-    setName((name = quiz.name));
+    setName((name = quiz?.name));
     setCardsFunction();
   };
 
@@ -169,7 +169,7 @@ export default function GameRoom({ match }) {
             room: match.params.room,
             user: match.params.user,
             time: time,
-            id: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+            id: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
           });
           document.getElementById("popUp").removeAttribute("hidden");
           document.getElementById("gameContent").remove();
@@ -234,7 +234,7 @@ export default function GameRoom({ match }) {
       const pos = data.find(
         (player) =>
           player.playerID ===
-            JSON.parse(localStorage.getItem("user")).profileObj.googleId &&
+            JSON.parse(localStorage.getItem("user"))?.profileObj.googleId &&
           player.player === match.params.user + "⠀"
       );
       window.location = `/roomleave/gameover?position=${pos && pos.position}`;

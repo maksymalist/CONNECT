@@ -24,7 +24,7 @@ export default function GameRoom({ match }) {
   const cards = [];
 
   const gameID = match.params.gameid;
-  const user = JSON.parse(localStorage.getItem("user")).profileObj.name;
+  const user = JSON.parse(localStorage.getItem("user"))?.profileObj.name;
   let gameOver = false;
   const [isMusic, setIsMusic] = useState(false);
   const [popUpHidden, setPopUpHidden] = useState(true);
@@ -41,7 +41,7 @@ export default function GameRoom({ match }) {
       { quizID: gameID }
     );
     quiz = response.data;
-    setName((name = quiz.name));
+    setName((name = quiz?.name));
     setCardsFunction();
   };
 

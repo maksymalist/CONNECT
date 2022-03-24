@@ -51,7 +51,7 @@ function Nav({ isLoggedIn, customerId }) {
   const { loading, error, data } = useQuery(GET_NOTIFICATION_LENGTH, {
     variables: {
       userId: JSON.parse(localStorage.getItem("user"))
-        ? JSON.parse(localStorage.getItem("user")).profileObj.googleId
+        ? JSON.parse(localStorage.getItem("user"))?.profileObj.googleId
         : null,
     },
   });
@@ -63,7 +63,7 @@ function Nav({ isLoggedIn, customerId }) {
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("user")) === null) return;
     setCurrentUsername(
-      JSON.parse(localStorage.getItem("user")).profileObj.name
+      JSON.parse(localStorage.getItem("user"))?.profileObj.name
     );
     if (userLanguage != null) {
       setLanguage(userLanguage);
@@ -150,7 +150,7 @@ function Nav({ isLoggedIn, customerId }) {
       <ul>
         {isLoggedIn ? (
           <img
-            src={JSON.parse(localStorage.getItem("user")).profileObj.imageUrl}
+            src={JSON.parse(localStorage.getItem("user"))?.profileObj.imageUrl}
             aria-controls="simple-menu"
             aria-haspopup="true"
             onClick={handleClick}

@@ -56,7 +56,8 @@ export default function MemberRoom() {
     const data = res.data;
 
     if (
-      data.owner != JSON.parse(localStorage.getItem("user")).profileObj.googleId
+      data?.owner !=
+      JSON.parse(localStorage.getItem("user"))?.profileObj.googleId
     ) {
       //window.location.href = `/view-class/${id}`
       //return
@@ -84,8 +85,8 @@ export default function MemberRoom() {
       });
       const data = res.data;
 
-      userObj.name = data.name;
-      userObj.imageUrl = data.imageUrl;
+      userObj.name = data?.name;
+      userObj.imageUrl = data?.imageUrl;
 
       setMembers((prevState) => [...prevState, userObj]);
     });
@@ -95,7 +96,7 @@ export default function MemberRoom() {
       `${config["api-server"]}/get-hall-of-fame`,
       { id: id }
     );
-    setHallOfFame(hallOfFameData.data);
+    setHallOfFame(hallOfFameData.data || []);
 
     //set recent games
 
@@ -105,7 +106,7 @@ export default function MemberRoom() {
 
     const recentGames = games.data;
 
-    setRecentGames(recentGames);
+    setRecentGames(recentGames || []);
   };
 
   useEffect(() => {

@@ -100,7 +100,7 @@ function HomePage(props) {
 
   const handleUpdateUserSubscription = async (subscriptionDetails) => {
     const subscriptionObj = {
-      id: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+      id: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
       plan: "Classroom",
       subscriptionDetails: JSON.stringify(subscriptionDetails),
     };

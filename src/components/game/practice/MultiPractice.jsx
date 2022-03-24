@@ -28,7 +28,7 @@ function MultiGameRoom({ match }) {
   const [name, setName] = useState("");
   var cards = [];
 
-  const user = JSON.parse(localStorage.getItem("user")).profileObj.name;
+  const user = JSON.parse(localStorage.getItem("user"))?.profileObj.name;
   const gameID = match.params.gameid;
   var [GameOver, setGameOver] = useState(false);
   const [isMusic, setIsMusic] = useState(false);

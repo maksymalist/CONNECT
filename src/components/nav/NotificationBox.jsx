@@ -38,13 +38,13 @@ function NotificationBox({ close }) {
 
   const { loading, error, data } = useQuery(GET_NOTIFICATIONS, {
     variables: {
-      userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+      userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
     },
   });
 
   const [clearNotifications] = useMutation(CLEAR_NOTIFICATIONS, {
     variables: {
-      userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+      userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
     },
   });
 

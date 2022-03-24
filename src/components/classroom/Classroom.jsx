@@ -113,22 +113,23 @@ export default function MemberRoom() {
     const data = res.data;
 
     if (
-      data.owner != JSON.parse(localStorage.getItem("user")).profileObj.googleId
+      data?.owner !=
+      JSON.parse(localStorage.getItem("user"))?.profileObj.googleId
     ) {
       window.location.href = `/view-class/${id}`;
       return;
     }
 
     //set class attributes
-    setName(data.name);
-    setBanner(data.banner);
+    setName(data?.name);
+    setBanner(data?.banner);
 
     //set members
-    const members = data.members || [];
+    const members = data?.members || [];
 
     console.log(members);
 
-    members.forEach(async (member) => {
+    members?.forEach(async (member) => {
       const userObj = {
         points: member.points,
         id: member.userId,
@@ -141,8 +142,8 @@ export default function MemberRoom() {
       });
       const data = res.data;
 
-      userObj.name = data.name;
-      userObj.imageUrl = data.imageUrl;
+      userObj.name = data?.name;
+      userObj.imageUrl = data?.imageUrl;
 
       setMembers((prevState) => [...prevState, userObj]);
     });
@@ -152,7 +153,7 @@ export default function MemberRoom() {
       `${config["api-server"]}/get-hall-of-fame`,
       { id: id }
     );
-    setHallOfFame(hallOfFameData.data);
+    setHallOfFame(hallOfFameData.data || []);
 
     //set recent games
 
@@ -224,7 +225,7 @@ export default function MemberRoom() {
     if (
       res.data._id ===
       USERID_PREFIX +
-        JSON.parse(localStorage.getItem("user")).profileObj.googleId
+        JSON.parse(localStorage.getItem("user"))?.profileObj.googleId
     ) {
       toast.error(Translations[userLanguage].alerts.cannotAddYourself);
       return;
@@ -253,7 +254,7 @@ export default function MemberRoom() {
         userId: memberId.replace(/user:/g, ""),
         type: "added_to_class",
         message: `${
-          JSON.parse(localStorage.getItem("user")).profileObj.name
+          JSON.parse(localStorage.getItem("user"))?.profileObj.name
         } has added you to ${name}!`,
         data: id,
       };
@@ -282,7 +283,7 @@ export default function MemberRoom() {
   const removeMember = (index, memberId) => {
     if (
       memberId ===
-      `user:${JSON.parse(localStorage.getItem("user")).profileObj.googleId}`
+      `user:${JSON.parse(localStorage.getItem("user"))?.profileObj.googleId}`
     ) {
       toast.error(Translations[userLanguage].alerts.cannotRemoveYourself);
       return;
@@ -295,7 +296,7 @@ export default function MemberRoom() {
       userId: memberId.replace(/user:/g, ""),
       type: "removed_from_class",
       message: `${
-        JSON.parse(localStorage.getItem("user")).profileObj.name
+        JSON.parse(localStorage.getItem("user"))?.profileObj.name
       } has removed you from ${name} :(`,
       data: id,
     };

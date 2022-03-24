@@ -161,12 +161,12 @@ export default function EnterCodeForm({ match, location }) {
         );
       }
       localStorage.setItem(
-        JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+        JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
         true
       );
 
       socket.emit("addHost", {
-        googleId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+        googleId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
         room: data.room,
       });
 
@@ -174,7 +174,7 @@ export default function EnterCodeForm({ match, location }) {
         socket.emit("addPrivateRoom", {
           room: data.room,
           classId: validclassId,
-          googleId: JSON.parse(localStorage.getItem("user")).profileObj
+          googleId: JSON.parse(localStorage.getItem("user"))?.profileObj
             .googleId,
         });
 
@@ -184,13 +184,13 @@ export default function EnterCodeForm({ match, location }) {
         );
         const members = res.data;
 
-        members.map((member) => {
+        members?.map((member) => {
           const memberId = member.userId;
           const notification = {
             userId: memberId.replace(/user:/g, ""),
             type: "invitation_to_room",
             message: `${
-              JSON.parse(localStorage.getItem("user")).profileObj.name
+              JSON.parse(localStorage.getItem("user"))?.profileObj.name
             } has invited you to play a game in room ${data.room}!`,
             data: JSON.stringify({ room: data.room, classId: validclassId }),
           };
@@ -279,7 +279,7 @@ export default function EnterCodeForm({ match, location }) {
       return;
     }
     const res = await axios.post(`${config["api-server"]}/get-user-classes`, {
-      userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+      userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
     });
     const classes = res.data;
 
@@ -287,7 +287,7 @@ export default function EnterCodeForm({ match, location }) {
       code: joinFormCode,
       name: joinFormNickname,
       profane: list.array.includes(joinFormNickname),
-      classes: classes,
+      classes: classes ? classes : [],
     });
   };
 
@@ -315,15 +315,15 @@ export default function EnterCodeForm({ match, location }) {
 
     if (data !== null) {
       const user = await axios.post(`${config["api-server"]}/user`, {
-        userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+        userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
       });
       const userData = user.data;
       console.log(userData);
-      if (userData.plan === "Starter") {
+      if (userData?.plan === "Starter") {
         socket.emit("createroom", {
           room: document.getElementById("roomName").value,
           gamecode: gameCode,
-          host: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+          host: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
           friendly: checked,
           gamemode: gameMode,
           classId: null,
@@ -333,7 +333,7 @@ export default function EnterCodeForm({ match, location }) {
         socket.emit("createroom", {
           room: document.getElementById("roomName").value || "",
           gamecode: gameCode,
-          host: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+          host: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
           friendly: checked,
           gamemode: gameMode,
           classId: classID,
@@ -343,7 +343,7 @@ export default function EnterCodeForm({ match, location }) {
       socket.emit("createroom", {
         room: document.getElementById("roomName").value,
         gamecode: gameCode,
-        host: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+        host: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
         friendly: checked,
         gamemode: gameMode,
         classId: null,
@@ -357,7 +357,7 @@ export default function EnterCodeForm({ match, location }) {
   const terminateRoom = (room) => {
     socket.emit("EndGameTerminated", {
       room: room,
-      googleId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+      googleId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
     });
     toast.success(
       `${Translations[userLanguage].alerts.roomterminated} ${room}`

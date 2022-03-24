@@ -176,11 +176,11 @@ export default function NewQuiz() {
 
     quizObj.name = name || "";
     quizObj.userName =
-      JSON.parse(localStorage.getItem("user")).profileObj.name || "";
+      JSON.parse(localStorage.getItem("user"))?.profileObj.name || "";
     quizObj.userProfilePic =
-      JSON.parse(localStorage.getItem("user")).profileObj.imageUrl || "";
+      JSON.parse(localStorage.getItem("user"))?.profileObj.imageUrl || "";
     quizObj.userID =
-      JSON.parse(localStorage.getItem("user")).profileObj.googleId || "";
+      JSON.parse(localStorage.getItem("user"))?.profileObj.googleId || "";
     quizObj.coverImg = imgRef.current ? imgRef.current.src : "" || "";
     quizObj.tags = getTags() || [];
 

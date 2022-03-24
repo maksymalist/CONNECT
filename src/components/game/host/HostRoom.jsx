@@ -146,7 +146,7 @@ export default function HostRoom(props) {
     socket.on("EndGame", (data) => {
       setIsRoomLeft(true);
       localStorage.removeItem(
-        JSON.parse(localStorage.getItem("user")).profileObj.googleId
+        JSON.parse(localStorage.getItem("user"))?.profileObj.googleId
       );
     });
 
@@ -399,14 +399,14 @@ export default function HostRoom(props) {
     });
     const quiz = res.data;
 
-    setName(quiz.name);
+    setName(quiz?.name);
   };
 
   const CheckPlanStatus = async () => {
     const res = await axios.post(`${config["api-server"]}/user`, {
-      userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+      userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
     });
-    const plan = res.data.plan;
+    const plan = res.data?.plan;
 
     if (plan === "Classroom") {
       if (props.maxPlayers > 90) {
@@ -468,12 +468,12 @@ export default function HostRoom(props) {
   const EndGame = () => {
     socket.emit("EndGame", {
       room: props.room,
-      googleId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+      googleId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
     });
     setGameStarted(false);
     setIsRoomLeft(true);
     localStorage.removeItem(
-      JSON.parse(localStorage.getItem("user")).profileObj.googleId
+      JSON.parse(localStorage.getItem("user"))?.profileObj.googleId
     );
     mute();
   };
@@ -562,9 +562,9 @@ export default function HostRoom(props) {
     const Podium = [];
 
     const res = await axios.post(`${config["api-server"]}/user`, {
-      userId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+      userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
     });
-    const plan = res.data.plan;
+    const plan = res.data?.plan;
     if (plan !== null && plan !== "" && plan !== undefined) {
       if (plan === "Classroom") {
         if (props.classid != "null" && props.classid !== null) {
@@ -590,7 +590,7 @@ export default function HostRoom(props) {
     socket.emit("GameOver", {
       room: props.room,
       podium: Podium,
-      googleId: JSON.parse(localStorage.getItem("user")).profileObj.googleId,
+      googleId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
     });
     setGameStarted(false);
     mute();
@@ -598,7 +598,7 @@ export default function HostRoom(props) {
     setFinalPodium(Podium);
     setIsRoomLeft(true);
     localStorage.removeItem(
-      JSON.parse(localStorage.getItem("user")).profileObj.googleId
+      JSON.parse(localStorage.getItem("user"))?.profileObj.googleId
     );
   };
   const shareLink = () => {
