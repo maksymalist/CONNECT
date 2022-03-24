@@ -118,7 +118,7 @@ export default function EnterCodeForm({ match, location }) {
         joined = true;
       } else {
         if (joined == true) return;
-        toast.error("Room not found :(");
+        toast.error(Translations[userLanguage].alerts.roomnotfound);
       }
     });
 
@@ -205,7 +205,7 @@ export default function EnterCodeForm({ match, location }) {
     socket.on("changeName", (data) => {
       if (sessionStorage.getItem("roomJoined") !== "true") {
         if (role !== "host") {
-          toast.error("That name is already taken!");
+          toast.error(Translations[userLanguage].alerts.nametaken);
         }
       }
     });
@@ -276,25 +276,30 @@ export default function EnterCodeForm({ match, location }) {
   }, []);
 
   const JoinRoom = async () => {
-    if (joinFormNickname === "") {
-      toast.error(Translations[userLanguage].alerts.entername);
+    if (sessionStorage.getItem("roomJoined") == "true") {
+      toast.info(Translations[userLanguage].alerts.sessionexpired);
       return;
-    }
-    if (joinFormCode === "") {
-      toast.error(Translations[userLanguage].alerts.entercode);
-      return;
-    }
-    const res = await axios.post(`${config["api-server"]}/get-user-classes`, {
-      userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
-    });
-    const classes = res.data;
+    } else {
+      if (joinFormNickname === "") {
+        toast.error(Translations[userLanguage].alerts.entername);
+        return;
+      }
+      if (joinFormCode === "") {
+        toast.error(Translations[userLanguage].alerts.entercode);
+        return;
+      }
+      const res = await axios.post(`${config["api-server"]}/get-user-classes`, {
+        userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+      });
+      const classes = res.data;
 
-    socket.emit("joinroom", {
-      code: joinFormCode,
-      name: joinFormNickname,
-      profane: list.array.includes(joinFormNickname),
-      classes: classes ? classes : [],
-    });
+      socket.emit("joinroom", {
+        code: joinFormCode,
+        name: joinFormNickname,
+        profane: list.array.includes(joinFormNickname),
+        classes: classes ? classes : [],
+      });
+    }
   };
 
   const CreateRoom = async () => {
@@ -460,7 +465,7 @@ export default function EnterCodeForm({ match, location }) {
                     setJoinFormStep(0);
                   }}
                 >
-                  Back ⏮
+                  {Translations[userLanguage].play.join.back}
                 </Button>
               </div>
             </>
