@@ -210,20 +210,17 @@ export default function EnterCodeForm({ match, location }) {
     socket.on("addeduser", (data) => {
       if (role !== "host") {
         setRole("player");
-        if (sessionStorage.getItem("roomJoined") !== "true") {
-          ReactDOM.render(
-            <div>
-              <WaitingRoom
-                room={data.currentRoom}
-                usersInRoom={data.UsersInRoom}
-                user={data.name}
-              />
-              <Background />
-            </div>,
-            document.getElementById("root")
-          );
-          sessionStorage.setItem("roomJoined", "true");
-        }
+        ReactDOM.render(
+          <div>
+            <WaitingRoom
+              room={data.currentRoom}
+              usersInRoom={data.UsersInRoom}
+              user={data.name}
+            />
+            <Background />
+          </div>,
+          document.getElementById("root")
+        );
       }
     });
     const terminateRoomPopUp = (room) => (
