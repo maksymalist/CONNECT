@@ -1314,6 +1314,28 @@ export default function HostRoom(props) {
                         </Typography>
                       </div>
                     </div>
+                    {lowestTimesState?.map((lowestTime, index) => {
+                      if (index < 3) return null;
+                      if (index >= props.podiumPlaces) return null;
+                      return (
+                        <div
+                          className="lowest__time__container"
+                          style={{ backgroundColor: "rgb(108, 99, 255)" }}
+                        >
+                          <Typography style={{ color: "white" }} variant="h3">
+                            🏅
+                          </Typography>
+                          <div className="lowest-time-box">
+                            <Typography variant="h3">
+                              {lowestTime?.player}{" "}
+                              <span style={{ color: "#6976EA" }}>
+                                {lowestTime?.time}s
+                              </span>
+                            </Typography>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </>
                 )}
               </div>
