@@ -100,6 +100,8 @@ export default function HostRoom(props) {
 
   const smallScreen = useMediaQuery("(max-width:600px)");
 
+  //
+
   useEffect(() => {
     setMusicIsPlaying(true);
     if (props.friendlyroom === true) {
