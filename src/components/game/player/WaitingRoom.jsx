@@ -10,6 +10,8 @@ import "../../../style/style.css";
 import Translations from "../../../translations/translations.json";
 import { EmojiEmotionsOutlined } from "@mui/icons-material";
 
+import { toast } from "react-toastify";
+
 //globals
 
 //const socket = io('http://localhost:3001')
@@ -21,6 +23,7 @@ export default function WaitingRoom(props) {
     localStorage.getItem("connectLanguage") || "english"
   );
   const [isOpen, setIsOpen] = useState(false);
+  let emoteCooldown = false;
 
   useEffect(() => {
     socket.emit("joinPlayerRoom", {
@@ -120,12 +123,44 @@ export default function WaitingRoom(props) {
     window.location = "/roomleave/left";
     sessionStorage.setItem("roomJoined", "false");
   };
+
+  const sendEmote = (emote) => {
+    if (emoteCooldown) {
+      toast.info("✨ emotes have a 3s cooldown ✨"); //Translations[userLanguage].emoteCooldown
+      return;
+    } else {
+      socket.emit("sendEmote", {
+        room: props.room,
+        user: props.user,
+        emote: emote,
+      });
+      emoteCooldown = true;
+      setTimeout(() => {
+        emoteCooldown = false;
+      }, 3000);
+    }
+  };
+
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <h1
+        style={{
+          textAlign: "center",
+          color: "white",
+          fontSize: "45px",
+          marginTop: "120px",
+        }}
+      >
+        {Translations[userLanguage].waitingroom.title}
+      </h1>
       <div id="waitingRoomDiv">
-        <h1 style={{ textAlign: "center" }}>
-          {Translations[userLanguage].waitingroom.title}
-        </h1>
         {/* <textarea id='userList' defaultValue={props.usersInRoom} readOnly></textarea> */}
         <div className="waiting__room__player__container">
           {peopleInRoom.map((person, index) => {
@@ -141,129 +176,120 @@ export default function WaitingRoom(props) {
             );
           })}
         </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          height: "100%",
+          justifyContent: "center",
+          alignItems: "flex-end",
+          position: "fixed",
+          bottom: "15px",
+        }}
+      >
         <div
           style={{
             display: "flex",
-            width: "100%",
-            height: "100%",
+            alignItems: "center",
+            flexWrap: "wrap",
             justifyContent: "center",
-            alignItems: "flex-end",
-            position: "sticky",
-            bottom: "0",
+            flexDirection: "column",
+            backgroundColor: "white",
+            width: "fit-content",
+            padding: "10px",
+            border: "2px solid black",
+            boxShadow: "10px 10px 0 #262626",
           }}
         >
+          {isOpen ? (
+            <ClickAwayListener onClickAway={() => setIsOpen(false)}>
+              <div
+                style={{
+                  backgroundColor: "e0e0e0",
+                  border: "1px solid lightgray",
+                  borderRadius: "5px",
+                  padding: "10px",
+                  marginBottom: "10px",
+                }}
+              >
+                <Typography variant="h6">Select Emote</Typography>
+                <Divider />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    marginTop: "10px",
+                    justifyContent: "center",
+                    flexWrap: "wrap",
+                    maxWidth: "350px",
+                  }}
+                >
+                  <div
+                    className="emote__card"
+                    onClick={() => {
+                      sendEmote("😀");
+                    }}
+                  >
+                    😀
+                  </div>
+                  <div
+                    className="emote__card"
+                    onClick={() => {
+                      sendEmote("😐");
+                    }}
+                  >
+                    😐
+                  </div>
+                  <div
+                    className="emote__card"
+                    onClick={() => {
+                      sendEmote("🥱");
+                    }}
+                  >
+                    🥱
+                  </div>
+                  <div
+                    className="emote__card"
+                    onClick={() => {
+                      sendEmote("😡");
+                    }}
+                  >
+                    😡
+                  </div>
+                </div>
+              </div>
+            </ClickAwayListener>
+          ) : null}
           <div
             style={{
               display: "flex",
               alignItems: "center",
               flexWrap: "wrap",
               justifyContent: "center",
-              flexDirection: "column",
-              backgroundColor: "white",
               width: "100%",
             }}
           >
-            {isOpen ? (
-              <ClickAwayListener onClickAway={() => setIsOpen(false)}>
-                <div
-                  style={{
-                    backgroundColor: "e0e0e0",
-                    border: "1px solid lightgray",
-                    borderRadius: "5px",
-                    padding: "10px",
-                    marginBottom: "10px",
-                  }}
-                >
-                  <Typography variant="h6">Select Emote</Typography>
-                  <Divider />
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      marginTop: "10px",
-                    }}
-                  >
-                    <div
-                      className="emote__card"
-                      onClick={() => {
-                        socket.emit("sendEmote", {
-                          room: props.room,
-                          user: props.user,
-                          emote: "😀",
-                        });
-                      }}
-                    >
-                      😀
-                    </div>
-                    <div
-                      className="emote__card"
-                      onClick={() => {
-                        socket.emit("sendEmote", {
-                          room: props.room,
-                          user: props.user,
-                          emote: "😐",
-                        });
-                      }}
-                    >
-                      😐
-                    </div>
-                    <div
-                      className="emote__card"
-                      onClick={() => {
-                        socket.emit("sendEmote", {
-                          room: props.room,
-                          user: props.user,
-                          emote: "🥱",
-                        });
-                      }}
-                    >
-                      🥱
-                    </div>
-                    <div
-                      className="emote__card"
-                      onClick={() => {
-                        socket.emit("sendEmote", {
-                          room: props.room,
-                          user: props.user,
-                          emote: "😡",
-                        });
-                      }}
-                    >
-                      😡
-                    </div>
-                  </div>
-                </div>
-              </ClickAwayListener>
-            ) : null}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                flexWrap: "wrap",
-                justifyContent: "center",
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              onClick={() => {
+                leaveRoom();
               }}
             >
-              <Button
-                variant="contained"
-                color="secondary"
-                size="large"
-                onClick={() => {
-                  leaveRoom();
-                }}
-              >
-                {Translations[userLanguage].waitingroom.leavebutton}
-              </Button>
-              <Button
-                endIcon={<EmojiEmotionsOutlined />}
-                style={{ marginLeft: "10px" }}
-                onClick={() => {
-                  setIsOpen(!isOpen);
-                }}
-                color={isOpen ? "secondary" : "inherit"}
-              >
-                emote
-              </Button>
-            </div>
+              {Translations[userLanguage].waitingroom.leavebutton}
+            </Button>
+            <Button
+              endIcon={<EmojiEmotionsOutlined />}
+              style={{ marginLeft: "40px" }}
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+              color={isOpen ? "secondary" : "inherit"}
+            >
+              emote
+            </Button>
           </div>
         </div>
       </div>

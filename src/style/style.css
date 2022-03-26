@@ -494,15 +494,8 @@ h1 {
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  background-color: white;
-  margin-top: 100px;
-  border: 2px solid black;
-  box-shadow: 10px 10px 0 #262626 !important;
+  margin-top: 50px;
   padding: 5px;
-  width: 100%;
-  max-width: 720px;
-  height: 500px;
-  overflow-y: auto;
 }
 .waiting__room__player__container {
   display: flex;

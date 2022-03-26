@@ -154,7 +154,7 @@
       }
     },
     "waitingroom": {
-      "title": "Waiting Room 💤",
+      "title": "Waiting Room 🎉",
       "leavebutton": "Leave room"
     },
     "hostroom": {
@@ -375,7 +375,8 @@
       "cannotRemoveYourself": "You cannot remove your self",
       "roomnotfound": "Room not found :(",
       "nametaken": "That name is already taken!",
-      "sessionexpired": "Session Expired! Please open a new tab!"
+      "sessionexpired": "Session Expired! Please open a new tab!",
+      "emotecooldown": "✨ emotes have a 3s cooldown ✨"
     },
     "paymentform": {
       "title": "Payment Form",
@@ -586,7 +587,7 @@
       }
     },
     "waitingroom": {
-      "title": "Salle d'attente 💤",
+      "title": "Salle d'attente 🎉",
       "leavebutton": "Quitter Salle 🚪"
     },
     "hostroom": {
@@ -807,7 +808,8 @@
       "cannotRemoveYourself": "Vous ne pouvez pas vous retirer vous-même",
       "roomnotfound": "Salle non trouvée",
       "nametaken": "Ce nom est déjà pris",
-      "sessionexpired": "Session expirée! Veuillez ouvrir un nouvel onglet!"
+      "sessionexpired": "Session expirée! Veuillez ouvrir un nouvel onglet!",
+      "emotecooldown": "✨ les emotes ont un temps de recharge de 3s ✨"
     },
     "paymentform": {
       "title": "Formulaire de paiement",
