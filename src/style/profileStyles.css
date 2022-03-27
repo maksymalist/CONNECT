@@ -1,114 +1,132 @@
 .profile-container {
-    display: block;
-    margin: 5px;
+  display: block;
+  margin: 5px;
 }
-.profile-banner{
-    background-image: url('../img/quizCoverPlaceholder.svg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 500px;
-    border: 2px solid black;
-    border-bottom: none;
-    box-shadow: 10px 10px 0 #262626;
+.profile-banner {
+  background-image: url("../img/quizCoverPlaceholder.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 500px;
+  border: 2px solid black;
+  border-bottom: none;
+  box-shadow: 10px 10px 0 #262626;
 }
-.profile-wrapper{
-    background-color: white;
-    width: 100%;
-    box-shadow: 10px 10px 0 #262626;
-    border: 2px solid black;
-    border-top: none;
+.profile-wrapper {
+  background-color: white;
+  width: 100%;
+  box-shadow: 10px 10px 0 #262626;
+  border: 2px solid black;
+  border-top: none;
 }
-.profile-info-bar{
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
+.profile-info-bar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
 }
-.profile-tabs-slider-container{
-    display: flex;
-    justify-content: center;
-    width: 100%;
+.profile-tabs-slider-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
-.profile-info-text{
-    display: flex;
-}
-
-.profile-tab{
-    background-color: white;
-    width: 100%;
-    height: 800px;
-    margin-top: 30px;
-    box-shadow: 10px 10px 0 #262626;
-    border: 2px solid black;
-    overflow-y: auto;
+.profile-info-text {
+  display: flex;
 }
 
-.profile-tab-quizzes{
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 100%;
-    max-height: 800px;
-    justify-content: center;
+.profile-tab {
+  background-color: white;
+  width: 100%;
+  height: 800px;
+  margin-top: 30px;
+  box-shadow: 10px 10px 0 #262626;
+  border: 2px solid black;
+  overflow-y: auto;
 }
 
+.profile-tab-quizzes {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  max-height: 800px;
+  justify-content: center;
+}
 
 @media only screen and (max-width: 590px) {
-    .profile-info-text  > * {
-        margin: 1vw;
-        font-size: 1rem;
-    }
+  .profile-info-text > * {
+    margin: 1vw;
+    font-size: 1rem;
+  }
 }
 @media only screen and (max-width: 600px) {
-    .profile-info-text{
-        flex-direction: column;
-    }
-    .profile-info-bar{
-        flex-direction: column;
-    }
+  .profile-info-text {
+    flex-direction: column;
+  }
+  .profile-info-bar {
+    flex-direction: column;
+  }
 }
 @media only screen and (max-width: 350px) {
-    .profile-info-bar{
-        flex-direction: column;
-    }
+  .profile-info-bar {
+    flex-direction: column;
+  }
 }
 
 @media only screen and (max-width: 260px) {
-    .profile-info-text  > * {
-        font-size: 0.8rem;
-    }
+  .profile-info-text > * {
+    font-size: 0.8rem;
+  }
 }
 
-.profile__class__card{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 2px solid black;
-    box-shadow: 10px 10px 0 #262626;
-    margin: 10px;
-    width: 100%;
-    max-width: 340px;
-    padding-bottom: 100px;
+.profile__class__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid black;
+  box-shadow: 10px 10px 0 #262626;
+  margin: 10px;
+  width: 100%;
+  max-width: 340px;
+  padding-bottom: 100px;
 }
 
-.profile__class__card:hover{
-    cursor: pointer;
-    transition: all 0.2s ease;
-    transform: scale(1.05);
+.profile__class__card:hover {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  transform: scale(1.05);
 }
 
 @media only screen and (max-width: 400px) {
-    .profile__class__card{
-        margin: 0;
-    }
+  .profile__class__card {
+    margin: 0;
+  }
 }
 
-.profile__user__classes{
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 100%;
-    max-height: 800px;
-    justify-content: center;
-
+.profile__user__classes {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  max-height: 800px;
+  justify-content: center;
+}
+.profile__tab__emotes {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+}
+.profile__emote__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding: 25px;
+  margin: 20px;
+  font-size: 1.5rem;
+  width: 250px;
+}
+.profile__emote__card:hover {
+  transform: scale(1.05);
+  cursor: pointer;
 }

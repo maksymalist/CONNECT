@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import socket from "../../../socket-io";
-import ReactDOM from "react-dom";
+import axios from "axios";
 import { Typography, Button, Divider, ClickAwayListener } from "@mui/material";
 
 import GameEnded from "../host/GameEnded";
@@ -11,6 +11,8 @@ import Translations from "../../../translations/translations.json";
 import { EmojiEmotionsOutlined } from "@mui/icons-material";
 
 import { toast } from "react-toastify";
+import config from "../../../config.json";
+import Emotes from "../../../emotes/emotes.json";
 
 //globals
 
@@ -25,12 +27,58 @@ export default function WaitingRoom(props) {
   const [isOpen, setIsOpen] = useState(false);
   let emoteCooldown = false;
 
+  const [emotes, setEmotes] = useState([]);
+
+  const getEmotes = async () => {
+    try {
+      const emotes = await axios.post(
+        `${config["api-server"]}/get-user-emotes`,
+        {
+          userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+        }
+      );
+
+      setEmotes([
+        {
+          emoteId: "1",
+        },
+        {
+          emoteId: "2",
+        },
+        {
+          emoteId: "3",
+        },
+        {
+          emoteId: "4",
+        },
+        ...emotes.data,
+      ]);
+    } catch (error) {
+      console.log(error);
+      setEmotes([
+        {
+          emoteId: "1",
+        },
+        {
+          emoteId: "2",
+        },
+        {
+          emoteId: "3",
+        },
+        {
+          emoteId: "4",
+        },
+      ]);
+    }
+  };
+
   useEffect(() => {
     socket.emit("joinPlayerRoom", {
       room: props.room,
       name: props.user,
     });
     setPeopleInRoom(props.usersInRoom);
+    getEmotes();
 
     socket.on("addeduser", (data) => {
       //console.log(data)
@@ -95,15 +143,17 @@ export default function WaitingRoom(props) {
 
     socket.on("emote", (data) => {
       console.log(data);
-      let emote = document.createElement("div");
-      emote.innerHTML = data.emote;
+      let emote = document.createElement("img");
+      const size = Math.floor(Math.random() * (100 - 50 + 1)) + 40;
+      emote.src = data.emote;
       emote.className = "emote__icons";
       document.body.appendChild(emote);
-      emote.style.position = "absolute";
+      emote.style.position = "fixed";
       emote.style.top = "0";
       emote.style.left = Math.random() * 100 + "%";
       emote.style.top = Math.random() * 100 + "%";
-      emote.style.fontSize = "2em";
+      emote.style.width = `${size}px`;
+      emote.style.height = `${size}px`;
 
       setTimeout(() => {
         emote.remove();
@@ -225,38 +275,22 @@ export default function WaitingRoom(props) {
                     maxWidth: "350px",
                   }}
                 >
-                  <div
-                    className="emote__card"
-                    onClick={() => {
-                      sendEmote("😀");
-                    }}
-                  >
-                    😀
-                  </div>
-                  <div
-                    className="emote__card"
-                    onClick={() => {
-                      sendEmote("😐");
-                    }}
-                  >
-                    😐
-                  </div>
-                  <div
-                    className="emote__card"
-                    onClick={() => {
-                      sendEmote("🥱");
-                    }}
-                  >
-                    🥱
-                  </div>
-                  <div
-                    className="emote__card"
-                    onClick={() => {
-                      sendEmote("😡");
-                    }}
-                  >
-                    😡
-                  </div>
+                  {emotes.map((emote, index) => {
+                    return (
+                      <div
+                        className="emote__card"
+                        onClick={() => {
+                          sendEmote(Emotes[emote.emoteId].icon);
+                        }}
+                      >
+                        <img
+                          style={{ width: "30px", height: "30px" }}
+                          src={Emotes[emote.emoteId].icon}
+                          alt="emote"
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </ClickAwayListener>

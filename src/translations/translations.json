@@ -283,8 +283,8 @@
         "title": "Quizzes",
         "by": "by"
       },
-      "saved": {
-        "title": "Saved"
+      "emotes": {
+        "title": "Emotes"
       },
       "class": {
         "title": "Classes"
@@ -716,8 +716,8 @@
         "title": "Quizs",
         "by": "par"
       },
-      "saved": {
-        "title": "Enregistré"
+      "emotes": {
+        "title": "Emotes"
       },
       "class": {
         "title": "Classes"

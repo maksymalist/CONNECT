@@ -1,0 +1,32 @@
+{
+  "1": {
+    "name": "Happy",
+    "icon": "https://user-images.githubusercontent.com/79988159/160256106-95eaf174-1000-4d3f-8377-8ae39bd0eec7.png",
+    "rarity": "common"
+  },
+  "2": {
+    "name": "Ok.",
+    "icon": "https://user-images.githubusercontent.com/79988159/160266887-3c83856c-2337-4805-bf57-1ae1d5a2a89b.png",
+    "rarity": "common"
+  },
+  "3": {
+    "name": "Tired",
+    "icon": "https://user-images.githubusercontent.com/79988159/160256078-aabf7e08-a855-4f7f-a580-0b09e8813120.png",
+    "rarity": "common"
+  },
+  "4": {
+    "name": "Rage",
+    "icon": "https://user-images.githubusercontent.com/79988159/160255956-0e0bf3a6-2d0b-4c05-bd40-00e862142329.png",
+    "rarity": "common"
+  },
+  "5": {
+    "name": "Sleepy",
+    "icon": "https://cdna.artstation.com/p/assets/images/images/024/878/874/original/loke-poh-ying-hungry.gif?1583837163",
+    "rarity": "epic"
+  },
+  "6": {
+    "name": "Hey",
+    "icon": "https://media3.giphy.com/media/3o7aCQ8mfzu4ltK0lG/giphy.gif",
+    "rarity": "rare"
+  }
+}
