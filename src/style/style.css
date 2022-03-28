@@ -184,6 +184,7 @@ h1 {
     width: 390px !important;
     min-width: 390px !important;
     height: 450px !important;
+    margin-top: 30px !important;
   }
   .card {
     height: 110px !important;
