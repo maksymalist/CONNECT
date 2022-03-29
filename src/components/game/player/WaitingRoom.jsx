@@ -76,6 +76,7 @@ export default function WaitingRoom(props) {
     socket.emit("joinPlayerRoom", {
       room: props.room,
       name: props.user,
+      id: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
     });
     setPeopleInRoom(props.usersInRoom);
     getEmotes();
