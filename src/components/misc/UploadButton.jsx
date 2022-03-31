@@ -32,26 +32,17 @@ const UploadButton = ({ imgRef }) => {
 
     const storage = firebase.storage();
     const storageRef = storage.ref("quizImg");
-    const listRef = await storage
-      .ref(`quizImg/${uploadedFile.name}`)
-      .getDownloadURL()
-      .then((response) => {
-        toast.success(Translations[userLanguage].alerts.uploadedpic);
-        setFile(response);
-      })
-      .catch(async (err) => {
-        try {
-          await storageRef.child(uploadedFile.name).put(uploadedFile);
-          const url = await storage
-            .ref(`quizImg/${uploadedFile.name}`)
-            .getDownloadURL();
-          console.log(url);
-          setFile(url);
-          toast.success(Translations[userLanguage].alerts.uploadedpic);
-        } catch (error) {
-          console.log("error", error);
-        }
-      });
+    try {
+      await storageRef.child(uploadedFile.name).put(uploadedFile);
+      const url = await storage
+        .ref(`quizImg/${uploadedFile.name}`)
+        .getDownloadURL();
+      console.log(url);
+      setFile(url);
+      toast.success(Translations[userLanguage].alerts.uploadedpic);
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   const UploadBox = () => (
