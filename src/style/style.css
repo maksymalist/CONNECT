@@ -779,6 +779,16 @@ input:hover {
   margin-left: 5vw;
   width: 200px;
 }
+
+@keyframes action {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-30px);
+  }
+}
+
 #home-page-img {
   margin-top: -750px;
   margin-left: 50vw;
@@ -786,6 +796,7 @@ input:hover {
   height: 100vh;
   min-width: 300px;
   min-height: 300px;
+  animation: action 1.5s infinite alternate;
 }
 
 .about__main__div {
