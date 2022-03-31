@@ -238,7 +238,7 @@ h1 {
   align-items: center;
   background-color: white;
   width: 360px;
-  height: 480px;
+  height: auto;
   margin: 10px;
   border: 2px solid black;
   box-shadow: 5px 5px 0 #262626;

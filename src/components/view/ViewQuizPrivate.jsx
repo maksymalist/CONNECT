@@ -78,6 +78,10 @@ function ViewQuiz() {
   const handleHideAnswers = () => {
     setAnsIsShown(false);
   };
+  const handleUserProfile = (userID) => {
+    const id = userID.replace("user:", "");
+    window.location.href = `/profiles/${id}`;
+  };
 
   return (
     <div>
@@ -164,6 +168,9 @@ function ViewQuiz() {
                       draggable="false"
                       src={quiz.privateQuiz.userProfilePic}
                       alt="quiz-img"
+                      onClick={() => {
+                        handleUserProfile(quiz.privateQuiz.userID);
+                      }}
                     />
                   ) : (
                     <AccountCircle

@@ -69,6 +69,11 @@ function ViewMultiQuiz() {
     setAnsIsShown(false);
   };
 
+  const handleUserProfile = (userID) => {
+    const id = userID.replace("user:", "");
+    window.location.href = `/profiles/${id}`;
+  };
+
   return (
     <div>
       {loading ? (
@@ -146,6 +151,9 @@ function ViewMultiQuiz() {
                   draggable="false"
                   src={data.privateMulti.userProfilePic}
                   alt="quiz-img"
+                  onClick={() => {
+                    handleUserProfile(data.privateMulti.userID);
+                  }}
                 />
                 <h3>
                   {Translations[userLanguage].multiquiz.by}{" "}

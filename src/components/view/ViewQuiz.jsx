@@ -79,6 +79,11 @@ function ViewQuiz() {
     setAnsIsShown(false);
   };
 
+  const handleUserProfile = (userID) => {
+    const id = userID.replace("user:", "");
+    window.location.href = `/profiles/${id}`;
+  };
+
   return (
     <div>
       {loading ? (
@@ -164,6 +169,9 @@ function ViewQuiz() {
                       draggable="false"
                       src={quiz.quiz.userProfilePic}
                       alt="quiz-img"
+                      onClick={() => {
+                        handleUserProfile(quiz.quiz.userID);
+                      }}
                     />
                   ) : (
                     <AccountCircle
