@@ -32,8 +32,10 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 import config from "../../config.json";
+import getUser from "../../hooks/getUser";
 
 export default function MemberRoom() {
+  const user = getUser();
   const plan = useSelector((state) => state.plan);
   const [userLanguage, setUserLanguage] = useState(
     localStorage.getItem("connectLanguage") || "english"
@@ -55,10 +57,7 @@ export default function MemberRoom() {
     });
     const data = res.data;
 
-    if (
-      data?.owner !=
-      JSON.parse(localStorage.getItem("user"))?.profileObj.googleId
-    ) {
+    if (data?.owner != user?.profileObj.googleId) {
       //window.location.href = `/view-class/${id}`
       //return
     }

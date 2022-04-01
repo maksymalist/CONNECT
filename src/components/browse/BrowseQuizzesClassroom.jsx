@@ -10,12 +10,7 @@ import {
   Chip,
 } from "@mui/material";
 
-import {
-  QuestionAnswerRounded,
-  FilterNoneRounded,
-  FileCopyRounded,
-  AccountCircle,
-} from "@mui/icons-material";
+import { AccountCircle } from "@mui/icons-material";
 
 import Placeholder from "../../img/quizCoverPlaceholder.svg";
 
@@ -212,12 +207,10 @@ export default function BrowseQuizzes({ classID, gamemode }) {
             required
           >
             <MenuItem value="normal">
-              <QuestionAnswerRounded color="primary" />⠀
-              {Translations[userLanguage].quizzes.bar.gamemode.normal}
+              ⚡️ {Translations[userLanguage].quizzes.bar.gamemode.normal}
             </MenuItem>
             <MenuItem value="multi">
-              <FilterNoneRounded color="primary" />⠀
-              {Translations[userLanguage].quizzes.bar.gamemode.multi}
+              🥳 {Translations[userLanguage].quizzes.bar.gamemode.multi}
             </MenuItem>
           </Select>
         </FormControl>

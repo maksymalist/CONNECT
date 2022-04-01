@@ -31,6 +31,7 @@ import { useQuery, gql } from "@apollo/client";
 import axios from "axios";
 
 import config from "../../config.json";
+import getUser from "../../hooks/getUser";
 
 //queries
 const GET_USER_PROFILE = gql`
@@ -110,9 +111,11 @@ const GET_USER_EMOTES = gql`
 `;
 
 function MyProfile(props) {
+  const user = getUser();
+
   const { loading, data } = useQuery(GET_USER_PROFILE, {
     variables: {
-      id: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+      id: user?.profileObj.googleId,
     },
   });
 
@@ -120,14 +123,14 @@ function MyProfile(props) {
     GET_USER_QUIZZES,
     {
       variables: {
-        userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+        userId: user?.profileObj.googleId,
       },
     }
   );
 
   const { loading: loadingMultis, data: multis } = useQuery(GET_USER_MULTIS, {
     variables: {
-      userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+      userId: user?.profileObj.googleId,
     },
   });
 
@@ -135,7 +138,7 @@ function MyProfile(props) {
     GET_USER_PRIVATE_QUIZZES,
     {
       variables: {
-        userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+        userId: user?.profileObj.googleId,
       },
     }
   );
@@ -144,14 +147,14 @@ function MyProfile(props) {
     GET_USER_PRIVATE_MULTIS,
     {
       variables: {
-        userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+        userId: user?.profileObj.googleId,
       },
     }
   );
 
   const { loading: loadingEmotes, data: emotes } = useQuery(GET_USER_EMOTES, {
     variables: {
-      userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+      userId: user?.profileObj.googleId,
     },
   });
 
@@ -214,7 +217,7 @@ function MyProfile(props) {
 
   const getClasses = async () => {
     const res = await axios.post(`${config["api-server"]}/get-user-classes`, {
-      userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+      userId: user?.profileObj.googleId,
     });
 
     if (res.data) {

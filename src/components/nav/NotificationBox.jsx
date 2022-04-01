@@ -12,6 +12,7 @@ import {
 import Translations from "../../translations/translations.json";
 
 import { useQuery, useMutation, gql } from "@apollo/client";
+import getUser from "../../hooks/getUser";
 
 const GET_NOTIFICATIONS = gql`
   query allNotificationsByUser($userId: ID!) {
@@ -32,19 +33,20 @@ const CLEAR_NOTIFICATIONS = gql`
 `;
 
 function NotificationBox({ close }) {
+  const user = getUser();
   const [userLanguage] = useState(
     localStorage.getItem("connectLanguage") || "english"
   );
 
   const { loading, error, data } = useQuery(GET_NOTIFICATIONS, {
     variables: {
-      userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+      userId: user?.profileObj.googleId,
     },
   });
 
   const [clearNotifications] = useMutation(CLEAR_NOTIFICATIONS, {
     variables: {
-      userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+      userId: user?.profileObj.googleId,
     },
   });
 

@@ -43,6 +43,9 @@ import config from "./config.json";
 import "firebase/storage";
 import PositionScreen from "./components/game/player/PositionScreen";
 
+//hooks
+import getUser from "./hooks/getUser";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAuhaVNdwDaivPThUZ6wxYKCkvs0tEDRNs",
   authDomain: "livequiz-20442.firebaseapp.com",
@@ -94,6 +97,7 @@ toast.configure({
 });
 
 function App() {
+  const user = getUser();
   const [customerId, setCustomerId] = useState(null);
 
   const [updateUserProfile] = useMutation(UPDATE_USER_PROFILE);
@@ -104,26 +108,21 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (
-      JSON.parse(localStorage.getItem("user")) !== null &&
-      JSON.parse(localStorage.getItem("user")) !== undefined &&
-      JSON.parse(localStorage.getItem("user")) !== ""
-    ) {
+    if (user !== null && user !== undefined && user !== "") {
       dispatch(setIsLoggedIn());
 
       updateUserProfile({
         variables: {
-          name: JSON.parse(localStorage.getItem("user"))?.profileObj.name,
-          email: JSON.parse(localStorage.getItem("user"))?.profileObj.email,
-          id: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
-          imageUrl: JSON.parse(localStorage.getItem("user"))?.profileObj
-            .imageUrl,
+          name: user?.profileObj.name,
+          email: user?.profileObj.email,
+          id: user?.profileObj.googleId,
+          imageUrl: user?.profileObj.imageUrl,
         },
       });
 
       axios
         .post(`${config["api-server"]}/get-user-subscription-id`, {
-          userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+          userId: user?.profileObj.googleId,
         })
         .then((res) => {
           console.log(res.data);
@@ -186,7 +185,7 @@ function App() {
       console.log(JSON.parse(res?.data?.subscriptionDetails));
       updateUserSubscription({
         variables: {
-          id: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+          id: user?.profileObj.googleId,
           subscriptionDetails: res?.data?.subscriptionDetails,
           plan: plan,
         },

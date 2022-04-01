@@ -16,6 +16,7 @@ import config from "../../../config.json";
 
 import ReactHowler from "react-howler";
 import themeSong from "../../../audio/connect_theme.mp3";
+import getUser from "../../../hooks/getUser";
 
 export default function GameRoom({ match }) {
   var [time, updateTime] = useState(0);
@@ -23,8 +24,10 @@ export default function GameRoom({ match }) {
   var [name, setName] = useState("");
   const cards = [];
 
+  const userData = getUser();
+
   const gameID = match.params.gameid;
-  const user = JSON.parse(localStorage.getItem("user"))?.profileObj.name;
+  const user = userData?.profileObj.name;
   let gameOver = false;
   const [isMusic, setIsMusic] = useState(false);
   const [popUpHidden, setPopUpHidden] = useState(true);

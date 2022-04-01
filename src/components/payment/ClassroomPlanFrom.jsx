@@ -36,6 +36,7 @@ import { useSelector } from "react-redux";
 
 import config from "../../config.json";
 import TeacherImg from "../../img/teacher_sub.svg";
+import getUser from "../../hooks/getUser";
 
 const UPDATE_USER_SUBSCRIPTION = gql`
   mutation ($id: ID!, $plan: String!, $subscriptionDetails: String!) {
@@ -48,6 +49,7 @@ const UPDATE_USER_SUBSCRIPTION = gql`
 `;
 
 function HomePage(props) {
+  const user = getUser();
   const plan = useSelector((state) => state.plan);
   // State
   const [email, setEmail] = useState("");
@@ -100,7 +102,7 @@ function HomePage(props) {
 
   const handleUpdateUserSubscription = async (subscriptionDetails) => {
     const subscriptionObj = {
-      id: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+      id: user?.profileObj.googleId,
       plan: "Classroom",
       subscriptionDetails: JSON.stringify(subscriptionDetails),
     };
@@ -151,7 +153,7 @@ function HomePage(props) {
   };
 
   const handleSubmitSub = async (event) => {
-    if (JSON.parse(localStorage.getItem("user")) == null) {
+    if (user == null) {
       toast.error(Translations[userLanguage].alerts.loginbeforebuy);
       setSpinner(false);
       return;

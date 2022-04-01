@@ -18,7 +18,9 @@ import UploadButton from "../misc/UploadButton";
 import Translations from "../../translations/translations.json";
 
 import { useMutation, gql } from "@apollo/client";
-import "react-quill/dist/quill.snow.css";
+
+//hooks
+import getUser from "../../hooks/getUser";
 
 const CREATE_QUIZ = gql`
   mutation createQuiz(
@@ -65,6 +67,7 @@ const CREATE_PRIVATE_QUIZ = gql`
 `;
 
 export default function NewQuiz() {
+  const user = getUser();
   const [name, setName] = useState("");
   const [questionArray, setQuestionArray] = useState([]);
 
@@ -148,7 +151,7 @@ export default function NewQuiz() {
   };
 
   const setQuizObj = (isPrivate, name) => {
-    if (JSON.parse(localStorage.getItem("user")) == null) {
+    if (user == null) {
       window.location = "/login";
       toast.error(Translations[userLanguage].alerts.logincreatequiz);
       return;
@@ -175,12 +178,9 @@ export default function NewQuiz() {
     }
 
     quizObj.name = name || "";
-    quizObj.userName =
-      JSON.parse(localStorage.getItem("user"))?.profileObj.name || "";
-    quizObj.userProfilePic =
-      JSON.parse(localStorage.getItem("user"))?.profileObj.imageUrl || "";
-    quizObj.userID =
-      JSON.parse(localStorage.getItem("user"))?.profileObj.googleId || "";
+    quizObj.userName = user?.profileObj.name || "";
+    quizObj.userProfilePic = user?.profileObj.imageUrl || "";
+    quizObj.userID = user?.profileObj.googleId || "";
     quizObj.coverImg = imgRef.current ? imgRef.current.src : "" || "";
     quizObj.tags = getTags() || [];
 

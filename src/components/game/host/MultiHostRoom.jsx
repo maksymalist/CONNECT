@@ -54,12 +54,16 @@ import QRCode from "react-qr-code";
 import ReactHowler from "react-howler";
 import themeSong from "../../../audio/connect_theme.mp3";
 
+//hooks
+import getUser from "../../../hooks/getUser";
+
 const playersTime = [];
 let finished2 = [];
 let activeStep2 = 0;
 let userLimit2 = 0;
 
 export default function HostRoom(props) {
+  const user = getUser();
   var [playerPodiumMax, setPlayerPodiumMax] = useState(props.podiumPlaces);
   const [userLimit, setUserLimit] = useState(8);
   const podium = [];
@@ -177,9 +181,7 @@ export default function HostRoom(props) {
 
     socket.on("EndGame", (data) => {
       setIsRoomLeft(true);
-      localStorage.removeItem(
-        JSON.parse(localStorage.getItem("user"))?.profileObj.googleId
-      );
+      localStorage.removeItem(user?.profileObj.googleId);
     });
 
     socket.on("UpdatePodium", (data) => {
@@ -421,7 +423,7 @@ export default function HostRoom(props) {
 
   const CheckPlanStatus = async () => {
     const res = await axios.post(`${config["api-server"]}/user`, {
-      userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+      userId: user?.profileObj.googleId,
     });
     const plan = res.data?.plan;
 
@@ -604,13 +606,11 @@ export default function HostRoom(props) {
   const EndGame = () => {
     socket.emit("EndGame", {
       room: props.room,
-      googleId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+      googleId: user?.profileObj.googleId,
     });
     setGameStarted(false);
     setIsRoomLeft(true);
-    localStorage.removeItem(
-      JSON.parse(localStorage.getItem("user"))?.profileObj.googleId
-    );
+    localStorage.removeItem(user?.profileObj.googleId);
     mute();
   };
 
@@ -698,7 +698,7 @@ export default function HostRoom(props) {
     const Podium = [];
 
     const res = await axios.post(`${config["api-server"]}/user`, {
-      userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+      userId: user?.profileObj.googleId,
     });
     const plan = res.data?.plan;
     if (plan !== null && plan !== "" && plan !== undefined) {
@@ -726,15 +726,13 @@ export default function HostRoom(props) {
     socket.emit("GameOver", {
       room: props.room,
       podium: Podium,
-      googleId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+      googleId: user?.profileObj.googleId,
     });
     setGameStarted(false);
     mute();
     setFinalPodium(Podium);
     setIsRoomLeft(true);
-    localStorage.removeItem(
-      JSON.parse(localStorage.getItem("user"))?.profileObj.googleId
-    );
+    localStorage.removeItem(user?.profileObj.googleId);
   };
   const shareLink = () => {
     setSharePopupActive(!sharePopupActive);

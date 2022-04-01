@@ -13,19 +13,14 @@ import longLogo from "../../img/connect-text.svg";
 
 import Translations from "../../translations/translations.json";
 
-import {
-  Add,
-  QuestionAnswerRounded,
-  FilterNoneRounded,
-  TranslateSharp,
-  NotificationsSharp,
-} from "@mui/icons-material";
+import { Add, TranslateSharp, NotificationsSharp } from "@mui/icons-material";
 
 import NotificationBox from "./NotificationBox";
 
 import { useQuery, gql } from "@apollo/client";
 
 import config from "../../config.json";
+import getUser from "../../hooks/getUser";
 
 const GET_NOTIFICATION_LENGTH = gql`
   query notificationNumber($userId: ID!) {
@@ -34,6 +29,7 @@ const GET_NOTIFICATION_LENGTH = gql`
 `;
 
 function Nav({ isLoggedIn, customerId }) {
+  const user = getUser();
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorEl2, setAnchorEl2] = useState(null);
   const [anchorEl3, setAnchorEl3] = useState(null);
@@ -50,9 +46,7 @@ function Nav({ isLoggedIn, customerId }) {
 
   const { loading, error, data } = useQuery(GET_NOTIFICATION_LENGTH, {
     variables: {
-      userId: JSON.parse(localStorage.getItem("user"))
-        ? JSON.parse(localStorage.getItem("user"))?.profileObj.googleId
-        : null,
+      userId: user ? user?.profileObj.googleId : null,
     },
   });
 
@@ -61,10 +55,8 @@ function Nav({ isLoggedIn, customerId }) {
   };
 
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("user")) === null) return;
-    setCurrentUsername(
-      JSON.parse(localStorage.getItem("user"))?.profileObj.name
-    );
+    if (user === null) return;
+    setCurrentUsername(user?.profileObj.name);
     if (userLanguage != null) {
       setLanguage(userLanguage);
     } else {
@@ -150,7 +142,7 @@ function Nav({ isLoggedIn, customerId }) {
       <ul>
         {isLoggedIn ? (
           <img
-            src={JSON.parse(localStorage.getItem("user"))?.profileObj.imageUrl}
+            src={user?.profileObj.imageUrl}
             aria-controls="simple-menu"
             aria-haspopup="true"
             onClick={handleClick}
@@ -245,22 +237,14 @@ function Nav({ isLoggedIn, customerId }) {
                   window.location = "/newquiz";
                 }}
               >
-                <QuestionAnswerRounded
-                  style={{ marginRight: "10px" }}
-                  color="primary"
-                />{" "}
-                {Translations[userLanguage].nav.add.normal}
+                ⚡️ {Translations[userLanguage].nav.add.normal}
               </MenuItem>
               <MenuItem
                 onClick={() => {
                   window.location = "/new-multi-quiz";
                 }}
               >
-                <FilterNoneRounded
-                  style={{ marginRight: "10px" }}
-                  color="primary"
-                />{" "}
-                {Translations[userLanguage].nav.add.multi}
+                🥳 {Translations[userLanguage].nav.add.multi}
               </MenuItem>
             </Menu>
             <TranslateSharp

@@ -14,11 +14,15 @@ import { toast } from "react-toastify";
 import config from "../../../config.json";
 import Emotes from "../../../emotes/emotes.json";
 
+//hooks
+import getUser from "../../../hooks/getUser";
+
 //globals
 
 //const socket = io('http://localhost:3001')
 
 export default function WaitingRoom(props) {
+  const user = getUser();
   var [gameStatus, setGameStatus] = useState(false);
   const [peopleInRoom, setPeopleInRoom] = useState([]);
   const [userLanguage] = useState(
@@ -34,7 +38,7 @@ export default function WaitingRoom(props) {
       const emotes = await axios.post(
         `${config["api-server"]}/get-user-emotes`,
         {
-          userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+          userId: user?.profileObj.googleId,
         }
       );
 
@@ -76,7 +80,7 @@ export default function WaitingRoom(props) {
     socket.emit("joinPlayerRoom", {
       room: props.room,
       name: props.user,
-      id: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+      id: user?.profileObj.googleId,
     });
     setPeopleInRoom(props.usersInRoom);
     getEmotes();

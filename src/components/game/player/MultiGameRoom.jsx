@@ -16,6 +16,9 @@ import config from "../../../config.json";
 import WaitingForHost from "./WaitingForHost";
 import PositionScreen from "./PositionScreen";
 
+//hooks
+import getUser from "../../../hooks/getUser";
+
 let isWaiting2 = false;
 let isShowingPosition2 = false;
 let position2 = 0;
@@ -26,6 +29,7 @@ let steps2 = [];
 let activeStep2 = 0;
 
 function MultiGameRoom({ match }) {
+  const user = getUser();
   let [activeStep, setActiveStep] = useState(0);
 
   let [steps, setSteps] = useState([]);
@@ -72,7 +76,7 @@ function MultiGameRoom({ match }) {
           time: time,
           room: CurrentRoom,
           user: match.params.user,
-          userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+          userId: user?.profileObj.googleId,
         });
       }
     }
@@ -249,8 +253,7 @@ function MultiGameRoom({ match }) {
           socket.emit("finishedSection", {
             room: CurrentRoom,
             user: match.params.user,
-            userId: JSON.parse(localStorage.getItem("user"))?.profileObj
-              .googleId,
+            userId: user?.profileObj.googleId,
           });
           if (activeStep2 + 1 === steps2.length) {
             setGameOver(true);
@@ -262,8 +265,7 @@ function MultiGameRoom({ match }) {
                 room: match.params.room,
                 user: match.params.user,
                 time: time,
-                id: JSON.parse(localStorage.getItem("user"))?.profileObj
-                  .googleId,
+                id: user?.profileObj.googleId,
               });
               emitted = true;
             }
@@ -328,8 +330,8 @@ function MultiGameRoom({ match }) {
     socket.on("showCurrentPosition", (data) => {
       console.log(data);
       const positions = data.positions;
-      const id = JSON.parse(localStorage.getItem("user"))?.profileObj.googleId;
-      const user = match.params.user;
+      const id = user?.profileObj.googleId;
+      const userName = match.params.user;
       console.log(positions);
 
       for (let i = 0; i < positions.length; i++) {
@@ -349,7 +351,7 @@ function MultiGameRoom({ match }) {
           user2: Supreme_Heron match
          */
 
-        if (position.userId === id && position.player === user) {
+        if (position.userId === id && position.player === userName) {
           console.log(position);
           setIsWaiting(false);
           isWaiting2 = false;
@@ -440,8 +442,7 @@ function MultiGameRoom({ match }) {
       });
       const pos = data.find(
         (player) =>
-          player.playerID ===
-            JSON.parse(localStorage.getItem("user"))?.profileObj.googleId &&
+          player.playerID === user?.profileObj.googleId &&
           player.player === match.params.user + "⠀"
       );
       window.location = `/roomleave/gameover?position=${pos && pos.position}`;

@@ -25,6 +25,9 @@ import list from "badwords-list";
 import config from "../config.json";
 import socket from "../socket-io";
 
+//hooks
+import getUser from "../hooks/getUser";
+
 const CREATE_NOTIFICATION = gql`
   mutation createNotification(
     $userId: ID!
@@ -44,6 +47,7 @@ const CREATE_NOTIFICATION = gql`
 let joined = false;
 
 export default function EnterCodeForm({ match, location }) {
+  const user = getUser();
   var [role, setRole] = useState("");
   const [checked, setChecked] = useState(false);
   var [code, setCode] = useState("");
@@ -75,7 +79,7 @@ export default function EnterCodeForm({ match, location }) {
   useEffect(() => {
     const Gamecode = new URLSearchParams(search).get("code");
 
-    if (!localStorage.getItem("user")) {
+    if (!user) {
       if (Gamecode !== null) {
         window.location = `/login?code=${Gamecode}`;
         return;
@@ -162,13 +166,10 @@ export default function EnterCodeForm({ match, location }) {
           document.getElementById("root")
         );
       }
-      localStorage.setItem(
-        JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
-        true
-      );
+      localStorage.setItem(user?.profileObj.googleId, true);
 
       socket.emit("addHost", {
-        googleId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+        googleId: user?.profileObj.googleId,
         room: data.room,
       });
 
@@ -176,8 +177,7 @@ export default function EnterCodeForm({ match, location }) {
         socket.emit("addPrivateRoom", {
           room: data.room,
           classId: validclassId,
-          googleId: JSON.parse(localStorage.getItem("user"))?.profileObj
-            .googleId,
+          googleId: user?.profileObj.googleId,
         });
 
         const res = await axios.post(
@@ -191,9 +191,7 @@ export default function EnterCodeForm({ match, location }) {
           const notification = {
             userId: memberId.replace(/user:/g, ""),
             type: "invitation_to_room",
-            message: `${
-              JSON.parse(localStorage.getItem("user"))?.profileObj.name
-            } has invited you to play a game in room ${data.room}!`,
+            message: `${user?.profileObj.name} has invited you to play a game in room ${data.room}!`,
             data: JSON.stringify({ room: data.room, classId: validclassId }),
           };
 
@@ -289,7 +287,7 @@ export default function EnterCodeForm({ match, location }) {
         return;
       }
       const res = await axios.post(`${config["api-server"]}/get-user-classes`, {
-        userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+        userId: user?.profileObj.googleId,
       });
       const classes = res.data;
 
@@ -325,16 +323,16 @@ export default function EnterCodeForm({ match, location }) {
     const data = res.data;
 
     if (data !== null) {
-      const user = await axios.post(`${config["api-server"]}/user`, {
-        userId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+      const res = await axios.post(`${config["api-server"]}/user`, {
+        userId: user?.profileObj.googleId,
       });
-      const userData = user.data;
+      const userData = res.data;
       console.log(userData);
       if (userData?.plan === "Starter") {
         socket.emit("createroom", {
           room: document.getElementById("roomName").value,
           gamecode: gameCode,
-          host: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+          host: user?.profileObj.googleId,
           friendly: checked,
           gamemode: gameMode,
           classId: null,
@@ -344,7 +342,7 @@ export default function EnterCodeForm({ match, location }) {
         socket.emit("createroom", {
           room: document.getElementById("roomName").value || "",
           gamecode: gameCode,
-          host: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+          host: user?.profileObj.googleId,
           friendly: checked,
           gamemode: gameMode,
           classId: classID,
@@ -354,7 +352,7 @@ export default function EnterCodeForm({ match, location }) {
       socket.emit("createroom", {
         room: document.getElementById("roomName").value,
         gamecode: gameCode,
-        host: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+        host: user?.profileObj.googleId,
         friendly: checked,
         gamemode: gameMode,
         classId: null,
@@ -368,7 +366,7 @@ export default function EnterCodeForm({ match, location }) {
   const terminateRoom = (room) => {
     socket.emit("EndGameTerminated", {
       room: room,
-      googleId: JSON.parse(localStorage.getItem("user"))?.profileObj.googleId,
+      googleId: user?.profileObj.googleId,
     });
     toast.success(
       `${Translations[userLanguage].alerts.roomterminated} ${room}`

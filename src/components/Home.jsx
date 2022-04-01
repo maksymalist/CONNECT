@@ -21,10 +21,14 @@ import {
   Divider,
 } from "@mui/material";
 
+//hooks
+import getUser from "../hooks/getUser";
+
 export default function HomePage() {
+  const user = getUser();
+
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("user")) == null)
-      window.location = "/login";
+    if (user == null) window.location = "/login";
     document.getElementById("root").style.padding = "0px";
     return () => {
       document.getElementById("root").style.padding = "10px";

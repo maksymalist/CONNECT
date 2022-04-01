@@ -18,6 +18,9 @@ import Translations from "../../translations/translations.json";
 
 import { useMutation, gql } from "@apollo/client";
 
+//hooks
+import getUser from "../../hooks/getUser";
+
 const CREATE_MULTI_QUIZ = gql`
   mutation createMulti(
     $name: String!
@@ -63,6 +66,7 @@ const CREATE_PRIVATE_MULTI_QUIZ = gql`
 `;
 
 function NewMultiQuiz() {
+  const user = getUser();
   const [name, setName] = useState("");
   const [quizArray, setQuizArray] = useState([]);
   const [tags, setTags] = useState([]);
@@ -347,21 +351,15 @@ function NewMultiQuiz() {
   };
 
   const setQuizObj = (isPrivate) => {
-    if (JSON.parse(localStorage.getItem("user")) == null) {
+    if (user == null) {
       window.location = "/login";
       toast.error(Translations[userLanguage].alerts.logincreatequiz);
       return;
     }
     quizObj.name = name;
-    quizObj.userName = JSON.parse(
-      localStorage.getItem("user")
-    )?.profileObj.name;
-    quizObj.userProfilePic = JSON.parse(
-      localStorage.getItem("user")
-    ).profileObj.imageUrl;
-    quizObj.userID = JSON.parse(
-      localStorage.getItem("user")
-    ).profileObj.googleId;
+    quizObj.userName = user?.profileObj.name;
+    quizObj.userProfilePic = user.profileObj.imageUrl;
+    quizObj.userID = user.profileObj.googleId;
     quizObj.coverImg = imgRef.current ? imgRef.current.src : "";
     quizObj.tags = getTags();
 

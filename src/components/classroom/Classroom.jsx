@@ -43,6 +43,9 @@ import axios from "axios";
 //apollo
 import { useMutation, gql } from "@apollo/client";
 
+//hooks
+import getUser from "../../hooks/getUser";
+
 const ADD_MEMBER = gql`
   mutation createMember($classId: ID!, $userId: ID!, $role: String!) {
     createMember(classId: $classId, userId: $userId, role: $role)
@@ -72,6 +75,7 @@ const DELETE_MEMBER = gql`
 `;
 
 export default function MemberRoom() {
+  const user = getUser();
   const plan = useSelector((state) => state.plan);
   const [userLanguage, setUserLanguage] = useState(
     localStorage.getItem("connectLanguage") || "english"
@@ -112,10 +116,7 @@ export default function MemberRoom() {
     });
     const data = res.data;
 
-    if (
-      data?.owner !=
-      JSON.parse(localStorage.getItem("user"))?.profileObj.googleId
-    ) {
+    if (data?.owner != user?.profileObj.googleId) {
       window.location.href = `/view-class/${id}`;
       return;
     }
@@ -222,11 +223,7 @@ export default function MemberRoom() {
       return;
     }
 
-    if (
-      res.data._id ===
-      USERID_PREFIX +
-        JSON.parse(localStorage.getItem("user"))?.profileObj.googleId
-    ) {
+    if (res.data._id === USERID_PREFIX + user?.profileObj.googleId) {
       toast.error(Translations[userLanguage].alerts.cannotAddYourself);
       return;
     }
@@ -253,9 +250,7 @@ export default function MemberRoom() {
       const notification = {
         userId: memberId.replace(/user:/g, ""),
         type: "added_to_class",
-        message: `${
-          JSON.parse(localStorage.getItem("user"))?.profileObj.name
-        } has added you to ${name}!`,
+        message: `${user?.profileObj.name} has added you to ${name}!`,
         data: id,
       };
 
@@ -281,10 +276,7 @@ export default function MemberRoom() {
   };
 
   const removeMember = (index, memberId) => {
-    if (
-      memberId ===
-      `user:${JSON.parse(localStorage.getItem("user"))?.profileObj.googleId}`
-    ) {
+    if (memberId === `user:${user?.profileObj.googleId}`) {
       toast.error(Translations[userLanguage].alerts.cannotRemoveYourself);
       return;
     }
@@ -295,9 +287,7 @@ export default function MemberRoom() {
     const notification = {
       userId: memberId.replace(/user:/g, ""),
       type: "removed_from_class",
-      message: `${
-        JSON.parse(localStorage.getItem("user"))?.profileObj.name
-      } has removed you from ${name} :(`,
+      message: `${user?.profileObj.name} has removed you from ${name} :(`,
       data: id,
     };
 

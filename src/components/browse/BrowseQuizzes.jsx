@@ -11,12 +11,7 @@ import {
   Button,
 } from "@mui/material";
 
-import {
-  QuestionAnswerRounded,
-  FilterNoneRounded,
-  FileCopyRounded,
-  AccountCircle,
-} from "@mui/icons-material";
+import { AccountCircle } from "@mui/icons-material";
 
 import { toast } from "react-toastify";
 
@@ -211,12 +206,10 @@ export default function BrowseQuizzes() {
             required
           >
             <MenuItem value="normal">
-              <QuestionAnswerRounded color="primary" />⠀
-              {Translations[userLanguage].quizzes.bar.gamemode.normal}
+              ⚡️ {Translations[userLanguage].quizzes.bar.gamemode.normal}
             </MenuItem>
             <MenuItem value="multi">
-              <FilterNoneRounded color="primary" />⠀
-              {Translations[userLanguage].quizzes.bar.gamemode.multi}
+              🥳 {Translations[userLanguage].quizzes.bar.gamemode.multi}
             </MenuItem>
           </Select>
         </FormControl>

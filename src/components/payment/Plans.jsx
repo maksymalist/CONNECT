@@ -12,8 +12,10 @@ import { CheckRounded } from "@mui/icons-material";
 import Translations from "../../translations/translations.json";
 
 import { useSelector } from "react-redux";
+import getUser from "../../hooks/getUser";
 
 export default function Plans() {
+  const user = getUser();
   const plan = useSelector((state) => state.plan);
   // eslint-disable-next-line
   const [userLanguage] = useState(
@@ -28,7 +30,7 @@ export default function Plans() {
     }
   };
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("user")) == null) return;
+    if (user == null) return;
   }, []);
 
   return (

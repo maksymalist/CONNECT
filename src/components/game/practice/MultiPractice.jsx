@@ -15,6 +15,7 @@ import config from "../../../config.json";
 
 import ReactHowler from "react-howler";
 import themeSong from "../../../audio/connect_theme.mp3";
+import getUser from "../../../hooks/getUser";
 
 function MultiGameRoom({ match }) {
   const [activeStep, setActiveStep] = useState(0);
@@ -28,7 +29,9 @@ function MultiGameRoom({ match }) {
   const [name, setName] = useState("");
   var cards = [];
 
-  const user = JSON.parse(localStorage.getItem("user"))?.profileObj.name;
+  const userData = getUser();
+
+  const user = userData?.profileObj.name;
   const gameID = match.params.gameid;
   var [GameOver, setGameOver] = useState(false);
   const [isMusic, setIsMusic] = useState(false);

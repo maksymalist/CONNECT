@@ -32,6 +32,7 @@ import { useQuery, gql } from "@apollo/client";
 
 import config from "../../config.json";
 import Emotes from "../../emotes/emotes.json";
+import getUser from "../../hooks/getUser";
 
 //queries
 const GET_USER_PROFILE = gql`
@@ -111,6 +112,7 @@ const GET_USER_EMOTES = gql`
 
 function Profile() {
   const { id } = useParams();
+  const user = getUser();
 
   const { loading, data } = useQuery(GET_USER_PROFILE, {
     variables: {
@@ -191,7 +193,7 @@ function Profile() {
   };
 
   useEffect(() => {
-    if (id == JSON.parse(localStorage.getItem("user"))?.profileObj.googleId) {
+    if (id == user?.profileObj.googleId) {
       window.location = "/profile";
       return;
     }
