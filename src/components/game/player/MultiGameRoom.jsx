@@ -361,11 +361,11 @@ function MultiGameRoom({ match }) {
           position2 = i + 1;
           return;
         }
-        setIsWaiting(false);
-        isWaiting2 = false;
-        setIsShowingPosition(true);
-        isShowingPosition2 = true;
       }
+      setIsWaiting(false);
+      isWaiting2 = false;
+      setIsShowingPosition(true);
+      isShowingPosition2 = true;
     });
 
     socket.on("startNextSection", (data) => {
