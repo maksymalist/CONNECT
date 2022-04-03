@@ -465,6 +465,15 @@ export default function HostRoom(props) {
     }, 1000);
     setGameStarted(true);
   };
+
+  const startCountdown = () => {
+    if (numberOfUsers <= 0) {
+      toast.error(Translations[userLanguage].alerts.notenoughplayers);
+      return;
+    }
+    setIsCountdown(true);
+  };
+
   const EndGame = () => {
     socket.emit("EndGame", {
       room: props.room,
@@ -867,7 +876,7 @@ export default function HostRoom(props) {
               <div style={{ display: "flex" }}>
                 <Button
                   onClick={() => {
-                    setIsCountdown(true);
+                    startCountdown();
                   }}
                   variant="contained"
                 >

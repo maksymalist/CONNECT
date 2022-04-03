@@ -376,7 +376,8 @@
       "roomnotfound": "Room not found :(",
       "nametaken": "That name is already taken!",
       "sessionexpired": "Session Expired! Please open a new tab!",
-      "emotecooldown": "✨ emotes have a 3s cooldown ✨"
+      "emotecooldown": "✨ emotes have a 3s cooldown ✨",
+      "notenoughplayers": "Not enough players to start the game!"
     },
     "paymentform": {
       "title": "Payment Form",
@@ -809,7 +810,8 @@
       "roomnotfound": "Salle non trouvée",
       "nametaken": "Ce nom est déjà pris",
       "sessionexpired": "Session expirée! Veuillez ouvrir un nouvel onglet!",
-      "emotecooldown": "✨ les emotes ont un temps de recharge de 3s ✨"
+      "emotecooldown": "✨ les emotes ont un temps de recharge de 3s ✨",
+      "notenoughplayers": "Il n'y a pas assez de joueurs pour commencer le jeu!!"
     },
     "paymentform": {
       "title": "Formulaire de paiement",

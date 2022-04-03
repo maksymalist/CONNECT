@@ -6,7 +6,7 @@ import countdown_sfx from "../../../audio/countdown.mp3";
 
 import ReactHowler from "react-howler";
 
-function CountDown({ start, room, muteMusic, unmuteMusic }) {
+function CountDown({ start, room, muteMusic, unmuteMusic, numberOfUsers }) {
   let [number, setNumber] = useState(0);
   let [isCountdown, setIsCountdown] = useState(false);
   const [userLanguage] = useState(
@@ -26,7 +26,7 @@ function CountDown({ start, room, muteMusic, unmuteMusic }) {
       if (number === 4) {
         setIsCountdown((isCountdown = false));
         unmuteMusic();
-        start(room);
+        start(room, numberOfUsers);
       }
     }, 1000);
   }, []);
