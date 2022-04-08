@@ -136,8 +136,12 @@ export default function EnterCodeForm({ match, location }) {
         ReactDOM.render(
           <div>
             <HostRoom
-              maxPlayers={maxPlayers.current.value}
-              podiumPlaces={podiumPlaces.current.value}
+              maxPlayers={
+                maxPlayers.current.value < 3 ? 3 : maxPlayers.current.value
+              }
+              podiumPlaces={
+                podiumPlaces.current.value < 3 ? 3 : podiumPlaces.current.value
+              }
               room={data.room}
               gamecode={data.gamecode}
               friendlyroom={data.friendly}
@@ -153,8 +157,12 @@ export default function EnterCodeForm({ match, location }) {
         ReactDOM.render(
           <div>
             <MultiHostRoom
-              maxPlayers={maxPlayers.current.value}
-              podiumPlaces={podiumPlaces.current.value}
+              maxPlayers={
+                maxPlayers.current.value < 3 ? 3 : maxPlayers.current.value
+              }
+              podiumPlaces={
+                podiumPlaces.current.value < 3 ? 3 : podiumPlaces.current.value
+              }
               room={data.room}
               gamecode={data.gamecode}
               friendlyroom={data.friendly}
