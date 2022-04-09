@@ -1080,3 +1080,9 @@ footer a {
 .mui-chip {
   margin: 5px !important;
 }
+
+.Toastify__toast {
+  border: 2px solid black !important;
+  box-shadow: 5px 5px 0 #262626 !important;
+  margin-right: 10px !important;
+}
