@@ -14,9 +14,17 @@
   flex-direction: column;
   box-shadow: 10px 10px 0px #262626;
   border: 2px solid black;
+  padding: 20px;
+  width: 100%;
+  max-width: 500px;
+}
+.login-component-container-blank {
+  height: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   padding: 50px;
 }
-
 .role__img__wrapper {
   display: flex;
   align-items: center;
@@ -37,6 +45,7 @@
   box-shadow: 5px 5px 0px #262626;
   width: 350px;
   height: 350px;
+  background-color: white;
 }
 
 .role__img__card:hover {
@@ -45,4 +54,13 @@
   border: 2px solid #5d56e1;
   box-shadow: 5px 5px 0px #6c63ff;
   color: #6c63ff;
+}
+
+span {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.google-login-button {
+  padding: 10px !important;
 }

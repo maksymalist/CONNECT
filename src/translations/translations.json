@@ -318,8 +318,14 @@
       "upload": "Upload 🏙"
     },
     "login": {
-      "title": "Sign into CONNECT!",
-      "googlebutton": "Login with google"
+      "title": "✨ Welcome ✨",
+      "title2": "A world of knowledge awaits you...",
+      "googlebutton": "Login with google",
+      "role": {
+        "title": "✨ Select your role ✨",
+        "student": "Student 🎓",
+        "teacher": "Teacher 🍏"
+      }
     },
     "sharepopup": {
       "title": "Share Code",
@@ -752,8 +758,14 @@
       "upload": "Télécharger 🏙"
     },
     "login": {
-      "title": "Connectez-vous à CONNECT!",
-      "googlebutton": "Connectez-vous avec Google"
+      "title": "✨ Bienvenue ✨",
+      "title2": "Un monde de connaissances vous attend...",
+      "googlebutton": "Connectez-vous avec Google",
+      "role": {
+        "title": "✨ Sélectionnez votre rôle ✨",
+        "student": "Étudiant 🎓",
+        "teacher": "Enseignant 🍏"
+      }
     },
     "sharepopup": {
       "title": "Partager le code",
