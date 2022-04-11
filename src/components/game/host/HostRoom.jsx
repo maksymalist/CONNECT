@@ -101,13 +101,10 @@ export default function HostRoom(props) {
       room: props.room,
     });
     socket.on("addeduser", (data) => {
-      console.log(`
-        Here it the number of users: ${data.UsersInRoom.length}
-        Here is the limit: ${userLimit}
-      `);
-      setNumberOfUsers(data.UsersInRoom.length);
+      setNumberOfUsers(data?.UsersInRoom?.length);
       updateUserDiv(data.UsersInRoom);
-      if (data.UsersInRoom.length >= userLimit2) {
+      console.log(data?.UsersInRoom?.length + " / " + userLimit2);
+      if (data?.UsersInRoom?.length >= userLimit2) {
         socket.emit("roomLimitReached", props.room);
       }
     });
@@ -137,17 +134,12 @@ export default function HostRoom(props) {
     });
 
     socket.on("roomTerminated", (data) => {
-      EndGame();
+      GameOver();
     });
 
     socket.on("playerLeftRoom", (data) => {
       setNumberOfUsers(data.UsersInRoom.length);
       updateUserDiv(data.UsersInRoom);
-    });
-
-    socket.on("EndGame", (data) => {
-      setIsRoomLeft(true);
-      localStorage.removeItem(user?.profileObj.googleId);
     });
 
     socket.on("UpdatePodium", (data) => {
@@ -192,7 +184,7 @@ export default function HostRoom(props) {
       .getElementById("userDiv")
       .querySelectorAll("*")
       .forEach((n) => n.remove());
-    users.map((user, index) => {
+    users?.map((user, index) => {
       let newUser = document.createElement("div");
       newUser.id = user;
       document.getElementById("userDiv").appendChild(newUser);
@@ -472,17 +464,6 @@ export default function HostRoom(props) {
       return;
     }
     setIsCountdown(true);
-  };
-
-  const EndGame = () => {
-    socket.emit("EndGame", {
-      room: props.room,
-      googleId: user?.profileObj.googleId,
-    });
-    setGameStarted(false);
-    setIsRoomLeft(true);
-    localStorage.removeItem(user?.profileObj.googleId);
-    mute();
   };
 
   const addPoints = async (points, userId) => {

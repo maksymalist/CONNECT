@@ -171,17 +171,12 @@ export default function HostRoom(props) {
     });
 
     socket.on("roomTerminated", (data) => {
-      EndGame();
+      GameOver();
     });
 
     socket.on("playerLeftRoom", (data) => {
       setNumberOfUsers(data.UsersInRoom.length);
       updateUserDiv(data.UsersInRoom);
-    });
-
-    socket.on("EndGame", (data) => {
-      setIsRoomLeft(true);
-      localStorage.removeItem(user?.profileObj.googleId);
     });
 
     socket.on("UpdatePodium", (data) => {
@@ -610,17 +605,6 @@ export default function HostRoom(props) {
       return;
     }
     setIsCountdown(true);
-  };
-
-  const EndGame = () => {
-    socket.emit("EndGame", {
-      room: props.room,
-      googleId: user?.profileObj.googleId,
-    });
-    setGameStarted(false);
-    setIsRoomLeft(true);
-    localStorage.removeItem(user?.profileObj.googleId);
-    mute();
   };
 
   const addPoints = async (points, userId) => {

@@ -11,7 +11,6 @@ import Nav from "./components/nav/Nav.jsx";
 import NewQuiz from "./components/creation-system/NewQuiz";
 import BrowseQuizzes from "./components/browse/BrowseQuizzes";
 import AfterRoomLeave from "./components/game/player/AfterRoomLeave";
-import GameEnded from "./components/game/host/GameEnded";
 import StripeSubscriptions from "./components/payment/StripeSubscriptions";
 import Plans from "./components/payment/Plans";
 import Background from "./components/misc/Background";
@@ -212,7 +211,6 @@ function App() {
           <Route path="/new-multi-quiz" component={NewMultiQuiz} />
           <Route path="/browsequizzes" component={BrowseQuizzes} />
           <Route path="/roomleave/:type" component={AfterRoomLeave} />
-          <Route path="/gamefinsihed/:room/:user" component={GameEnded} />
           <Route path="/plans" component={Plans} />
           <Route path="/subscription/:plan" component={StripeSubscriptions} />
           <Route path="/login" component={Login} />

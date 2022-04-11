@@ -218,7 +218,7 @@ export default function WaitingRoom(props) {
       <div id="waitingRoomDiv">
         {/* <textarea id='userList' defaultValue={props.usersInRoom} readOnly></textarea> */}
         <div className="waiting__room__player__container">
-          {peopleInRoom.map((person, index) => {
+          {peopleInRoom?.map((person, index) => {
             return (
               <Typography
                 className="waitingRoomPerson"
