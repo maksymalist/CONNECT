@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { useLocation } from "react-router-dom";
-import { io } from "socket.io-client";
 import WaitingRoom from "./game/player/WaitingRoom";
 import HostRoom from "./game/host/HostRoom";
 import MultiHostRoom from "./game/host/MultiHostRoom";
@@ -10,9 +9,7 @@ import Background from "./misc/Background";
 import "../style/style.css";
 import { toast } from "react-toastify";
 
-import { Button, Switch, Typography } from "@mui/material";
-
-import CasinoRoundedIcon from "@mui/icons-material/CasinoRounded";
+import { Button, Switch, Typography, CircularProgress } from "@mui/material";
 
 import Translations from "../translations/translations.json";
 
@@ -76,6 +73,10 @@ export default function EnterCodeForm({ match, location }) {
   //mutations
   const [createNotification] = useMutation(CREATE_NOTIFICATION);
 
+  //spinners
+  const [spinner1, setSpinner1] = useState(false);
+  const [spinner2, setSpinner2] = useState(false);
+
   useEffect(() => {
     const Gamecode = new URLSearchParams(search).get("code");
 
@@ -120,14 +121,17 @@ export default function EnterCodeForm({ match, location }) {
     socket.on("roomcallback", (data) => {
       if (data.joined == true) {
         joined = true;
+        setSpinner1(false);
       } else {
         if (joined == true) return;
         toast.error(Translations[userLanguage].alerts.roomnotfound);
+        setSpinner1(false);
       }
     });
 
     socket.on("roomcreated", async (data) => {
       setRole((role = "host"));
+      setSpinner2(false);
 
       var validclassId = data.classId;
 
@@ -298,7 +302,7 @@ export default function EnterCodeForm({ match, location }) {
         userId: user?.profileObj.googleId,
       });
       const classes = res.data;
-
+      setSpinner1(true);
       socket.emit("joinroom", {
         code: joinFormCode,
         name: joinFormNickname,
@@ -366,6 +370,7 @@ export default function EnterCodeForm({ match, location }) {
         classId: null,
       });
     }
+    setSpinner2(true);
   };
 
   const Generatecode = () => {
@@ -456,7 +461,11 @@ export default function EnterCodeForm({ match, location }) {
                     JoinRoom();
                   }}
                 >
-                  {Translations[userLanguage].play.join.button2}
+                  {spinner1 ? (
+                    <CircularProgress size={24} style={{ color: "white" }} />
+                  ) : (
+                    Translations[userLanguage].play.join.button2
+                  )}
                 </Button>
                 <Button
                   variant="contained"
@@ -572,7 +581,7 @@ export default function EnterCodeForm({ match, location }) {
           </Button>
           <br></br>
           <Button
-            style={{ marginBottom: "1vh" }}
+            style={{ marginBottom: "1vh", width: "150px" }}
             variant="contained"
             color="primary"
             size="small"
@@ -580,7 +589,11 @@ export default function EnterCodeForm({ match, location }) {
               CreateRoom();
             }}
           >
-            {Translations[userLanguage].play.host.presets.button2}
+            {spinner2 ? (
+              <CircularProgress size={24} style={{ color: "white" }} />
+            ) : (
+              Translations[userLanguage].play.host.presets.button2
+            )}
           </Button>
         </div>
       )}
