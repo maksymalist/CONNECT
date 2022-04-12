@@ -496,7 +496,7 @@ function NewMultiQuiz() {
               style={{ marginTop: "10px" }}
               key={tag + index}
               id={tag + index}
-              label={tag}
+              label={"#" + tag}
               onDelete={() => handleDelete(tag + index, tag)}
               color="primary"
             />

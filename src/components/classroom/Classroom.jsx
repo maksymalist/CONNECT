@@ -706,7 +706,7 @@ export default function MemberRoom() {
                                 <Chip
                                   style={{ margin: "5px" }}
                                   key={tag + index}
-                                  label={tag}
+                                  label={"#" + tag}
                                   color="primary"
                                 />
                               );
