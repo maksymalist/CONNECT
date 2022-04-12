@@ -21,6 +21,7 @@ import { useMutation, gql } from "@apollo/client";
 
 //hooks
 import getUser from "../../hooks/getUser";
+import useUnsavedChangesWarning from "../../hooks/useUnsavedChangesWarning";
 
 const CREATE_QUIZ = gql`
   mutation createQuiz(
@@ -82,6 +83,8 @@ export default function NewQuiz() {
 
   const [createQuiz] = useMutation(CREATE_QUIZ);
   const [createPrivateQuiz] = useMutation(CREATE_PRIVATE_QUIZ);
+
+  const [Prompt, setDirty, setPristine] = useUnsavedChangesWarning();
 
   const [isPrivate, setIsPrivate] = useState(false);
 
@@ -322,6 +325,7 @@ export default function NewQuiz() {
 
   return (
     <div style={{ marginTop: "100px" }}>
+      {Prompt}
       <div
         style={{
           display: "flex",

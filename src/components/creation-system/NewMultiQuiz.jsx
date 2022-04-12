@@ -20,6 +20,7 @@ import { useMutation, gql } from "@apollo/client";
 
 //hooks
 import getUser from "../../hooks/getUser";
+import useUnsavedChangesWarning from "../../hooks/useUnsavedChangesWarning";
 
 const CREATE_MULTI_QUIZ = gql`
   mutation createMulti(
@@ -77,9 +78,9 @@ function NewMultiQuiz() {
     localStorage.getItem("connectLanguage") || "english"
   );
 
-  const quizObj = {};
+  const [Prompt, setDirty, setPristine] = useUnsavedChangesWarning();
 
-  const getCards = () => {};
+  const quizObj = {};
 
   //
   const quizName = useRef(null);
@@ -404,6 +405,7 @@ function NewMultiQuiz() {
 
   return (
     <div style={{ marginTop: "100px" }}>
+      {Prompt}
       <div
         style={{
           display: "flex",

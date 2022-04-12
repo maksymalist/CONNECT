@@ -26,6 +26,7 @@ import { useMutation, gql } from "@apollo/client";
 
 //hooks
 import getUser from "../../hooks/getUser";
+import useUnsavedChangesWarning from "../../hooks/useUnsavedChangesWarning";
 
 const CREATE_CLASS = gql`
   mutation createClassroom(
@@ -83,6 +84,8 @@ function CreateClass() {
   const [userLanguage] = useState(
     localStorage.getItem("connectLanguage") || "english"
   );
+
+  const [Prompt] = useUnsavedChangesWarning();
 
   const [createClassMutation] = useMutation(CREATE_CLASS);
   const [createNotificationMutation] = useMutation(CREATE_NOTIFICATION);
@@ -191,6 +194,7 @@ function CreateClass() {
   return (
     <div>
       <div style={{ marginTop: "100px" }}>
+        {Prompt}
         <div
           style={{
             display: "flex",
