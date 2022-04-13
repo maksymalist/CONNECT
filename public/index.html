@@ -29,6 +29,11 @@
       name="twitter:image"
       content="https://user-images.githubusercontent.com/79988159/147132814-bf97c9d9-5afb-4a69-bf1b-3173612eca62.png"
     />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-7TZ8J1DMSJ"
+    ></script>
   </head>
   <body>
     <div id="root"></div>
@@ -42,6 +47,15 @@
             .catch((err) => console.log("Failure: ", err));
         });
       }
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-7TZ8J1DMSJ");
     </script>
   </body>
 </html>
