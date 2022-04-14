@@ -8,11 +8,13 @@ import Placeholder from "../../img/quizCoverPlaceholder.svg";
 
 import Translations from "../../translations/translations.json";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, Redirect } from "react-router-dom";
 
 import { useQuery, gql } from "@apollo/client";
 
 import { CircularProgress } from "@mui/material";
+
+import getUser from "../../hooks/getUser";
 
 const GET_QUIZ_DETAILS = gql`
   query privateMulti($id: ID!) {
@@ -45,6 +47,8 @@ function ViewMultiQuiz() {
   const { loading, error, data } = useQuery(GET_QUIZ_DETAILS, {
     variables: { id: code },
   });
+
+  const user = getUser();
 
   useEffect(() => {
     Object.keys(
@@ -82,7 +86,7 @@ function ViewMultiQuiz() {
           thickness={3}
           style={{ color: "white", margin: "100px" }}
         />
-      ) : (
+      ) : data.privateMulti.userID === "user:" + user?.profileObj.googleId ? (
         <div className="view__quiz__flex">
           <div className="view__quiz__content">
             <img
@@ -250,6 +254,8 @@ function ViewMultiQuiz() {
             )}
           </div>
         </div>
+      ) : (
+        <Redirect to="/" />
       )}
     </div>
   );

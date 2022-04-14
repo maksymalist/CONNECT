@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import "../../style/viewQuizStyles.css";
 
 import { Divider, Typography, Button, Chip } from "@mui/material";
@@ -17,6 +17,8 @@ import { useLocation } from "react-router-dom";
 import { useQuery, gql } from "@apollo/client";
 
 import { CircularProgress } from "@mui/material";
+
+import getUser from "../../hooks/getUser";
 
 const GET_QUIZ = gql`
   query privateQuiz($id: ID!) {
@@ -56,6 +58,8 @@ function ViewQuiz() {
     },
   });
 
+  const user = getUser();
+
   useEffect(() => {
     Object.keys(
       document.getElementsByClassName("view__quiz__content__question")
@@ -91,7 +95,7 @@ function ViewQuiz() {
           thickness={3}
           style={{ color: "white", margin: "100px" }}
         />
-      ) : quiz ? (
+      ) : quiz.privateQuiz.userID === "user:" + user?.profileObj.googleId ? (
         <div className="view__quiz__flex">
           <div className="view__quiz__content">
             <img
@@ -265,7 +269,9 @@ function ViewQuiz() {
             })}
           </div>
         </div>
-      ) : null}
+      ) : (
+        <Redirect to="/" />
+      )}
     </div>
   );
 }
