@@ -3,7 +3,7 @@ import { useMutation, gql } from "@apollo/client";
 import getUser from "../../hooks/getUser";
 import { Button, CircularProgress, Typography } from "@mui/material";
 import Emotes from "../../emotes/emotes.json";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Translations from "../../translations/translations.json";
 
 const CLAIM_EMOTE = gql`
@@ -16,7 +16,10 @@ function ClaimEmote() {
   const [addEmote, { data, loading, error }] = useMutation(CLAIM_EMOTE);
   const user = getUser();
 
-  const { secret, emoteId } = useParams();
+  const search = useLocation().search;
+
+  const secret = new URLSearchParams(search).get("secret");
+  const emoteId = new URLSearchParams(search).get("emoteId");
 
   const [userLanguage, setUserLanguage] = useState(
     localStorage.getItem("connectLanguage") || "english"
@@ -32,7 +35,7 @@ function ClaimEmote() {
         },
       });
     } else {
-      window.location.href = "/login";
+      window.location = `/login?secret=${secret}&emoteId=${emoteId}`;
     }
   }, []);
 

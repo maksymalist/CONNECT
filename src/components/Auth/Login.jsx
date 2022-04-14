@@ -46,6 +46,8 @@ function Login() {
   const search = useLocation().search;
 
   const Gamecode = new URLSearchParams(search).get("code");
+  const Secret = new URLSearchParams(search).get("secret");
+  const EmoteId = new URLSearchParams(search).get("emoteId");
 
   const [step, setStep] = useState(0);
 
@@ -60,11 +62,15 @@ function Login() {
         if (Gamecode) {
           localStorage.setItem("user", JSON.stringify(response));
           window.location.reload();
-          window.location.href = `/play?code=${Gamecode}`;
+          window.location = `/play?code=${Gamecode}`;
+        } else if (Secret && EmoteId) {
+          localStorage.setItem("user", JSON.stringify(response));
+          window.location.reload();
+          window.location = `/claim-emote?secret=${Secret}&emoteId=${EmoteId}`;
         } else {
           localStorage.setItem("user", JSON.stringify(response));
           window.location.reload();
-          window.location.href = "/play";
+          window.location = "/play";
         }
       } else {
         setStep(1);
@@ -86,9 +92,19 @@ function Login() {
         role: role,
       },
     });
-    localStorage.setItem("user", JSON.stringify(response));
-    window.location.reload();
-    window.location.href = "/play";
+    if (Gamecode) {
+      localStorage.setItem("user", JSON.stringify(response));
+      window.location.reload();
+      window.location = `/play?code=${Gamecode}`;
+    } else if (Secret && EmoteId) {
+      localStorage.setItem("user", JSON.stringify(response));
+      window.location.reload();
+      window.location = `/claim-emote?secret=${Secret}&emoteId=${EmoteId}`;
+    } else {
+      localStorage.setItem("user", JSON.stringify(response));
+      window.location.reload();
+      window.location = "/play";
+    }
   };
 
   return (

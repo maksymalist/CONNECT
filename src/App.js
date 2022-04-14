@@ -139,7 +139,8 @@ function App() {
       dispatch(setIsLoggedOut());
       if (window.location.pathname == "/login") return;
       if (window.location.pathname == "/play") return;
-      window.location.href = "/login";
+      if (window.location.pathname == "/claim-emote") return;
+      window.location = "/login";
     }
     return () => {
       //cleanup
@@ -229,7 +230,7 @@ function App() {
           <Route path="/class/:id" component={Classroom} />
           <Route path="/view-class/:id" component={ViewClassroom} />
           <Route path="/create-class" component={CreateClass} />
-          <Route path="/claim-emote/:secret/:emoteId" component={ClaimEmote} />
+          <Route path="/claim-emote" component={ClaimEmote} />
         </Switch>
       </div>
     </Router>
