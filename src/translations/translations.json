@@ -337,6 +337,12 @@
       "title": "Purchase Successful!",
       "button": "Continue"
     },
+    "claimemote": {
+      "title1": "✨ Emote claimed! ✨",
+      "button1": "View Emotes 🎉",
+      "title2": "✨ Failed to claim emote ✨",
+      "button2": "Go home 🏠"
+    },
     "alerts": {
       "loginalert": "You Have To Login If You Want To Use CONNECT!",
       "roomalreadyexists": "A Room With This Name Already Exists Choose Another Name",
@@ -776,6 +782,12 @@
     "thanksforpurchasing": {
       "title": "Achat réussi!",
       "button": "Continuer"
+    },
+    "claimemote": {
+      "title1": "✨ Emote obtenue !✨",
+      "button1": "Voir Emotes 🎉",
+      "title2": "✨ Échec de la réclamation de l'emote ✨",
+      "button2": "Retour 🏠"
     },
     "alerts": {
       "loginalert": "Vous devez vous connecter si vous souhaitez utiliser CONNECT !",

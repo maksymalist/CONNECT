@@ -30,6 +30,7 @@ import ViewMultiQuiz from "./components/view/ViewMultiQuiz";
 import CreateClass from "./components/creation-system/CreateClass";
 import QuizPractice from "./components/game/practice/QuizPractice";
 import MultiPractice from "./components/game/practice/MultiPractice";
+import ClaimEmote from "./components/misc/ClaimEmote";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
@@ -40,7 +41,6 @@ import { setIsLoggedIn, setIsLoggedOut } from "./actions/IsLogged";
 import { useMutation, gql } from "@apollo/client";
 import config from "./config.json";
 import "firebase/storage";
-import PositionScreen from "./components/game/player/PositionScreen";
 
 //hooks
 import getUser from "./hooks/getUser";
@@ -229,6 +229,7 @@ function App() {
           <Route path="/class/:id" component={Classroom} />
           <Route path="/view-class/:id" component={ViewClassroom} />
           <Route path="/create-class" component={CreateClass} />
+          <Route path="/claim-emote/:secret/:emoteId" component={ClaimEmote} />
         </Switch>
       </div>
     </Router>
