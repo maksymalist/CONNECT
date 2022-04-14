@@ -137,14 +137,14 @@ export default function HostRoom(props) {
         if (!document.getElementById(data.user)) return;
         document.getElementById(
           data.user
-        ).innerHTML = `${data.user}<span style='color:#fff'>⠀</span><span style='color:#6976EA'>${data.time}s</span>`;
+        ).innerHTML = `${data.user} <span class="time__text" style='color:#6976EA'>${data.time}s</span>`;
         document.getElementById(data.user).dataset.time = data.time;
       } else {
         playersTime.push(data.user);
 
         let newTime = document.createElement("h1");
 
-        newTime.innerHTML = `${data.user}<span style='color:#fff'>⠀</span><span style='color:#6976EA'>${data.time}s</span>`;
+        newTime.innerHTML = `${data.user} <span class="time__text" style='color:#6976EA'>${data.time}s</span>`;
         newTime.id = data.user;
         newTime.className = "time-box";
         newTime.dataset.time = data.time;
@@ -1270,7 +1270,10 @@ export default function HostRoom(props) {
                       <div className="lowest-time-box">
                         <Typography variant="h3">
                           {lowestTimesState[0]?.player}{" "}
-                          <span style={{ color: "#6976EA" }}>
+                          <span
+                            className="best__time__text"
+                            style={{ color: "#6976EA" }}
+                          >
                             {lowestTimesState[0]?.time}s
                           </span>
                         </Typography>
@@ -1286,7 +1289,10 @@ export default function HostRoom(props) {
                       <div className="lowest-time-box">
                         <Typography variant="h3">
                           {lowestTimesState[1]?.player}{" "}
-                          <span style={{ color: "#6976EA" }}>
+                          <span
+                            className="best__time__text"
+                            style={{ color: "#6976EA" }}
+                          >
                             {lowestTimesState[1]?.time}s
                           </span>
                         </Typography>
@@ -1302,7 +1308,10 @@ export default function HostRoom(props) {
                       <div className="lowest-time-box">
                         <Typography variant="h3">
                           {lowestTimesState[2]?.player}{" "}
-                          <span style={{ color: "#6976EA" }}>
+                          <span
+                            className="best__time__text"
+                            style={{ color: "#6976EA" }}
+                          >
                             {lowestTimesState[2]?.time}s
                           </span>
                         </Typography>
@@ -1322,7 +1331,10 @@ export default function HostRoom(props) {
                           <div className="lowest-time-box">
                             <Typography variant="h3">
                               {lowestTime?.player}{" "}
-                              <span style={{ color: "#6976EA" }}>
+                              <span
+                                className="best__time__text"
+                                style={{ color: "#6976EA" }}
+                              >
                                 {lowestTime?.time}s
                               </span>
                             </Typography>

@@ -599,6 +599,19 @@ h1 {
   box-shadow: 10px 10px #262626;
   margin: 10px;
 }
+.best__time__text {
+  margin: 0;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  font-size: 3rem;
+  line-height: 1.167;
+  letter-spacing: 0em;
+}
+.time__text {
+  font-size: 1.2em;
+  margin-left: 10px;
+  font-weight: bold;
+}
 
 @media screen and (max-width: 630px) {
   .lowest-time-box {
