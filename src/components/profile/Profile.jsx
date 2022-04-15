@@ -6,8 +6,8 @@ import {
   Tab,
   Tabs,
   Chip,
-  Avatar,
   Divider,
+  Avatar,
   CircularProgress,
 } from "@mui/material";
 import {
@@ -17,51 +17,40 @@ import {
 } from "@mui/icons-material";
 
 import { toast } from "react-toastify";
-import axios from "axios";
-
 import { Link } from "react-router-dom";
 
 import "../../style/profileStyles.css";
 
 import Placeholder from "../../img/quizCoverPlaceholder.svg";
 import LockedEmote from "../../img/lockedEmote.svg";
-
 import Translations from "../../translations/translations.json";
+import Emotes from "../../emotes/emotes.json";
+import { useSelector } from "react-redux";
 
 import { useQuery, gql } from "@apollo/client";
 
+import axios from "axios";
+
 import config from "../../config.json";
-import Emotes from "../../emotes/emotes.json";
 import getUser from "../../hooks/getUser";
+
+import QuizCard from "../cards/QuizCard";
 
 //queries
 const GET_USER_PROFILE = gql`
-  query getUserProfile($id: ID!) {
-    user(id: $id) {
+  query profile($userId: ID!) {
+    user(id: $userId) {
       _id
       name
       email
       imageUrl
       plan
+      role
     }
-  }
-`;
-const GET_USER_QUIZZES = gql`
-  query ($userId: ID!) {
-    allQuizzesByUser(userId: $userId) {
+    getUserEmotes(userId: $userId) {
       _id
-      name
-      coverImg
-      tags
-      userID
-      userName
-      userProfilePic
+      emoteId
     }
-  }
-`;
-
-const GET_USER_MULTIS = gql`
-  query allMultisByUser($userId: ID!) {
     allMultisByUser(userId: $userId) {
       _id
       name
@@ -70,12 +59,9 @@ const GET_USER_MULTIS = gql`
       userID
       userName
       userProfilePic
+      __typename
     }
-  }
-`;
-const GET_USER_PRIVATE_QUIZZES = gql`
-  query allPrivateQuizzesByUser($userId: ID!) {
-    allPrivateQuizzesByUser(userId: $userId) {
+    allQuizzesByUser(userId: $userId) {
       _id
       name
       coverImg
@@ -83,12 +69,8 @@ const GET_USER_PRIVATE_QUIZZES = gql`
       userID
       userName
       userProfilePic
+      __typename
     }
-  }
-`;
-
-const GET_USER_PRIVATE_MULTIS = gql`
-  query allPrivateMultisByUser($userId: ID!) {
     allPrivateMultisByUser(userId: $userId) {
       _id
       name
@@ -97,77 +79,42 @@ const GET_USER_PRIVATE_MULTIS = gql`
       userID
       userName
       userProfilePic
+      __typename
     }
-  }
-`;
-
-const GET_USER_EMOTES = gql`
-  query ($userId: ID!) {
-    getUserEmotes(userId: $userId) {
+    allPrivateQuizzesByUser(userId: $userId) {
       _id
-      emoteId
+      name
+      coverImg
+      tags
+      userID
+      userName
+      userProfilePic
+      __typename
     }
   }
 `;
 
-function Profile() {
+function MyProfile() {
   const { id } = useParams();
   const user = getUser();
 
   const { loading, data } = useQuery(GET_USER_PROFILE, {
     variables: {
-      id: id,
-    },
-  });
-
-  const { loading: loadingQuizzes, data: quizzes } = useQuery(
-    GET_USER_QUIZZES,
-    {
-      variables: {
-        userId: id,
-      },
-    }
-  );
-
-  const { loading: loadingMultis, data: multis } = useQuery(GET_USER_MULTIS, {
-    variables: {
       userId: id,
     },
   });
 
-  const { loading: loadingPrivateQuizzes, data: privateQuizzes } = useQuery(
-    GET_USER_PRIVATE_QUIZZES,
-    {
-      variables: {
-        userId: id,
-      },
-    }
-  );
-
-  const { loading: loadingPrivateMultis, data: privateMultis } = useQuery(
-    GET_USER_PRIVATE_MULTIS,
-    {
-      variables: {
-        userId: id,
-      },
-    }
-  );
-
-  const { loading: loadingEmotes, data: emotes } = useQuery(GET_USER_EMOTES, {
-    variables: {
-      userId: id,
-    },
-  });
+  const [value, setValue] = useState(0);
 
   const [userLanguage, setUserLanguage] = useState(
     localStorage.getItem("connectLanguage") || "english"
   );
 
-  const [value, setValue] = useState(0);
+  const quizzesTab = useRef(null);
+
+  const plan = useSelector((state) => state.plan);
 
   const [userClasses, setUserClasses] = useState([]);
-
-  const quizzesTab = useRef(null);
 
   const [lockedEmotes, setLockedEmotes] = useState([
     "5",
@@ -191,7 +138,6 @@ function Profile() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   useEffect(() => {
     if (id == user?.profileObj.googleId) {
       window.location = "/profile";
@@ -200,30 +146,11 @@ function Profile() {
     getClasses();
   }, []);
 
-  const handleQuizClick = (key, type, isPrivate) => {
-    if (isPrivate) {
-      if (type === "Quiz") {
-        window.location = `/quiz/normal/private/${key}`;
-      }
-      if (type === "Multi") {
-        window.location = `/quiz/multi/private/${key}`;
-      }
-    } else {
-      if (type === "Quiz") {
-        window.location = `/quiz/normal/${key}`;
-      }
-      if (type === "Multi") {
-        window.location = `/quiz/multi/${key}`;
-      }
-    }
-  };
-
   const getClasses = async () => {
     const res = await axios.post(`${config["api-server"]}/get-user-classes`, {
-      userId: id,
+      userId: user?.profileObj.googleId,
     });
 
-    console.log(res.data);
     if (res.data) {
       setUserClasses(res.data || []);
     }
@@ -248,75 +175,6 @@ function Profile() {
       </div>
     );
   };
-
-  const QuizCardComponent = ({ data, isPrivate }) => (
-    <div
-      onClick={() => {
-        handleQuizClick(data._id, data.__typename, isPrivate);
-      }}
-      className="quizCard"
-      style={{ overflowY: "auto", overflowX: "hidden", maxWidth: "300px" }}
-    >
-      {isPrivate ? (
-        <Lock
-          style={{
-            position: "absolute",
-            top: "10px",
-            right: "10px",
-            zIndex: "10",
-          }}
-          color="primary"
-        />
-      ) : null}
-      <img
-        style={{ width: "100%", height: "300px" }}
-        src={data.coverImg || Placeholder}
-        alt="cover-img"
-      />
-      <h2>{data.name}</h2>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {data.userProfilePic == undefined ? (
-          <AccountCircle style={{ marginRight: "10px" }} color="primary" />
-        ) : (
-          <img
-            width="25px"
-            height="25px"
-            src={data.userProfilePic}
-            alt={data.userProfilePic}
-            style={{
-              borderRadius: "100%",
-              marginRight: "10px",
-            }}
-          />
-        )}
-        <h3>{`${Translations[userLanguage].profile.quizzes.by} ${data.userName}`}</h3>
-      </div>
-      {/* <Button variant='contained' size='small' color='primary' style={{margin:'10px'}}>Edit</Button> */}
-      <div>
-        {data.tags == undefined ? null : (
-          <div>
-            <br></br>
-            {data.tags.map((tag, index) => {
-              return (
-                <Chip
-                  style={{ margin: "5px" }}
-                  key={tag + index}
-                  label={"#" + tag}
-                  color="primary"
-                />
-              );
-            })}
-          </div>
-        )}
-      </div>
-    </div>
-  );
 
   const playEmote = (src) => {
     let emote = document.createElement("img");
@@ -477,14 +335,14 @@ function Profile() {
               variant="outlined"
             />
           )}
-          {quizzes?.allQuizzesByUser?.length > 0 ? (
+          {data?.allQuizzesByUser?.length > 0 ? (
             <Chip
               className="mui-chip"
               label={Translations[userLanguage].profile.tags.creator}
               color="primary"
               variant="outlined"
             />
-          ) : multis?.allMultiQuizzesByUser?.length > 0 ? (
+          ) : data?.allMultiQuizzesByUser?.length > 0 ? (
             <Chip
               className="mui-chip"
               label={Translations[userLanguage].profile.tags.creator}
@@ -492,6 +350,30 @@ function Profile() {
               variant="outlined"
             />
           ) : null}
+          {data?.user?.role === "student" && (
+            <Chip
+              className="mui-chip"
+              label={Translations[userLanguage].profile.tags.student}
+              color="primary"
+              variant="outlined"
+            />
+          )}
+          {data?.user?.role === "teacher" && (
+            <Chip
+              className="mui-chip"
+              label={Translations[userLanguage].profile.tags.teacher}
+              color="primary"
+              variant="outlined"
+            />
+          )}
+          {data?.getUserEmotes?.length === 16 && (
+            <Chip
+              className="mui-chip"
+              label={Translations[userLanguage].profile.tags.collector}
+              color="primary"
+              variant="outlined"
+            />
+          )}
         </div>
         <div className="profile-tabs-slider-container">
           <Tabs
@@ -513,42 +395,40 @@ function Profile() {
             <Typography variant="h3" style={{ margin: "20px" }}>
               {Translations[userLanguage].profile.quizzes.title}
             </Typography>
+            <Divider style={{ marginLeft: "10px", marginRight: "10px" }} />
+            <br></br>
             <div className="profile-tab-quizzes" ref={quizzesTab}>
-              {loadingQuizzes ? (
+              {loading ? (
                 <CircularProgress
                   color="primary"
                   size={150}
                   thickness={3}
                   style={{ margin: "100px" }}
                 />
-              ) : quizzes ? (
-                quizzes.allQuizzesByUser.map((data, index) => {
-                  return <QuizCardComponent key={index} data={data} />;
+              ) : data ? (
+                data.allQuizzesByUser.map((data, index) => {
+                  return <QuizCard key={index} data={data} />;
                 })
               ) : null}
-              {loadingPrivateQuizzes
+              {loading
                 ? null
-                : privateQuizzes
-                ? privateQuizzes.allPrivateQuizzesByUser.map((data, index) => {
-                    return (
-                      <QuizCardComponent key={index} data={data} isPrivate />
-                    );
+                : data
+                ? data.allPrivateQuizzesByUser.map((data, index) => {
+                    return <QuizCard key={index} data={data} isPrivate />;
                   })
                 : null}
-              {loadingMultis
+              {loading
                 ? null
-                : multis
-                ? multis.allMultisByUser.map((data, index) => {
-                    return <QuizCardComponent key={index} data={data} />;
+                : data
+                ? data.allMultisByUser.map((data, index) => {
+                    return <QuizCard key={index} data={data} />;
                   })
                 : null}
-              {loadingPrivateMultis
+              {loading
                 ? null
-                : privateMultis
-                ? privateMultis.allPrivateMultisByUser.map((data, index) => {
-                    return (
-                      <QuizCardComponent key={index} data={data} isPrivate />
-                    );
+                : data
+                ? data.allPrivateMultisByUser.map((data, index) => {
+                    return <QuizCard key={index} data={data} isPrivate />;
                   })
                 : null}
             </div>
@@ -561,6 +441,27 @@ function Profile() {
             </Typography>
             <Divider style={{ marginLeft: "10px", marginRight: "10px" }} />
             <br></br>
+            {plan === "Classroom" ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  width: "100%",
+                  alignItems: "center",
+                }}
+              >
+                <Link to="/create-class" style={{ width: "170px" }}>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    color="primary"
+                    style={{ margin: "10px" }}
+                  >
+                    {Translations[userLanguage].classroom.createbutton}
+                  </Button>
+                </Link>
+              </div>
+            ) : null}
             <div className="profile__user__classes">
               {userClasses.map((myclass, index) => {
                 return (
@@ -592,7 +493,7 @@ function Profile() {
               }}
             >
               <Typography variant="h4">
-                <b>{emotes?.getUserEmotes.length + 4}/20</b>
+                <b>{data?.getUserEmotes.length + 4}/20</b>
               </Typography>
               <EmojiEmotionsOutlined
                 style={{
@@ -615,23 +516,32 @@ function Profile() {
                 <EmoteCardComponent emoteId="2" />
                 <EmoteCardComponent emoteId="3" />
                 <EmoteCardComponent emoteId="4" />
-                {loadingEmotes ? (
-                  <h1>loading...</h1>
-                ) : emotes ? (
-                  emotes?.getUserEmotes.map((data, index) => {
+                {loading ? (
+                  <CircularProgress
+                    color="primary"
+                    size={150}
+                    thickness={3}
+                    style={{ margin: "100px" }}
+                  />
+                ) : data ? (
+                  data?.getUserEmotes.map((data, index) => {
                     return (
                       <EmoteCardComponent key={index} emoteId={data.emoteId} />
                     );
                   })
                 ) : null}
-                {lockedEmotes.map((data, index) => {
-                  const emote = emotes?.getUserEmotes[index]?.emoteId;
-                  if (emote === undefined || emote === null) {
-                    return <LockedEmoteComponent key={index} />;
-                  } else {
-                    return null;
-                  }
-                })}
+                {loading
+                  ? null
+                  : data
+                  ? lockedEmotes.map((el, index) => {
+                      const emote = data?.getUserEmotes[index]?.emoteId;
+                      if (emote === undefined || emote === null) {
+                        return <LockedEmoteComponent key={index} />;
+                      } else {
+                        return null;
+                      }
+                    })
+                  : null}
               </div>
             </div>
           </div>
@@ -641,4 +551,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default MyProfile;

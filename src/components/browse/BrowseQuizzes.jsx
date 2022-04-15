@@ -11,15 +11,11 @@ import {
   Button,
 } from "@mui/material";
 
-import { AccountCircle } from "@mui/icons-material";
-
-import { toast } from "react-toastify";
-
-import Placeholder from "../../img/quizCoverPlaceholder.svg";
-
 import Translations from "../../translations/translations.json";
 
 import { useQuery, gql } from "@apollo/client";
+
+import QuizCard from "../cards/QuizCard";
 
 const GET_QUIZZES = gql`
   query allQuizzes {
@@ -31,6 +27,7 @@ const GET_QUIZZES = gql`
       userID
       userName
       userProfilePic
+      __typename
     }
   }
 `;
@@ -45,6 +42,7 @@ const GET_MULTIS = gql`
       userID
       userName
       userProfilePic
+      __typename
     }
   }
 `;
@@ -57,118 +55,6 @@ export default function BrowseQuizzes() {
 
   const { loading, error, data: quizzes } = useQuery(GET_QUIZZES);
   const { loading: multisLoading, data: multis } = useQuery(GET_MULTIS);
-
-  const QuizCard = ({ data }) => (
-    <div
-      className="quizCard"
-      onClick={() => (window.location = `/quiz/normal/${data._id}`)}
-      style={{ overflowY: "auto", overflowX: "hidden" }}
-    >
-      <img
-        style={{ width: "100%", height: "250px" }}
-        src={data.coverImg || Placeholder}
-        alt="cover-img"
-      />
-      <h2>{data.name}</h2>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {data.userProfilePic == undefined ? (
-          <AccountCircle style={{ marginRight: "10px" }} color="primary" />
-        ) : (
-          <img
-            width="25px"
-            height="25px"
-            src={data.userProfilePic}
-            alt={data.userProfilePic}
-            style={{
-              borderRadius: "100%",
-              marginRight: "10px",
-            }}
-          />
-        )}
-        <h3>{`${Translations[userLanguage].quizzes.by} ${data.userName}`}</h3>
-      </div>
-      <div>
-        {data.tags == undefined ? null : (
-          <div>
-            <br></br>
-            {data.tags.map((tag, index) => {
-              return (
-                <Chip
-                  style={{ margin: "5px" }}
-                  key={tag + index}
-                  label={"#" + tag}
-                  color="primary"
-                />
-              );
-            })}
-          </div>
-        )}
-      </div>
-      <br></br>
-    </div>
-  );
-
-  const MultiCard = ({ data }) => (
-    <div
-      className="quizCard"
-      onClick={() => (window.location = `/quiz/multi/${data._id}`)}
-      style={{ overflowY: "auto", overflowX: "hidden" }}
-    >
-      <img
-        style={{ width: "100%", height: "250px" }}
-        src={data.coverImg || Placeholder}
-        alt="cover-img"
-      />
-      <h2>{data.name}</h2>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {data.userProfilePic == undefined ? (
-          <AccountCircle style={{ marginRight: "10px" }} color="primary" />
-        ) : (
-          <img
-            width="25px"
-            height="25px"
-            src={data.userProfilePic}
-            alt={data.userProfilePic}
-            style={{
-              borderRadius: "100%",
-              marginRight: "10px",
-            }}
-          />
-        )}
-        <h3>{`${Translations[userLanguage].quizzes.by} ${data.userName}`}</h3>
-      </div>
-      <div>
-        {data.tags == undefined ? null : (
-          <div>
-            <br></br>
-            {data.tags.map((tag, index) => {
-              return (
-                <Chip
-                  style={{ margin: "5px" }}
-                  key={tag + index}
-                  label={"#" + tag}
-                  color="primary"
-                />
-              );
-            })}
-          </div>
-        )}
-      </div>
-      <br></br>
-    </div>
-  );
 
   const changeGamemode = (event) => {
     event.preventDefault();
@@ -237,7 +123,7 @@ export default function BrowseQuizzes() {
             />
           ) : (
             multis?.allMultis?.map((quiz, index) => {
-              return <MultiCard key={quiz.id + index} data={quiz} />;
+              return <QuizCard key={quiz.id + index} data={quiz} />;
             })
           )
         ) : null}

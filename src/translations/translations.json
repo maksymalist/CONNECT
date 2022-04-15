@@ -291,7 +291,10 @@
       },
       "tags": {
         "classroom": "Classroom Plan 📚",
-        "creator": "Creator 🎨"
+        "creator": "Creator 🎨",
+        "student": "Student 🎓",
+        "teacher": "Teacher 🍏",
+        "collector": "Collector 📦"
       }
     },
     "quiz": {
@@ -737,7 +740,10 @@
       },
       "tags": {
         "classroom": "Forfait de Classe 📚",
-        "creator": "Créateur 🎨"
+        "creator": "Créateur 🎨",
+        "student": "Étudiant 🎓",
+        "teacher": "Enseignant 🍏",
+        "collector": "Collection 📦"
       }
     },
     "quiz": {
