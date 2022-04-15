@@ -1,8 +1,8 @@
-import { AccountCircle, Lock } from "@mui/icons-material";
+import { Lock } from "@mui/icons-material";
 import Translations from "../../translations/translations.json";
-import { Chip } from "@mui/material";
+import { Chip, Avatar, Typography } from "@mui/material";
 import { useState } from "react";
-import Placeholder from "../../img/quizCoverPlaceholder.svg";
+import Placeholder from "../../img/quizCoverPlaceholder.png";
 
 const QuizCard = ({ data, isPrivate }) => {
   const [userLanguage] = useState(
@@ -28,69 +28,55 @@ const QuizCard = ({ data, isPrivate }) => {
 
   return (
     <div
+      className="quiz__card"
       onClick={() => {
         handleQuizClick(data._id, data.__typename, isPrivate);
       }}
-      className="quizCard"
-      style={{ overflowY: "auto", overflowX: "hidden", maxWidth: "300px" }}
     >
-      {isPrivate ? (
-        <Lock
-          style={{
-            position: "absolute",
-            top: "10px",
-            right: "10px",
-            zIndex: "10",
-          }}
-          color="primary"
-        />
-      ) : null}
       <img
-        style={{ width: "100%", height: "300px" }}
         src={data.coverImg || Placeholder}
-        alt="cover-img"
+        className="quiz__card__image"
+        alt=""
       />
-      <h2>{data.name}</h2>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {data.userProfilePic == undefined ? (
-          <AccountCircle style={{ marginRight: "10px" }} color="primary" />
-        ) : (
+      <div className="quiz__card__overlay">
+        <div className="quiz__card__header">
+          <svg className="quiz__card__arc" xmlns="http://www.w3.org/2000/svg">
+            <path />
+          </svg>
           <img
-            width="25px"
-            height="25px"
-            src={data.userProfilePic}
-            alt={data.userProfilePic}
-            style={{
-              borderRadius: "100%",
-              marginRight: "10px",
-            }}
+            className="quiz__card__thumb"
+            src={
+              data.userProfilePic || (
+                <Avatar style={{ width: "50px", height: "50px" }}>
+                  {data.userName}
+                </Avatar>
+              )
+            }
+            alt=""
           />
-        )}
-        <h3>{`${Translations[userLanguage].profile.quizzes.by} ${data.userName}`}</h3>
-      </div>
-      {/* <Button variant='contained' size='small' color='primary' style={{margin:'10px'}}>Edit</Button> */}
-      <div>
-        {data.tags == undefined ? null : (
-          <div>
-            <br></br>
-            {data.tags.map((tag, index) => {
-              return (
-                <Chip
-                  style={{ margin: "5px" }}
-                  key={tag + index}
-                  label={"#" + tag}
-                  color="primary"
-                />
-              );
-            })}
+          <div className="quiz__card__header-text">
+            <h3 className="quiz__card__title">
+              {data.name} {isPrivate ? "🔒" : null}
+            </h3>
+            <span className="quiz__card__status">
+              {Translations[userLanguage].profile.quizzes.by} {data.userName}
+            </span>
           </div>
-        )}
+        </div>
+        <div class="card__description">
+          {data.tags == undefined
+            ? null
+            : data.tags.map((tag, index) => {
+                return (
+                  <Chip
+                    style={{ margin: "5px" }}
+                    key={tag + index}
+                    label={"#" + tag}
+                    color="primary"
+                  />
+                );
+              })}
+        </div>
       </div>
     </div>
   );
