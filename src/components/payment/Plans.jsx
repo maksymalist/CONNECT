@@ -5,7 +5,7 @@ import EntrepriseImg from "../../img/entreprise_sub.svg";
 
 import { toast } from "react-toastify";
 
-import { Button, Typography, Chip } from "@mui/material";
+import { Button, Typography, Chip, Divider } from "@mui/material";
 
 import { CheckRounded } from "@mui/icons-material";
 import Translations from "../../translations/translations.json";
@@ -109,20 +109,7 @@ export default function Plans() {
           >
             <b>{Translations[userLanguage].plans.starter.title}</b>
           </Typography>
-          <Typography variant="h5" color="#4F5251">
-            {Translations[userLanguage].plans.starter.sub}
-          </Typography>
-          <br></br>
-
-          <Typography variant="h5" color="#4F5251">
-            {Translations[userLanguage].plans.starter.at} <br></br>{" "}
-            <span style={{ color: "#6c63ff", fontSize: "1.8em" }}>
-              {Translations[userLanguage].plans.starter.price}
-            </span>
-            <br></br>
-            {Translations[userLanguage].plans.starter.permonth}
-          </Typography>
-          <br></br>
+          <Divider />
           <div
             style={{ display: "flex", justifyContent: "center", width: "100%" }}
           >
@@ -133,6 +120,18 @@ export default function Plans() {
               src={StarterImg}
             />
           </div>
+          <Typography variant="h5" color="#4F5251">
+            {Translations[userLanguage].plans.starter.at} <br></br>{" "}
+            <span style={{ color: "#6c63ff", fontSize: "1.8em" }}>
+              {Translations[userLanguage].plans.starter.price}
+            </span>
+            <br></br>
+            {Translations[userLanguage].plans.starter.permonth}
+          </Typography>
+          <br></br>
+          <Typography variant="sub1" color="#4F5251">
+            {Translations[userLanguage].plans.starter.sub}
+          </Typography>
           <br></br>
           <div
             style={{
@@ -183,18 +182,15 @@ export default function Plans() {
           <div id="plan2">
             <div
               style={{
-                width: "100%",
-                height: "80px",
+                width: "fit-content",
                 backgroundColor: "#1bb978",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
                 padding: "10px",
-                border: "2px solid black",
-                boxShadow: "5px 5px 0 #262626",
+                marginTop: "-50px",
+                borderRadius: "50px",
+                marginLeft: "55px",
               }}
             >
-              <Typography variant="h5" style={{ color: "white" }}>
+              <Typography variant="h6" style={{ color: "white" }}>
                 {Translations[userLanguage].plans.classroom.bestvalue}
               </Typography>
             </div>
@@ -204,21 +200,7 @@ export default function Plans() {
             >
               <b>{Translations[userLanguage].plans.classroom.title}</b>
             </Typography>
-
-            <Typography variant="h5" color="#4F5251">
-              {Translations[userLanguage].plans.classroom.sub}
-            </Typography>
-            <br></br>
-
-            <Typography variant="h5" color="#4F5251">
-              {Translations[userLanguage].plans.classroom.at} <br></br>{" "}
-              <span style={{ color: "#6c63ff", fontSize: "1.8em" }}>
-                {Translations[userLanguage].plans.classroom.price}
-              </span>
-              <br></br>
-              {Translations[userLanguage].plans.classroom.permonth}
-            </Typography>
-            <br></br>
+            <Divider />
             <div
               style={{
                 display: "flex",
@@ -233,6 +215,19 @@ export default function Plans() {
                 src={TeacherImg}
               />
             </div>
+            <Typography variant="h5" color="#4F5251">
+              {Translations[userLanguage].plans.classroom.at} <br></br>{" "}
+              <span style={{ color: "#6c63ff", fontSize: "1.8em" }}>
+                {Translations[userLanguage].plans.classroom.price}
+              </span>
+              <br></br>
+              {Translations[userLanguage].plans.classroom.permonth}
+            </Typography>
+            <br></br>
+            <Typography variant="sub1" color="#4F5251">
+              {Translations[userLanguage].plans.classroom.sub}
+            </Typography>
+            <br></br>
             <div
               style={{
                 display: "flex",
@@ -299,20 +294,7 @@ export default function Plans() {
           >
             <b>{Translations[userLanguage].plans.entreprise.title}</b>
           </Typography>
-          <Typography variant="h5" color="#4F5251">
-            {Translations[userLanguage].plans.entreprise.sub}
-          </Typography>
-          <br></br>
-
-          <Typography variant="h5" color="#4F5251">
-            {Translations[userLanguage].plans.entreprise.at} <br></br>{" "}
-            <span style={{ color: "#6c63ff", fontSize: "1.8em" }}>
-              {Translations[userLanguage].plans.entreprise.price}
-            </span>
-            <br></br>
-            {Translations[userLanguage].plans.entreprise.permonth}
-          </Typography>
-          <br></br>
+          <Divider />
           <div
             style={{ display: "flex", justifyContent: "center", width: "100%" }}
           >
@@ -323,6 +305,21 @@ export default function Plans() {
               src={EntrepriseImg}
             />
           </div>
+
+          <Typography variant="h5" color="#4F5251">
+            {Translations[userLanguage].plans.entreprise.at} <br></br>{" "}
+            <span style={{ color: "#6c63ff", fontSize: "1.8em" }}>
+              {Translations[userLanguage].plans.entreprise.price}
+            </span>
+            <br></br>
+            {Translations[userLanguage].plans.entreprise.permonth}
+          </Typography>
+          <br></br>
+
+          <Typography variant="sub1" color="#4F5251">
+            {Translations[userLanguage].plans.entreprise.sub}
+          </Typography>
+          <br></br>
           <div
             style={{
               display: "flex",

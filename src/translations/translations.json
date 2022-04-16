@@ -141,7 +141,7 @@
       "classroom": {
         "bestvalue": "✨BEST VALUE✨",
         "title": "Classroom",
-        "sub": "This plan is a must-have if you are a teacher or professor. It is the perfect solution for your classroom.",
+        "sub": "This plan is a must-have if you are a teacher or professor.",
         "at": "starting at",
         "price": "✨$10.00✨",
         "permonth": "per month",
@@ -608,8 +608,8 @@
           "title": "Avantages",
           "feature1": "accès a tous les modes de jeux 🔑",
           "feature2": "8 personnes dans vos salles 🚀",
-          "feature3": "créer des quizzes ✨",
-          "feature4": "créer des quizzes privés 🔒"
+          "feature3": "créer des quiz ✨",
+          "feature4": "créer des quiz privés 🔒"
         },
         "button": "Voir",
         "buttonsubscribed": "Selectionné ✓"
@@ -625,8 +625,8 @@
           "title": "Avantages",
           "feature1": "accès a tous les modes de jeux 🔑",
           "feature2": "100 personnes dans vos salles 🚀",
-          "feature3": "créer des quizzes ✨",
-          "feature4": "créer des quizzes privés 🔒",
+          "feature3": "créer des quiz ✨",
+          "feature4": "créer des quiz privés 🔒",
           "feature5": "créer des classes 🏫",
           "feature6": "analyse de joueurs 📈",
           "feature7": "créer des salles privées 🔐"
@@ -644,8 +644,8 @@
           "title": "Avantages",
           "feature1": "accès a tous les modes de jeux 🔑",
           "feature2": "300 personnes dans vos salles 🚀",
-          "feature3": "créer des quizzes ✨",
-          "feature4": "créer des quizzes privés 🔒",
+          "feature3": "créer des quiz ✨",
+          "feature4": "créer des quiz privés 🔒",
           "feature5": "créer des classes 🏫",
           "feature6": "analyse de joueurs 📈",
           "feature7": "créer des salles privées 🔒"
