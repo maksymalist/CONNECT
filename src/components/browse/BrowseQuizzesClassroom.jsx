@@ -77,6 +77,7 @@ export default function BrowseQuizzes({ classID, gamemode }) {
           width: "95%",
           display: "flex",
           justifyContent: "flex-start",
+          flexWrap: "wrap",
           backgroundColor: "white",
           alignItems: "center",
           border: "2px solid black",

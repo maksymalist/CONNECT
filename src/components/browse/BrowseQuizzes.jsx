@@ -174,6 +174,7 @@ export default function BrowseQuizzes() {
           style={{
             display: "flex",
             justifyContent: "flex-start",
+            flexWrap: "wrap",
             backgroundColor: "white",
             alignItems: "center",
             border: "2px solid black",
