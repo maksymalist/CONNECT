@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "../../style/style.css";
 import {
@@ -9,11 +9,19 @@ import {
   CircularProgress,
   Chip,
   Button,
+  Typography,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
+
+import TagIcon from "@mui/icons-material/Tag";
 
 import Translations from "../../translations/translations.json";
 
 import { useQuery, gql } from "@apollo/client";
+
+import banner from "../../img/banner.svg";
+import Wave from "../../img/WhiteBigStripe.svg";
 
 import QuizCard from "../cards/QuizCard";
 
@@ -53,6 +61,17 @@ export default function BrowseQuizzes() {
     localStorage.getItem("connectLanguage") || "english"
   );
 
+  const [currentTag, setCurrentTag] = useState("");
+  const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    document.getElementById("root").style.padding = "0px";
+
+    return () => {
+      document.getElementById("root").style.padding = "10px";
+    };
+  }, []);
+
   const { loading, error, data: quizzes } = useQuery(GET_QUIZZES);
   const { loading: multisLoading, data: multis } = useQuery(GET_MULTIS);
 
@@ -65,42 +84,184 @@ export default function BrowseQuizzes() {
     <>
       <div
         style={{
-          width: "100%",
+          width: "100vw",
+          height: "auto",
+          minHeight: "200px",
           display: "flex",
-          justifyContent: "flex-start",
-          backgroundColor: "white",
-          alignItems: "center",
-          border: "2px solid black",
-          boxShadow: "10px 10px 0 #262626",
+          justifyContent: "space-evenly",
+          flexWrap: "wrap",
+          marginTop: "60px",
+          backgroundColor: "#fff",
           padding: "10px",
         }}
       >
-        <h1 style={{ fontSize: "1.5rem", marginRight: "20px" }}>
-          {Translations[userLanguage].quizzes.bar.title}
-        </h1>
-        <FormControl variant="outlined">
-          <InputLabel id="demo-simple-select-outlined-label">
-            {Translations[userLanguage].quizzes.bar.gamemode.title}
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-outlined-label"
-            id="demo-simple-select-outlined"
-            value={gameMode}
-            onChange={changeGamemode}
-            label="GameMode"
-            style={{ width: "180px", height: "40px" }}
-            required
-          >
-            <MenuItem value="normal">
-              ⚡️ {Translations[userLanguage].quizzes.bar.gamemode.normal}
-            </MenuItem>
-            <MenuItem value="multi">
-              🥳 {Translations[userLanguage].quizzes.bar.gamemode.multi}
-            </MenuItem>
-          </Select>
-        </FormControl>
+        <div>
+          <div>
+            <Typography
+              variant="h2"
+              style={{
+                marginBottom: "20px",
+                marginTop: "50px",
+                fontWeight: "bold",
+                textAlign: "left",
+              }}
+            >
+              {Translations[userLanguage].quizzes.bar.discover}
+            </Typography>
+          </div>
+          <div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "left",
+                marginLeft: "10px",
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "center",
+              }}
+            >
+              <Chip
+                label={Translations[userLanguage].quizzes.bar.tags.history}
+                style={{ backgroundColor: "#FCC73E" }}
+                className="mui-chip"
+                color="primary"
+              />
+              <Chip
+                label={Translations[userLanguage].quizzes.bar.tags.geography}
+                style={{ backgroundColor: "#1594DB" }}
+                className="mui-chip"
+                color="primary"
+              />
+              <Chip
+                label={Translations[userLanguage].quizzes.bar.tags.science}
+                style={{ backgroundColor: "#1BB978" }}
+                className="mui-chip"
+                color="primary"
+              />
+              <Chip
+                label={Translations[userLanguage].quizzes.bar.tags.sports}
+                style={{ backgroundColor: "#DC014E" }}
+                className="mui-chip"
+                color="primary"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <img
+            src={banner}
+            alt="banner"
+            style={{
+              maxWidth: "400px",
+              maxHeight: "400px",
+              width: "100%",
+              height: "100%",
+            }}
+          />
+        </div>
       </div>
-      <div style={{ marginTop: "100px" }} id="feed">
+      <img
+        src={Wave}
+        alt="wave"
+        style={{
+          width: "100%",
+          height: "auto",
+        }}
+      />
+      <br></br>
+      <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+            backgroundColor: "white",
+            alignItems: "center",
+            border: "2px solid black",
+            boxShadow: "10px 10px 0 #262626",
+            padding: "20px",
+            width: "90%",
+          }}
+        >
+          <Typography variant="h4" style={{ marginRight: "20px" }}>
+            <b>{Translations[userLanguage].quizzes.bar.title}</b>
+          </Typography>
+          <FormControl variant="outlined">
+            <InputLabel id="demo-simple-select-outlined-label">
+              {Translations[userLanguage].quizzes.bar.gamemode.title}
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-outlined-label"
+              id="demo-simple-select-outlined"
+              value={gameMode}
+              onChange={changeGamemode}
+              label="GameMode"
+              style={{ width: "180px", height: "40px" }}
+              required
+            >
+              <MenuItem value="normal">
+                ⚡️ {Translations[userLanguage].quizzes.bar.gamemode.normal}
+              </MenuItem>
+              <MenuItem value="multi">
+                🥳 {Translations[userLanguage].quizzes.bar.gamemode.multi}
+              </MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl variant="outlined" style={{ marginLeft: "10px" }}>
+            <TextField
+              variant="outlined"
+              label={Translations[userLanguage].quizzes.bar.tagsearch}
+              size="small"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <TagIcon style={{ color: "c4c4c4", opacity: "90%" }} />
+                  </InputAdornment>
+                ),
+              }}
+              value={currentTag}
+              onChange={(e) => {
+                setCurrentTag(e.target.value);
+              }}
+            />
+          </FormControl>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              setTags([
+                ...tags,
+                {
+                  tag: currentTag,
+                  seed: Math.floor(Math.random() * (3 + 1)),
+                },
+              ]);
+              setCurrentTag("");
+            }}
+          >
+            {Translations[userLanguage].quizzes.bar.add}
+          </Button>
+        </div>
+      </div>
+      <div style={{ marginTop: "20px" }}>
+        {tags.map((tag, index) => (
+          <Chip
+            key={index}
+            label={tag.tag}
+            className="mui-chip"
+            onDelete={() => {
+              setTags(tags.filter((t) => t.tag !== tag.tag));
+            }}
+            color="primary"
+            style={{
+              backgroundColor: ["#FCC73E", "#1594DB", "#1BB978", "#DC014E"][
+                tag.seed
+              ],
+              color: "white",
+            }}
+          />
+        ))}
+      </div>
+      <div style={{ marginTop: "30px" }} id="feed">
         {gameMode === "normal" ? (
           loading ? (
             <CircularProgress
@@ -110,7 +271,7 @@ export default function BrowseQuizzes() {
             />
           ) : (
             quizzes?.allQuizzes?.map((quiz, index) => {
-              return <QuizCard key={quiz.id + index} data={quiz} />;
+              return <QuizCard key={quiz.id + index} data={quiz} tags={tags} />;
             })
           )
         ) : null}
@@ -123,7 +284,7 @@ export default function BrowseQuizzes() {
             />
           ) : (
             multis?.allMultis?.map((quiz, index) => {
-              return <QuizCard key={quiz.id + index} data={quiz} />;
+              return <QuizCard key={quiz.id + index} data={quiz} tags={tags} />;
             })
           )
         ) : null}

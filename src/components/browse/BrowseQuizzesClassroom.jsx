@@ -8,9 +8,12 @@ import {
   Select,
   CircularProgress,
   Chip,
+  TextField,
+  InputAdornment,
+  Button,
 } from "@mui/material";
 
-import { AccountCircle } from "@mui/icons-material";
+import TagIcon from "@mui/icons-material/Tag";
 
 import Placeholder from "../../img/quizCoverPlaceholder.svg";
 
@@ -64,11 +67,14 @@ export default function BrowseQuizzes({ classID, gamemode }) {
     setGameMode(event.target.value);
   };
 
+  const [currentTag, setCurrentTag] = useState("");
+  const [tags, setTags] = useState([]);
+
   return (
     <>
       <div
         style={{
-          width: "100%",
+          width: "95%",
           display: "flex",
           justifyContent: "flex-start",
           backgroundColor: "white",
@@ -102,8 +108,61 @@ export default function BrowseQuizzes({ classID, gamemode }) {
             </MenuItem>
           </Select>
         </FormControl>
+        <FormControl variant="outlined" style={{ marginLeft: "10px" }}>
+          <TextField
+            variant="outlined"
+            label="Tag Search"
+            size="small"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <TagIcon style={{ color: "c4c4c4", opacity: "90%" }} />
+                </InputAdornment>
+              ),
+            }}
+            value={currentTag}
+            onChange={(e) => {
+              setCurrentTag(e.target.value);
+            }}
+          />
+        </FormControl>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            setTags([
+              ...tags,
+              {
+                tag: currentTag,
+                seed: Math.floor(Math.random() * (3 + 1)),
+              },
+            ]);
+            setCurrentTag("");
+          }}
+        >
+          {Translations[userLanguage].quizzes.bar.add}
+        </Button>
       </div>
-      <div style={{ marginTop: "100px" }} id="feed">
+      <div style={{ marginTop: "20px" }}>
+        {tags.map((tag, index) => (
+          <Chip
+            key={index}
+            label={tag.tag}
+            className="mui-chip"
+            onDelete={() => {
+              setTags(tags.filter((t) => t.tag !== tag.tag));
+            }}
+            color="primary"
+            style={{
+              backgroundColor: ["#FCC73E", "#1594DB", "#1BB978", "#DC014E"][
+                tag.seed
+              ],
+              color: "white",
+            }}
+          />
+        ))}
+      </div>
+      <div style={{ marginTop: "30px" }} id="feed">
         {gameMode === "normal" ? (
           loading ? (
             <CircularProgress
@@ -113,7 +172,7 @@ export default function BrowseQuizzes({ classID, gamemode }) {
             />
           ) : (
             quizzes.allQuizzes.map((quiz, index) => {
-              return <QuizCard key={quiz.id + index} data={quiz} />;
+              return <QuizCard key={quiz.id + index} data={quiz} tags={tags} />;
             })
           )
         ) : null}
@@ -126,7 +185,7 @@ export default function BrowseQuizzes({ classID, gamemode }) {
             />
           ) : (
             multis.allMultis.map((quiz, index) => {
-              return <QuizCard key={quiz.id + index} data={quiz} />;
+              return <QuizCard key={quiz.id + index} data={quiz} tags={tags} />;
             })
           )
         ) : null}

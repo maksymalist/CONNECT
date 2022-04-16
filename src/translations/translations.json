@@ -1,10 +1,10 @@
 {
   "english": {
     "nav": {
-      "play": "Play",
-      "quizzes": "Quizzes",
-      "plans": "Plans",
-      "login": "Login",
+      "play": "Play 🎉",
+      "quizzes": "Quizzes ✨",
+      "plans": "Plans 💰",
+      "login": "Login 🔐",
       "add": {
         "normal": "New Quiz",
         "multi": "New Multi"
@@ -17,10 +17,10 @@
         "logout": "Logout"
       },
       "dropdown": {
-        "play": "PLAY",
-        "quizzes": "QUIZZES",
-        "plans": "PLANS",
-        "login": "LOGIN"
+        "play": "Play 🎉",
+        "quizzes": "Quizzes ✨",
+        "plans": "Plans 💰",
+        "login": "Login 🔐"
       }
     },
     "home": {
@@ -101,12 +101,21 @@
     },
     "quizzes": {
       "bar": {
-        "title": "Explore Content 🧭",
+        "title": "Filter",
         "gamemode": {
           "title": "Game Mode",
           "normal": "Normal",
           "multi": "Multi"
-        }
+        },
+        "add": "Add 🚀",
+        "discover": "✨Discover✨",
+        "tags": {
+          "history": "#History",
+          "geography": "#Geography",
+          "science": "#Science",
+          "sports": "#Sports"
+        },
+        "tagsearch": "Tag search 🔎"
       },
       "by": "by"
     },
@@ -450,10 +459,10 @@
   },
   "french": {
     "nav": {
-      "play": "Jouer",
-      "quizzes": "Quiz",
-      "plans": "Forfaits",
-      "login": "Connexion",
+      "play": "Jouer 🎉",
+      "quizzes": "Quiz ✨",
+      "plans": "Forfaits 💰",
+      "login": "Connexion 🔐",
       "add": {
         "normal": "Créer Quiz",
         "multi": "Créer Multi"
@@ -466,10 +475,10 @@
         "logout": "Déconnexion"
       },
       "dropdown": {
-        "play": "JOUER",
-        "quizzes": "QUIZ",
-        "plans": "Forfait",
-        "login": "Connexion"
+        "play": "Jouer 🎉",
+        "quizzes": "Quiz ✨",
+        "plans": "Forfaits 💰",
+        "login": "Connexion 🔐"
       }
     },
     "home": {
@@ -550,12 +559,21 @@
     },
     "quizzes": {
       "bar": {
-        "title": "Explorer Contenu 🧭",
+        "title": "Filtre",
         "gamemode": {
           "title": "Mode de jeu",
           "normal": "Normal",
           "multi": "Multi"
-        }
+        },
+        "add": "Ajouter 🚀",
+        "discover": "✨Découvrez✨",
+        "tags": {
+          "history": "#Histoire",
+          "geography": "#Geographie",
+          "science": "#Science",
+          "sports": "#Sports"
+        },
+        "tagsearch": "Recherche par mot-clefs 🔎"
       },
       "by": "par"
     },

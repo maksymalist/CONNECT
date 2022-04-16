@@ -119,7 +119,7 @@ function Nav({ isLoggedIn, customerId }) {
   };
 
   const selectedColors = {
-    backgroundColor: "#3f51b5",
+    backgroundColor: "#6c63ff",
     color: "white",
     fontWeight: "bold",
     borderRadius: "5px",

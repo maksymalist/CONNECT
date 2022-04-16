@@ -246,6 +246,7 @@ h1 {
   overflow: hidden;
   text-decoration: none;
   margin: 15px;
+  background-color: white;
 }
 
 .quiz__card__image {
@@ -259,7 +260,7 @@ h1 {
   left: 0;
   right: 0;
   z-index: 1;
-  border-radius: calc(40 * 1px) 0 0 0 !important;
+  border-radius: 25px 25px 0 0 !important;
   background-color: white;
   transform: translateY(100%);
   transition: 0.2s ease-in-out;
@@ -275,10 +276,11 @@ h1 {
   align-items: center;
   gap: 2em;
   padding: 2em;
-  border-radius: calc(40 * 1px) 0 0 0 !important;
+  border-radius: 25px 25px 0 0 !important;
   background-color: #ffffff;
   transform: translateY(-100%);
   transition: 0.2s ease-in-out;
+  border-top: 2px solid black;
 }
 
 .quiz__card__header-text {
