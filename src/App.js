@@ -210,7 +210,7 @@ function App() {
           <Route path="/practice/multi/:gameid" component={MultiPractice} />
           <Route path="/newquiz" component={NewQuiz} />
           <Route path="/new-multi-quiz" component={NewMultiQuiz} />
-          <Route path="/browsequizzes" component={BrowseQuizzes} />
+          <Route path="/quizzes" component={BrowseQuizzes} />
           <Route path="/roomleave/:type" component={AfterRoomLeave} />
           <Route path="/plans" component={Plans} />
           <Route path="/subscription/:plan" component={StripeSubscriptions} />

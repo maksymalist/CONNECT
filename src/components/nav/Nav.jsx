@@ -369,14 +369,14 @@ function Nav({ isLoggedIn, customerId }) {
           </button>
           <div className="dropdown-content">
             <a href="/play">{Translations[userLanguage].nav.dropdown.play}</a>
-            <a href="/browsequizzes">
+            <a href="/quizzes">
               {Translations[userLanguage].nav.dropdown.quizzes}
             </a>
             <a href="/plans">{Translations[userLanguage].nav.dropdown.plans}</a>
             <a href="/login">{Translations[userLanguage].nav.dropdown.login}</a>
           </div>
         </div>
-        <Link style={navStyle} to="/browsequizzes/normal">
+        <Link style={navStyle} to="/quizzes">
           <li className="nav-links lileft">
             {Translations[userLanguage].nav.quizzes}
           </li>

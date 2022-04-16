@@ -90,7 +90,7 @@ export default function BrowseQuizzes() {
           display: "flex",
           justifyContent: "space-evenly",
           flexWrap: "wrap",
-          marginTop: "60px",
+          marginTop: "50px",
           backgroundColor: "#fff",
           padding: "10px",
         }}
