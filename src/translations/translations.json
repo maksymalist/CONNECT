@@ -120,43 +120,59 @@
       "by": "by"
     },
     "plans": {
-      "month": "month",
+      "title1": "Enhance 🚀",
+      "title2": "CONNECT! with plans!!!",
       "starter": {
         "title": "Starter",
-        "price": "✨ Free ✨",
+        "sub": "This is the most basic version of CONNECT! available for free.",
+        "at": "starting at",
+        "price": "✨Free✨",
+        "permonth": "per month",
         "features": {
           "title": "Features",
-          "feature1": "Acces to The Multiplayer Card Games",
-          "feature2": "8 People in Your Rooms",
-          "feature3": "You Can Create Quizzes"
+          "feature1": "access to all gamemodes 🔑",
+          "feature2": "8 people in your rooms 🚀",
+          "feature3": "create quizzes ✨",
+          "feature4": "create private quizzes 🔒"
         },
         "button": "View",
         "buttonsubscribed": "Selected ✓"
       },
       "classroom": {
+        "bestvalue": "✨BEST VALUE✨",
         "title": "Classroom",
-        "price": "$10.00 /",
+        "sub": "This plan is a must-have if you are a teacher or professor. It is the perfect solution for your classroom.",
+        "at": "starting at",
+        "price": "✨$10.00✨",
+        "permonth": "per month",
         "features": {
           "title": "Features",
-          "feature1": "90 People in Your Rooms",
-          "feature2": "Access to player analytics",
-          "feature3": "You can create classes",
-          "feature4": "Google Classroom integration",
-          "feature5": "Microsoft Teams integration"
+          "feature1": "access to all gamemodes 🔑",
+          "feature2": "100 people in your rooms 🚀",
+          "feature3": "create quizzes ✨",
+          "feature4": "create private quizzes 🔒",
+          "feature5": "create classes 🏫",
+          "feature6": "player analytics 📈",
+          "feature7": "host private rooms 🔐"
         },
         "button": "Select",
         "buttonsubscribed": "Selected ✓"
       },
       "entreprise": {
         "title": "Enterprise",
-        "price": "$100.00 /",
+        "sub": "This plan is best suited for companies and organizations.",
+        "at": "starting at",
+        "price": "✨$100.00✨",
+        "permonth": "per month",
         "features": {
           "title": "Features",
-          "feature1": "200 People in Your Rooms",
-          "feature2": "Access to player analytics",
-          "feature3": "You can create classes",
-          "feature4": "Google Classroom integration",
-          "feature5": "Microsoft Teams integration"
+          "feature1": "access to all gamemodes 🔑",
+          "feature2": "300 People in your rooms 🚀",
+          "feature3": "create quizzes ✨",
+          "feature4": "create private quizzes 🔒",
+          "feature5": "create classes 🏫",
+          "feature6": "player analytics 📈",
+          "feature7": "host private rooms 🔐"
         },
         "button": "Select",
         "buttonsubscribed": "Selected ✓"
@@ -401,7 +417,8 @@
       "nametaken": "That name is already taken!",
       "sessionexpired": "Session Expired! Please open a new tab!",
       "emotecooldown": "✨ emotes have a 3s cooldown ✨",
-      "notenoughplayers": "Not enough players to start the game!"
+      "notenoughplayers": "Not enough players to start the game!",
+      "betterplan": "Your plan has better features 🙈 !!!"
     },
     "paymentform": {
       "title": "Payment Form",
@@ -578,43 +595,60 @@
       "by": "par"
     },
     "plans": {
+      "title1": "Améliorez 🚀",
+      "title2": "CONNECT! avec nos forfaits!!!",
       "month": "mois",
       "starter": {
-        "title": "Forfait Débutant",
+        "title": "Débutant",
+        "sub": "Ceci est la version la plus basique de CONNECT! disponible gratuitement.",
+        "at": "à partir de",
         "price": "✨ Gratuit ✨",
+        "permonth": "par mois",
         "features": {
           "title": "Avantages",
-          "feature1": "Accès aux jeux de cartes multijoueurs",
-          "feature2": "40 personnes dans vos salles",
-          "feature3": "Vous pouvez créer des quiz"
+          "feature1": "accès a tous les modes de jeux 🔑",
+          "feature2": "8 personnes dans vos salles 🚀",
+          "feature3": "créer des quizzes ✨",
+          "feature4": "créer des quizzes privés 🔒"
         },
         "button": "Voir",
         "buttonsubscribed": "Selectionné ✓"
       },
       "classroom": {
-        "title": "Forfait de classe",
-        "price": "$10,00 /",
+        "bestvalue": "✨Meilleur valeur✨",
+        "title": "Classe",
+        "sub": "Ce forfait est indispensable si vous êtes enseignant ou professeur. C'est la solution parfaite pour votre classe.",
+        "at": "à partir de",
+        "price": "✨$10.00✨",
+        "permonth": "par mois",
         "features": {
           "title": "Avantages",
-          "feature1": "90 personnes dans vos salles",
-          "feature2": "Accès aux analyses de joueurs",
-          "feature3": "Vous pouvez créer des classes",
-          "feature4": "Intégration de Google Classroom",
-          "feature5": "Intégration de Microsoft Teams"
+          "feature1": "accès a tous les modes de jeux 🔑",
+          "feature2": "100 personnes dans vos salles 🚀",
+          "feature3": "créer des quizzes ✨",
+          "feature4": "créer des quizzes privés 🔒",
+          "feature5": "créer des classes 🏫",
+          "feature6": "analyse de joueurs 📈",
+          "feature7": "créer des salles privées 🔐"
         },
         "button": "Sélectionner",
         "buttonsubscribed": "Selectionné ✓"
       },
       "entreprise": {
-        "title": "Forfait d'Enterprise",
-        "price": "$100,00 /",
+        "title": "Entreprise",
+        "sub": "Ce forfait est le mieux adapté pour les entreprises et les organisations.",
+        "at": "à partir de",
+        "price": "✨$100.00✨",
+        "permonth": "par mois",
         "features": {
           "title": "Avantages",
-          "feature1": "200 personnes dans vos salles",
-          "feature2": "Accès aux analyses de joueurs",
-          "feature3": "Vous pouvez créer des classes",
-          "feature4": "Intégration de Google Classroom",
-          "feature5": "Intégration de Microsoft Teams"
+          "feature1": "accès a tous les modes de jeux 🔑",
+          "feature2": "300 personnes dans vos salles 🚀",
+          "feature3": "créer des quizzes ✨",
+          "feature4": "créer des quizzes privés 🔒",
+          "feature5": "créer des classes 🏫",
+          "feature6": "analyse de joueurs 📈",
+          "feature7": "créer des salles privées 🔒"
         },
         "button": "Sélectionner",
         "buttonsubscribed": "Selectionné ✓"
@@ -859,7 +893,8 @@
       "nametaken": "Ce nom est déjà pris",
       "sessionexpired": "Session expirée! Veuillez ouvrir un nouvel onglet!",
       "emotecooldown": "✨ les emotes ont un temps de recharge de 3s ✨",
-      "notenoughplayers": "Il n'y a pas assez de joueurs pour commencer le jeu!!"
+      "notenoughplayers": "Il n'y a pas assez de joueurs pour commencer le jeu!!",
+      "betterplan": "Votre forfait a des meilleurs avantages 🙈 !!!"
     },
     "paymentform": {
       "title": "Formulaire de paiement",

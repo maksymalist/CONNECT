@@ -62,7 +62,8 @@ li {
 }
 .features {
   margin: 10px !important;
-  text-align: center;
+  text-align: left;
+  color: "#4F5251";
 }
 a {
   padding: 10px;
@@ -406,41 +407,48 @@ h1 {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: flex-end;
 }
+
 #plan1 {
   background-color: white;
   box-shadow: 10px 10px 0 #262626;
   border: 2px solid black;
-  padding: 15px;
+  padding: 25px;
   width: 100%;
   margin: 50px;
   max-width: 420px;
-}
-#plan1:hover,
-#plan2:hover,
-#plan3:hover {
-  cursor: pointer;
-  transition: all 0.2s ease;
-  transform: scale(1.05);
+  text-align: left;
+  max-height: 880px;
 }
 
 #plan2 {
   background-color: white;
   box-shadow: 10px 10px 0 #262626;
   border: 2px solid black;
-  padding: 15px;
+  padding: 25px;
   width: 100%;
   margin: 50px;
   max-width: 420px;
+  text-align: left;
 }
 #plan3 {
   background-color: white;
   box-shadow: 10px 10px 0 #262626;
   border: 2px solid black;
-  padding: 15px;
+  padding: 25px;
   width: 100%;
   margin: 50px;
   max-width: 420px;
+  text-align: left;
+}
+
+#plan1:hover,
+#plan2:hover,
+#plan3:hover {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  transform: scale(1.05);
 }
 /*
 .sub-button{
