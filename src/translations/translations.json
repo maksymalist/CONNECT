@@ -120,8 +120,9 @@
       "by": "by"
     },
     "plans": {
-      "title1": "Enhance 🚀",
-      "title2": "CONNECT! with plans!!!",
+      "title1": "Ready to take",
+      "title2": "CONNECT!",
+      "title3": "to the next level? 🚀",
       "starter": {
         "title": "Starter",
         "sub": "This is the most basic version of CONNECT! available for free.",
@@ -595,8 +596,9 @@
       "by": "par"
     },
     "plans": {
-      "title1": "Améliorez 🚀",
-      "title2": "CONNECT! avec nos forfaits!!!",
+      "title1": "Êtes-vous prêt à passer",
+      "title2": "CONNECT!",
+      "title3": "au niveau supérieur? 🚀",
       "month": "mois",
       "starter": {
         "title": "Débutant",

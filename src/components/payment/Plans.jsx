@@ -51,6 +51,7 @@ export default function Plans() {
           backgroundColor: "white",
           padding: "10px",
           justifyContent: "space-evenly",
+          flexWrap: "wrap",
         }}
       >
         <div>
@@ -65,17 +66,17 @@ export default function Plans() {
                 maxWidth: "600px",
               }}
             >
-              <Typography
-                variant="h3"
+              {Translations[userLanguage].plans.title1}{" "}
+              <b
                 style={{
                   fontWeight: "bold",
                   color: "#6c63ff",
                   marginBottom: "15px",
                 }}
               >
-                {Translations[userLanguage].plans.title1}
-              </Typography>
-              {Translations[userLanguage].plans.title2}
+                {Translations[userLanguage].plans.title2}
+              </b>{" "}
+              {Translations[userLanguage].plans.title3}
             </Typography>
           </div>
           <div></div>
@@ -106,6 +107,7 @@ export default function Plans() {
           <Typography
             variant="h3"
             style={{ marginTop: "20px", marginBottom: "20px" }}
+            color="#6c63ff"
           >
             <b>{Translations[userLanguage].plans.starter.title}</b>
           </Typography>
@@ -183,7 +185,7 @@ export default function Plans() {
             <div
               style={{
                 width: "fit-content",
-                backgroundColor: "#1bb978",
+                backgroundColor: "#1BB978",
                 padding: "10px",
                 marginTop: "-50px",
                 borderRadius: "50px",
@@ -197,6 +199,7 @@ export default function Plans() {
             <Typography
               variant="h3"
               style={{ marginTop: "20px", marginBottom: "20px" }}
+              color="#6c63ff"
             >
               <b>{Translations[userLanguage].plans.classroom.title}</b>
             </Typography>
@@ -291,6 +294,7 @@ export default function Plans() {
           <Typography
             variant="h3"
             style={{ marginTop: "20px", marginBottom: "20px" }}
+            color="#6c63ff"
           >
             <b>{Translations[userLanguage].plans.entreprise.title}</b>
           </Typography>
