@@ -422,7 +422,7 @@
       "betterplan": "Your plan has better features 🙈 !!!"
     },
     "paymentform": {
-      "title": "Payment Form",
+      "title": "Subscribe to",
       "plan": "Classroom Plan",
       "price": "$10 monthly",
       "button": "Apply",
@@ -899,7 +899,7 @@
       "betterplan": "Votre forfait a des meilleurs avantages 🙈 !!!"
     },
     "paymentform": {
-      "title": "Formulaire de paiement",
+      "title": "Abonnement au",
       "plan": "Forfait de classe",
       "price": "10 $ par mois",
       "button": "Appliquer",

@@ -3,8 +3,6 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 // MUI Components
 import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import {
   TextField,
   InputAdornment,
@@ -12,18 +10,18 @@ import {
   Divider,
   Backdrop,
   Paper,
+  useMediaQuery,
 } from "@mui/material";
 // stripe
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 // Util imports
-import { makeStyles } from "@mui/material/styles";
 import CircularProgress from "@mui/material/CircularProgress";
 // Custom Components
-import CardInput from "./CardInput";
 import ThanksForPurchasingAnimation from "./ThanksForPurchasingAnimation";
 //toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Spline from "@splinetool/react-spline";
 
 //material-icons
 import { Redeem, AlternateEmail } from "@mui/icons-material";
@@ -48,6 +46,24 @@ const UPDATE_USER_SUBSCRIPTION = gql`
   }
 `;
 
+const CARD_ELEMENT_OPTIONS = {
+  style: {
+    base: {
+      color: "#32325d",
+      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+      fontSmoothing: "antialiased",
+      fontSize: "16px",
+      "::placeholder": {
+        color: "#aab7c4",
+      },
+    },
+    invalid: {
+      color: "#fa755a",
+      iconColor: "#fa755a",
+    },
+  },
+};
+
 function HomePage(props) {
   const user = getUser();
   const plan = useSelector((state) => state.plan);
@@ -67,6 +83,7 @@ function HomePage(props) {
   const [price, setPrice] = useState(10);
 
   const [comfirmPurchase, setComfirmPurchase] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const [open, setOpen] = useState(false);
 
@@ -81,24 +98,29 @@ function HomePage(props) {
   const stripe = useStripe();
   const elements = useElements();
 
+  const smallScreen = useMediaQuery("(max-width:980px)");
+
   useEffect(() => {
     setTotal(price - discount);
     console.log(total);
     if (discount >= price) {
       setTotal(0);
     }
+    document.getElementById("root").style.padding = "0px";
+
     return () => {
       setTotal(0);
+      document.getElementById("root").style.padding = "10px";
     };
   }, [discount]);
 
-  // useEffect(() => {
-  //   if (plan === "Starter") return;
-  //   if (plan === "Classroom") {
-  //     window.location.href = "/plans";
-  //     toast.warn(Translations[userLanguage].alreadyhaveplan);
-  //   }
-  // }, [plan]);
+  useEffect(() => {
+    if (plan === "Starter") return;
+    if (plan === "Classroom") {
+      window.location.href = "/plans";
+      toast.warn(Translations[userLanguage].alreadyhaveplan);
+    }
+  }, [plan]);
 
   const handleUpdateUserSubscription = async (subscriptionDetails) => {
     const subscriptionObj = {
@@ -142,7 +164,7 @@ function HomePage(props) {
       // The payment has been processed!
       if (result.paymentIntent.status === "succeeded") {
         console.log("Money is in the bank!");
-        renderAnimation();
+        setSuccess(true);
         // Show a success message to your customer
         // There's a risk of the customer closing the window before callback
         // execution. Set up a webhook or plugin to listen for the
@@ -175,7 +197,6 @@ function HomePage(props) {
       });
 
       if (result.error) {
-        console.log(result.error.message);
         toast.error(result.error.message, "Try Again");
         setSpinner(false);
       } else {
@@ -187,36 +208,16 @@ function HomePage(props) {
           // eslint-disable-next-line camelcase
           const { client_secret, status, customer_obj, subscription_obj } =
             res.data;
-          console.log(JSON.parse(customer_obj).id);
-          console.log(JSON.parse(subscription_obj));
 
-          if (status === "requires_action") {
-            stripe.confirmCardPayment(client_secret).then(function (result) {
-              if (result.error) {
-                console.log("There was an issue!");
-                console.log(result.error);
-                toast.error(result.error);
-                setSpinner(false);
-                // Display error message in your UI.
-                // The card was declined (i.e. insufficient funds, card has expired, etc)
-              } else {
-                console.log(Translations[userLanguage].alerts.wowsoeasy);
-                console.log(res.data);
-                toast.success(Translations[userLanguage].alerts.wowsoeasy);
-                renderAnimation();
-                setSpinner(false);
-                console.log(result);
-                handleUpdateUserSubscription(JSON.parse(subscription_obj));
-                // Show a success message to your customer
-              }
-            });
-          } else {
-            console.log(Translations[userLanguage].alerts.wowsoeasy);
-            console.log(res.data);
-            toast.success(Translations[userLanguage].alerts.wowsoeasy);
-            renderAnimation();
+          if (status !== "succeeded") {
+            toast.error(
+              `${Translations[userLanguage].alerts.purchasefailed} Status ${status}`
+            );
             setSpinner(false);
-            console.log(result);
+          } else {
+            toast.success(Translations[userLanguage].alerts.wowsoeasy);
+            setSuccess(true);
+            setSpinner(false);
             handleUpdateUserSubscription(JSON.parse(subscription_obj));
             // No additional information was needed
             // Show a success message to your customer
@@ -231,36 +232,15 @@ function HomePage(props) {
           // eslint-disable-next-line camelcase
           const { client_secret, status, customer_obj, subscription_obj } =
             res.data;
-          console.log(JSON.parse(customer_obj).id);
-          console.log(JSON.parse(subscription_obj));
-
-          if (status === "requires_action") {
-            stripe.confirmCardPayment(client_secret).then(function (result) {
-              if (result.error) {
-                console.log("There was an issue!");
-                console.log(result.error);
-                toast.error(result.error);
-                setSpinner(false);
-                // Display error message in your UI.
-                // The card was declined (i.e. insufficient funds, card has expired, etc)
-              } else {
-                console.log(Translations[userLanguage].alerts.wowsoeasy);
-                console.log(res.data);
-                toast.success(Translations[userLanguage].alerts.wowsoeasy);
-                renderAnimation();
-                setSpinner(false);
-                console.log(result);
-                handleUpdateUserSubscription(JSON.parse(subscription_obj));
-                // Show a success message to your customer
-              }
-            });
-          } else {
-            console.log(Translations[userLanguage].alerts.wowsoeasy);
-            console.log(res.data);
-            toast.success(Translations[userLanguage].alerts.wowsoeasy);
-            renderAnimation();
+          if (status !== "succeeded") {
+            toast.error(
+              `${Translations[userLanguage].alerts.purchasefailed} Status ${status}`
+            );
             setSpinner(false);
-            console.log(result);
+          } else {
+            toast.success(Translations[userLanguage].alerts.wowsoeasy);
+            setSuccess(true);
+            setSpinner(false);
             handleUpdateUserSubscription(JSON.parse(subscription_obj));
             // No additional information was needed
             // Show a success message to your customer
@@ -268,14 +248,6 @@ function HomePage(props) {
         }
       }
     }
-  };
-
-  const renderAnimation = () => {
-    ReactDOM.render(
-      <ThanksForPurchasingAnimation />,
-      document.getElementById("paymentFormCard")
-    );
-    setSpinner(false);
   };
 
   const handleApplyCoupon = async () => {
@@ -326,8 +298,8 @@ function HomePage(props) {
     setOpen(!open);
   };
 
-  const handleComfirmPurchase = (childData) => {
-    if (childData === true) {
+  const handleComfirmPurchase = (email) => {
+    if (email !== null) {
       setComfirmPurchase(true);
       handleSubmitSub();
     } else {
@@ -416,175 +388,242 @@ function HomePage(props) {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Card
-        id="paymentFormCard"
-        style={{
-          padding: "30px",
-          border: "2px solid black",
-          boxShadow: "10px 10px 0px #262626",
-          borderRadius: "0px",
-          maxWidth: "900px",
-          display: "flex",
-          flexWrap: "wrap",
-          marginTop: "50px",
-        }}
-      >
-        <CardContent>
-          <Typography variant="h4" component="h4">
-            {Translations[userLanguage].paymentform.title}
-          </Typography>
-          <br></br>
-          <Typography variant="h5">
-            {props.match.params.plan === "classroom"
-              ? Translations[userLanguage].paymentform.plan
-              : "Premium Plan"}
-          </Typography>
-          <br></br>
-          <Divider />
-          <br></br>
-          <TextField
-            label="Email"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AlternateEmail style={{ color: "c4c4c4", opacity: "90%" }} />
-                </InputAdornment>
-              ),
-            }}
-            id="outlined-email-input"
-            helperText={`Email you'll recive updates and receipts on`}
-            margin="normal"
-            variant="outlined"
-            type="email"
-            required
-            onChange={(e) => setEmail(e.target.value)}
-            fullWidth
-          />
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <TextField
-              label="Coupon Code *"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Redeem style={{ color: "c4c4c4", opacity: "90%" }} />
-                  </InputAdornment>
-                ),
-              }}
-              id="outlined-coupon-input"
-              helperText={currentDiscount}
-              margin="normal"
-              variant="outlined"
-              size={"small"}
-              onChange={(e) => setCoupon(e.target.value)}
-            />
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginTop: "-12px", marginLeft: "5px" }}
-              onClick={() => handleApplyCoupon()}
-            >
-              {Translations[userLanguage].paymentform.button}
-            </Button>
-          </div>
-          <CardInput />
-          <div style={{ height: "40px" }} />
-          <div>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              onClick={() => {
-                handleToggle();
-              }}
-            >
-              {spinner ? (
-                <CircularProgress
-                  style={{
-                    marginLeft: "32px",
-                    marginRight: "32px",
-                    color: "white",
-                  }}
-                  size={20}
-                />
-              ) : (
-                Translations[userLanguage].paymentform.button2
-              )}
-            </Button>
-          </div>
-        </CardContent>
-        <CardContent>
-          <div>
-            <Typography variant="h4" component="h4">
-              {Translations[userLanguage].plans.classroom.price}
-              <span style={{ fontSize: "15px" }}>
-                {Translations[userLanguage].plans.month}
-              </span>
-            </Typography>
-            <br></br>
-            <Typography variant="h5">
-              {Translations[userLanguage].plans.classroom.features.title}
-            </Typography>
-            <br></br>
-            <Divider />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                textAlign: "start",
-              }}
-            >
-              <Typography variant="subtitle1" className="features">
-                {"✅ "}
-                {Translations[userLanguage].plans.classroom.features.feature1}
-              </Typography>
-              <Typography variant="subtitle1" className="features">
-                {"✅ "}
-                {Translations[userLanguage].plans.classroom.features.feature2}
-              </Typography>
-              <Typography variant="subtitle1" className="features">
-                {"✅ "}
-                {Translations[userLanguage].plans.classroom.features.feature3}
-              </Typography>
-              <Typography variant="subtitle1" className="features">
-                {"✅ "}
-                {Translations[userLanguage].plans.classroom.features.feature4}
-              </Typography>
-              <Typography variant="subtitle1" className="features">
-                {"✅ "}
-                {Translations[userLanguage].plans.classroom.features.feature5}
-              </Typography>
-            </div>
-            <img
-              alt="classroom-img"
-              height="220px"
-              width="220px"
-              src={TeacherImg}
-            ></img>
-          </div>
-        </CardContent>
-        <Backdrop
-          style={{ zIndex: "1000" }}
-          open={open}
-          onClick={() => {
-            handleClose();
+    <>
+      {success ? (
+        <ThanksForPurchasingAnimation />
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <ComfirmPurchase
-            discount={discount}
-            discountName={discountName}
-            price={price}
-            callback={handleComfirmPurchase}
-          />
-        </Backdrop>
-      </Card>
-    </div>
+          <div
+            id="payment__form__wrapper"
+            style={
+              smallScreen
+                ? {
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                  }
+                : {
+                    width: "100%",
+                    display: "flex",
+                    flexWrap: "wrap",
+                  }
+            }
+          >
+            <div
+              style={{
+                backgroundColor: "#636CFF",
+                flex: "40",
+                height: "auto",
+                padding: "50px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                overflowY: "auto",
+              }}
+            >
+              <div>
+                <Typography
+                  variant="h5"
+                  color="white"
+                  style={{ textAlign: "left" }}
+                >
+                  {Translations[userLanguage].plans.classroom.at} <br></br>{" "}
+                  <span style={{ fontSize: "1.8em" }}>
+                    {Translations[userLanguage].plans.classroom.price}
+                  </span>
+                  <br></br>
+                  {Translations[userLanguage].plans.classroom.permonth}
+                </Typography>
+                <br></br>
+                <Divider />
+                <br></br>
+                <img
+                  alt="classroom-img"
+                  height="350px"
+                  width="350px"
+                  src={TeacherImg}
+                ></img>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    textAlign: "start",
+                    color: "white",
+                  }}
+                >
+                  <Typography variant="subtitle1" className="features">
+                    {"✅ "}
+                    {
+                      Translations[userLanguage].plans.classroom.features
+                        .feature1
+                    }
+                  </Typography>
+                  <Typography variant="subtitle1" className="features">
+                    {"✅ "}
+                    {
+                      Translations[userLanguage].plans.classroom.features
+                        .feature2
+                    }
+                  </Typography>
+                  <Typography variant="subtitle1" className="features">
+                    {"✅ "}
+                    {
+                      Translations[userLanguage].plans.classroom.features
+                        .feature3
+                    }
+                  </Typography>
+                  <Typography variant="subtitle1" className="features">
+                    {"✅ "}
+                    {
+                      Translations[userLanguage].plans.classroom.features
+                        .feature4
+                    }
+                  </Typography>
+                  <Typography variant="subtitle1" className="features">
+                    {"✅ "}
+                    {
+                      Translations[userLanguage].plans.classroom.features
+                        .feature5
+                    }
+                  </Typography>
+                  <Typography variant="subtitle1" className="features">
+                    {"✅ "}
+                    {
+                      Translations[userLanguage].plans.classroom.features
+                        .feature6
+                    }
+                  </Typography>
+                  <Typography variant="subtitle1" className="features">
+                    {"✅ "}
+                    {
+                      Translations[userLanguage].plans.classroom.features
+                        .feature7
+                    }
+                  </Typography>
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                backgroundColor: "white",
+                flex: "60",
+                height: "auto",
+                padding: "50px",
+              }}
+            >
+              <Typography
+                variant="h4"
+                component="h4"
+                style={{ textAlign: "left", fontWeight: "bold" }}
+              >
+                {Translations[userLanguage].paymentform.title}
+                <Typography variant="h4" color="#6c63ff">
+                  {Translations[userLanguage].paymentform.plan}
+                </Typography>
+              </Typography>
+              <br></br>
+              <Divider />
+              <br></br>
+              <TextField
+                label="Email"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <AlternateEmail
+                        style={{ color: "c4c4c4", opacity: "90%" }}
+                      />
+                    </InputAdornment>
+                  ),
+                }}
+                id="outlined-email-input"
+                helperText={`Email you'll recive updates and receipts on`}
+                margin="normal"
+                variant="outlined"
+                type="email"
+                required
+                onChange={(e) => setEmail(e.target.value)}
+                fullWidth
+              />
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <TextField
+                  label="Coupon Code *"
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Redeem style={{ color: "c4c4c4", opacity: "90%" }} />
+                      </InputAdornment>
+                    ),
+                  }}
+                  id="outlined-coupon-input"
+                  helperText={currentDiscount}
+                  margin="normal"
+                  variant="outlined"
+                  size={"small"}
+                  onChange={(e) => setCoupon(e.target.value)}
+                />
+                <Button
+                  variant="contained"
+                  color="action"
+                  style={{ marginTop: "-12px", marginLeft: "5px" }}
+                  onClick={() => handleApplyCoupon()}
+                >
+                  {Translations[userLanguage].paymentform.button}
+                </Button>
+              </div>
+              <CardElement options={CARD_ELEMENT_OPTIONS} />
+              <div style={{ height: "40px" }} />
+              <div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  onClick={() => {
+                    handleToggle();
+                  }}
+                  disabled={spinner}
+                >
+                  {spinner ? (
+                    <CircularProgress
+                      style={{
+                        marginLeft: "32px",
+                        marginRight: "32px",
+                        color: "white",
+                      }}
+                      size={20}
+                    />
+                  ) : (
+                    Translations[userLanguage].paymentform.button2
+                  )}
+                </Button>
+              </div>
+              <div>
+                <Spline scene="https://draft.spline.design/cVPeOJXBIzTwgsNC/scene.spline" />
+              </div>
+            </div>
+            <Backdrop
+              style={{ zIndex: "1000" }}
+              open={open}
+              onClick={() => {
+                handleClose();
+              }}
+            >
+              <ComfirmPurchase
+                discount={discount}
+                discountName={discountName}
+                price={price}
+                callback={() => handleComfirmPurchase(email)}
+              />
+            </Backdrop>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

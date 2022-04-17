@@ -10,7 +10,15 @@ export default function ThanksForPurchasingAnimation() {
   );
   return (
     <div style={{ display: "flex", justifyContent: "center", marginTop: "0x" }}>
-      <div id="popUpCard">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+          marginTop: "100px",
+        }}
+      >
         <div>
           <svg
             width="100px"
@@ -22,7 +30,7 @@ export default function ThanksForPurchasingAnimation() {
             <circle
               className="path circle"
               fill="none"
-              stroke="#73AF55"
+              stroke="#1bb978"
               strokeWidth="6"
               strokeLiterlimit="10"
               cx="65.1"
@@ -32,23 +40,23 @@ export default function ThanksForPurchasingAnimation() {
             <polyline
               className="path check"
               fill="none"
-              stroke="#73AF55"
+              stroke="#1bb978"
               strokeWidth="6"
               strokeLinecap="round"
               strokeMiterlimit="10"
               points="100.2,40.2 51.5,88.8 29.8,67.5 "
             />
           </svg>
-          <Typography variant="h4" className="success">
-            {Translations[userLanguage].thanksforpurchasing.title}
+          <Typography variant="h4" color="white" style={{ marginTop: "50px" }}>
+            🎉🎉 {Translations[userLanguage].thanksforpurchasing.title} 🎉🎉
           </Typography>
         </div>
         <Button
           href="/"
-          style={{ marginTop: "1vh", marginBottom: "1vh" }}
+          style={{ marginTop: "50px" }}
           variant="contained"
           color="primary"
-          size="small"
+          size="large"
         >
           {Translations[userLanguage].thanksforpurchasing.button}
         </Button>
