@@ -43,6 +43,19 @@
   margin-bottom: 30px;
   text-align: center;
 }
+
+.wave-stripe-1 {
+  width: 100%;
+  height: auto;
+  margin-bottom: -12px;
+}
+
+.wave-stripe-2 {
+  width: 100%;
+  height: auto;
+  margin-bottom: -12px;
+}
+
 .home-page-section-1-content-top-text-2 {
   margin-bottom: 30px;
   text-align: center;

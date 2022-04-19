@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Spline from "@splinetool/react-spline";
 
 import HomePageImage from "../img/HomePageArt.svg";
+import WaveStripe from "../img/BigStripe.svg";
+import WaveStripe2 from "../img/BigStripe-2.svg";
 
 import HIW_IMG_1 from "../img/HIW_Image_1.svg";
 import HIW_IMG_2 from "../img/HIW_Image_2.svg";
@@ -97,6 +99,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+        <img src={WaveStripe2} alt="wave-stripe" className="wave-stripe-2" />
         <div className="home-page-section-2">
           <div className="home-page-section-2-content">
             <div className="home-page-section-2-header">
@@ -148,6 +151,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+        <img src={WaveStripe} alt="wave-stripe" className="wave-stripe-1" />
         <div className="home-page-section-3">
           <div className="home-page-section-3-content">
             <div className="home-page-section-3-header">
