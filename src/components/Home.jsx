@@ -67,6 +67,7 @@ export default function HomePage() {
                   variant="contained"
                   style={{ marginRight: "10px" }}
                   color="primary"
+                  size="large"
                   className="home-page-section-1-content-top-button"
                   onClick={() => {
                     window.location = "/play";
@@ -77,6 +78,7 @@ export default function HomePage() {
                 <Button
                   variant="outlined"
                   color="action"
+                  size="large"
                   className="home-page-section-1-content-top-button"
                   onClick={() => {
                     window.location = "/plans";
