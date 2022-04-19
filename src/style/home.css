@@ -48,11 +48,6 @@
   text-align: center;
 }
 
-.home-page-section-1-content-right-image {
-  max-width: 500px;
-  max-height: 500px;
-}
-
 .home-page-section-1-content-top-button-container {
   display: flex;
   flex-direction: row;

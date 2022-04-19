@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Spline from "@splinetool/react-spline";
 
-import HomePageImage from "../img/HomePageImg.svg";
+import HomePageImage from "../img/HomePageArt.svg";
 
 import HIW_IMG_1 from "../img/HIW_Image_1.svg";
 import HIW_IMG_2 from "../img/HIW_Image_2.svg";
@@ -89,7 +89,11 @@ export default function HomePage() {
               </div>
             </div>
             <div className="home-page-section-1-content-bottom">
-              <Spline scene="https://draft.spline.design/MFlI6uokYUIVuqtN/scene.spline" />
+              <img
+                src={HomePageImage}
+                alt="home-page-image"
+                className="home-page-section-1-content-right-image"
+              />
             </div>
           </div>
         </div>
