@@ -1062,3 +1062,7 @@ footer a {
   box-shadow: 5px 5px 0 #262626 !important;
   margin-right: 10px !important;
 }
+
+.MuiButton-root {
+  text-transform: lowercase !important;
+}

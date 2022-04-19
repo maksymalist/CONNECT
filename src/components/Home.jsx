@@ -67,7 +67,7 @@ export default function HomePage() {
               <div className="home-page-section-1-content-top-button-container">
                 <Button
                   variant="contained"
-                  style={{ marginRight: "10px" }}
+                  style={{ marginRight: "20px" }}
                   color="primary"
                   size="large"
                   className="home-page-section-1-content-top-button"
