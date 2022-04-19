@@ -313,7 +313,7 @@ function MultiGameRoom({ match }) {
         startTime();
       });
 
-    document.querySelector("nav").hidden = true;
+    document.querySelector("nav").remove();
 
     socket.on("joinedGameRoom", (data) => {
       console.log(data);

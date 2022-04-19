@@ -173,7 +173,7 @@ export default function GameRoom({ match }) {
       updateTime((prev) => (time = Math.round((prev += 0.1) * 10) / 10));
     }, 100);
     getQuiz();
-    document.querySelector("nav").hidden = true;
+    document.querySelector("nav").remove();
     setIsMusic(true);
   }, []);
 

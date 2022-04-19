@@ -19,27 +19,13 @@ body {
 .App {
   text-align: center;
 }
-nav {
-  background: #4e54c8;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 50px;
-  width: 100%;
-  z-index: 400;
-}
 #navMargin {
   margin: 50px;
 }
 #navMargin2 {
   margin: 50px;
 }
-ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  z-index: 1;
-}
+
 .MuiMenu-list {
   outline: 0 !important;
   display: flex !important;
@@ -50,51 +36,10 @@ ul {
   margin-left: -15px !important;
 }
 
-li {
-  float: left;
-  font-family: Arial, Helvetica, sans-serif;
-  display: initial;
-  margin-left: 5%;
-  margin-top: 1%;
-  margin-bottom: 0%;
-  z-index: 20;
-  font-size: 1rem;
-}
 .features {
   margin: 10px !important;
   text-align: left;
   color: "#4F5251";
-}
-a {
-  padding: 10px;
-  width: 100px;
-  display: initial;
-  margin-left: 1%;
-  margin-top: 1%;
-  text-decoration: none;
-  color: #fff;
-  font-weight: bold;
-  text-transform: uppercase;
-  z-index: 1;
-}
-.liright {
-  float: right;
-  margin-right: 1%;
-}
-.lileft {
-  float: left;
-  margin-right: 1%;
-}
-.liright-google {
-  float: right;
-  margin-right: 1%;
-  margin-left: 5%;
-  color: white !important;
-  background-color: transparent !important;
-  padding-left: 10px !important;
-  padding-right: 10px !important;
-  font-size: 18px !important;
-  font-weight: bold !important;
 }
 
 @keyframes gradient {
@@ -587,10 +532,6 @@ h1 {
 /* Change the background color of the dropdown button when the dropdown content is shown */
 /* .dropdown:hover .dropbtn {background-color: #4e54c8;} */
 
-.MuiBadge-badge {
-  top: 10px !important;
-}
-
 #waitingRoomDiv {
   display: flex;
   align-items: center;
@@ -975,30 +916,6 @@ input:hover {
   }
 }
 
-.homePageDivPurple {
-  text-align: left;
-  background-color: #6c63ff;
-  height: 100vh;
-  justify-content: start;
-}
-.homePageDivWhite {
-  text-align: left;
-  background-color: white;
-  height: 100%;
-  justify-content: start;
-  z-index: 0;
-}
-.newdiv2 {
-  background-color: white;
-  width: 100%;
-  height: 100%;
-  float: left;
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  align-items: center;
-}
-
 .about-card {
   background-color: white;
   box-shadow: 10px 10px 0px #262626;
@@ -1045,59 +962,6 @@ input:hover {
   filter: brightness(0.8);
 }
 
-.howitworks-div {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 100px;
-}
-.howitworks-div > * {
-  margin: 100px;
-}
-
-.iphone-div {
-  background-image: url("../img/Iphone.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 375px;
-  height: 725px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#background-video {
-  width: 320px;
-  height: 450px;
-}
-/*gear animation*/
-
-#large {
-  animation: spin 1.5s linear infinite;
-}
-#small {
-  animation: spin 1.5s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform-box: fill-box;
-    transform-origin: center;
-    transform: rotate(0deg);
-  }
-  100% {
-    transform-box: fill-box;
-    transform-origin: center;
-    transform: rotate(360deg);
-  }
-}
-
-.purpleAboutDiv {
-  background-color: #6c63ff;
-  width: 100%;
-  height: fit-content;
-  background-image: url("../img/BigStripe.svg");
-  background-repeat: no-repeat;
-}
 .MuiButton-containedPrimary {
   background-color: #1bb978 !important;
   color: white !important;
