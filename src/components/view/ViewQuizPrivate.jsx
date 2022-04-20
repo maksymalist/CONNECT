@@ -31,6 +31,8 @@ const GET_QUIZ = gql`
       userName
       userProfilePic
       questions
+      description
+      plays
     }
   }
 `;
@@ -108,6 +110,11 @@ function ViewQuiz() {
               <Typography variant="h4" component="h4">
                 {quiz.privateQuiz.name}
               </Typography>
+              <br></br>
+              <Typography variant="sub1">
+                ✨ {quiz.privateQuiz.plays}{" "}
+                {Translations[userLanguage].quiz.plays} ✨
+              </Typography>
               <div
                 style={{
                   display: "flex",
@@ -123,7 +130,6 @@ function ViewQuiz() {
                     flexDirection: "row",
                     width: "100%",
                     marginTop: "30px",
-                    marginBottom: "30px",
                   }}
                 >
                   <Button
@@ -147,6 +153,15 @@ function ViewQuiz() {
                   </Button>
                 </div>
               </div>
+              <div
+                style={{ textAlign: "left", padding: "0" }}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    quiz.privateQuiz.description !== ""
+                      ? quiz.privateQuiz.description
+                      : "",
+                }}
+              ></div>
               <div
                 style={{
                   display: "flex",

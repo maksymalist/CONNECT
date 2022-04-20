@@ -27,6 +27,8 @@ const GET_QUIZ_DETAILS = gql`
       userName
       userProfilePic
       steps
+      description
+      plays
     }
   }
 `;
@@ -99,6 +101,11 @@ function ViewMultiQuiz() {
               <Typography variant="h4" component="h4">
                 {data.privateMulti.name}
               </Typography>
+              <br></br>
+              <Typography variant="sub1">
+                ✨ {data.privateMulti.plays}{" "}
+                {Translations[userLanguage].multiquiz.plays} ✨
+              </Typography>
               <div
                 style={{
                   display: "flex",
@@ -114,7 +121,6 @@ function ViewMultiQuiz() {
                     flexDirection: "row",
                     width: "100%",
                     marginTop: "30px",
-                    marginBottom: "30px",
                   }}
                 >
                   <Button
@@ -138,6 +144,15 @@ function ViewMultiQuiz() {
                   </Button>
                 </div>
               </div>
+              <div
+                style={{ textAlign: "left", padding: "0" }}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    data.privateMulti.description !== ""
+                      ? data.privateMulti.description
+                      : "",
+                }}
+              ></div>
               <div
                 style={{
                   display: "flex",

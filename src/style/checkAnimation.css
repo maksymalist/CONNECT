@@ -16,12 +16,6 @@
   -webkit-animation: dash-check 0.9s 0.35s ease-in-out forwards;
   animation: dash-check 0.9s 0.35s ease-in-out forwards;
 }
-
-p {
-  text-align: center;
-  margin: 20px 0 60px;
-  font-size: 1.25em;
-}
 .success {
   color: #73af55;
   margin-top: 20px !important;

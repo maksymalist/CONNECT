@@ -331,7 +331,8 @@
       "hideanswers": "Hide Answers",
       "by": "by",
       "play": "Play 🚀",
-      "practice": "Practice 🎯"
+      "practice": "Practice 🎯",
+      "plays": "plays"
     },
     "multiquiz": {
       "steps": "Steps",
@@ -339,7 +340,8 @@
       "hideanswers": "Hide Answers",
       "by": "by",
       "play": "Play 🚀",
-      "practice": "Practice 🎯"
+      "practice": "Practice 🎯",
+      "plays": "plays"
     },
     "countdown": {
       "ready": "Ready?",
@@ -810,7 +812,8 @@
       "hideanswers": "Cacher réponses",
       "by": "par",
       "play": "Jouer 🚀",
-      "practice": "Pratique 🎯"
+      "practice": "Pratique 🎯",
+      "plays": "jeux"
     },
     "multiquiz": {
       "steps": "Étapes",
@@ -818,7 +821,8 @@
       "hideanswers": "Cacher réponses",
       "by": "par",
       "play": "Jouer 🚀",
-      "practice": "Pratique 🎯"
+      "practice": "Pratique 🎯",
+      "plays": "jeux"
     },
     "countdown": {
       "ready": "Prêt?",
