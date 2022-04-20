@@ -41,6 +41,12 @@ const CREATE_NOTIFICATION = gql`
   }
 `;
 
+const INCREMENT_PLAYS = gql`
+  mutation ($type: String!, $visibility: String!, $id: ID!) {
+    incrementPlays(type: $type, visibility: $visibility, _id: $id)
+  }
+`;
+
 let joined = false;
 
 export default function EnterCodeForm({ match, location }) {
@@ -72,6 +78,7 @@ export default function EnterCodeForm({ match, location }) {
 
   //mutations
   const [createNotification] = useMutation(CREATE_NOTIFICATION);
+  const [incrementPlays] = useMutation(INCREMENT_PLAYS);
 
   //spinners
   const [spinner1, setSpinner1] = useState(false);
@@ -137,6 +144,25 @@ export default function EnterCodeForm({ match, location }) {
 
       if (maxPlayers.current == null || podiumPlaces.current == null) return;
       if (data.gamemode === "normal") {
+        try {
+          const response = await axios.post(
+            `${config["api-server"]}/get-quiz-all-types`,
+            { quizID: data.gamecode }
+          );
+
+          const visibility = response.data.visibility;
+
+          incrementPlays({
+            variables: {
+              type: "quiz",
+              visibility: visibility,
+              id: data.gamecode,
+            },
+          });
+        } catch (error) {
+          console.log(error);
+        }
+
         ReactDOM.render(
           <div>
             <HostRoom
@@ -158,6 +184,25 @@ export default function EnterCodeForm({ match, location }) {
         );
       }
       if (data.gamemode === "multi") {
+        try {
+          const response = await axios.post(
+            `${config["api-server"]}/get-multi-all-types`,
+            { multiID: data.gamecode }
+          );
+
+          const visibility = response.data?.visibility;
+
+          incrementPlays({
+            variables: {
+              type: "multi",
+              visibility: visibility,
+              id: data.gamecode,
+            },
+          });
+        } catch (error) {
+          console.log(error);
+        }
+
         ReactDOM.render(
           <div>
             <MultiHostRoom

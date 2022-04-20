@@ -14,6 +14,8 @@ import { toast } from "react-toastify";
 import { AddCircleRounded, SaveAs, DeleteRounded } from "@mui/icons-material";
 import UploadButton from "../misc/UploadButton";
 
+import "react-quill/dist/quill.snow.css";
+import ReactQuill from "react-quill";
 import Translations from "../../translations/translations.json";
 
 import { useMutation, gql } from "@apollo/client";
@@ -31,6 +33,7 @@ const CREATE_MULTI_QUIZ = gql`
     $userProfilePic: String!
     $userName: String!
     $steps: String!
+    $description: String!
   ) {
     createMulti(
       name: $name
@@ -40,6 +43,7 @@ const CREATE_MULTI_QUIZ = gql`
       userProfilePic: $userProfilePic
       userName: $userName
       steps: $steps
+      description: $description
     )
   }
 `;
@@ -53,6 +57,7 @@ const CREATE_PRIVATE_MULTI_QUIZ = gql`
     $userProfilePic: String!
     $userName: String!
     $steps: String!
+    $description: String!
   ) {
     createPrivateMulti(
       name: $name
@@ -62,6 +67,7 @@ const CREATE_PRIVATE_MULTI_QUIZ = gql`
       userProfilePic: $userProfilePic
       userName: $userName
       steps: $steps
+      description: $description
     )
   }
 `;
@@ -73,6 +79,7 @@ function NewMultiQuiz() {
   const [tags, setTags] = useState([]);
   const [currentTag, setCurrentTag] = useState("");
   const [tagNumber, setTagNumber] = useState(0);
+  const [description, setDescription] = useState("");
 
   const [userLanguage, setUserLanguage] = useState(
     localStorage.getItem("connectLanguage") || "english"
@@ -332,6 +339,7 @@ function NewMultiQuiz() {
           userProfilePic: quizObj.userProfilePic,
           userName: quizObj.userName,
           steps: JSON.stringify(quizObj.steps),
+          description: quizObj.description,
         },
       });
     } else {
@@ -344,14 +352,15 @@ function NewMultiQuiz() {
           userProfilePic: quizObj.userProfilePic,
           userName: quizObj.userName,
           steps: JSON.stringify(quizObj.steps),
+          description: quizObj.description,
         },
       });
     }
     toast.success(Translations[userLanguage].alerts.quizcreated);
-    //reset all the values
+    window.location.reload();
   };
 
-  const setQuizObj = (isPrivate) => {
+  const setQuizObj = (isPrivate, name, description) => {
     if (user == null) {
       window.location = "/login";
       toast.error(Translations[userLanguage].alerts.logincreatequiz);
@@ -363,6 +372,7 @@ function NewMultiQuiz() {
     quizObj.userID = user.profileObj.googleId;
     quizObj.coverImg = imgRef.current ? imgRef.current.src : "";
     quizObj.tags = getTags();
+    quizObj.description = description;
 
     const stepObj = {};
 
@@ -450,6 +460,19 @@ function NewMultiQuiz() {
         >
           <UploadButton imgRef={imgRef} />
         </div>
+        <ReactQuill
+          theme="snow"
+          value={description}
+          placeholder={Translations[userLanguage].newmultiquiz.description}
+          onChange={setDescription}
+          style={{
+            width: "100%",
+            maxWidth: "700px",
+            height: "400px",
+            marginTop: "10px",
+            marginBottom: "50px",
+          }}
+        />
         <div
           style={{
             backgroundColor: "white",
@@ -585,7 +608,7 @@ function NewMultiQuiz() {
             color="primary"
             size="large"
             onClick={() => {
-              setQuizObj(isPrivate);
+              setQuizObj(isPrivate, name, description);
             }}
           >
             {Translations[userLanguage].newquiz.button}

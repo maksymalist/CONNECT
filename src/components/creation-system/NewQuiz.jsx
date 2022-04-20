@@ -15,6 +15,8 @@ import { toast } from "react-toastify";
 import { AddCircleRounded, DeleteRounded, SaveAs } from "@mui/icons-material";
 import UploadButton from "../misc/UploadButton";
 
+import "react-quill/dist/quill.snow.css";
+import ReactQuill from "react-quill";
 import Translations from "../../translations/translations.json";
 
 import { useMutation, gql } from "@apollo/client";
@@ -31,7 +33,8 @@ const CREATE_QUIZ = gql`
     $userID: ID!
     $userProfilePic: String!
     $userName: String!
-    $questions: [String]
+    $questions: [String]!
+    $description: String!
   ) {
     createQuiz(
       name: $name
@@ -41,6 +44,7 @@ const CREATE_QUIZ = gql`
       userProfilePic: $userProfilePic
       userName: $userName
       questions: $questions
+      description: $description
     )
   }
 `;
@@ -53,7 +57,8 @@ const CREATE_PRIVATE_QUIZ = gql`
     $userID: ID!
     $userProfilePic: String!
     $userName: String!
-    $questions: [String]
+    $questions: [String]!
+    $description: String!
   ) {
     createPrivateQuiz(
       name: $name
@@ -63,6 +68,7 @@ const CREATE_PRIVATE_QUIZ = gql`
       userProfilePic: $userProfilePic
       userName: $userName
       questions: $questions
+      description: $description
     )
   }
 `;
@@ -78,6 +84,7 @@ export default function NewQuiz() {
   const [userLanguage, setUserLanguage] = useState(
     localStorage.getItem("connectLanguage") || "english"
   );
+  const [description, setDescription] = useState("");
 
   const imgRef = useRef(null);
 
@@ -96,6 +103,7 @@ export default function NewQuiz() {
     userID: "",
     userProfilePic: "",
     userName: "",
+    description: "",
   };
 
   useEffect(() => {
@@ -124,6 +132,7 @@ export default function NewQuiz() {
           userProfilePic: quizObj.userProfilePic,
           userName: quizObj.userName,
           questions: quizObj.questions,
+          description: quizObj.description,
         },
       });
     } else {
@@ -136,14 +145,12 @@ export default function NewQuiz() {
           userProfilePic: quizObj.userProfilePic,
           userName: quizObj.userName,
           questions: quizObj.questions,
+          description: quizObj.description,
         },
       });
     }
     toast.success(Translations[userLanguage].alerts.quizcreated);
-    setName("");
-    setQuestionArray([]);
-    setTags([]);
-    imgRef.current.src = "";
+    window.location.reload();
   };
   const getTags = () => {
     const newTagArr = [];
@@ -153,7 +160,7 @@ export default function NewQuiz() {
     return newTagArr;
   };
 
-  const setQuizObj = (isPrivate, name) => {
+  const setQuizObj = (isPrivate, name, description) => {
     if (user == null) {
       window.location = "/login";
       toast.error(Translations[userLanguage].alerts.logincreatequiz);
@@ -186,6 +193,7 @@ export default function NewQuiz() {
     quizObj.userID = user?.profileObj.googleId || "";
     quizObj.coverImg = imgRef.current ? imgRef.current.src : "" || "";
     quizObj.tags = getTags() || [];
+    quizObj.description = description || "";
 
     for (let i = 0; i < newQuestionArray.length; i++) {
       const data = newQuestionArray[i];
@@ -369,6 +377,19 @@ export default function NewQuiz() {
         >
           <UploadButton imgRef={imgRef} />
         </div>
+        <ReactQuill
+          theme="snow"
+          value={description}
+          placeholder={Translations[userLanguage].newmultiquiz.description}
+          onChange={setDescription}
+          style={{
+            width: "100%",
+            maxWidth: "700px",
+            height: "400px",
+            marginTop: "10px",
+            marginBottom: "50px",
+          }}
+        />
         <div
           style={{
             backgroundColor: "white",
@@ -487,7 +508,7 @@ export default function NewQuiz() {
             color="primary"
             size="large"
             onClick={() => {
-              setQuizObj(isPrivate, name);
+              setQuizObj(isPrivate, name, description);
             }}
           >
             {Translations[userLanguage].newquiz.button}

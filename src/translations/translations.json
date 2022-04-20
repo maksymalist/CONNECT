@@ -282,6 +282,7 @@
     "newmultiquiz": {
       "title": "Create a Multi Quiz",
       "step1": "1. Give your quiz a title",
+      "description": "Give your quiz a description",
       "input": "Title",
       "step2": "2. Upload your cover Image",
       "step3": "3. Give your quiz some tags",
@@ -759,6 +760,7 @@
     },
     "newmultiquiz": {
       "title": "Créer un multi-quiz",
+      "description": "Donnez une description a votre quiz",
       "step1": "1. Donnez un titre à votre quiz",
       "input": "Titre",
       "step2": "2. Téléchargez votre image de couverture",

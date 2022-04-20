@@ -9,6 +9,8 @@ import Translations from "../../translations/translations.json";
 
 import "firebase/storage";
 
+import uploadImg from "../../img/uploadImg.svg";
+
 const UploadButton = ({ imgRef }) => {
   const firebase = getFirebase();
   const ref = useRef(undefined);
@@ -48,9 +50,11 @@ const UploadButton = ({ imgRef }) => {
   const UploadBox = () => (
     <div onClick={() => handleClick()} className="upload-box">
       {file === null ? (
-        <Typography variant="h4">
-          {Translations[userLanguage].uploadbox.upload}
-        </Typography>
+        <img
+          src={uploadImg}
+          alt="upload"
+          style={{ width: "100%", height: "100%" }}
+        />
       ) : (
         <img
           id="coverImg"
