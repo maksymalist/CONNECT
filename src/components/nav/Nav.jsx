@@ -153,6 +153,7 @@ function Nav({ isLoggedIn, customerId }) {
             : {}
           : {}
       }
+      id="main-nav"
     >
       <div className="nav-left-section">
         <img

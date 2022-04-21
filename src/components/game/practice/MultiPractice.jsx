@@ -246,7 +246,7 @@ function MultiGameRoom({ match }) {
         setIsMusic(true);
       });
 
-    document.querySelector("nav").remove();
+    document.getElementById("main-nav").remove();
   }, []);
 
   return (

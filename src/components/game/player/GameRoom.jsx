@@ -197,7 +197,7 @@ export default function GameRoom({ match }) {
       UpdateTimeFunction();
     }, 100);
 
-    document.querySelector("nav").remove();
+    document.getElementById("main-nav").remove();
 
     socket.on("joinedGameRoom", (data) => {
       console.log(data);
