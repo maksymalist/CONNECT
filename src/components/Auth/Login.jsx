@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import GoogleLogin from "react-google-login";
 import { Typography } from "@mui/material";
-import Spline from "@splinetool/react-spline";
 import { useLocation } from "react-router-dom";
 
 //style
@@ -13,6 +12,7 @@ import axios from "axios";
 import config from "../../config.json";
 
 //role imgs
+import LoginArt from "../../img/Login/loginArt.svg";
 import teacher from "../../img/Login/teacher_role.svg";
 import student from "../../img/Login/student_role.svg";
 
@@ -125,10 +125,15 @@ function Login() {
             </b>
           </Typography>
           <br></br>
-          <div
-            style={{ width: "250px", height: "250px", marginBottom: "40px" }}
-          >
-            <Spline scene="https://draft.spline.design/x-auyQbM97sLc0dD/scene.spline" />
+          <div style={{ width: "100%", height: "auto", marginBottom: "40px" }}>
+            <img
+              src={LoginArt}
+              alt="login-art"
+              style={{
+                width: "95%",
+                height: "auto",
+              }}
+            />
           </div>
           <GoogleLogin
             clientId="701696427912-ajmlkcj3hpo46q5fokhtn5mmeib0m3be.apps.googleusercontent.com"
