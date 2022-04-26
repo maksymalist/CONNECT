@@ -145,7 +145,11 @@ function ViewMultiQuiz() {
                 </div>
               </div>
               <div
-                style={{ textAlign: "left", padding: "0" }}
+                style={{
+                  textAlign: "left",
+                  marginBottom: "20px",
+                  marginTop: "20px",
+                }}
                 dangerouslySetInnerHTML={{
                   __html:
                     data.privateMulti.description !== ""

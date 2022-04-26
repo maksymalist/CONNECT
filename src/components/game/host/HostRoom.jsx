@@ -87,6 +87,7 @@ export default function HostRoom(props) {
   const [musicVolume, setMusicVolume] = useState(50);
 
   const smallScreen = useMediaQuery("(max-width:600px)");
+  const bigScreen = useMediaQuery("(min-width:1900px)");
 
   useEffect(() => {
     setMusicIsPlaying(true);
@@ -659,6 +660,7 @@ export default function HostRoom(props) {
           </div>
           <Button
             variant="contained"
+            size={bigScreen ? "large" : "medium"}
             color="secondary"
             onClick={() => {
               GameOver();
@@ -749,14 +751,27 @@ export default function HostRoom(props) {
               }}
             >
               <div
-                style={{
-                  backgroundColor: "white",
-                  border: "2px solid #000",
-                  boxShadow: "10px 10px 0 #262626",
-                  padding: "10px",
-                  margin: "10px",
-                  paddingInline: "30px",
-                }}
+                style={
+                  bigScreen
+                    ? {
+                        backgroundColor: "white",
+                        border: "2px solid #000",
+                        boxShadow: "10px 10px 0 #262626",
+                        padding: "10px",
+                        margin: "10px",
+                        paddingInline: "30px",
+                        width: "600px",
+                        height: "250px",
+                      }
+                    : {
+                        backgroundColor: "white",
+                        border: "2px solid #000",
+                        boxShadow: "10px 10px 0 #262626",
+                        padding: "10px",
+                        margin: "10px",
+                        paddingInline: "30px",
+                      }
+                }
               >
                 <div
                   style={{
@@ -767,16 +782,30 @@ export default function HostRoom(props) {
                   }}
                 >
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    <Typography variant="h2" style={{ fontWeight: "10000" }}>
+                    <Typography
+                      variant="h2"
+                      style={bigScreen ? { fontSize: "145px" } : {}}
+                    >
                       <b>{props.room}</b>
                     </Typography>
-                    <Typography variant="sub1">
+                    <Typography
+                      variant="sub1"
+                      style={bigScreen ? { fontSize: "25px" } : {}}
+                    >
                       {Translations[userLanguage].hostroom.joinat}
                       <span
-                        style={{
-                          color: "#6C63FF",
-                          textDecoration: "underline",
-                        }}
+                        style={
+                          bigScreen
+                            ? {
+                                fontSize: "25px",
+                                color: "#6C63FF",
+                                textDecoration: "underline",
+                              }
+                            : {
+                                color: "#6C63FF",
+                                textDecoration: "underline",
+                              }
+                        }
                         onClick={() =>
                           window.open("https://quiz-connect.netlify.app/play")
                         }
@@ -799,7 +828,7 @@ export default function HostRoom(props) {
                 >
                   <QRCode
                     value={`https://quiz-connect.netlify.app/play?code=${props.room}`}
-                    size={86}
+                    size={bigScreen ? 225 : 86}
                   />
                 </div>
               )}
@@ -824,7 +853,7 @@ export default function HostRoom(props) {
                   style={{ width: "120px" }}
                   variant="contained"
                   color="primary"
-                  size="medium"
+                  size={bigScreen ? "large" : "medium"}
                   id="playButtonSvg"
                   onClick={() => {
                     shareLink();
@@ -860,6 +889,7 @@ export default function HostRoom(props) {
                     startCountdown();
                   }}
                   variant="contained"
+                  size={bigScreen ? "large" : "medium"}
                 >
                   {Translations[userLanguage].hostroom.startbutton}
                 </Button>
@@ -867,6 +897,7 @@ export default function HostRoom(props) {
                 <Button
                   variant="contained"
                   color="secondary"
+                  size={bigScreen ? "large" : "medium"}
                   onClick={() => {
                     GameOver();
                   }}
@@ -893,8 +924,8 @@ export default function HostRoom(props) {
             >
               <svg
                 id="connectText"
-                width="340"
-                height="90"
+                width={bigScreen ? 590 : 340}
+                height={bigScreen ? 340 : 90}
                 viewBox="0 0 340 90"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
