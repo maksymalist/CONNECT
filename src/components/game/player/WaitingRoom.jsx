@@ -3,7 +3,7 @@ import socket from "../../../socket-io";
 import axios from "axios";
 import { Typography, Button, Divider, ClickAwayListener } from "@mui/material";
 
-import GameEnded from "../host/GameEnded";
+import { motion } from "framer-motion/dist/framer-motion";
 
 import "../../../style/style.css";
 
@@ -220,14 +220,25 @@ export default function WaitingRoom(props) {
         <div className="waiting__room__player__container">
           {peopleInRoom?.map((person, index) => {
             return (
-              <Typography
-                className="waitingRoomPerson"
-                variant="h2"
-                key={index}
-                style={{ padding: "10px", margin: "10px", fontSize: "1.5rem" }}
+              <motion.div
+                initial={{ scale: 1 }}
+                animate={{ scale: [1, 1.08, 1] }}
+                exit={{ scale: 1 }}
+                transition={{ duration: 0.5, type: "spring", stiffness: 50 }}
               >
-                {person}
-              </Typography>
+                <Typography
+                  className="waitingRoomPerson"
+                  variant="h2"
+                  key={index}
+                  style={{
+                    padding: "10px",
+                    margin: "10px",
+                    fontSize: "1.5rem",
+                  }}
+                >
+                  {person}
+                </Typography>
+              </motion.div>
             );
           })}
         </div>

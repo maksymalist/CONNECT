@@ -11,6 +11,7 @@ import {
   VolumeUpRounded,
 } from "@mui/icons-material";
 import GameEnded from "./GameEnded";
+import { motion } from "framer-motion/dist/framer-motion";
 
 import {
   Divider,
@@ -190,7 +191,12 @@ export default function HostRoom(props) {
       newUser.id = user;
       document.getElementById("userDiv").appendChild(newUser);
       ReactDOM.render(
-        <div>
+        <motion.div
+          initial={{ scale: 1 }}
+          animate={{ scale: [1, 1.08, 1] }}
+          exit={{ scale: 1 }}
+          transition={{ duration: 0.5, type: "spring", stiffness: 50 }}
+        >
           <h2
             className="userH1"
             onClick={() => {
@@ -199,7 +205,7 @@ export default function HostRoom(props) {
           >
             {user}
           </h2>
-        </div>,
+        </motion.div>,
         newUser
       );
     });
