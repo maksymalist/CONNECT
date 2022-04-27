@@ -31,7 +31,6 @@ import CreateClass from "./components/creation-system/CreateClass";
 import QuizPractice from "./components/game/practice/QuizPractice";
 import MultiPractice from "./components/game/practice/MultiPractice";
 import ClaimEmote from "./components/misc/ClaimEmote";
-
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { setStarter, setClassroom, setEntreprise } from "./actions/Plan";
