@@ -431,9 +431,9 @@ export default function HostRoom(props) {
     const plan = res.data?.plan;
 
     if (plan === "Classroom") {
-      if (props.maxPlayers > 90) {
-        setUserLimit(90);
-        userLimit2 = 90;
+      if (props.maxPlayers > 100) {
+        setUserLimit(100);
+        userLimit2 = 100;
       } else if (props.maxPlayers < 3) {
         setUserLimit(3);
         userLimit2 = 3;
