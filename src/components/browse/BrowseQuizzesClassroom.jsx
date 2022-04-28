@@ -173,7 +173,14 @@ export default function BrowseQuizzes({ classID, gamemode }) {
             />
           ) : (
             quizzes.allQuizzes.map((quiz, index) => {
-              return <QuizCard key={quiz.id + index} data={quiz} tags={tags} />;
+              return (
+                <QuizCard
+                  key={quiz.id + index}
+                  data={quiz}
+                  tags={tags}
+                  classID={classID}
+                />
+              );
             })
           )
         ) : null}
@@ -186,7 +193,14 @@ export default function BrowseQuizzes({ classID, gamemode }) {
             />
           ) : (
             multis.allMultis.map((quiz, index) => {
-              return <QuizCard key={quiz.id + index} data={quiz} tags={tags} />;
+              return (
+                <QuizCard
+                  key={quiz.id + index}
+                  data={quiz}
+                  tags={tags}
+                  classID={classID}
+                />
+              );
             })
           )
         ) : null}

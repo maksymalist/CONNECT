@@ -50,7 +50,7 @@
           "step5": "Specify if the user nicknames should be friendly",
           "step6": "Start the game!!!",
           "next": "Next ➡️",
-          "back": "Back"
+          "back": "⬅️ Back"
         },
         "join": {
           "title": "Joining 🔗",
@@ -58,7 +58,7 @@
           "step2": "Enter a valid room name / code",
           "step3": "Join your game and have fun !!!",
           "next": "Next ➡️",
-          "back": "Back "
+          "back": "⬅️ Back "
         },
         "play": {
           "title": "Playing 🎉",
@@ -66,7 +66,7 @@
           "step2": "If you match the wrong cards 5s will be added to your timer",
           "step3": "The goal is to get the lowest time to have the highest place on the podium.",
           "next": "Next ➡️",
-          "back": "Back "
+          "back": "⬅️ Back "
         }
       }
     },
@@ -76,7 +76,7 @@
         "input": "enter room code",
         "input2": "enter your nickname",
         "button": "Next ➡️",
-        "back": "Back",
+        "back": "⬅️ Back",
         "button2": "Join 🚀"
       },
       "host": {
@@ -86,15 +86,19 @@
           "normal": "Normal",
           "multi": "Multi"
         },
-        "input": "give your room a name",
+        "input": "code",
         "input2": "enter game code",
         "presets": {
           "title": "Presets ⚙️",
+          "gamecode": "Game Code 🔐",
           "maxplayers": "Max players 👥",
           "podiumplaces": "Podium Places 🏆",
-          "friendly": "Friendly nicknames ✨",
+          "friendly": "Friendly nicknames ? ✨",
           "button": "Generate Code 🎲",
-          "button2": "Host Room 🚀"
+          "button2": "Host Room 🚀",
+          "no": "🤷‍♂️ No. 🤷‍♂️",
+          "yes": "✨ Yes! ✨",
+          "ready": "Ready to start ?!? 🎉"
         },
         "private": "Private 🔐",
         "roomcode": "Room Code"
@@ -221,15 +225,15 @@
       "sub": "Wait For More People To Finish",
       "WOW": "WOW!",
       "sub2": "You finished in ",
-      "return": "Return home"
+      "return": "Return home 🏠"
     },
     "gameended": {
       "title": "Game Has Ended",
-      "button": "Return home"
+      "button": "Return home 🏠"
     },
     "leftroom": {
       "title": "You Have Left the Room",
-      "button": "Return home",
+      "button": "Return home 🏠",
       "kicked": {
         "title": "You have been kicked from the room",
         "sub": "WHAT HAVE YOU DONE???"
@@ -449,7 +453,7 @@
       },
       "play": {
         "playbutton": "Play Games",
-        "backbutton": "Back"
+        "backbutton": "⬅️ Back"
       },
       "halloffame": {
         "title": "Hall of Fame"
@@ -530,7 +534,7 @@
           "step5": "Spécifiez si les pseudonymes des utilisateurs doivent être conviviaux",
           "step6": "Commencez le jeu!!!",
           "next": "Suivant ➡️",
-          "back": "Retour ⬅️"
+          "back": "⬅️ Retour"
         },
         "join": {
           "title": "Rejoindre 🔗",
@@ -538,7 +542,7 @@
           "step2": "Entrez un nom de salle valide",
           "step3": "Rejoignez la salle et amusez-vous !!!",
           "next": "Suivant ➡️",
-          "back": "Retour ⬅️"
+          "back": "⬅️ Retour"
         },
         "play": {
           "title": "Jouer 🎉",
@@ -546,7 +550,7 @@
           "step2": "Si vous faites correspondre les mauvaises cartes, 5s seront ajoutés à votre minuteur",
           "step3": "L'objectif est d'obtenir le temps le plus bas pour avoir la plus haute place sur le podium !!!",
           "next": "Suivant ➡️",
-          "back": "Retour ⬅️"
+          "back": "⬅️ Retour"
         }
       }
     },
@@ -556,7 +560,7 @@
         "input": "code de salle",
         "input2": "pseudonyme",
         "button": "Suivant ➡️",
-        "back": "Retour ⬅️",
+        "back": "⬅️ Retour",
         "button2": "Rejoindre 🚀"
       },
       "host": {
@@ -566,15 +570,19 @@
           "normal": "Normal",
           "multi": "Multi"
         },
-        "input": "code de la salle",
+        "input": "code",
         "input2": "entrez un code de quiz",
         "presets": {
           "title": "Paramètres ⚙️",
+          "gamecode": "Code de jeu 🔐",
           "maxplayers": "Joueurs Maximum 👥",
           "podiumplaces": "Places de podium 🏆",
-          "friendly": "Surnoms filtrés ✨",
+          "friendly": "Surnoms filtrés ? ✨",
           "button": "Générer le code 🎲",
-          "button2": "Créer la salle 🚀"
+          "button2": "Créer la salle 🚀",
+          "no": "🤷‍♂️ Non. 🤷‍♂️",
+          "yes": "✨ Oui! ✨",
+          "ready": "Prêt a commencer ?!? 🎉"
         },
         "private": "Privé 🔐",
         "roomcode": "Code de salle"
@@ -702,15 +710,15 @@
       "sub": "Attendez que plus de personnes finissent",
       "WOW": "WOW!",
       "sub2": "Vous avez fini en ",
-      "return": "Revenir à l'accueil"
+      "return": "Revenir à l'accueil 🏠"
     },
     "gameended": {
       "title": "Le jeu est terminé",
-      "button": "Revenir à l'accueil"
+      "button": "Revenir à l'accueil 🏠"
     },
     "leftroom": {
       "title": "Vous avez quitté la salle",
-      "button": "Revenir à l'accueil",
+      "button": "Revenir à l'accueil 🏠",
       "kicked": {
         "title": "Vous avez été expulsé de la salle",
         "sub": "QU'AVEZ-VOUS FAIT ????"
@@ -855,7 +863,7 @@
       "title1": "✨ Emote obtenue !✨",
       "button1": "Voir Emotes 🎉",
       "title2": "✨ Échec de la réclamation de l'emote ✨",
-      "button2": "Retour ⬅️ 🏠"
+      "button2": "⬅️ Retour 🏠"
     },
     "alerts": {
       "loginalert": "Vous devez vous connecter si vous souhaitez utiliser CONNECT !",
@@ -922,8 +930,8 @@
         "remove": "retirer"
       },
       "play": {
-        "playbutton": "Jouer",
-        "backbutton": "retourner"
+        "playbutton": "Jouer 🚀",
+        "backbutton": "⬅️ Retour"
       },
       "addmember": {
         "title": "Ajouter des membres",

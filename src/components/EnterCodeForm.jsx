@@ -5,11 +5,12 @@ import WaitingRoom from "./game/player/WaitingRoom";
 import HostRoom from "./game/host/HostRoom";
 import MultiHostRoom from "./game/host/MultiHostRoom";
 import Background from "./misc/Background";
+import { motion } from "framer-motion/dist/framer-motion";
 
 import "../style/style.css";
 import { toast } from "react-toastify";
 
-import { Button, Switch, Typography, CircularProgress } from "@mui/material";
+import { Button, Typography, CircularProgress } from "@mui/material";
 
 import Translations from "../translations/translations.json";
 
@@ -49,19 +50,19 @@ const INCREMENT_PLAYS = gql`
 
 let joined = false;
 
+let friendlyNicknamesGlobal = false;
+let maxPlayersGlobal = 3;
+let podiumPlacesGlobal = 3;
+
 export default function EnterCodeForm({ match, location }) {
   const user = getUser();
   var [role, setRole] = useState("");
-  const [checked, setChecked] = useState(false);
   var [code, setCode] = useState("");
 
   const [gameCode, setGameCode] = useState("");
   const [gameMode, setGameMode] = useState("");
 
   const [playMode, setPlayMode] = useState(true);
-
-  const maxPlayers = useRef(null);
-  const podiumPlaces = useRef(null);
 
   const search = useLocation().search;
 
@@ -83,6 +84,76 @@ export default function EnterCodeForm({ match, location }) {
   //spinners
   const [spinner1, setSpinner1] = useState(false);
   const [spinner2, setSpinner2] = useState(false);
+
+  const [hostStep, setHostStep] = useState(0);
+
+  const [roomName, setRoomName] = useState("");
+  const [maxPlayers, setMaxPlayers] = useState(3);
+  const [maxPlayerEmojis, setMaxPlayerEmojis] = useState([1, 2, 3]);
+  const allEmojis = [
+    "😀",
+    "😁",
+    "😂",
+    "😃",
+    "😄",
+    "😅",
+    "😆",
+    "😇",
+    "😈",
+    "👿",
+    "😉",
+    "😊",
+    "😋",
+    "😌",
+    "😍",
+    "😎",
+    "😏",
+    "😐",
+    "😑",
+    "😒",
+    "😓",
+    "😔",
+    "😕",
+    "😖",
+    "😗",
+    "😘",
+    "😙",
+    "😚",
+    "😛",
+    "😜",
+    "😝",
+    "😞",
+    "😟",
+    "😠",
+    "😡",
+    "😢",
+    "😣",
+    "😤",
+    "😥",
+    "😦",
+    "😧",
+    "😨",
+    "😩",
+    "😪",
+    "😫",
+    "😬",
+    "😭",
+    "😮",
+    "😯",
+    "😰",
+    "😱",
+    "😲",
+    "😳",
+    "😴",
+    "😵",
+    "😶",
+    "😷",
+  ];
+
+  const [podiumPlaces, setPodiumPlaces] = useState(3);
+  const [podiumPlacesArr, setPodiumPlacesArr] = useState([1, 2, 3]);
+
+  const [isFriendlyNicknames, setIsFriendlyNicknames] = useState(false);
 
   useEffect(() => {
     const Gamecode = new URLSearchParams(search).get("code");
@@ -142,7 +213,6 @@ export default function EnterCodeForm({ match, location }) {
 
       var validclassId = data.classId;
 
-      if (maxPlayers.current == null || podiumPlaces.current == null) return;
       if (data.gamemode === "normal") {
         try {
           const response = await axios.post(
@@ -166,12 +236,8 @@ export default function EnterCodeForm({ match, location }) {
         ReactDOM.render(
           <div>
             <HostRoom
-              maxPlayers={
-                maxPlayers.current.value < 3 ? 3 : maxPlayers.current.value
-              }
-              podiumPlaces={
-                podiumPlaces.current.value < 3 ? 3 : podiumPlaces.current.value
-              }
+              maxPlayers={maxPlayersGlobal < 3 ? 3 : maxPlayersGlobal}
+              podiumPlaces={podiumPlacesGlobal < 3 ? 3 : podiumPlacesGlobal}
               room={data.room}
               gamecode={data.gamecode}
               friendlyroom={data.friendly}
@@ -206,12 +272,8 @@ export default function EnterCodeForm({ match, location }) {
         ReactDOM.render(
           <div>
             <MultiHostRoom
-              maxPlayers={
-                maxPlayers.current.value < 3 ? 3 : maxPlayers.current.value
-              }
-              podiumPlaces={
-                podiumPlaces.current.value < 3 ? 3 : podiumPlaces.current.value
-              }
+              maxPlayers={maxPlayersGlobal < 3 ? 3 : maxPlayersGlobal}
+              podiumPlaces={podiumPlacesGlobal < 3 ? 3 : podiumPlacesGlobal}
               room={data.room}
               gamecode={data.gamecode}
               friendlyroom={data.friendly}
@@ -315,8 +377,7 @@ export default function EnterCodeForm({ match, location }) {
 
     socket.on("GeneratedCode", (data) => {
       console.log(data);
-      if (document.getElementById("roomName") == undefined) return;
-      document.getElementById("roomName").value = data;
+      setRoomName(data);
     });
 
     socket.on("gameAlreadyStarted", (data) => {
@@ -329,6 +390,14 @@ export default function EnterCodeForm({ match, location }) {
       toast.error(Translations[userLanguage].alerts.cannotjoinprivate);
     });
   }, []);
+
+  useEffect(() => {
+    console.log(`
+      is friendly nicknames: ${friendlyNicknamesGlobal ? "true" : "false"}
+      max players: ${maxPlayersGlobal}
+      podium places: ${podiumPlacesGlobal}
+    `);
+  }, [isFriendlyNicknames, maxPlayers, podiumPlaces]);
 
   const JoinRoom = async () => {
     if (sessionStorage.getItem("roomJoined") == "true") {
@@ -358,7 +427,7 @@ export default function EnterCodeForm({ match, location }) {
   };
 
   const CreateRoom = async () => {
-    if (document.getElementById("roomName").value === undefined) {
+    if (roomName === "") {
       toast.error(Translations[userLanguage].alerts.enterroomname);
       return;
     }
@@ -370,7 +439,7 @@ export default function EnterCodeForm({ match, location }) {
       toast.error(Translations[userLanguage].alerts.entergamemode);
       return;
     }
-    console.log(checked);
+    console.log(friendlyNicknamesGlobal);
 
     const res = await axios.post(`${config["api-server"]}/get-class`, {
       id: classID,
@@ -387,30 +456,30 @@ export default function EnterCodeForm({ match, location }) {
       console.log(userData);
       if (userData?.plan === "Starter") {
         socket.emit("createroom", {
-          room: document.getElementById("roomName").value,
+          room: roomName,
           gamecode: gameCode,
           host: user?.profileObj.googleId,
-          friendly: checked,
+          friendly: friendlyNicknamesGlobal,
           gamemode: gameMode,
           classId: null,
         });
       }
       if (userData.plan === "Classroom") {
         socket.emit("createroom", {
-          room: document.getElementById("roomName").value || "",
+          room: roomName || "",
           gamecode: gameCode,
           host: user?.profileObj.googleId,
-          friendly: checked,
+          friendly: friendlyNicknamesGlobal,
           gamemode: gameMode,
           classId: classID,
         });
       }
     } else {
       socket.emit("createroom", {
-        room: document.getElementById("roomName").value,
+        room: roomName,
         gamecode: gameCode,
         host: user?.profileObj.googleId,
-        friendly: checked,
+        friendly: friendlyNicknamesGlobal,
         gamemode: gameMode,
         classId: null,
       });
@@ -532,7 +601,415 @@ export default function EnterCodeForm({ match, location }) {
           )}
         </div>
       ) : (
-        <div id="subConatainer">
+        <div style={{ marginTop: "120px" }}>
+          {classid != "null" && (
+            <div style={{ display: "flex", alignItems: "flex-start" }}>
+              {classid !== null && (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor: "#3f51b5",
+                    color: "white",
+                    fontWeight: "bold",
+                    borderRadius: "5px",
+                    margin: "2px",
+                    padding: "10px",
+                  }}
+                >
+                  <Typography variant="sub1">
+                    {Translations[userLanguage].play.host.private}
+                  </Typography>
+                </div>
+              )}
+            </div>
+          )}
+          {hostStep === 0 && (
+            <div>
+              <Typography
+                variant="h2"
+                style={{ marginBottom: "30px", color: "white" }}
+              >
+                <b>{Translations[userLanguage].play.host.presets.gamecode}</b>
+              </Typography>
+              <input
+                style={{
+                  width: "300px",
+                  fontSize: "75px",
+                  padding: "10px",
+                  textAlign: "center",
+                }}
+                placeholder={Translations[userLanguage].play.host.input}
+                type="text"
+                id="roomName"
+                value={roomName}
+                onChange={(event) => setRoomName(event.target.value)}
+              />
+              <div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  style={{
+                    fontSize: "1.2rem",
+                    height: "48px",
+                    width: "100%",
+                    marginBottom: "100px",
+                    marginTop: "50px",
+                  }}
+                  onClick={() => {
+                    Generatecode();
+                  }}
+                >
+                  {Translations[userLanguage].play.host.presets.button}{" "}
+                </Button>
+                <div>
+                  <Button
+                    variant="contained"
+                    color="action"
+                    size="large"
+                    style={{
+                      color: "white",
+                      marginRight: "10px",
+                    }}
+                    onClick={() => {
+                      setHostStep(hostStep + 1);
+                    }}
+                  >
+                    {Translations[userLanguage].hostroom.next}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+          {hostStep === 1 && (
+            <div>
+              <Typography
+                variant="h2"
+                style={{ marginBottom: "30px", color: "white" }}
+              >
+                <b>{Translations[userLanguage].play.host.presets.maxplayers}</b>
+              </Typography>
+              <input
+                style={{
+                  width: "300px",
+                  fontSize: "75px",
+                  padding: "10px",
+                  textAlign: "center",
+                }}
+                id="max-players"
+                type="number"
+                min="3"
+                max="90"
+                value={maxPlayers}
+                onChange={(event) => {
+                  if (
+                    event.target.value === null ||
+                    event.target.value === "" ||
+                    event.target.value === undefined
+                  ) {
+                    setMaxPlayers(3);
+                    const array = new Array(parseInt(3)).fill(0);
+                    console.log(array);
+                    setMaxPlayerEmojis(array);
+                    maxPlayersGlobal = 3;
+                    return;
+                  }
+                  setMaxPlayers(parseInt(event.target.value));
+                  maxPlayersGlobal = parseInt(event.target.value);
+                  const array = new Array(parseInt(event.target.value)).fill(0);
+                  setMaxPlayerEmojis(array);
+                }}
+              />
+              <div
+                style={{
+                  margin: "30px",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  flexWrap: "wrap",
+                }}
+              >
+                {maxPlayerEmojis.map((player, index) => {
+                  return (
+                    <div
+                      key={index}
+                      style={{
+                        fontSize: "5rem",
+                      }}
+                    >
+                      {
+                        allEmojis[
+                          index > allEmojis.length - 1
+                            ? Math.floor(Math.random() * 56) + 1
+                            : index
+                        ]
+                      }
+                    </div>
+                  );
+                })}
+              </div>
+              <div style={{ marginTop: "100px" }}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  onClick={() => {
+                    setHostStep(hostStep - 1);
+                  }}
+                >
+                  {Translations[userLanguage].play.join.back}
+                </Button>
+                <Button
+                  variant="contained"
+                  color="action"
+                  size="large"
+                  style={{
+                    color: "white",
+                    marginLeft: "10px",
+                  }}
+                  onClick={() => {
+                    setHostStep(hostStep + 1);
+                  }}
+                >
+                  {Translations[userLanguage].hostroom.next}
+                </Button>
+              </div>
+            </div>
+          )}
+          {hostStep === 2 && (
+            <div>
+              <Typography
+                variant="h2"
+                style={{ marginBottom: "30px", color: "white" }}
+              >
+                <b>
+                  {Translations[userLanguage].play.host.presets.podiumplaces}
+                </b>
+              </Typography>
+              <input
+                style={{
+                  width: "300px",
+                  fontSize: "75px",
+                  padding: "10px",
+                  textAlign: "center",
+                }}
+                onChange={(event) => {
+                  if (
+                    event.target.value === null ||
+                    event.target.value === "" ||
+                    event.target.value === undefined
+                  ) {
+                    setPodiumPlaces(3);
+                    const array = new Array(parseInt(3)).fill(0);
+                    console.log(array);
+                    setPodiumPlacesArr(array);
+                    podiumPlacesGlobal = 3;
+                    return;
+                  }
+                  setPodiumPlaces(parseInt(event.target.value));
+                  podiumPlacesGlobal = parseInt(event.target.value);
+                  const array = new Array(parseInt(event.target.value)).fill(0);
+                  setPodiumPlacesArr(array);
+                }}
+                id="podium-places"
+                type="number"
+                min="3"
+                max="90"
+                value={podiumPlaces}
+              />
+              <div
+                style={{
+                  margin: "30px",
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  flexWrap: "wrap",
+                }}
+              >
+                {podiumPlacesArr.map((player, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      fontSize: "5rem",
+                    }}
+                  >
+                    {index === 0
+                      ? "🥇"
+                      : index === 1
+                      ? "🥈"
+                      : index === 2
+                      ? "🥉"
+                      : "🏅"}
+                  </div>
+                ))}
+              </div>
+              <div style={{ marginTop: "100px" }}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  onClick={() => {
+                    setHostStep(hostStep - 1);
+                  }}
+                >
+                  {Translations[userLanguage].play.join.back}
+                </Button>
+                <Button
+                  variant="contained"
+                  color="action"
+                  size="large"
+                  style={{
+                    color: "white",
+                    marginLeft: "10px",
+                  }}
+                  onClick={() => {
+                    setHostStep(hostStep + 1);
+                  }}
+                >
+                  {Translations[userLanguage].hostroom.next}
+                </Button>
+              </div>
+            </div>
+          )}
+          {hostStep === 3 && (
+            <div>
+              <Typography
+                variant="h2"
+                style={{ marginBottom: "30px", color: "white" }}
+              >
+                <b>{Translations[userLanguage].play.host.presets.friendly}</b>
+              </Typography>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "white",
+                  border: "2px solid black",
+                  boxShadow: "10px 10px 0 #262626",
+                  padding: "10px",
+                }}
+              >
+                <Button
+                  variant={isFriendlyNicknames ? "contained" : "outlined"}
+                  color="success"
+                  size="large"
+                  style={{
+                    padding: "25px",
+                    fontSize: "4.5rem",
+                    margin: "20px",
+                  }}
+                  onClick={() => {
+                    setIsFriendlyNicknames(true);
+                    friendlyNicknamesGlobal = true;
+                  }}
+                >
+                  {Translations[userLanguage].play.host.presets.yes}
+                </Button>
+                <Button
+                  variant={isFriendlyNicknames ? "outlined" : "contained"}
+                  color="secondary"
+                  size="large"
+                  style={{ padding: "25px", fontSize: "4.5rem" }}
+                  onClick={() => {
+                    setIsFriendlyNicknames(false);
+                    friendlyNicknamesGlobal = false;
+                  }}
+                >
+                  {Translations[userLanguage].play.host.presets.no}
+                </Button>
+              </div>
+              <div style={{ marginTop: "100px" }}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  onClick={() => {
+                    setHostStep(hostStep - 1);
+                  }}
+                >
+                  {Translations[userLanguage].play.join.back}
+                </Button>
+                <Button
+                  variant="contained"
+                  color="action"
+                  size="large"
+                  style={{
+                    color: "white",
+                    marginLeft: "10px",
+                  }}
+                  onClick={() => {
+                    setHostStep(hostStep + 1);
+                  }}
+                >
+                  {Translations[userLanguage].hostroom.next}
+                </Button>
+              </div>
+            </div>
+          )}
+          {hostStep === 4 && (
+            <div>
+              <Typography
+                variant="h2"
+                style={{ marginBottom: "100px", color: "white" }}
+              >
+                <b>{Translations[userLanguage].play.host.presets.ready}</b>
+              </Typography>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  style={{
+                    padding: "25px",
+                    fontSize: "4.5rem",
+                    margin: "20px",
+                  }}
+                  onClick={() => {
+                    setHostStep(hostStep - 1);
+                  }}
+                >
+                  {Translations[userLanguage].play.join.back}
+                </Button>
+                <Button
+                  variant="contained"
+                  color="success"
+                  size="large"
+                  style={{
+                    padding: "25px",
+                    fontSize: "4.5rem",
+                    minWidth: "484px",
+                    minHeight: "176px",
+                  }}
+                  onClick={() => {
+                    CreateRoom();
+                  }}
+                >
+                  {spinner2 ? (
+                    <CircularProgress size={72} style={{ color: "white" }} />
+                  ) : (
+                    Translations[userLanguage].play.host.presets.button2
+                  )}
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/*<div id="subConatainer">
           {classid != "null" && (
             <div style={{ display: "flex", alignItems: "flex-start" }}>
               {classid !== null && (
@@ -602,12 +1079,12 @@ export default function EnterCodeForm({ match, location }) {
               </label>
               <Switch
                 size="small"
-                checked={checked}
+                friendlyNicknamesGlobal={friendlyNicknamesGlobal}
                 onChange={() => {
                   toggleChecked();
                 }}
                 color="primary"
-                name="checked"
+                name="friendlyNicknamesGlobal"
                 inputProps={{ "aria-label": "primary checkbox" }}
               />
             </div>
@@ -640,8 +1117,4 @@ export default function EnterCodeForm({ match, location }) {
               Translations[userLanguage].play.host.presets.button2
             )}
           </Button>
-        </div>
-      )}
-    </div>
-  );
-}
+        </div>*/

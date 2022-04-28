@@ -4,24 +4,42 @@ import { Chip, Avatar, Typography } from "@mui/material";
 import { useState } from "react";
 import Placeholder from "../../img/quizCoverPlaceholder.png";
 
-const QuizCard = ({ data, isPrivate, tags }) => {
+const QuizCard = ({ data, isPrivate, tags, classID }) => {
   const [userLanguage] = useState(
     localStorage.getItem("connectLanguage") || "english"
   );
-  const handleQuizClick = (key, type, isPrivate) => {
-    if (isPrivate) {
-      if (type === "Quiz") {
-        window.location = `/quiz/normal/private/${key}`;
-      }
-      if (type === "Multi") {
-        window.location = `/quiz/multi/private/${key}`;
+  const handleQuizClick = (key, type, isPrivate, classID) => {
+    if (classID) {
+      if (isPrivate) {
+        if (type === "Quiz") {
+          window.location = `/quiz/normal/private/${key}?classid=${classID}`;
+        }
+        if (type === "Multi") {
+          window.location = `/quiz/multi/private/${key}?classid=${classID}`;
+        }
+      } else {
+        if (type === "Quiz") {
+          window.location = `/quiz/normal/${key}?classid=${classID}`;
+        }
+        if (type === "Multi") {
+          window.location = `/quiz/multi/${key}?classid=${classID}`;
+        }
       }
     } else {
-      if (type === "Quiz") {
-        window.location = `/quiz/normal/${key}`;
-      }
-      if (type === "Multi") {
-        window.location = `/quiz/multi/${key}`;
+      if (isPrivate) {
+        if (type === "Quiz") {
+          window.location = `/quiz/normal/private/${key}`;
+        }
+        if (type === "Multi") {
+          window.location = `/quiz/multi/private/${key}`;
+        }
+      } else {
+        if (type === "Quiz") {
+          window.location = `/quiz/normal/${key}`;
+        }
+        if (type === "Multi") {
+          window.location = `/quiz/multi/${key}`;
+        }
       }
     }
   };
@@ -34,7 +52,7 @@ const QuizCard = ({ data, isPrivate, tags }) => {
         <div
           className="quiz__card"
           onClick={() => {
-            handleQuizClick(data._id, data.__typename, isPrivate);
+            handleQuizClick(data._id, data.__typename, isPrivate, classID);
           }}
         >
           <img
