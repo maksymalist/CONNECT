@@ -378,18 +378,18 @@ function MultiGameRoom({ match }) {
       console.log(position2);
 
       if (position2 === 0) {
-        updateTime((prev) => (time = prev += 15));
+        updateTime((prev) => (time = prev += 25));
       }
 
-      if (position2 === 1) {
-        updateTime((prev) => (time = prev -= 15));
-      }
-      if (position2 === 2) {
-        updateTime((prev) => (time = prev -= 10));
-      }
-      if (position2 === 3) {
-        updateTime((prev) => (time = prev -= 5));
-      }
+      // if (position2 === 1) {
+      //   updateTime((prev) => (time = prev -= 15));
+      // }
+      // if (position2 === 2) {
+      //   updateTime((prev) => (time = prev -= 10));
+      // }
+      // if (position2 === 3) {
+      //   updateTime((prev) => (time = prev -= 5));
+      // }
 
       setPosition(0);
       position2 = 0;

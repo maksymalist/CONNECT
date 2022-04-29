@@ -8,33 +8,29 @@ function PositionScreen({ position, player }) {
   );
   return (
     <div>
-      <div
-        style={{ display: "flex", width: "100vw", justifyContent: "flex-end" }}
-      >
+      {position === 0 && (
         <div
           style={{
-            marginRight: "20px",
-            marginTop: "20px",
-            backgroundColor: position === 0 ? "rgb(220, 0, 78)" : "#1bb978",
-            borderRadius: "5px",
-            padding: "10px",
+            display: "flex",
+            width: "100vw",
+            justifyContent: "flex-end",
           }}
         >
-          <Typography variant="sub1" style={{ color: "white" }}>
-            <b>
-              {position === 0
-                ? "+15s"
-                : position === 1
-                ? "-15s"
-                : position === 2
-                ? "-10s"
-                : position === 3
-                ? "-5s"
-                : "-0s"}
-            </b>
-          </Typography>
+          <div
+            style={{
+              marginRight: "20px",
+              marginTop: "20px",
+              backgroundColor: position === 0 ? "rgb(220, 0, 78)" : "#1bb978",
+              borderRadius: "5px",
+              padding: "10px",
+            }}
+          >
+            <Typography variant="sub1" style={{ color: "white" }}>
+              <b>+ 25s</b>
+            </Typography>
+          </div>
         </div>
-      </div>
+      )}
       <Typography
         variant="h2"
         style={{ color: "white", marginTop: "100px", marginBottom: "50px" }}
