@@ -240,15 +240,15 @@
       },
       "ended": "Your host has ended the game :(",
       "winner": {
-        "title": "You won the game!",
+        "title": "1st place",
         "sub": "Congrats!"
       },
       "second": {
-        "title": "You finished second",
+        "title": "2nd place",
         "sub": "I know you can do better!"
       },
       "third": {
-        "title": "You finished third",
+        "title": "3rd place",
         "sub": "At least you're on the podium!"
       },
       "loser": {
@@ -725,20 +725,20 @@
       },
       "ended": "Le hôte a terminé le jeu",
       "winner": {
-        "title": "Vous avez gagné",
+        "title": "1ère place",
         "sub": "Bravo !"
       },
       "second": {
-        "title": "Vous êtes second",
+        "title": "2ème place",
         "sub": "Je le sais, que vous aviez pu faire mieux!"
       },
       "third": {
-        "title": "Vous êtes troisième",
+        "title": "3ème place",
         "sub": "Au moins vous êtes sur le podium !"
       },
       "loser": {
         "title1": "Vous avez eu la ",
-        "title2": "iem place",
+        "title2": "ème place",
         "sub": "Meilleur chance la prochaine fois !"
       },
       "over": {
