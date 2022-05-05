@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion/dist/framer-motion";
 import Confetti from "react-confetti";
 import "../../../style/podiumAnimation.css";
+import { Howl, Howler } from "howler";
+import soundEffect from "../../../audio/drum_roll.mp3";
 
 function PodiumAnimation({ podium, maxPodiumPlayers }) {
+  //{ podium, maxPodiumPlayers }
+
   // const podium = [
   //   {
   //     player: "John Doe 💳🔗🔒",
@@ -68,6 +72,13 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
   // ];
 
   // const maxPodiumPlayers = 10;
+
+  const PlaySound = (mp3) => {
+    let sound = new Howl({
+      src: mp3,
+    });
+    sound.play();
+  };
 
   const FirstPlace = ({ name }) => {
     return (
@@ -253,6 +264,13 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
     );
   };
 
+  useEffect(() => {
+    if (podium.length <= 0) return;
+    PlaySound(soundEffect);
+  }, [podium]);
+
+  Howler.volume(1.0);
+
   return (
     <>
       <Confetti
@@ -268,7 +286,6 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
             alignItems: "flex-end",
             width: "100%",
             justifyContent: "center",
-            height: "650px",
             overflow: "hidden",
           }}
         >

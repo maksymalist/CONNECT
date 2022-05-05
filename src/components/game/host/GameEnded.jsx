@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PodiumAnimation from "./PodiumAnimation";
 import Translations from "../../../translations/translations.json";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 export default function GameEnded(props) {
   const [userLanguage] = useState(
@@ -23,9 +23,13 @@ export default function GameEnded(props) {
         flexDirection: "column",
       }}
     >
-      <h1 style={{ color: "white" }}>
-        {Translations[userLanguage].gameended.title}
-      </h1>
+      <Typography variant="h3" style={{ color: "white", marginBottom: "50px" }}>
+        <b>{Translations[userLanguage].gameended.title}</b>
+      </Typography>
+      <PodiumAnimation
+        maxPodiumPlayers={props.maxPodiumPlayers}
+        podium={props.podium}
+      />
       <div>
         <Button
           variant="contained"
@@ -35,10 +39,6 @@ export default function GameEnded(props) {
           {Translations[userLanguage].finishedscreen.return}
         </Button>
       </div>
-      <PodiumAnimation
-        maxPodiumPlayers={props.maxPodiumPlayers}
-        podium={props.podium}
-      />
     </div>
   );
 }
