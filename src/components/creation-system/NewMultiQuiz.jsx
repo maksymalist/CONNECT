@@ -192,14 +192,14 @@ function NewMultiQuiz() {
                 SaveQuestion(subIndex, index, question, answer, type)
               }
             >
-              ✨ Save ✨
+              ✨ {Translations[userLanguage].newmultiquiz.questions.save} ✨
             </Button>
             <div style={{ width: "10px", height: "10px" }} />
             <Button
               color="secondary"
               onClick={() => DeleteQuestion(subIndex, index)}
             >
-              ❌ Delete ❌
+              ❌ {Translations[userLanguage].newmultiquiz.questions.delete} ❌
             </Button>
           </div>
         </div>
@@ -291,14 +291,14 @@ function NewMultiQuiz() {
                 SaveQuestion(subIndex, index, question, answer, type)
               }
             >
-              ✨ Save ✨
+              ✨ {Translations[userLanguage].newmultiquiz.questions.save} ✨
             </Button>
             <div style={{ width: "10px", height: "10px" }} />
             <Button
               color="secondary"
               onClick={() => DeleteQuestion(subIndex, index)}
             >
-              ❌ Delete ❌
+              ❌ {Translations[userLanguage].newmultiquiz.questions.delete} ❌
             </Button>
           </div>
         </div>
@@ -417,7 +417,7 @@ function NewMultiQuiz() {
     newQuizArray[subjectIndex].cards[questionIndex].question = question;
     newQuizArray[subjectIndex].cards[questionIndex].answer = answer;
     setQuizArray(newQuizArray);
-    toast.success("Saved ✨", {
+    toast.success(Translations[userLanguage].alerts.saved, {
       autoClose: 500,
     });
   };
@@ -425,7 +425,7 @@ function NewMultiQuiz() {
     const newQuizArray = [...quizArray];
     newQuizArray[subjectIndex].cards.splice(questionIndex, 1);
     setQuizArray(newQuizArray);
-    toast.error("Deleted ❌", {
+    toast.error(Translations[userLanguage].alerts.deleted, {
       autoClose: 500,
     });
   };
@@ -442,7 +442,7 @@ function NewMultiQuiz() {
     const newQuizArray = [...quizArray];
     newQuizArray[subjectIndex].name = name;
     setQuizArray(newQuizArray);
-    toast.success("Saved ✨", {
+    toast.success(Translations[userLanguage].alerts.saved, {
       autoClose: 500,
     });
   };
@@ -451,7 +451,7 @@ function NewMultiQuiz() {
     const newQuizArray = [...quizArray];
     newQuizArray.splice(subjectIndex, 1);
     setQuizArray(newQuizArray);
-    toast.error("Deleted ❌", {
+    toast.error(Translations[userLanguage].alerts.deleted, {
       autoClose: 500,
     });
   };
@@ -616,7 +616,7 @@ function NewMultiQuiz() {
           }}
         >
           <Typography variant="h3" style={{ textAlign: "center" }}>
-            Select Card Type 💡
+            {Translations[userLanguage].newmultiquiz.questions.select}
           </Typography>
           <br></br>
           <Divider />

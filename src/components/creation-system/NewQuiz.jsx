@@ -300,11 +300,11 @@ export default function NewQuiz() {
               color="success"
               onClick={() => SaveQuestion(question, answer, index)}
             >
-              ✨ Save ✨
+              ✨ {Translations[userLanguage].newquiz.questions.save} ✨
             </Button>
             <div style={{ width: "10px", height: "10px" }} />
             <Button color="secondary" onClick={() => DeleteQuestion(index)}>
-              ❌ Delete ❌
+              ❌ {Translations[userLanguage].newquiz.questions.delete} ❌
             </Button>
           </div>
         </div>
@@ -393,11 +393,11 @@ export default function NewQuiz() {
               color="success"
               onClick={() => SaveQuestion(question, answer, index)}
             >
-              ✨ Save ✨
+              ✨ {Translations[userLanguage].newquiz.questions.save} ✨
             </Button>
             <div style={{ width: "10px", height: "10px" }} />
             <Button color="secondary" onClick={() => DeleteQuestion(index)}>
-              ❌ Delete ❌
+              ❌ {Translations[userLanguage].newquiz.questions.delete} ❌
             </Button>
           </div>
         </div>
@@ -431,7 +431,7 @@ export default function NewQuiz() {
     newQuestionArray[index].answer = answer;
     setQuestionArray(newQuestionArray);
 
-    toast.success("Saved ✨", {
+    toast.success(Translations[userLanguage].alerts.saved, {
       autoClose: 500,
     });
   };
@@ -441,7 +441,7 @@ export default function NewQuiz() {
     newQuestionArray.splice(index, 1);
     setQuestionArray(newQuestionArray);
 
-    toast.error("Deleted ❌", {
+    toast.error(Translations[userLanguage].alerts.delete, {
       autoClose: 500,
     });
   };
@@ -494,7 +494,7 @@ export default function NewQuiz() {
           }}
         >
           <Typography variant="h3" style={{ textAlign: "center" }}>
-            Select Card Type 💡
+            {Translations[userLanguage].newquiz.questions.select}
           </Typography>
           <br></br>
           <Divider />

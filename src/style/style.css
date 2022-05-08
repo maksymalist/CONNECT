@@ -1069,4 +1069,5 @@ footer a {
 
 .MuiButton-root {
   text-transform: lowercase !important;
+  font-weight: bold !important;
 }
