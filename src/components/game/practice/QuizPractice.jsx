@@ -54,6 +54,7 @@ export default function GameRoom({ match }) {
       cards.push({
         question: question.question,
         ans: question.answer,
+        type: question.type === undefined ? "ques_ans" : question.type,
       });
     });
     GetCards();
@@ -84,7 +85,14 @@ export default function GameRoom({ match }) {
               CardClick(item, ans, item, i);
             }}
           >
-            {item}
+            {cards[randomNum[i]].type === "ques_ans" && item}
+            {cards[randomNum[i]].type === "ques_img" && (
+              <img
+                src={item}
+                alt="quiz-cover"
+                style={{ width: "100%", height: "100%" }}
+              />
+            )}
           </div>
         </>,
         newCard
@@ -126,7 +134,7 @@ export default function GameRoom({ match }) {
       },
     ]);
     document.getElementById(id).style =
-      "color: rgb(99, 108, 255); font-weight: bold;";
+      "color: rgb(99, 108, 255); font-weight: bold; transform: scale(1.05);";
 
     memory.push({
       question: ques,
@@ -142,7 +150,6 @@ export default function GameRoom({ match }) {
       }
       if (memory[0].question == memory[1].question) {
         if (memory[0].index == memory[1].index) {
-          updateTime((prev) => (time = prev += 5));
           memory = [];
           setSelected((selected = []));
           return;

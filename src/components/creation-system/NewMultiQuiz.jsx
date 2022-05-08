@@ -9,6 +9,7 @@ import {
   Divider,
   Switch,
   TextareaAutosize,
+  ClickAwayListener,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import { AddCircleRounded, SaveAs, DeleteRounded } from "@mui/icons-material";
@@ -23,6 +24,12 @@ import { useMutation, gql } from "@apollo/client";
 //hooks
 import getUser from "../../hooks/getUser";
 import useUnsavedChangesWarning from "../../hooks/useUnsavedChangesWarning";
+
+//imgs
+import QuesImg from "../../img/CardType/Image_Answer.svg";
+import QuesAns from "../../img/CardType/Question_Answer.svg";
+import uploadImg from "../../img/uploadImg.svg";
+import CropperComponent from "../misc/CropperComponent";
 
 const CREATE_MULTI_QUIZ = gql`
   mutation createMulti(
@@ -102,64 +109,198 @@ function NewMultiQuiz() {
   ] = useMutation(CREATE_PRIVATE_MULTI_QUIZ);
 
   const [isPrivate, setIsPrivate] = useState(false);
+  const [isAddQuestion, setIsAddQuestion] = useState({
+    isAddQuestion: false,
+    subIndex: null,
+  });
+  const [isUploadingCard, setIsUploadingCard] = useState({
+    isUploading: false,
+    subIndex: null,
+    questionIndex: null,
+  });
 
   useEffect(() => {
     toast.info(Translations[userLanguage].alerts.eachansdifferent);
   }, []);
 
-  const Card = ({ subIndex, data, index }) => {
+  const Card = ({ data, index, subIndex }) => {
     const [question, setQuestion] = useState(data.question);
     const [answer, setAnswer] = useState(data.answer);
 
+    const type = data.type;
+
     return (
       <div className="card2">
-        <Typography variant="h3" style={{ textAlign: "right" }}>
-          {index + 1}
-        </Typography>
-        <input
-          className="questions userInput"
-          onChange={(e) => setQuestion(e.target.value)}
-          value={question}
-          type="text"
-          placeholder={
-            Translations[userLanguage].newquiz.questions.question + " 💭"
-          }
-        />
-        <br></br>
-        <TextareaAutosize
-          className="answers userInput"
-          onChange={(e) => setAnswer(e.target.value)}
-          value={answer}
-          style={{
-            minWidth: "160px",
-            width: "160px",
-            height: "100px",
-            maxHeight: "150px",
-            borderRadius: "5px",
-            border: "1px solid #e0e0e0",
-          }}
-          placeholder={
-            Translations[userLanguage].newquiz.questions.answer + "💡"
-          }
-        />
         <div
           style={{
             display: "flex",
             width: "100%",
-            justifyContent: "flex-end",
+            height: "100%",
+            flexDirection: "column",
+            justifyContent: "space-between",
           }}
         >
-          <SaveAs
-            htmlColor="#1bb978"
-            style={{ width: "30px", height: "30px" }}
-            onClick={() => SaveQuestion(subIndex, index, question, answer)}
-          />
-          <div style={{ width: "10px", height: "10px" }} />
-          <DeleteRounded
-            color="secondary"
-            style={{ width: "30px", height: "30px" }}
-            onClick={() => DeleteQuestion(subIndex, index)}
-          />
+          <div>
+            <Typography variant="h3" style={{ textAlign: "left" }}>
+              {index + 1}
+            </Typography>
+
+            <TextareaAutosize
+              className="questions userInput"
+              onChange={(e) => setQuestion(e.target.value)}
+              value={question}
+              style={{
+                minWidth: "250px",
+                width: "250px",
+                height: "100px",
+                maxHeight: "150px",
+                borderRadius: "5px",
+                border: "1px solid #e0e0e0",
+              }}
+              placeholder={
+                Translations[userLanguage].newquiz.questions.question + " 💭"
+              }
+            />
+            <br></br>
+            <TextareaAutosize
+              className="answers userInput"
+              onChange={(e) => setAnswer(e.target.value)}
+              value={answer}
+              style={{
+                minWidth: "250px",
+                width: "250px",
+                height: "100px",
+                maxHeight: "150px",
+                borderRadius: "5px",
+                border: "1px solid #e0e0e0",
+              }}
+              placeholder={
+                Translations[userLanguage].newquiz.questions.answer + "💡"
+              }
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Button
+              color="success"
+              onClick={() =>
+                SaveQuestion(subIndex, index, question, answer, type)
+              }
+            >
+              ✨ Save ✨
+            </Button>
+            <div style={{ width: "10px", height: "10px" }} />
+            <Button
+              color="secondary"
+              onClick={() => DeleteQuestion(subIndex, index)}
+            >
+              ❌ Delete ❌
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const CardImg = ({ data, index, subIndex }) => {
+    const [question, setQuestion] = useState(data.question);
+    const [answer, setAnswer] = useState(data.answer);
+
+    const type = data.type;
+
+    return (
+      <div className="card2">
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            height: "100%",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
+          <div>
+            <Typography variant="h3" style={{ textAlign: "left" }}>
+              {index + 1}
+            </Typography>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              <div
+                onClick={() => {
+                  setIsUploadingCard({
+                    isUploading: true,
+                    subIndex: subIndex,
+                    questionIndex: index,
+                  });
+                }}
+                className="upload-box-button"
+              >
+                {question === "" ? (
+                  <img
+                    src={uploadImg}
+                    alt="upload"
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                ) : (
+                  <img
+                    src={question}
+                    alt="upload"
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                )}
+              </div>
+            </div>
+            <br></br>
+            <TextareaAutosize
+              className="answers userInput"
+              onChange={(e) => setAnswer(e.target.value)}
+              value={answer}
+              style={{
+                minWidth: "250px",
+                width: "250px",
+                height: "100px",
+                maxHeight: "150px",
+                borderRadius: "5px",
+                border: "1px solid #e0e0e0",
+              }}
+              placeholder={
+                Translations[userLanguage].newquiz.questions.answer + "💡"
+              }
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Button
+              color="success"
+              onClick={() =>
+                SaveQuestion(subIndex, index, question, answer, type)
+              }
+            >
+              ✨ Save ✨
+            </Button>
+            <div style={{ width: "10px", height: "10px" }} />
+            <Button
+              color="secondary"
+              onClick={() => DeleteQuestion(subIndex, index)}
+            >
+              ❌ Delete ❌
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -197,17 +338,29 @@ function NewMultiQuiz() {
           />
         </div>
         <div className="cardContainer2" style={{ margin: "1%" }}>
-          {subjectCards.map((card, i) => (
-            <Card
-              key={card.question + index}
-              subIndex={index}
-              data={card}
-              index={i}
-            />
-          ))}
+          {subjectCards.map((card, i) =>
+            card.type === "ques_ans" ? (
+              <Card
+                key={card.question + index}
+                subIndex={index}
+                data={card}
+                index={i}
+              />
+            ) : card.type === "ques_img" ? (
+              <CardImg
+                key={card.question + index}
+                subIndex={index}
+                data={card}
+                index={i}
+              />
+            ) : null
+          )}
           <div
             onClick={() => {
-              AddQuestion(index);
+              setIsAddQuestion({
+                subIndex: index,
+                isAddQuestion: true,
+              });
             }}
             className="card2-2"
             style={{
@@ -226,11 +379,12 @@ function NewMultiQuiz() {
     );
   };
 
-  const AddQuestion = (subjectIndex) => {
+  const AddQuestion = (subjectIndex, type) => {
     if (quizArray[subjectIndex].cards.length >= 12) return;
     const card = {
       question: "",
       answer: "",
+      type: type,
     };
     const newQuizArray = [...quizArray];
     console.log(newQuizArray);
@@ -239,7 +393,26 @@ function NewMultiQuiz() {
     setQuizArray(newQuizArray);
   };
 
-  const SaveQuestion = (subjectIndex, questionIndex, question, answer) => {
+  const setImage = (subjectIndex, questionIndex, img) => {
+    const newQuizArray = [...quizArray];
+    console.log(subjectIndex, questionIndex, img);
+    console.log(newQuizArray[subjectIndex].cards);
+    newQuizArray[subjectIndex].cards[questionIndex].question = img;
+    setQuizArray(newQuizArray);
+    setIsUploadingCard({
+      subjectIndex: null,
+      questionIndex: null,
+      isUploading: false,
+    });
+  };
+
+  const SaveQuestion = (
+    subjectIndex,
+    questionIndex,
+    question,
+    answer,
+    type
+  ) => {
     const newQuizArray = [...quizArray];
     newQuizArray[subjectIndex].cards[questionIndex].question = question;
     newQuizArray[subjectIndex].cards[questionIndex].answer = answer;
@@ -413,209 +586,302 @@ function NewMultiQuiz() {
     setTagNumber(newTags.length);
   };
 
-  return (
-    <div style={{ marginTop: "100px" }}>
-      {Prompt}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "column",
-          backgroundColor: "white",
-          margin: "10px",
-          border: "2px solid black",
-          boxShadow: "10px 10px 0 #262626",
+  const AddQuestionForm = () => (
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "fixed",
+        top: "0",
+        zIndex: "9999",
+        backgroundColor: "rgba(0,0,0,0.5)",
+      }}
+    >
+      <ClickAwayListener
+        onClickAway={() => {
+          setIsAddQuestion(false);
         }}
       >
         <div
           style={{
+            width: "100%",
+            maxWidth: "600px",
+            height: "auto",
+            backgroundColor: "white",
+            border: "2px solid black",
+            padding: "10px",
+          }}
+        >
+          <Typography variant="h3" style={{ textAlign: "center" }}>
+            Select Card Type 💡
+          </Typography>
+          <br></br>
+          <Divider />
+          <br></br>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <div
+              className="card_type"
+              style={{
+                margin: "20px",
+                border: "2px solid black",
+              }}
+              onClick={() => {
+                AddQuestion(isAddQuestion.subIndex, "ques_ans");
+              }}
+            >
+              <img src={QuesAns} style={{ width: "150px", height: "150px" }} />
+            </div>
+            <div
+              className="card_type"
+              style={{
+                margin: "20px",
+                border: "2px solid black",
+              }}
+              onClick={() => {
+                AddQuestion(isAddQuestion.subIndex, "ques_img");
+              }}
+            >
+              <img src={QuesImg} style={{ width: "150px", height: "150px" }} />
+            </div>
+          </div>
+        </div>
+      </ClickAwayListener>
+    </div>
+  );
+
+  return (
+    <>
+      {isAddQuestion.isAddQuestion ? <AddQuestionForm /> : null}
+      {isUploadingCard.isUploading ? (
+        <CropperComponent
+          setImage={setImage}
+          index={isUploadingCard.questionIndex}
+          subIndex={isUploadingCard.subIndex}
+          mode={"multi"}
+          close={() => {
+            setIsUploadingCard({
+              questionIndex: null,
+              subIndex: null,
+              isUploading: false,
+            });
+          }}
+        />
+      ) : null}
+      <div style={{ marginTop: "100px" }}>
+        {Prompt}
+        <div
+          style={{
             display: "flex",
             alignItems: "center",
             flexDirection: "column",
+            backgroundColor: "white",
+            margin: "10px",
+            border: "2px solid black",
+            boxShadow: "10px 10px 0 #262626",
           }}
         >
-          <Typography variant="h2" style={{ margin: "10px" }}>
-            <b>{Translations[userLanguage].newmultiquiz.title}</b>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Typography variant="h2" style={{ margin: "10px" }}>
+              <b>{Translations[userLanguage].newmultiquiz.title}</b>
+            </Typography>
+            <br></br>
+            <Divider style={{ width: "90vw" }} light />
+            <br></br>
+            <input
+              ref={quizName}
+              className="userInput quizName"
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+              type="text"
+              placeholder={Translations[userLanguage].newmultiquiz.input}
+            ></input>
+          </div>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+              marginTop: "10px",
+            }}
+          >
+            <UploadButton imgRef={imgRef} />
+          </div>
+          <ReactQuill
+            theme="snow"
+            value={description}
+            placeholder={Translations[userLanguage].newmultiquiz.description}
+            onChange={setDescription}
+            style={{
+              width: "100%",
+              maxWidth: "700px",
+              height: "400px",
+              marginTop: "10px",
+              marginBottom: "50px",
+            }}
+          />
+          <div
+            style={{
+              backgroundColor: "white",
+              padding: "15px",
+              border: "2px solid black",
+              boxShadow: "10px 10px 0 #262626",
+              width: "80vw",
+              maxWidth: "700px",
+              marginTop: "10px",
+            }}
+          >
+            <Typography variant="h4">
+              {Translations[userLanguage].newmultiquiz.tags.title}
+            </Typography>
+            <br></br>
+            <Divider light />
+            <br></br>
+            <TextField
+              variant="outlined"
+              size="small"
+              label="Tag Name"
+              helperText={
+                <span style={{ color: "black" }}>
+                  {5 - tagNumber}{" "}
+                  {Translations[userLanguage].newmultiquiz.tags.helpertext}
+                </span>
+              }
+              onChange={(e) => {
+                setCurrentTag(e.target.value);
+              }}
+              value={currentTag}
+            />
+            <Button
+              variant="contained"
+              size="medium"
+              color="primary"
+              onClick={() => {
+                AddTag(currentTag);
+              }}
+            >
+              {Translations[userLanguage].newmultiquiz.tags.button}
+            </Button>
+            <br></br>
+            {tags.map((tag, index) => (
+              <Chip
+                style={{ marginTop: "10px" }}
+                key={tag + index}
+                id={tag + index}
+                label={"#" + tag}
+                onDelete={() => handleDelete(tag + index, tag)}
+                color="primary"
+              />
+            ))}
+          </div>
+          <Typography
+            variant="h4"
+            style={{ margin: "10px", marginTop: "50px" }}
+          >
+            {Translations[userLanguage].newmultiquiz.qna}
           </Typography>
           <br></br>
           <Divider style={{ width: "90vw" }} light />
           <br></br>
-          <input
-            ref={quizName}
-            className="userInput quizName"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-            type="text"
-            placeholder={Translations[userLanguage].newmultiquiz.input}
-          ></input>
-        </div>
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
-            marginTop: "10px",
-          }}
-        >
-          <UploadButton imgRef={imgRef} />
-        </div>
-        <ReactQuill
-          theme="snow"
-          value={description}
-          placeholder={Translations[userLanguage].newmultiquiz.description}
-          onChange={setDescription}
-          style={{
-            width: "100%",
-            maxWidth: "700px",
-            height: "400px",
-            marginTop: "10px",
-            marginBottom: "50px",
-          }}
-        />
-        <div
-          style={{
-            backgroundColor: "white",
-            padding: "15px",
-            border: "2px solid black",
-            boxShadow: "10px 10px 0 #262626",
-            width: "80vw",
-            maxWidth: "700px",
-            marginTop: "10px",
-          }}
-        >
-          <Typography variant="h4">
-            {Translations[userLanguage].newmultiquiz.tags.title}
-          </Typography>
-          <br></br>
-          <Divider light />
-          <br></br>
-          <TextField
-            variant="outlined"
-            size="small"
-            label="Tag Name"
-            helperText={
-              <span style={{ color: "black" }}>
-                {5 - tagNumber}{" "}
-                {Translations[userLanguage].newmultiquiz.tags.helpertext}
-              </span>
-            }
-            onChange={(e) => {
-              setCurrentTag(e.target.value);
-            }}
-            value={currentTag}
-          />
-          <Button
-            variant="contained"
-            size="medium"
-            color="primary"
-            onClick={() => {
-              AddTag(currentTag);
-            }}
-          >
-            {Translations[userLanguage].newmultiquiz.tags.button}
-          </Button>
-          <br></br>
-          {tags.map((tag, index) => (
-            <Chip
-              style={{ marginTop: "10px" }}
-              key={tag + index}
-              id={tag + index}
-              label={"#" + tag}
-              onDelete={() => handleDelete(tag + index, tag)}
-              color="primary"
-            />
-          ))}
-        </div>
-        <Typography variant="h4" style={{ margin: "10px", marginTop: "50px" }}>
-          {Translations[userLanguage].newmultiquiz.qna}
-        </Typography>
-        <br></br>
-        <Divider style={{ width: "90vw" }} light />
-        <br></br>
-        <div
-          className="cardContainer2-sub"
-          id="cardContainer2-sub"
-          style={{ margin: "1%", marginTop: "100px" }}
-        >
-          {quizArray.map((subject, index) => {
-            return (
-              <Subject
-                key={index}
-                index={index}
-                name={subject.name}
-                cards={subject.cards}
-              />
-            );
-          })}
           <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "100%",
-            }}
+            className="cardContainer2-sub"
+            id="cardContainer2-sub"
+            style={{ margin: "1%", marginTop: "100px" }}
           >
+            {quizArray.map((subject, index) => {
+              return (
+                <Subject
+                  key={index}
+                  index={index}
+                  name={subject.name}
+                  cards={subject.cards}
+                />
+              );
+            })}
             <div
-              onClick={() => {
-                AddSubject();
-              }}
-              className="card2-2-subject"
               style={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                width: "100%",
               }}
             >
-              <AddCircleRounded
-                style={{ width: "75px", height: "75px" }}
-                color="primary"
-              />
+              <div
+                onClick={() => {
+                  AddSubject();
+                }}
+                className="card2-2-subject"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <AddCircleRounded
+                  style={{ width: "75px", height: "75px" }}
+                  color="primary"
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
           <div
             style={{
               display: "flex",
-              flexDirection: "row",
+              flexDirection: "column",
               alignItems: "center",
             }}
           >
-            <Typography variant="subtitle1" style={{ margin: "10px" }}>
-              {Translations[userLanguage].newmultiquiz.private}
-            </Typography>
-            <Switch
-              size="medium"
-              checked={isPrivate}
-              onChange={() => {
-                setIsPrivate(!isPrivate);
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
               }}
+            >
+              <Typography variant="subtitle1" style={{ margin: "10px" }}>
+                {Translations[userLanguage].newmultiquiz.private}
+              </Typography>
+              <Switch
+                size="medium"
+                checked={isPrivate}
+                onChange={() => {
+                  setIsPrivate(!isPrivate);
+                }}
+                color="primary"
+                name="checked"
+                inputProps={{ "aria-label": "primary checkbox" }}
+              />
+            </div>
+            <Button
+              style={{ marginBottom: "1vh" }}
+              variant="contained"
               color="primary"
-              name="checked"
-              inputProps={{ "aria-label": "primary checkbox" }}
-            />
+              size="large"
+              onClick={() => {
+                setQuizObj(isPrivate, name, description);
+              }}
+            >
+              {Translations[userLanguage].newquiz.button}
+            </Button>
           </div>
-          <Button
-            style={{ marginBottom: "1vh" }}
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={() => {
-              setQuizObj(isPrivate, name, description);
-            }}
-          >
-            {Translations[userLanguage].newquiz.button}
-          </Button>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

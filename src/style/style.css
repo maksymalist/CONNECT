@@ -943,6 +943,29 @@ input:hover {
   filter: brightness(0.8);
 }
 
+.uploaded-box {
+  border: 2px dashed black;
+  width: 100%;
+  max-width: 800px;
+  background-color: #fff;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-box-button {
+  border: 2px dashed black;
+  width: 150px;
+  background-color: #fff;
+  height: 150px;
+}
+
+.upload-box-button:hover {
+  cursor: pointer;
+  filter: brightness(0.8);
+}
+
 .MuiButton-containedPrimary {
   background-color: #1bb978 !important;
   color: white !important;

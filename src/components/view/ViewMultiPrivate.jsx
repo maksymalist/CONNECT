@@ -246,14 +246,33 @@ function ViewMultiQuiz() {
                       {step}
                     </Typography>
                     {Object.keys(questions).map((question, index) => {
+                      const type =
+                        questions[question].type === undefined
+                          ? "ques_ans"
+                          : questions[question].type;
                       return (
                         <div
                           key={index}
                           className="view__quiz__content__question"
                         >
-                          <Typography variant="h6" component="h6">
-                            {index + 1}. {questions[question].question}
-                          </Typography>
+                          {type === "ques_ans" && (
+                            <Typography variant="h5" component="h5">
+                              {index + 1}. {questions[question].question}
+                            </Typography>
+                          )}
+                          {type === "ques_img" && (
+                            <>
+                              <Typography variant="h5" component="h5">
+                                {index + 1}.
+                              </Typography>
+                              <br />
+                              <img
+                                style={{ width: "400px", height: "400px" }}
+                                src={questions[question].question}
+                                alt="quiz"
+                              />
+                            </>
+                          )}
                           {ansIsShown ? (
                             <div style={{ width: "100%" }}>
                               <br></br>

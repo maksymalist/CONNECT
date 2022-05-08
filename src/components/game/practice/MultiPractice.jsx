@@ -70,6 +70,7 @@ function MultiGameRoom({ match }) {
       cards.push({
         question: question,
         ans: answer,
+        type: quiz[key].type === undefined ? "ques_ans" : quiz[key].type,
       });
     });
     GetCards();
@@ -100,7 +101,14 @@ function MultiGameRoom({ match }) {
               CardClick(item, ans, item, i);
             }}
           >
-            {item}
+            {cards[randomNum[i]].type === "ques_ans" && item}
+            {cards[randomNum[i]].type === "ques_img" && (
+              <img
+                src={item}
+                alt="quiz-cover"
+                style={{ width: "100%", height: "100%" }}
+              />
+            )}
           </div>
         </>,
         newCard
@@ -142,7 +150,7 @@ function MultiGameRoom({ match }) {
       },
     ]);
     document.getElementById(id).style =
-      "color: rgb(99, 108, 255); font-weight: bold;";
+      "color: rgb(99, 108, 255); font-weight: bold; transform: scale(1.05);";
 
     memory.push({
       question: ques,
@@ -158,7 +166,6 @@ function MultiGameRoom({ match }) {
       }
       if (memory[0].question == memory[1].question) {
         if (memory[0].index == memory[1].index) {
-          updateTime((prev) => (time = prev += 5));
           memory = [];
           setSelected((selected = []));
           return;

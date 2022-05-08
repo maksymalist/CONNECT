@@ -13,7 +13,6 @@
   width: 350px;
   margin: 20px;
   background-color: white;
-  height: 300px;
   border: 2px solid #e0e0e0 !important;
   border-radius: 10px;
 }
@@ -76,4 +75,10 @@
   width: 80%;
   max-width: 600px;
   font-size: 30px;
+}
+
+.card_type:hover {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  transform: scale(1.05) !important;
 }

@@ -43,6 +43,7 @@ import "firebase/storage";
 
 //hooks
 import getUser from "./hooks/getUser";
+import Cropper from "./components/misc/CropperComponent";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAuhaVNdwDaivPThUZ6wxYKCkvs0tEDRNs",
@@ -230,6 +231,7 @@ function App() {
           <Route path="/view-class/:id" component={ViewClassroom} />
           <Route path="/create-class" component={CreateClass} />
           <Route path="/claim-emote" component={ClaimEmote} />
+          <Route path="/crop" component={Cropper} />
         </Switch>
       </div>
     </Router>
