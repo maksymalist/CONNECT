@@ -267,7 +267,11 @@ function ViewMultiQuiz() {
                               </Typography>
                               <br />
                               <img
-                                style={{ width: "400px", height: "400px" }}
+                                style={{
+                                  width: "100%",
+                                  maxWidth: "200px",
+                                  height: "150px",
+                                }}
                                 src={questions[question].question}
                                 alt="quiz"
                               />
