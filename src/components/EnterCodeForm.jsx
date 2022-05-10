@@ -511,7 +511,9 @@ export default function EnterCodeForm({ match, location }) {
     >
       {playMode ? (
         <div id="mainConatainer">
-          <h1>{Translations[userLanguage].play.join.title}</h1>
+          <Typography variant="h3" style={{ margin: "30px" }}>
+            <b>{Translations[userLanguage].play.join.title}</b>
+          </Typography>
           {joinFormStep === 0 && (
             <>
               <input
@@ -582,7 +584,7 @@ export default function EnterCodeForm({ match, location }) {
                   )}
                 </Button>
                 <Button
-                  variant="contained"
+                  variant="outlined"
                   color="secondary"
                   size="small"
                   style={{

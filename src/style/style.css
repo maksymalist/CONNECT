@@ -61,9 +61,8 @@ body {
   width: 90%;
   height: auto;
   background-color: white;
-  margin-top: 12vh;
+  margin-top: 100px;
   min-width: 250px;
-  min-height: 250px;
   box-shadow: 10px 10px 0 #262626;
   z-index: 1;
   border: 2px solid black;
