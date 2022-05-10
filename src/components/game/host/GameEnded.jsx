@@ -30,15 +30,6 @@ export default function GameEnded(props) {
         maxPodiumPlayers={props.maxPodiumPlayers}
         podium={props.podium}
       />
-      <div>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => (window.location = "/")}
-        >
-          {Translations[userLanguage].finishedscreen.return}
-        </Button>
-      </div>
     </div>
   );
 }

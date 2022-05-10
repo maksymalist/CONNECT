@@ -4,8 +4,13 @@ import Confetti from "react-confetti";
 import "../../../style/podiumAnimation.css";
 import { Howl, Howler } from "howler";
 import soundEffect from "../../../audio/drum_roll.mp3";
+import { Button } from "@mui/material";
+import Translations from "../../../translations/translations.json";
 
 function PodiumAnimation({ podium, maxPodiumPlayers }) {
+  const [userLanguage] = useState(
+    localStorage.getItem("connectLanguage") || "english"
+  );
   //{ podium, maxPodiumPlayers }
 
   // const podium = [
@@ -273,81 +278,107 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
 
   return (
     <>
-      <Confetti
-        width={window.innerWidth}
-        height={window.innerHeight}
-        style={{ visibility: "hidden" }}
-        id="podium__confetti"
-      />
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-end",
-            width: "100%",
-            justifyContent: "center",
-            overflow: "hidden",
-          }}
-        >
-          {podium.map((podiumPlayer, index) => {
-            if (podiumPlayer?.position === "2") {
-              return (
-                <SecondPlace
-                  key={index}
-                  name={podiumPlayer?.player.replace("⠀", "")}
-                />
-              );
-            }
-          })}
-          {podium.map((podiumPlayer, index) => {
-            if (podiumPlayer?.position === "1") {
-              return (
-                <FirstPlace
-                  key={index}
-                  name={podiumPlayer?.player.replace("⠀", "")}
-                />
-              );
-            }
-          })}
-          {podium.map((podiumPlayer, index) => {
-            if (podiumPlayer?.position === "3") {
-              return (
-                <ThirdPlace
-                  key={index}
-                  name={podiumPlayer?.player.replace("⠀", "")}
-                />
-              );
-            }
-          })}
-        </div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 2, delay: 5.5, type: "easeInOut" }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-            }}
-          >
-            {podium.map((place, index) => {
-              if (
-                place.position > 3 &&
-                parseInt(maxPodiumPlayers) >= place?.position
-              ) {
-                return (
-                  <div key={index} className="other-place">
-                    {place?.position}th place {place?.player.replace("⠀", "")}
-                  </div>
-                );
-              }
-            })}
+      {podium.length > 0 ? (
+        <>
+          <Confetti
+            width={window.innerWidth}
+            height={window.innerHeight}
+            style={{ visibility: "hidden" }}
+            id="podium__confetti"
+          />
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-end",
+                width: "100%",
+                justifyContent: "center",
+                overflow: "hidden",
+              }}
+            >
+              {podium.map((podiumPlayer, index) => {
+                if (podiumPlayer?.position === "2") {
+                  return (
+                    <SecondPlace
+                      key={index}
+                      name={podiumPlayer?.player.replace("⠀", "")}
+                    />
+                  );
+                }
+              })}
+              {podium.map((podiumPlayer, index) => {
+                if (podiumPlayer?.position === "1") {
+                  return (
+                    <FirstPlace
+                      key={index}
+                      name={podiumPlayer?.player.replace("⠀", "")}
+                    />
+                  );
+                }
+              })}
+              {podium.map((podiumPlayer, index) => {
+                if (podiumPlayer?.position === "3") {
+                  return (
+                    <ThirdPlace
+                      key={index}
+                      name={podiumPlayer?.player.replace("⠀", "")}
+                    />
+                  );
+                }
+              })}
+            </div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 2, delay: 5.5, type: "easeInOut" }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                }}
+              >
+                {podium.map((place, index) => {
+                  if (
+                    place.position > 3 &&
+                    parseInt(maxPodiumPlayers) >= place?.position
+                  ) {
+                    return (
+                      <div key={index} className="other-place">
+                        {place?.position}th place{" "}
+                        {place?.player.replace("⠀", "")}
+                      </div>
+                    );
+                  }
+                })}
+              </div>
+              <div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => (window.location = "/")}
+                >
+                  {Translations[userLanguage].finishedscreen.return}
+                </Button>
+              </div>
+            </motion.div>
           </div>
-        </motion.div>
-      </div>
+        </>
+      ) : (
+        <div
+          style={{ display: "flex", justifyContent: "center", margin: "30px" }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => (window.location = "/")}
+          >
+            {Translations[userLanguage].finishedscreen.return}
+          </Button>
+        </div>
+      )}
     </>
   );
 }
