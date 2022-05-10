@@ -134,7 +134,7 @@ export default function GameRoom({ match }) {
       },
     ]);
     document.getElementById(id).style =
-      "color: rgb(99, 108, 255); font-weight: bold; transform: scale(1.05);";
+      "color: #1594DB; font-weight: bold; transform: scale(1.05); border: 4px solid #1594DB;";
 
     memory.push({
       question: ques,

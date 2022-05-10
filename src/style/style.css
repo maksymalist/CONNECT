@@ -149,6 +149,8 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 1.1rem;
+  background-color: white;
+  border: 2px solid black;
 }
 .card:hover {
   cursor: pointer;
