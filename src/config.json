@@ -1,4 +1,4 @@
 {
-  "socket-server": "https://quiz-connect-socketio.herokuapp.com",
-  "api-server": "https://quiz-connect-api.herokuapp.com"
+  "socket-server": "https://quiz-connect-websocket.herokuapp.com",
+  "api-server": "https://quiz-connect-api-v2.herokuapp.com"
 }
