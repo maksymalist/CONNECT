@@ -44,6 +44,7 @@ import "firebase/storage";
 //hooks
 import getUser from "./hooks/getUser";
 import Cropper from "./components/misc/CropperComponent";
+import NoLocalStorage from "./components/NoLocalStorage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAuhaVNdwDaivPThUZ6wxYKCkvs0tEDRNs",
@@ -140,6 +141,7 @@ function App() {
       if (window.location.pathname == "/login") return;
       if (window.location.pathname == "/play") return;
       if (window.location.pathname == "/claim-emote") return;
+      if (window.location.pathname == "/no-local-storage") return;
       window.location = "/login";
     }
     return () => {
@@ -231,7 +233,7 @@ function App() {
           <Route path="/view-class/:id" component={ViewClassroom} />
           <Route path="/create-class" component={CreateClass} />
           <Route path="/claim-emote" component={ClaimEmote} />
-          <Route path="/crop" component={Cropper} />
+          <Route path="/no-local-storage" component={NoLocalStorage} />
         </Switch>
       </div>
     </Router>

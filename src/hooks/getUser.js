@@ -1,4 +1,23 @@
+const lsTest = () => {
+  if (typeof localStorage === "object") {
+    try {
+      localStorage.setItem("localStorage", 1);
+      localStorage.removeItem("localStorage");
+      return true;
+    } catch (e) {
+      Storage.prototype._setItem = Storage.prototype.setItem;
+      Storage.prototype.setItem = function () {};
+      return false;
+    }
+  }
+};
+
 const getUser = () => {
+  if (lsTest() === false) {
+    window.location = "/no-local-storage";
+    return null;
+  }
+
   try {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user !== null && user !== undefined && user !== "") {

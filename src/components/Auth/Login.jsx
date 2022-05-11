@@ -70,7 +70,7 @@ function Login() {
         } else {
           localStorage.setItem("user", JSON.stringify(response));
           window.location.reload();
-          window.location = "/play";
+          window.location.href = "/play";
         }
       } else {
         setStep(1);
@@ -103,7 +103,7 @@ function Login() {
     } else {
       localStorage.setItem("user", JSON.stringify(response));
       window.location.reload();
-      window.location = "/play";
+      window.location.href = "/play";
     }
   };
 
@@ -131,7 +131,7 @@ function Login() {
               alt="login-art"
               style={{
                 width: "95%",
-                height: "auto",
+                height: "300px",
               }}
             />
           </div>
@@ -139,8 +139,8 @@ function Login() {
             clientId="701696427912-ajmlkcj3hpo46q5fokhtn5mmeib0m3be.apps.googleusercontent.com"
             buttonText={Translations[userLanguage].login.googlebutton}
             onSuccess={responseGoogle}
-            onFailure={() => {
-              console.log(Error);
+            onFailure={(error) => {
+              window.location = "/no-local-storage";
             }}
             cookiePolicy={"single_host_origin"}
             style={{ backgroundColor: "#e0e0e0" }}
