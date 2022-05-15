@@ -45,6 +45,7 @@ import "firebase/storage";
 import getUser from "./hooks/getUser";
 import Cropper from "./components/misc/CropperComponent";
 import NoLocalStorage from "./components/NoLocalStorage";
+import Tutorial from "./components/tutorial/Tutorial";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAuhaVNdwDaivPThUZ6wxYKCkvs0tEDRNs",
@@ -234,6 +235,7 @@ function App() {
           <Route path="/create-class" component={CreateClass} />
           <Route path="/claim-emote" component={ClaimEmote} />
           <Route path="/no-local-storage" component={NoLocalStorage} />
+          <Route path="/tutorial" component={Tutorial} />
         </Switch>
       </div>
     </Router>

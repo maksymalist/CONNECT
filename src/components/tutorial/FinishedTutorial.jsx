@@ -1,0 +1,132 @@
+import { Button, Divider, Typography } from "@mui/material";
+import { useState } from "react";
+import Confetti from "react-confetti";
+
+//icon
+import DiscordIcon from "../../img/DiscordIcon.svg";
+import Translations from "../../translations/translations.json";
+
+const FinishedTutorial = () => {
+  const [userLanguage, setUserLanguage] = useState(
+    localStorage.getItem("connectLanguage") || "english"
+  );
+  return (
+    <>
+      <Confetti width={window.innerWidth} height={window.innerHeight} />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: "#1BB978",
+            color: "white",
+            padding: "20px",
+            border: "2px solid black",
+            boxShadow: "10px 10px 0 #262626",
+            margin: "15px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <Typography variant="h4">
+            <b>{Translations[userLanguage].tutorial.tutorialcompleted.title}</b>
+          </Typography>
+          <br></br>
+        </div>
+        <div
+          style={{
+            backgroundColor: "white",
+            padding: "30px",
+            border: "2px solid black",
+            boxShadow: "10px 10px 0 #262626",
+            margin: "15px",
+            marginTop: "50px",
+            maxWidth: "600px",
+          }}
+        >
+          <Typography variant="h4">
+            {Translations[userLanguage].tutorial.tutorialcompleted.sub}
+          </Typography>
+          <br></br>
+          <Divider />
+          <br></br>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              variant="contained"
+              color="error"
+              size="large"
+              style={{
+                minWidth: "250px",
+                margin: "10px",
+                padding: "10px",
+                fontSize: "1.5rem",
+              }}
+              onClick={() => (window.location = "/quizzes")}
+            >
+              {Translations[userLanguage].tutorial.tutorialcompleted.button1}
+            </Button>
+            <Button
+              variant="contained"
+              color="warning"
+              size="large"
+              style={{
+                minWidth: "250px",
+                margin: "10px",
+                padding: "10px",
+                fontSize: "1.5rem",
+              }}
+              onClick={() => (window.location = "/newquiz")}
+            >
+              {Translations[userLanguage].tutorial.tutorialcompleted.button2}
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              style={{
+                minWidth: "250px",
+                margin: "10px",
+                padding: "10px",
+                fontSize: "1.5rem",
+              }}
+              onClick={() => (window.location = "/play")}
+            >
+              {Translations[userLanguage].tutorial.tutorialcompleted.button3}
+            </Button>
+            <Button
+              variant="contained"
+              color="action"
+              size="large"
+              style={{
+                minWidth: "250px",
+                margin: "10px",
+                padding: "10px",
+                fontSize: "1.5rem",
+              }}
+              startIcon={<img src={DiscordIcon} width={36} height={36} />}
+              onClick={() =>
+                window.open("https://discord.gg/WSBtsD66yc", "_blank")
+              }
+            >
+              {Translations[userLanguage].tutorial.tutorialcompleted.button4}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default FinishedTutorial;

@@ -103,7 +103,7 @@ function Login() {
     } else {
       localStorage.setItem("user", JSON.stringify(response));
       window.location.reload();
-      window.location.href = "/play";
+      window.location.href = "/tutorial";
     }
   };
 

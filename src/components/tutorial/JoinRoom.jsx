@@ -1,0 +1,140 @@
+import { useState } from "react";
+import Translations from "../../translations/translations.json";
+
+import { Typography, Button, CircularProgress } from "@mui/material";
+
+import { toast } from "react-toastify";
+
+const JoinRoom = ({ nextStep, setUser }) => {
+  const [joinFormStep, setJoinFormStep] = useState(0);
+  const [userLanguage, setUserLanguage] = useState(
+    localStorage.getItem("connectLanguage") || "english"
+  );
+
+  const [joinFormCode, setJoinFormCode] = useState("");
+  const [joinFormNickname, setJoinFormNickname] = useState("");
+
+  const [spinner1, setSpinner1] = useState(false);
+  const [spinner2, setSpinner2] = useState(false);
+
+  return (
+    <>
+      <div
+        style={{
+          opacity: "1",
+          backgroundColor: "white",
+          borderRadius: "5px",
+          marginBottom: "5px",
+        }}
+      >
+        <Typography sx={{ p: 2 }}>
+          {Translations[userLanguage].play.join.tip}
+        </Typography>
+      </div>
+      <div
+        style={{
+          height: "auto",
+          backgroundColor: "white",
+          minWidth: "250px",
+          boxShadow: "10px 10px 0 #262626",
+          zIndex: 1,
+          border: "2px solid black",
+          padding: "15px",
+          maxWidth: "400px",
+          marginBottom: "100px",
+        }}
+      >
+        <Typography variant="h3" style={{ margin: "30px" }}>
+          <b>{Translations[userLanguage].play.join.title}</b>
+        </Typography>
+        {joinFormStep === 0 && (
+          <>
+            <input
+              value={joinFormCode}
+              onChange={(event) => setJoinFormCode(event.target.value)}
+              style={{ width: "100%", height: "48px" }}
+              placeholder={Translations[userLanguage].play.join.input}
+              type="text"
+              id="code"
+            />
+            <br></br>
+            <Button
+              style={{
+                marginTop: "1vh",
+                width: "100%",
+                fontSize: "1.2rem",
+                height: "48px",
+              }}
+              variant="contained"
+              color="primary"
+              size="small"
+              onClick={() => {
+                if (joinFormCode !== "123-456") {
+                  toast.info(
+                    <div>
+                      <Typography variant="h5">
+                        <b>{Translations[userLanguage].alerts.hint.title}</b>
+                      </Typography>
+                      <Typography variant="h6">
+                        {Translations[userLanguage].alerts.hint.text}
+                      </Typography>
+                    </div>
+                  );
+                  return;
+                }
+                setJoinFormStep(1);
+              }}
+            >
+              {Translations[userLanguage].play.join.button}
+            </Button>
+          </>
+        )}
+        {joinFormStep === 1 && (
+          <>
+            <input
+              value={joinFormNickname}
+              onChange={(event) => setJoinFormNickname(event.target.value)}
+              style={{ width: "100%", height: "48px" }}
+              placeholder={Translations[userLanguage].play.join.input2}
+              type="text"
+              id="name"
+            />
+            <br></br>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                style={{
+                  fontSize: "1.2rem",
+                  height: "48px",
+                  width: "100%",
+                  margin: "10px",
+                }}
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={() => {
+                  nextStep();
+                  setUser(joinFormNickname);
+                }}
+              >
+                {spinner1 ? (
+                  <CircularProgress size={24} style={{ color: "white" }} />
+                ) : (
+                  Translations[userLanguage].play.join.button2
+                )}
+              </Button>
+            </div>
+          </>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default JoinRoom;

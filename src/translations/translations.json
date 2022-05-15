@@ -77,7 +77,8 @@
         "input2": "enter your nickname",
         "button": "Next ➡️",
         "back": "⬅️ Back",
-        "button2": "Join 🚀"
+        "button2": "Join 🚀",
+        "tip": "👈 enter the room code you find in that image"
       },
       "host": {
         "title": "Host Room",
@@ -370,6 +371,56 @@
         "teacher": "Teacher 🍏"
       }
     },
+    "tutorial": {
+      "title": "Tutorial 📚",
+      "welcome": {
+        "title": "Welcome to the Tutorial! 📚",
+        "sub": "If you have no idea how CONNECT! works it might be a good idea to stick around and learn about it.",
+        "button": "Let's Go! 🚀"
+      },
+      "waitingroom": {
+        "button": "Start Game 🚀"
+      },
+      "tutorialcompleted": {
+        "title": "✨ Tutorial Completed ✨",
+        "sub": "You have completed the tutorial. You can now start using the platform. Good luck!",
+        "button1": "🔎 Find quizzes",
+        "button2": "🎨 Create a quiz",
+        "button3": "🚀 Join a game",
+        "button4": "Join Discord"
+      },
+      "popup": {
+        "next": "next ➡️",
+        "step1": {
+          "title": "This is a question card",
+          "card": "What is the capital of France ?"
+        },
+        "step2": {
+          "title": "This is an answer card",
+          "card": "Paris 🥖🍷"
+        },
+        "step3": {
+          "title": "To Win, match the question cards with their corresponding answer card",
+          "card1": "Do you understand 🤔",
+          "card2": "Yes 👍"
+        },
+        "step4": {
+          "title": "If you match the wrong cards together 5s will be added to your timer",
+          "sub": "Note: the goal is to have the lowest time 🏆",
+          "card1": "1+1",
+          "card2": "3"
+        }
+      },
+      "stepper": {
+        "join": "Join Room 🚀",
+        "waiting": "Waiting Room 😴",
+        "game": "The Game 🎮"
+      },
+      "game": {
+        "notbad": "Not bad for your first time! 🥳",
+        "button": "next ➡️"
+      }
+    },
     "sharepopup": {
       "title": "Share Code",
       "sub": "Share this link via",
@@ -435,7 +486,11 @@
       "notenoughplayers": "Not enough players to start the game!",
       "betterplan": "Your plan has better features 🙈 !!!",
       "saved": "Saved ✨",
-      "deleted": "Deleted ❌"
+      "deleted": "Deleted ❌",
+      "hint": {
+        "title": "HINT: ",
+        "text": "it's literally just 123-456 🙃"
+      }
     },
     "paymentform": {
       "title": "Subscribe to",
@@ -569,7 +624,8 @@
         "input2": "pseudonyme",
         "button": "Suivant ➡️",
         "back": "⬅️ Retour",
-        "button2": "Rejoindre 🚀"
+        "button2": "Rejoindre 🚀",
+        "tip": "👈 entrez le code que vous voyez dans cette image"
       },
       "host": {
         "title": "Créer une salle ",
@@ -863,6 +919,56 @@
         "teacher": "Enseignant 🍏"
       }
     },
+    "tutorial": {
+      "title": "Tutoriel 📚",
+      "welcome": {
+        "title": "Bienvenue dans le tutoriel ! 📚",
+        "sub": "Si vous n'avez aucune idée du fonctionnement de CONNECT!, ce serait peut-être une bonne idée de rester dans le coin et d'en savoir plus.",
+        "button": "Allons-y ! 🚀"
+      },
+      "waitingroom": {
+        "button": "Démarrer le jeu 🚀"
+      },
+      "tutorialcompleted": {
+        "title": "✨ Tutoriel Terminé ✨",
+        "sub": "Vous avez terminé le tutoriel. Vous pouvez maintenant commencer à utiliser la plateforme. Bonne chance !",
+        "button1": "🔎 Trouver des quiz",
+        "button2": "🎨 Créer un quiz",
+        "button3": "🚀 Rejoindre une partie",
+        "button4": "Rejoindre Discord"
+      },
+      "popup": {
+        "next": "suivant ➡️",
+        "step1": {
+          "title": "Ceci est une carte-question",
+          "card": "Quelle est la capitale de la France ?"
+        },
+        "step2": {
+          "title": "Ceci est une carte-réponse",
+          "card": "Paris 🥖🍷"
+        },
+        "step3": {
+          "title": "Pour Gagner, associez les cartes questions avec leur carte réponse correspondante",
+          "card1": "Tu comprends 🤔",
+          "card2": "Oui 👍"
+        },
+        "step4": {
+          "title": "Si vous associez les mauvaises cartes ensemble, 5s seront ajoutés à votre chronomètre",
+          "sub": "Note : le but est d'avoir le temps le plus bas 🏆",
+          "card1": "1+1",
+          "card2": "3"
+        }
+      },
+      "stepper": {
+        "join": "Rejoindre 🚀",
+        "waiting": "Salle d'attente 😴",
+        "game": "Le jeu 🎮"
+      },
+      "game": {
+        "notbad": "Pas mal pour une première fois ! 🥳",
+        "button": "suivant ➡️"
+      }
+    },
     "sharepopup": {
       "title": "Partager le code",
       "sub": "Partagez ce lien via",
@@ -928,7 +1034,11 @@
       "notenoughplayers": "Il n'y a pas assez de joueurs pour commencer le jeu!!",
       "betterplan": "Votre forfait a des meilleurs avantages 🙈 !!!",
       "saved": "Sauvegardé ✨",
-      "deleted": "Supprimé ❌"
+      "deleted": "Supprimé ❌",
+      "hint": {
+        "title": "INDICE: ",
+        "text": "c'est littéralement juste 123-456 🙃"
+      }
     },
     "paymentform": {
       "title": "Abonnement au",

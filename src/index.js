@@ -45,6 +45,14 @@ const theme = createTheme({
       main: "#1bb978",
       contrastText: "#fff",
     },
+    warning: {
+      main: "#FED253",
+      contrastText: "#fff",
+    },
+    error: {
+      main: "#FF2C62",
+      contrastText: "#fff",
+    },
   },
 });
 
