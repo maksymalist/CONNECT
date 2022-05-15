@@ -78,7 +78,8 @@
         "button": "Next ➡️",
         "back": "⬅️ Back",
         "button2": "Join 🚀",
-        "tip": "👈 enter the room code you find in that image"
+        "tip": "👈 enter the room code you find in that image",
+        "tip2": " enter your nickname here 👇"
       },
       "host": {
         "title": "Host Room",
@@ -391,6 +392,9 @@
       },
       "popup": {
         "next": "next ➡️",
+        "step0": {
+          "title": "Wait!!! Before you start, here are a few things to know..."
+        },
         "step1": {
           "title": "This is a question card",
           "card": "What is the capital of France ?"
@@ -625,7 +629,8 @@
         "button": "Suivant ➡️",
         "back": "⬅️ Retour",
         "button2": "Rejoindre 🚀",
-        "tip": "👈 entrez le code que vous voyez dans cette image"
+        "tip": "👈 entrez le code que vous voyez dans cette image",
+        "tip2": " entrez votre pseudonyme ici 👇"
       },
       "host": {
         "title": "Créer une salle ",
@@ -735,7 +740,7 @@
     },
     "waitingroom": {
       "title": "Salle d'attente 🎉",
-      "leavebutton": "Quitter Salle 🚪"
+      "leavebutton": "Quitter Salle"
     },
     "hostroom": {
       "sharebutton": "Partager ✈️",
@@ -939,6 +944,9 @@
       },
       "popup": {
         "next": "suivant ➡️",
+        "step0": {
+          "title": "Attendez!!! Avant de commencer, voici quelques choses à savoir..."
+        },
         "step1": {
           "title": "Ceci est une carte-question",
           "card": "Quelle est la capitale de la France ?"
@@ -948,7 +956,7 @@
           "card": "Paris 🥖🍷"
         },
         "step3": {
-          "title": "Pour Gagner, associez les cartes questions avec leur carte réponse correspondante",
+          "title": "Pour gagner, associez les cartes questions avec leur carte réponse correspondante",
           "card1": "Tu comprends 🤔",
           "card2": "Oui 👍"
         },

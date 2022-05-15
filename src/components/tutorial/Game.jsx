@@ -275,7 +275,7 @@ export default function Game({ nickname, nextSection }) {
               style={{
                 display: "flex",
                 width: "100%",
-                justifyContent: "right",
+                justifyContent: "flex-end",
                 marginTop: "50px",
               }}
             >

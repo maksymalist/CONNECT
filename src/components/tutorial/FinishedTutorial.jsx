@@ -41,26 +41,20 @@ const FinishedTutorial = () => {
         </div>
         <div
           style={{
-            backgroundColor: "white",
-            padding: "30px",
-            border: "2px solid black",
-            boxShadow: "10px 10px 0 #262626",
             margin: "15px",
             marginTop: "50px",
             maxWidth: "600px",
           }}
         >
-          <Typography variant="h4">
-            {Translations[userLanguage].tutorial.tutorialcompleted.sub}
-          </Typography>
-          <br></br>
-          <Divider />
           <br></br>
           <div
             style={{
               display: "flex",
-              flexDirection: "column",
+              flexWrap: "wrap",
               alignItems: "center",
+              width: "100%",
+              maxWidth: "800px",
+              justifyContent: "center",
             }}
           >
             <Button

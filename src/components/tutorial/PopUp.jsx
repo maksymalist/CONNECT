@@ -22,13 +22,13 @@ const PopUp = ({ startGame }) => {
           return;
         }
 
-        if (activeStep === 2) {
-          setActiveStep(3);
+        if (activeStep === 3) {
+          setActiveStep(4);
           setSelected([]);
           return;
         }
 
-        if (activeStep === 3) {
+        if (activeStep === 4) {
           startGame();
           return;
         }
@@ -59,11 +59,37 @@ const PopUp = ({ startGame }) => {
           padding: "15px",
           margin: "15px",
           boxShadow: "10px 10px 0 #262626",
-          width: "100%",
+          width: "fit-content",
           maxWidth: "600px",
         }}
       >
         {activeStep === 0 && (
+          <div
+            style={{
+              padding: "5px",
+              display: "flex",
+              width: "100%",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h4" style={{ maxWidth: "350px" }}>
+              {Translations[userLanguage].tutorial.popup.step0.title}
+            </Typography>
+            <br></br>
+            <Button
+              variant="contained"
+              color="action"
+              size="large"
+              onClick={() => setActiveStep(1)}
+              style={{ width: "100%" }}
+            >
+              {Translations[userLanguage].tutorial.popup.next}
+            </Button>
+          </div>
+        )}
+        {activeStep === 1 && (
           <div>
             <Typography variant="h4">
               {Translations[userLanguage].tutorial.popup.step1.title}
@@ -92,20 +118,20 @@ const PopUp = ({ startGame }) => {
                 padding: "5px",
                 display: "flex",
                 width: "100%",
-                justifyContent: "right",
+                justifyContent: "flex-end",
               }}
             >
               <Button
                 variant="contained"
-                color="primary"
-                onClick={() => setActiveStep(1)}
+                color="action"
+                onClick={() => setActiveStep(2)}
               >
                 {Translations[userLanguage].tutorial.popup.next}
               </Button>
             </div>
           </div>
         )}
-        {activeStep === 1 && (
+        {activeStep === 2 && (
           <div>
             <Typography variant="h4">
               {Translations[userLanguage].tutorial.popup.step2.title}
@@ -134,20 +160,20 @@ const PopUp = ({ startGame }) => {
                 padding: "5px",
                 display: "flex",
                 width: "100%",
-                justifyContent: "right",
+                justifyContent: "flex-end",
               }}
             >
               <Button
                 variant="contained"
-                color="primary"
-                onClick={() => setActiveStep(2)}
+                color="action"
+                onClick={() => setActiveStep(3)}
               >
                 {Translations[userLanguage].tutorial.popup.next}
               </Button>
             </div>
           </div>
         )}
-        {activeStep === 2 && (
+        {activeStep === 3 && (
           <div>
             <Typography variant="h4">
               {Translations[userLanguage].tutorial.popup.step3.title}
@@ -207,7 +233,7 @@ const PopUp = ({ startGame }) => {
             </div>
           </div>
         )}
-        {activeStep === 3 && (
+        {activeStep === 4 && (
           <div>
             <Typography variant="h4">
               {Translations[userLanguage].tutorial.popup.step4.title}

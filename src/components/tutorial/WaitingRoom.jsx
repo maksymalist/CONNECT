@@ -79,27 +79,39 @@ const WaitingRoom = ({ nextStep, user }) => {
         alignItems: "center",
         width: "100%",
         maxWidth: "800px",
-        backgroundColor: "white",
-        border: "2px solid black",
       }}
     >
       <div
         style={{
-          height: "50px",
           backgroundColor: "white",
+          height: "60px",
           width: "100%",
           borderBottom: "2px solid black",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
         <div
           style={{
-            float: "left",
             color: "black",
-            marginLeft: "10px",
-            marginTop: "-10px",
+            marginLeft: "5px",
           }}
         >
           <h2>{user}</h2>
+        </div>
+        <div
+          style={{
+            marginRight: "5px",
+          }}
+        >
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => nextStep()}
+          >
+            {Translations[userLanguage].tutorial.waitingroom.button}
+          </Button>
         </div>
       </div>
       <h1
@@ -107,6 +119,7 @@ const WaitingRoom = ({ nextStep, user }) => {
           textAlign: "center",
           fontSize: "45px",
           marginTop: "40px",
+          color: "white",
         }}
       >
         {Translations[userLanguage].waitingroom.title}

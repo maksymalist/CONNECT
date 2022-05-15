@@ -25,30 +25,8 @@ const Tutorial = () => {
 
   const JoinSection = () => {
     return (
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <div>
-          <img
-            src={HostExample}
-            alt="Host Example"
-            style={{
-              height: "100%",
-              width: "100%",
-              maxWidth: "500px",
-              margin: "20px",
-            }}
-          />
-        </div>
-        <div>
-          <JoinRoom nextStep={() => setActiveStep(1)} setUser={setUser} />
-        </div>
+      <div>
+        <JoinRoom nextStep={() => setActiveStep(1)} setUser={setUser} />
       </div>
     );
   };
@@ -56,22 +34,6 @@ const Tutorial = () => {
   const WaitingRoomSection = () => {
     return (
       <div>
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "right",
-            marginBottom: "10px",
-          }}
-        >
-          <Button
-            variant="contained"
-            color="success"
-            onClick={() => setActiveStep(2)}
-          >
-            {Translations[userLanguage].tutorial.waitingroom.button}
-          </Button>
-        </div>
         <WaitingRoom nextStep={() => setActiveStep(2)} user={user} />
       </div>
     );

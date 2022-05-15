@@ -6,8 +6,7 @@ function NoLocalStorage() {
     <div style={{ marginTop: "120px" }}>
       <Typography variant="h3" color="white">
         <strong>
-          Sorry buddy, but it seems there might be a <br></br> problem with your
-          browser 😱
+          Wow, it seems there might be a <br></br> problem with your browser 😱
         </strong>
       </Typography>
       <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
@@ -26,7 +25,7 @@ function NoLocalStorage() {
             style={{
               width: "100%",
               display: "flex",
-              justifyContent: "left",
+              justifyContent: "flex-start",
               marginBottom: "40px",
             }}
           >

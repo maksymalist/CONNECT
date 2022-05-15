@@ -483,7 +483,7 @@ function MyProfile(props) {
               style={{
                 width: "100%",
                 display: "flex",
-                justifyContent: "right",
+                justifyContent: "flex-end",
                 alignItems: "center",
               }}
             >
