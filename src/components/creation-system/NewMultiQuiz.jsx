@@ -17,7 +17,6 @@ import UploadButton from "../misc/UploadButton";
 
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
-import Translations from "../../translations/translations.json";
 
 import { useMutation, gql } from "@apollo/client";
 
@@ -30,6 +29,7 @@ import QuesImg from "../../img/CardType/Image_Answer.svg";
 import QuesAns from "../../img/CardType/Question_Answer.svg";
 import uploadImg from "../../img/uploadImg.svg";
 import CropperComponent from "../misc/CropperComponent";
+import useTranslations from "../../hooks/useTranslations";
 
 const CREATE_MULTI_QUIZ = gql`
   mutation createMulti(
@@ -88,9 +88,7 @@ function NewMultiQuiz() {
   const [tagNumber, setTagNumber] = useState(0);
   const [description, setDescription] = useState("");
 
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const [Prompt, setDirty, setPristine] = useUnsavedChangesWarning();
 
@@ -120,7 +118,7 @@ function NewMultiQuiz() {
   });
 
   useEffect(() => {
-    toast.info(Translations[userLanguage].alerts.eachansdifferent);
+    toast.info(translations.alerts.eachansdifferent);
   }, []);
 
   const Card = ({ data, index, subIndex }) => {
@@ -157,9 +155,7 @@ function NewMultiQuiz() {
                 borderRadius: "5px",
                 border: "1px solid #e0e0e0",
               }}
-              placeholder={
-                Translations[userLanguage].newquiz.questions.question + " 💭"
-              }
+              placeholder={translations.newquiz.questions.question + " 💭"}
             />
             <br></br>
             <TextareaAutosize
@@ -174,9 +170,7 @@ function NewMultiQuiz() {
                 borderRadius: "5px",
                 border: "1px solid #e0e0e0",
               }}
-              placeholder={
-                Translations[userLanguage].newquiz.questions.answer + "💡"
-              }
+              placeholder={translations.newquiz.questions.answer + "💡"}
             />
           </div>
           <div
@@ -192,14 +186,14 @@ function NewMultiQuiz() {
                 SaveQuestion(subIndex, index, question, answer, type)
               }
             >
-              ✨ {Translations[userLanguage].newmultiquiz.questions.save} ✨
+              ✨ {translations.newmultiquiz.questions.save} ✨
             </Button>
             <div style={{ width: "10px", height: "10px" }} />
             <Button
               color="secondary"
               onClick={() => DeleteQuestion(subIndex, index)}
             >
-              ❌ {Translations[userLanguage].newmultiquiz.questions.delete} ❌
+              ❌ {translations.newmultiquiz.questions.delete} ❌
             </Button>
           </div>
         </div>
@@ -273,9 +267,7 @@ function NewMultiQuiz() {
                 borderRadius: "5px",
                 border: "1px solid #e0e0e0",
               }}
-              placeholder={
-                Translations[userLanguage].newquiz.questions.answer + "💡"
-              }
+              placeholder={translations.newquiz.questions.answer + "💡"}
             />
           </div>
           <div
@@ -291,14 +283,14 @@ function NewMultiQuiz() {
                 SaveQuestion(subIndex, index, question, answer, type)
               }
             >
-              ✨ {Translations[userLanguage].newmultiquiz.questions.save} ✨
+              ✨ {translations.newmultiquiz.questions.save} ✨
             </Button>
             <div style={{ width: "10px", height: "10px" }} />
             <Button
               color="secondary"
               onClick={() => DeleteQuestion(subIndex, index)}
             >
-              ❌ {Translations[userLanguage].newmultiquiz.questions.delete} ❌
+              ❌ {translations.newmultiquiz.questions.delete} ❌
             </Button>
           </div>
         </div>
@@ -324,7 +316,7 @@ function NewMultiQuiz() {
             onChange={(e) => setSubjectName(e.target.value)}
             value={subjectName}
             type="text"
-            placeholder={Translations[userLanguage].newmultiquiz.subjects.input}
+            placeholder={translations.newmultiquiz.subjects.input}
           />
           <SaveAs
             htmlColor="#1bb978"
@@ -417,7 +409,7 @@ function NewMultiQuiz() {
     newQuizArray[subjectIndex].cards[questionIndex].question = question;
     newQuizArray[subjectIndex].cards[questionIndex].answer = answer;
     setQuizArray(newQuizArray);
-    toast.success(Translations[userLanguage].alerts.saved, {
+    toast.success(translations.alerts.saved, {
       autoClose: 500,
     });
   };
@@ -425,7 +417,7 @@ function NewMultiQuiz() {
     const newQuizArray = [...quizArray];
     newQuizArray[subjectIndex].cards.splice(questionIndex, 1);
     setQuizArray(newQuizArray);
-    toast.error(Translations[userLanguage].alerts.deleted, {
+    toast.error(translations.alerts.deleted, {
       autoClose: 500,
     });
   };
@@ -442,7 +434,7 @@ function NewMultiQuiz() {
     const newQuizArray = [...quizArray];
     newQuizArray[subjectIndex].name = name;
     setQuizArray(newQuizArray);
-    toast.success(Translations[userLanguage].alerts.saved, {
+    toast.success(translations.alerts.saved, {
       autoClose: 500,
     });
   };
@@ -451,7 +443,7 @@ function NewMultiQuiz() {
     const newQuizArray = [...quizArray];
     newQuizArray.splice(subjectIndex, 1);
     setQuizArray(newQuizArray);
-    toast.error(Translations[userLanguage].alerts.deleted, {
+    toast.error(translations.alerts.deleted, {
       autoClose: 500,
     });
   };
@@ -470,12 +462,12 @@ function NewMultiQuiz() {
     const newQuizArray = [...quizArray];
 
     if (name === "") {
-      toast.error(Translations[userLanguage].alerts.quiznameempty);
+      toast.error(translations.alerts.quiznameempty);
       return;
     }
 
     if (newQuizArray.length === 0) {
-      toast.error(Translations[userLanguage].alerts.need1subject);
+      toast.error(translations.alerts.need1subject);
       return;
     }
 
@@ -484,19 +476,19 @@ function NewMultiQuiz() {
       const cards = subject.cards;
 
       if (cards.length < 6) {
-        toast.error(Translations[userLanguage].alerts.min6questions);
+        toast.error(translations.alerts.min6questions);
         return;
       }
 
       if (subject.name === "") {
-        toast.error(Translations[userLanguage].alerts.fieldleftempty);
+        toast.error(translations.alerts.fieldleftempty);
         return;
       }
 
       for (let j = 0; j < cards.length; j++) {
         const card = cards[j];
         if (card.question === "" || card.answer === "") {
-          toast.error(Translations[userLanguage].alerts.fieldleftempty);
+          toast.error(translations.alerts.fieldleftempty);
           return;
         }
       }
@@ -529,14 +521,14 @@ function NewMultiQuiz() {
         },
       });
     }
-    toast.success(Translations[userLanguage].alerts.quizcreated);
+    toast.success(translations.alerts.quizcreated);
     window.location.reload();
   };
 
   const setQuizObj = (isPrivate, name, description) => {
     if (user == null) {
       window.location = "/login";
-      toast.error(Translations[userLanguage].alerts.logincreatequiz);
+      toast.error(translations.alerts.logincreatequiz);
       return;
     }
     quizObj.name = name;
@@ -616,7 +608,7 @@ function NewMultiQuiz() {
           }}
         >
           <Typography variant="h3" style={{ textAlign: "center" }}>
-            {Translations[userLanguage].newmultiquiz.questions.select}
+            {translations.newmultiquiz.questions.select}
           </Typography>
           <br></br>
           <Divider />
@@ -697,7 +689,7 @@ function NewMultiQuiz() {
             }}
           >
             <Typography variant="h2" style={{ margin: "10px" }}>
-              <b>{Translations[userLanguage].newmultiquiz.title}</b>
+              <b>{translations.newmultiquiz.title}</b>
             </Typography>
             <br></br>
             <Divider style={{ width: "90vw" }} light />
@@ -708,7 +700,7 @@ function NewMultiQuiz() {
               onChange={(e) => setName(e.target.value)}
               value={name}
               type="text"
-              placeholder={Translations[userLanguage].newmultiquiz.input}
+              placeholder={translations.newmultiquiz.input}
             ></input>
           </div>
           <div
@@ -725,7 +717,7 @@ function NewMultiQuiz() {
           <ReactQuill
             theme="snow"
             value={description}
-            placeholder={Translations[userLanguage].newmultiquiz.description}
+            placeholder={translations.newmultiquiz.description}
             onChange={setDescription}
             style={{
               width: "100%",
@@ -747,7 +739,7 @@ function NewMultiQuiz() {
             }}
           >
             <Typography variant="h4">
-              {Translations[userLanguage].newmultiquiz.tags.title}
+              {translations.newmultiquiz.tags.title}
             </Typography>
             <br></br>
             <Divider light />
@@ -758,8 +750,7 @@ function NewMultiQuiz() {
               label="Tag Name"
               helperText={
                 <span style={{ color: "black" }}>
-                  {5 - tagNumber}{" "}
-                  {Translations[userLanguage].newmultiquiz.tags.helpertext}
+                  {5 - tagNumber} {translations.newmultiquiz.tags.helpertext}
                 </span>
               }
               onChange={(e) => {
@@ -775,7 +766,7 @@ function NewMultiQuiz() {
                 AddTag(currentTag);
               }}
             >
-              {Translations[userLanguage].newmultiquiz.tags.button}
+              {translations.newmultiquiz.tags.button}
             </Button>
             <br></br>
             {tags.map((tag, index) => (
@@ -793,7 +784,7 @@ function NewMultiQuiz() {
             variant="h4"
             style={{ margin: "10px", marginTop: "50px" }}
           >
-            {Translations[userLanguage].newmultiquiz.qna}
+            {translations.newmultiquiz.qna}
           </Typography>
           <br></br>
           <Divider style={{ width: "90vw" }} light />
@@ -854,7 +845,7 @@ function NewMultiQuiz() {
               }}
             >
               <Typography variant="subtitle1" style={{ margin: "10px" }}>
-                {Translations[userLanguage].newmultiquiz.private}
+                {translations.newmultiquiz.private}
               </Typography>
               <Switch
                 size="medium"
@@ -876,7 +867,7 @@ function NewMultiQuiz() {
                 setQuizObj(isPrivate, name, description);
               }}
             >
-              {Translations[userLanguage].newquiz.button}
+              {translations.newquiz.button}
             </Button>
           </div>
         </div>

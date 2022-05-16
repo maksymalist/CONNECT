@@ -6,11 +6,11 @@ import { motion } from "framer-motion/dist/framer-motion";
 
 import "../../style/style.css";
 
-import Translations from "../../translations/translations.json";
 import { EmojiEmotionsOutlined } from "@mui/icons-material";
 
 import { toast } from "react-toastify";
 import Emotes from "../../emotes/emotes.json";
+import useTranslations from "../../hooks/useTranslations";
 
 const WaitingRoom = ({ nextStep, user }) => {
   const peopleInRoom = [
@@ -22,9 +22,7 @@ const WaitingRoom = ({ nextStep, user }) => {
     "Lucy 🐳🙈",
     user,
   ];
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   const [isOpen, setIsOpen] = useState(false);
   let emoteCooldown = false;
 
@@ -45,7 +43,7 @@ const WaitingRoom = ({ nextStep, user }) => {
 
   const sendEmote = (emoteSrc) => {
     if (emoteCooldown) {
-      toast.info("✨ emotes have a 3s cooldown ✨"); //Translations[userLanguage].emoteCooldown
+      toast.info("✨ emotes have a 3s cooldown ✨"); //translations.emoteCooldown
       return;
     } else {
       emoteCooldown = true;
@@ -110,7 +108,7 @@ const WaitingRoom = ({ nextStep, user }) => {
             color="success"
             onClick={() => nextStep()}
           >
-            {Translations[userLanguage].tutorial.waitingroom.button}
+            {translations.tutorial.waitingroom.button}
           </Button>
         </div>
       </div>
@@ -122,7 +120,7 @@ const WaitingRoom = ({ nextStep, user }) => {
           color: "white",
         }}
       >
-        {Translations[userLanguage].waitingroom.title}
+        {translations.waitingroom.title}
       </h1>
       <div id="waitingRoomDiv">
         <div className="waiting__room__player__container">
@@ -234,7 +232,7 @@ const WaitingRoom = ({ nextStep, user }) => {
                   toast.info("You are not leaving this room 😡");
                 }}
               >
-                {Translations[userLanguage].waitingroom.leavebutton}
+                {translations.waitingroom.leavebutton}
               </Button>
               <Button
                 endIcon={<EmojiEmotionsOutlined />}

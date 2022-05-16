@@ -10,12 +10,10 @@ import {
 } from "@mui/material";
 
 import "../../../style/style.css";
-import Translations from "../../../translations/translations.json";
+import useTranslations from "../../../hooks/useTranslations";
 
 export default function FinishedScreen({ match, user, steps }) {
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   return (
     <div
       style={{
@@ -32,10 +30,10 @@ export default function FinishedScreen({ match, user, steps }) {
           variant="h3"
           style={{ color: "white", marginBottom: "10px" }}
         >
-          <b>{Translations[userLanguage].finishedscreen.title}</b>
+          <b>{translations.finishedscreen.title}</b>
         </Typography>
         <Typography variant="h3" style={{ color: "white" }}>
-          <b>{Translations[userLanguage].finishedscreen.sub}</b>
+          <b>{translations.finishedscreen.sub}</b>
         </Typography>
       </div>
       <div

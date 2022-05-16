@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 
 import "../../../style/sharepopupStyles.css";
 
-import Translations from "../../../translations/translations.json";
+import useTranslations from "../../../hooks/useTranslations";
 
 function SharePopup({ shareLink, close }) {
   const [open, setOpen] = useState(true);
@@ -24,9 +24,7 @@ function SharePopup({ shareLink, close }) {
 
   const [showPopupModal, setShowPopupModal] = useState(false);
 
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -50,7 +48,7 @@ function SharePopup({ shareLink, close }) {
     var text = url;
     navigator.clipboard.writeText(text).then(
       function () {
-        toast.success(Translations[userLanguage].alerts.copiedinvitation);
+        toast.success(translations.alerts.copiedinvitation);
       },
       function (err) {
         toast.error(err);
@@ -70,9 +68,7 @@ function SharePopup({ shareLink, close }) {
             width: "100%",
           }}
         >
-          <Typography variant="h4">
-            {Translations[userLanguage].sharepopup.title}
-          </Typography>
+          <Typography variant="h4">{translations.sharepopup.title}</Typography>
         </div>
         <br></br>
         <Divider style={{ width: "100%" }} light />
@@ -86,9 +82,7 @@ function SharePopup({ shareLink, close }) {
             width: "100%",
           }}
         >
-          <Typography variant="h6">
-            {Translations[userLanguage].sharepopup.sub}
-          </Typography>
+          <Typography variant="h6">{translations.sharepopup.sub}</Typography>
         </div>
         <div className="share__popup__icon__div">
           <GoogleShareToClassRoom
@@ -122,9 +116,7 @@ function SharePopup({ shareLink, close }) {
             width: "100%",
           }}
         >
-          <Typography variant="h6">
-            {Translations[userLanguage].sharepopup.sub2}
-          </Typography>
+          <Typography variant="h6">{translations.sharepopup.sub2}</Typography>
         </div>
         <div
           style={{
@@ -162,7 +154,7 @@ function SharePopup({ shareLink, close }) {
               width: "100px",
             }}
           >
-            {Translations[userLanguage].sharepopup.button}
+            {translations.sharepopup.button}
           </Button>
         </div>
       </div>

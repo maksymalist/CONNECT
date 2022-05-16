@@ -8,8 +8,6 @@ import "../../../style/style.css";
 import { toast } from "react-toastify";
 import { Typography, Stepper, Step, StepLabel } from "@mui/material";
 
-import Translations from "../../../translations/translations.json";
-
 import axios from "axios";
 
 import config from "../../../config.json";
@@ -18,6 +16,7 @@ import PositionScreen from "./PositionScreen";
 
 //hooks
 import getUser from "../../../hooks/getUser";
+import useTranslations from "../../../hooks/useTranslations";
 
 let isWaiting2 = false;
 let isShowingPosition2 = false;
@@ -52,9 +51,7 @@ function MultiGameRoom({ match }) {
 
   let quiz;
 
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const getQuiz = async (currentQuiz, name) => {
     quiz = currentQuiz;
@@ -227,7 +224,7 @@ function MultiGameRoom({ match }) {
       },
     ]);
     document.getElementById(id).style =
-    "color: #1594DB; font-weight: bold; transform: scale(1.05); border: 4px solid #1594DB;";
+      "color: #1594DB; font-weight: bold; transform: scale(1.05); border: 4px solid #1594DB;";
 
     memory.push({
       question: ques,
@@ -423,12 +420,9 @@ function MultiGameRoom({ match }) {
     });
 
     socket.on("PlayerFinished2", (data) => {
-      toast.success(
-        `${data} ${Translations[userLanguage].alerts.playerfinishedgame}`,
-        {
-          autoClose: 750,
-        }
-      );
+      toast.success(`${data} ${translations.alerts.playerfinishedgame}`, {
+        autoClose: 750,
+      });
     });
 
     socket.on("EndedGame", (data) => {

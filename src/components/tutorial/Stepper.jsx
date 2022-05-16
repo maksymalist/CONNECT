@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Stepper, Step, StepLabel } from "@mui/material";
-import Translations from "../../translations/translations.json";
+import useTranslations from "../../hooks/useTranslations";
 
 const StepperComponent = ({ activeStep }) => {
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   return (
     <Stepper
       activeStep={activeStep}
@@ -19,19 +17,13 @@ const StepperComponent = ({ activeStep }) => {
       }}
     >
       <Step>
-        <StepLabel>
-          {Translations[userLanguage].tutorial.stepper.join}
-        </StepLabel>
+        <StepLabel>{translations.tutorial.stepper.join}</StepLabel>
       </Step>
       <Step>
-        <StepLabel>
-          {Translations[userLanguage].tutorial.stepper.waiting}
-        </StepLabel>
+        <StepLabel>{translations.tutorial.stepper.waiting}</StepLabel>
       </Step>
       <Step>
-        <StepLabel>
-          {Translations[userLanguage].tutorial.stepper.game}
-        </StepLabel>
+        <StepLabel>{translations.tutorial.stepper.game}</StepLabel>
       </Step>
     </Stepper>
   );

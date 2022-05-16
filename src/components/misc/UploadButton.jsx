@@ -5,20 +5,17 @@ import { getFirebase } from "../../App";
 import { Typography } from "@mui/material";
 import { toast } from "react-toastify";
 
-import Translations from "../../translations/translations.json";
-
 import "firebase/storage";
 
 import uploadImg from "../../img/uploadImg.svg";
+import useTranslations from "../../hooks/useTranslations";
 
 const UploadButton = ({ imgRef }) => {
   const firebase = getFirebase();
   const ref = useRef(undefined);
   const [file, setFile] = useState(null);
 
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const handleClick = () => {
     if (ref) {
@@ -41,7 +38,7 @@ const UploadButton = ({ imgRef }) => {
         .getDownloadURL();
       console.log(url);
       setFile(url);
-      toast.success(Translations[userLanguage].alerts.uploadedpic);
+      toast.success(translations.alerts.uploadedpic);
     } catch (error) {
       console.log("error", error);
     }

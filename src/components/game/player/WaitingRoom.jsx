@@ -7,7 +7,6 @@ import { motion } from "framer-motion/dist/framer-motion";
 
 import "../../../style/style.css";
 
-import Translations from "../../../translations/translations.json";
 import { EmojiEmotionsOutlined } from "@mui/icons-material";
 
 import { toast } from "react-toastify";
@@ -16,6 +15,7 @@ import Emotes from "../../../emotes/emotes.json";
 
 //hooks
 import getUser from "../../../hooks/getUser";
+import useTranslations from "../../../hooks/useTranslations";
 
 //globals
 
@@ -25,9 +25,7 @@ export default function WaitingRoom(props) {
   const user = getUser();
   var [gameStatus, setGameStatus] = useState(false);
   const [peopleInRoom, setPeopleInRoom] = useState([]);
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   const [isOpen, setIsOpen] = useState(false);
   let emoteCooldown = false;
 
@@ -181,7 +179,7 @@ export default function WaitingRoom(props) {
 
   const sendEmote = (emote) => {
     if (emoteCooldown) {
-      toast.info("✨ emotes have a 3s cooldown ✨"); //Translations[userLanguage].emoteCooldown
+      toast.info("✨ emotes have a 3s cooldown ✨"); //translations.emoteCooldown
       return;
     } else {
       socket.emit("sendEmote", {
@@ -213,7 +211,7 @@ export default function WaitingRoom(props) {
           marginTop: "120px",
         }}
       >
-        {Translations[userLanguage].waitingroom.title}
+        {translations.waitingroom.title}
       </h1>
       <div id="waitingRoomDiv">
         {/* <textarea id='userList' defaultValue={props.usersInRoom} readOnly></textarea> */}
@@ -328,7 +326,7 @@ export default function WaitingRoom(props) {
                 leaveRoom();
               }}
             >
-              {Translations[userLanguage].waitingroom.leavebutton}
+              {translations.waitingroom.leavebutton}
             </Button>
             <Button
               endIcon={<EmojiEmotionsOutlined />}

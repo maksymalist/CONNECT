@@ -23,7 +23,6 @@ import UploadButton from "../misc/UploadButton";
 
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
-import Translations from "../../translations/translations.json";
 
 import { useMutation, gql } from "@apollo/client";
 
@@ -36,6 +35,7 @@ import QuesImg from "../../img/CardType/Image_Answer.svg";
 import QuesAns from "../../img/CardType/Question_Answer.svg";
 import uploadImg from "../../img/uploadImg.svg";
 import CropperComponent from "../misc/CropperComponent";
+import useTranslations from "../../hooks/useTranslations";
 
 const CREATE_QUIZ = gql`
   mutation createQuiz(
@@ -93,9 +93,7 @@ export default function NewQuiz() {
   const [tags, setTags] = useState([]);
   const [currentTag, setCurrentTag] = useState("");
   const [tagNumber, setTagNumber] = useState(0);
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   const [description, setDescription] = useState("");
 
   const imgRef = useRef(null);
@@ -124,7 +122,7 @@ export default function NewQuiz() {
   };
 
   useEffect(() => {
-    toast.info(Translations[userLanguage].alerts.eachansdifferent);
+    toast.info(translations.alerts.eachansdifferent);
     document.getElementById("root").style.padding = "0px";
 
     return () => {
@@ -140,7 +138,7 @@ export default function NewQuiz() {
     ) {
       console.log("userIn");
       if (document.getElementsByClassName("userInput")[i].value == "") {
-        toast.error(Translations[userLanguage].alerts.fieldleftempty);
+        toast.error(translations.alerts.fieldleftempty);
         return;
       }
     }
@@ -171,7 +169,7 @@ export default function NewQuiz() {
         },
       });
     }
-    toast.success(Translations[userLanguage].alerts.quizcreated);
+    toast.success(translations.alerts.quizcreated);
     window.location.reload();
   };
   const getTags = () => {
@@ -185,16 +183,16 @@ export default function NewQuiz() {
   const setQuizObj = (isPrivate, name, description) => {
     if (user == null) {
       window.location = "/login";
-      toast.error(Translations[userLanguage].alerts.logincreatequiz);
+      toast.error(translations.alerts.logincreatequiz);
       return;
     }
     if (name === "") {
-      toast.error(Translations[userLanguage].alerts.quiznameempty);
+      toast.error(translations.alerts.quiznameempty);
       return;
     }
     const newQuestionArray = [...questionArray];
     if (newQuestionArray.length < 6) {
-      toast.error(Translations[userLanguage].alerts.min6questions);
+      toast.error(translations.alerts.min6questions);
       return;
     }
     if (newQuestionArray.length > 12) {
@@ -204,7 +202,7 @@ export default function NewQuiz() {
     for (let i = 0; i < newQuestionArray.length; i++) {
       const data = newQuestionArray[i];
       if (data.question == "" || data.answer == "") {
-        toast.error(Translations[userLanguage].alerts.fieldleftempty);
+        toast.error(translations.alerts.fieldleftempty);
         return;
       }
     }
@@ -267,9 +265,7 @@ export default function NewQuiz() {
                 borderRadius: "5px",
                 border: "1px solid #e0e0e0",
               }}
-              placeholder={
-                Translations[userLanguage].newquiz.questions.question + " 💭"
-              }
+              placeholder={translations.newquiz.questions.question + " 💭"}
             />
             <br></br>
             <TextareaAutosize
@@ -284,9 +280,7 @@ export default function NewQuiz() {
                 borderRadius: "5px",
                 border: "1px solid #e0e0e0",
               }}
-              placeholder={
-                Translations[userLanguage].newquiz.questions.answer + "💡"
-              }
+              placeholder={translations.newquiz.questions.answer + "💡"}
             />
           </div>
           <div
@@ -300,11 +294,11 @@ export default function NewQuiz() {
               color="success"
               onClick={() => SaveQuestion(question, answer, index)}
             >
-              ✨ {Translations[userLanguage].newquiz.questions.save} ✨
+              ✨ {translations.newquiz.questions.save} ✨
             </Button>
             <div style={{ width: "10px", height: "10px" }} />
             <Button color="secondary" onClick={() => DeleteQuestion(index)}>
-              ❌ {Translations[userLanguage].newquiz.questions.delete} ❌
+              ❌ {translations.newquiz.questions.delete} ❌
             </Button>
           </div>
         </div>
@@ -377,9 +371,7 @@ export default function NewQuiz() {
                 borderRadius: "5px",
                 border: "1px solid #e0e0e0",
               }}
-              placeholder={
-                Translations[userLanguage].newquiz.questions.answer + "💡"
-              }
+              placeholder={translations.newquiz.questions.answer + "💡"}
             />
           </div>
           <div
@@ -393,11 +385,11 @@ export default function NewQuiz() {
               color="success"
               onClick={() => SaveQuestion(question, answer, index)}
             >
-              ✨ {Translations[userLanguage].newquiz.questions.save} ✨
+              ✨ {translations.newquiz.questions.save} ✨
             </Button>
             <div style={{ width: "10px", height: "10px" }} />
             <Button color="secondary" onClick={() => DeleteQuestion(index)}>
-              ❌ {Translations[userLanguage].newquiz.questions.delete} ❌
+              ❌ {translations.newquiz.questions.delete} ❌
             </Button>
           </div>
         </div>
@@ -431,7 +423,7 @@ export default function NewQuiz() {
     newQuestionArray[index].answer = answer;
     setQuestionArray(newQuestionArray);
 
-    toast.success(Translations[userLanguage].alerts.saved, {
+    toast.success(translations.alerts.saved, {
       autoClose: 500,
     });
   };
@@ -441,7 +433,7 @@ export default function NewQuiz() {
     newQuestionArray.splice(index, 1);
     setQuestionArray(newQuestionArray);
 
-    toast.error(Translations[userLanguage].alerts.delete, {
+    toast.error(translations.alerts.delete, {
       autoClose: 500,
     });
   };
@@ -494,7 +486,7 @@ export default function NewQuiz() {
           }}
         >
           <Typography variant="h3" style={{ textAlign: "center" }}>
-            {Translations[userLanguage].newquiz.questions.select}
+            {translations.newquiz.questions.select}
           </Typography>
           <br></br>
           <Divider />
@@ -573,7 +565,7 @@ export default function NewQuiz() {
             }}
           >
             <Typography variant="h2" style={{ margin: "10px" }}>
-              <b>{Translations[userLanguage].newquiz.title}</b>
+              <b>{translations.newquiz.title}</b>
             </Typography>
             <br></br>
             <Divider style={{ width: "90vw" }} light />
@@ -583,7 +575,7 @@ export default function NewQuiz() {
               onChange={(e) => setName(e.target.value)}
               value={name}
               type="text"
-              placeholder={Translations[userLanguage].newquiz.input}
+              placeholder={translations.newquiz.input}
             ></input>
           </div>
           <div
@@ -600,7 +592,7 @@ export default function NewQuiz() {
           <ReactQuill
             theme="snow"
             value={description}
-            placeholder={Translations[userLanguage].newmultiquiz.description}
+            placeholder={translations.newmultiquiz.description}
             onChange={setDescription}
             style={{
               width: "100%",
@@ -622,7 +614,7 @@ export default function NewQuiz() {
             }}
           >
             <Typography variant="h4">
-              {Translations[userLanguage].newquiz.tags.title}
+              {translations.newquiz.tags.title}
             </Typography>
             <br></br>
             <Divider light />
@@ -630,11 +622,10 @@ export default function NewQuiz() {
             <TextField
               variant="outlined"
               size="small"
-              label={Translations[userLanguage].newquiz.tags.input}
+              label={translations.newquiz.tags.input}
               helperText={
                 <span style={{ color: "black" }}>
-                  {5 - tagNumber}{" "}
-                  {Translations[userLanguage].newquiz.tags.helpertext}
+                  {5 - tagNumber} {translations.newquiz.tags.helpertext}
                 </span>
               }
               onChange={(e) => {
@@ -650,7 +641,7 @@ export default function NewQuiz() {
                 AddTag(currentTag);
               }}
             >
-              {Translations[userLanguage].newquiz.tags.button}
+              {translations.newquiz.tags.button}
             </Button>
             <br></br>
             {tags.map((tag, index) => (
@@ -668,7 +659,7 @@ export default function NewQuiz() {
             variant="h4"
             style={{ margin: "10px", marginTop: "50px" }}
           >
-            {Translations[userLanguage].newquiz.qna}
+            {translations.newquiz.qna}
           </Typography>
           <br></br>
           <Divider style={{ width: "90vw" }} light />
@@ -716,7 +707,7 @@ export default function NewQuiz() {
               }}
             >
               <Typography variant="subtitle1" style={{ margin: "10px" }}>
-                {Translations[userLanguage].newquiz.private}
+                {translations.newquiz.private}
               </Typography>
               <Switch
                 size="medium"
@@ -738,7 +729,7 @@ export default function NewQuiz() {
                 setQuizObj(isPrivate, name, description);
               }}
             >
-              {Translations[userLanguage].newquiz.button}
+              {translations.newquiz.button}
             </Button>
           </div>
         </div>

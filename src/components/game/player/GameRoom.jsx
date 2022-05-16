@@ -9,14 +9,13 @@ import { toast } from "react-toastify";
 
 import { Typography } from "@mui/material";
 
-import Translations from "../../../translations/translations.json";
-
 import axios from "axios";
 
 import config from "../../../config.json";
 
 //hooks
 import getUser from "../../../hooks/getUser";
+import useTranslations from "../../../hooks/useTranslations";
 
 export default function GameRoom({ match }) {
   const user = getUser();
@@ -32,9 +31,7 @@ export default function GameRoom({ match }) {
 
   let quiz = [];
 
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const getQuiz = async () => {
     const response = await axios.post(
@@ -218,12 +215,9 @@ export default function GameRoom({ match }) {
       //console.log(data.time, data.user)
     });
     socket.on("PlayerFinished2", (data) => {
-      toast.success(
-        `${data} ${Translations[userLanguage].alerts.playerfinishedgame}`,
-        {
-          autoClose: 750,
-        }
-      );
+      toast.success(`${data} ${translations.alerts.playerfinishedgame}`, {
+        autoClose: 750,
+      });
     });
 
     socket.on("EndedGame", (data) => {

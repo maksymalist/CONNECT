@@ -1,16 +1,14 @@
 import { useState } from "react";
-import Translations from "../../translations/translations.json";
 
 import { Typography, Button, CircularProgress } from "@mui/material";
 import HostExample from "../../img/Tutorial/HostExample.svg";
 
 import { toast } from "react-toastify";
+import useTranslations from "../../hooks/useTranslations";
 
 const JoinRoom = ({ nextStep, setUser }) => {
   const [joinFormStep, setJoinFormStep] = useState(0);
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const [joinFormCode, setJoinFormCode] = useState("");
   const [joinFormNickname, setJoinFormNickname] = useState("");
@@ -52,14 +50,10 @@ const JoinRoom = ({ nextStep, setUser }) => {
           }}
         >
           {joinFormStep === 0 && (
-            <Typography sx={{ p: 2 }}>
-              {Translations[userLanguage].play.join.tip}
-            </Typography>
+            <Typography sx={{ p: 2 }}>{translations.play.join.tip}</Typography>
           )}
           {joinFormStep === 1 && (
-            <Typography sx={{ p: 2 }}>
-              {Translations[userLanguage].play.join.tip2}
-            </Typography>
+            <Typography sx={{ p: 2 }}>{translations.play.join.tip2}</Typography>
           )}
         </div>
         <div
@@ -76,7 +70,7 @@ const JoinRoom = ({ nextStep, setUser }) => {
           }}
         >
           <Typography variant="h3" style={{ margin: "30px" }}>
-            <b>{Translations[userLanguage].play.join.title}</b>
+            <b>{translations.play.join.title}</b>
           </Typography>
           {joinFormStep === 0 && (
             <>
@@ -84,7 +78,7 @@ const JoinRoom = ({ nextStep, setUser }) => {
                 value={joinFormCode}
                 onChange={(event) => setJoinFormCode(event.target.value)}
                 style={{ width: "100%", height: "48px" }}
-                placeholder={Translations[userLanguage].play.join.input}
+                placeholder={translations.play.join.input}
                 type="text"
                 id="code"
               />
@@ -104,10 +98,10 @@ const JoinRoom = ({ nextStep, setUser }) => {
                     toast.info(
                       <div>
                         <Typography variant="h5">
-                          <b>{Translations[userLanguage].alerts.hint.title}</b>
+                          <b>{translations.alerts.hint.title}</b>
                         </Typography>
                         <Typography variant="h6">
-                          {Translations[userLanguage].alerts.hint.text}
+                          {translations.alerts.hint.text}
                         </Typography>
                       </div>
                     );
@@ -116,7 +110,7 @@ const JoinRoom = ({ nextStep, setUser }) => {
                   setJoinFormStep(1);
                 }}
               >
-                {Translations[userLanguage].play.join.button}
+                {translations.play.join.button}
               </Button>
             </>
           )}
@@ -126,7 +120,7 @@ const JoinRoom = ({ nextStep, setUser }) => {
                 value={joinFormNickname}
                 onChange={(event) => setJoinFormNickname(event.target.value)}
                 style={{ width: "100%", height: "48px" }}
-                placeholder={Translations[userLanguage].play.join.input2}
+                placeholder={translations.play.join.input2}
                 type="text"
                 id="name"
               />
@@ -157,7 +151,7 @@ const JoinRoom = ({ nextStep, setUser }) => {
                   {spinner1 ? (
                     <CircularProgress size={24} style={{ color: "white" }} />
                   ) : (
-                    Translations[userLanguage].play.join.button2
+                    translations.play.join.button2
                   )}
                 </Button>
               </div>

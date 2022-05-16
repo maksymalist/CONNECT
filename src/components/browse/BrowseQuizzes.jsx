@@ -16,14 +16,13 @@ import {
 
 import TagIcon from "@mui/icons-material/Tag";
 
-import Translations from "../../translations/translations.json";
-
 import { useQuery, gql } from "@apollo/client";
 
 import banner from "../../img/banner.svg";
 import Wave from "../../img/WhiteBigStripe.svg";
 
 import QuizCard from "../cards/QuizCard";
+import useTranslations from "../../hooks/useTranslations";
 
 const GET_QUIZZES = gql`
   query allQuizzes {
@@ -57,9 +56,7 @@ const GET_MULTIS = gql`
 
 export default function BrowseQuizzes() {
   const [gameMode, setGameMode] = useState("normal");
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const [currentTag, setCurrentTag] = useState("");
   const [tags, setTags] = useState([]);
@@ -106,7 +103,7 @@ export default function BrowseQuizzes() {
                 textAlign: "left",
               }}
             >
-              {Translations[userLanguage].quizzes.bar.discover}
+              {translations.quizzes.bar.discover}
             </Typography>
           </div>
           <div>
@@ -121,25 +118,25 @@ export default function BrowseQuizzes() {
               }}
             >
               <Chip
-                label={Translations[userLanguage].quizzes.bar.tags.history}
+                label={translations.quizzes.bar.tags.history}
                 style={{ backgroundColor: "#FCC73E" }}
                 className="mui-chip"
                 color="primary"
               />
               <Chip
-                label={Translations[userLanguage].quizzes.bar.tags.geography}
+                label={translations.quizzes.bar.tags.geography}
                 style={{ backgroundColor: "#1594DB" }}
                 className="mui-chip"
                 color="primary"
               />
               <Chip
-                label={Translations[userLanguage].quizzes.bar.tags.science}
+                label={translations.quizzes.bar.tags.science}
                 style={{ backgroundColor: "#1BB978" }}
                 className="mui-chip"
                 color="primary"
               />
               <Chip
-                label={Translations[userLanguage].quizzes.bar.tags.sports}
+                label={translations.quizzes.bar.tags.sports}
                 style={{ backgroundColor: "#DC014E" }}
                 className="mui-chip"
                 color="primary"
@@ -184,11 +181,11 @@ export default function BrowseQuizzes() {
           }}
         >
           <Typography variant="h4" style={{ marginRight: "20px" }}>
-            <b>{Translations[userLanguage].quizzes.bar.title}</b>
+            <b>{translations.quizzes.bar.title}</b>
           </Typography>
           <FormControl variant="outlined">
             <InputLabel id="demo-simple-select-outlined-label">
-              {Translations[userLanguage].quizzes.bar.gamemode.title}
+              {translations.quizzes.bar.gamemode.title}
             </InputLabel>
             <Select
               labelId="demo-simple-select-outlined-label"
@@ -200,17 +197,17 @@ export default function BrowseQuizzes() {
               required
             >
               <MenuItem value="normal">
-                ⚡️ {Translations[userLanguage].quizzes.bar.gamemode.normal}
+                ⚡️ {translations.quizzes.bar.gamemode.normal}
               </MenuItem>
               <MenuItem value="multi">
-                🥳 {Translations[userLanguage].quizzes.bar.gamemode.multi}
+                🥳 {translations.quizzes.bar.gamemode.multi}
               </MenuItem>
             </Select>
           </FormControl>
           <FormControl variant="outlined" style={{ marginLeft: "10px" }}>
             <TextField
               variant="outlined"
-              label={Translations[userLanguage].quizzes.bar.tagsearch}
+              label={translations.quizzes.bar.tagsearch}
               size="small"
               InputProps={{
                 startAdornment: (
@@ -239,7 +236,7 @@ export default function BrowseQuizzes() {
               setCurrentTag("");
             }}
           >
-            {Translations[userLanguage].quizzes.bar.add}
+            {translations.quizzes.bar.add}
           </Button>
         </div>
       </div>

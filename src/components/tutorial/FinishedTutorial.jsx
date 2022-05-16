@@ -1,15 +1,13 @@
 import { Button, Divider, Typography } from "@mui/material";
 import { useState } from "react";
 import Confetti from "react-confetti";
+import useTranslations from "../../hooks/useTranslations";
 
 //icon
 import DiscordIcon from "../../img/DiscordIcon.svg";
-import Translations from "../../translations/translations.json";
 
 const FinishedTutorial = () => {
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   return (
     <>
       <Confetti width={window.innerWidth} height={window.innerHeight} />
@@ -35,7 +33,7 @@ const FinishedTutorial = () => {
           }}
         >
           <Typography variant="h4">
-            <b>{Translations[userLanguage].tutorial.tutorialcompleted.title}</b>
+            <b>{translations.tutorial.tutorialcompleted.title}</b>
           </Typography>
           <br></br>
         </div>
@@ -69,7 +67,7 @@ const FinishedTutorial = () => {
               }}
               onClick={() => (window.location = "/quizzes")}
             >
-              {Translations[userLanguage].tutorial.tutorialcompleted.button1}
+              {translations.tutorial.tutorialcompleted.button1}
             </Button>
             <Button
               variant="contained"
@@ -83,7 +81,7 @@ const FinishedTutorial = () => {
               }}
               onClick={() => (window.location = "/newquiz")}
             >
-              {Translations[userLanguage].tutorial.tutorialcompleted.button2}
+              {translations.tutorial.tutorialcompleted.button2}
             </Button>
             <Button
               variant="contained"
@@ -97,7 +95,7 @@ const FinishedTutorial = () => {
               }}
               onClick={() => (window.location = "/play")}
             >
-              {Translations[userLanguage].tutorial.tutorialcompleted.button3}
+              {translations.tutorial.tutorialcompleted.button3}
             </Button>
             <Button
               variant="contained"
@@ -114,7 +112,7 @@ const FinishedTutorial = () => {
                 window.open("https://discord.gg/WSBtsD66yc", "_blank")
               }
             >
-              {Translations[userLanguage].tutorial.tutorialcompleted.button4}
+              {translations.tutorial.tutorialcompleted.button4}
             </Button>
           </div>
         </div>

@@ -12,8 +12,6 @@ import { toast } from "react-toastify";
 
 import { Button, Typography, CircularProgress } from "@mui/material";
 
-import Translations from "../translations/translations.json";
-
 import axios from "axios";
 
 import { useMutation, gql } from "@apollo/client";
@@ -22,6 +20,8 @@ import list from "badwords-list";
 
 import config from "../config.json";
 import socket from "../socket-io";
+
+import useTranslations from "../hooks/useTranslations";
 
 //hooks
 import getUser from "../hooks/getUser";
@@ -70,9 +70,7 @@ export default function EnterCodeForm({ match, location }) {
   const [joinFormCode, setJoinFormCode] = useState("");
   const [joinFormNickname, setJoinFormNickname] = useState("");
 
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const [classid, setClassid] = useState("null");
   const classID = new URLSearchParams(search).get("classid");
@@ -202,7 +200,7 @@ export default function EnterCodeForm({ match, location }) {
         setSpinner1(false);
       } else {
         if (joined == true) return;
-        toast.error(Translations[userLanguage].alerts.roomnotfound);
+        toast.error(translations.alerts.roomnotfound);
         setSpinner1(false);
       }
     });
@@ -322,7 +320,7 @@ export default function EnterCodeForm({ match, location }) {
     socket.on("changeName", (data) => {
       if (sessionStorage.getItem("roomJoined") !== "true") {
         if (role !== "host") {
-          toast.error(Translations[userLanguage].alerts.nametaken);
+          toast.error(translations.alerts.nametaken);
         }
       }
     });
@@ -351,8 +349,8 @@ export default function EnterCodeForm({ match, location }) {
     });
     const terminateRoomPopUp = (room) => (
       <div>
-        <h3>{Translations[userLanguage].alerts.terminate.text1}</h3>
-        <h4>{Translations[userLanguage].alerts.terminate.text2}</h4>
+        <h3>{translations.alerts.terminate.text1}</h3>
+        <h4>{translations.alerts.terminate.text2}</h4>
         <Button
           style={{ marginBottom: "1vh" }}
           variant="contained"
@@ -362,13 +360,13 @@ export default function EnterCodeForm({ match, location }) {
             terminateRoom(room);
           }}
         >
-          {Translations[userLanguage].alerts.terminate.button}
+          {translations.alerts.terminate.button}
         </Button>
       </div>
     );
 
     socket.on("roomAlreadyExists", (data) => {
-      toast.info(Translations[userLanguage].alerts.roomalreadyexists);
+      toast.info(translations.alerts.roomalreadyexists);
     });
 
     socket.on("alreadyHostRoom", (data) => {
@@ -381,13 +379,11 @@ export default function EnterCodeForm({ match, location }) {
     });
 
     socket.on("gameAlreadyStarted", (data) => {
-      toast.info(
-        `${Translations[userLanguage].alerts.gamealreadystarted} ${data.room}`
-      );
+      toast.info(`${translations.alerts.gamealreadystarted} ${data.room}`);
     });
 
     socket.on("cannotJoinPrivateRoom", (data) => {
-      toast.error(Translations[userLanguage].alerts.cannotjoinprivate);
+      toast.error(translations.alerts.cannotjoinprivate);
     });
   }, []);
 
@@ -401,15 +397,15 @@ export default function EnterCodeForm({ match, location }) {
 
   const JoinRoom = async () => {
     if (sessionStorage.getItem("roomJoined") == "true") {
-      toast.info(Translations[userLanguage].alerts.sessionexpired);
+      toast.info(translations.alerts.sessionexpired);
       return;
     } else {
       if (joinFormNickname === "") {
-        toast.error(Translations[userLanguage].alerts.entername);
+        toast.error(translations.alerts.entername);
         return;
       }
       if (joinFormCode === "") {
-        toast.error(Translations[userLanguage].alerts.entercode);
+        toast.error(translations.alerts.entercode);
         return;
       }
       const res = await axios.post(`${config["api-server"]}/get-user-classes`, {
@@ -428,15 +424,15 @@ export default function EnterCodeForm({ match, location }) {
 
   const CreateRoom = async () => {
     if (roomName === "") {
-      toast.error(Translations[userLanguage].alerts.enterroomname);
+      toast.error(translations.alerts.enterroomname);
       return;
     }
     if (gameCode === "") {
-      toast.error(Translations[userLanguage].alerts.entergamecode);
+      toast.error(translations.alerts.entergamecode);
       return;
     }
     if (gameMode === "") {
-      toast.error(Translations[userLanguage].alerts.entergamemode);
+      toast.error(translations.alerts.entergamemode);
       return;
     }
     console.log(friendlyNicknamesGlobal);
@@ -495,9 +491,7 @@ export default function EnterCodeForm({ match, location }) {
       room: room,
       googleId: user?.profileObj.googleId,
     });
-    toast.success(
-      `${Translations[userLanguage].alerts.roomterminated} ${room}`
-    );
+    toast.success(`${translations.alerts.roomterminated} ${room}`);
   };
 
   const toggleChecked = () => {
@@ -512,7 +506,7 @@ export default function EnterCodeForm({ match, location }) {
       {playMode ? (
         <div id="mainConatainer">
           <Typography variant="h3" style={{ margin: "30px" }}>
-            <b>{Translations[userLanguage].play.join.title}</b>
+            <b>{translations.play.join.title}</b>
           </Typography>
           {joinFormStep === 0 && (
             <>
@@ -521,7 +515,7 @@ export default function EnterCodeForm({ match, location }) {
                 onChange={(event) => setJoinFormCode(event.target.value)}
                 style={{ width: "100%", height: "48px" }}
                 defaultValue={code}
-                placeholder={Translations[userLanguage].play.join.input}
+                placeholder={translations.play.join.input}
                 type="text"
                 id="code"
               />
@@ -540,7 +534,7 @@ export default function EnterCodeForm({ match, location }) {
                   setJoinFormStep(1);
                 }}
               >
-                {Translations[userLanguage].play.join.button}
+                {translations.play.join.button}
               </Button>
             </>
           )}
@@ -550,7 +544,7 @@ export default function EnterCodeForm({ match, location }) {
                 value={joinFormNickname}
                 onChange={(event) => setJoinFormNickname(event.target.value)}
                 style={{ width: "100%", height: "48px" }}
-                placeholder={Translations[userLanguage].play.join.input2}
+                placeholder={translations.play.join.input2}
                 type="text"
                 id="name"
               />
@@ -580,7 +574,7 @@ export default function EnterCodeForm({ match, location }) {
                   {spinner1 ? (
                     <CircularProgress size={24} style={{ color: "white" }} />
                   ) : (
-                    Translations[userLanguage].play.join.button2
+                    translations.play.join.button2
                   )}
                 </Button>
                 <Button
@@ -596,7 +590,7 @@ export default function EnterCodeForm({ match, location }) {
                     setJoinFormStep(0);
                   }}
                 >
-                  {Translations[userLanguage].play.join.back}
+                  {translations.play.join.back}
                 </Button>
               </div>
             </>
@@ -620,7 +614,7 @@ export default function EnterCodeForm({ match, location }) {
                   }}
                 >
                   <Typography variant="sub1">
-                    {Translations[userLanguage].play.host.private}
+                    {translations.play.host.private}
                   </Typography>
                 </div>
               )}
@@ -632,7 +626,7 @@ export default function EnterCodeForm({ match, location }) {
                 variant="h2"
                 style={{ marginBottom: "30px", color: "white" }}
               >
-                <b>{Translations[userLanguage].play.host.presets.gamecode}</b>
+                <b>{translations.play.host.presets.gamecode}</b>
               </Typography>
               <input
                 style={{
@@ -641,7 +635,7 @@ export default function EnterCodeForm({ match, location }) {
                   padding: "10px",
                   textAlign: "center",
                 }}
-                placeholder={Translations[userLanguage].play.host.input}
+                placeholder={translations.play.host.input}
                 type="text"
                 id="roomName"
                 value={roomName}
@@ -663,7 +657,7 @@ export default function EnterCodeForm({ match, location }) {
                     Generatecode();
                   }}
                 >
-                  {Translations[userLanguage].play.host.presets.button}{" "}
+                  {translations.play.host.presets.button}{" "}
                 </Button>
                 <div>
                   <Button
@@ -678,7 +672,7 @@ export default function EnterCodeForm({ match, location }) {
                       setHostStep(hostStep + 1);
                     }}
                   >
-                    {Translations[userLanguage].hostroom.next}
+                    {translations.hostroom.next}
                   </Button>
                 </div>
               </div>
@@ -690,7 +684,7 @@ export default function EnterCodeForm({ match, location }) {
                 variant="h2"
                 style={{ marginBottom: "30px", color: "white" }}
               >
-                <b>{Translations[userLanguage].play.host.presets.maxplayers}</b>
+                <b>{translations.play.host.presets.maxplayers}</b>
               </Typography>
               <input
                 style={{
@@ -760,7 +754,7 @@ export default function EnterCodeForm({ match, location }) {
                     setHostStep(hostStep - 1);
                   }}
                 >
-                  {Translations[userLanguage].play.join.back}
+                  {translations.play.join.back}
                 </Button>
                 <Button
                   variant="contained"
@@ -774,7 +768,7 @@ export default function EnterCodeForm({ match, location }) {
                     setHostStep(hostStep + 1);
                   }}
                 >
-                  {Translations[userLanguage].hostroom.next}
+                  {translations.hostroom.next}
                 </Button>
               </div>
             </div>
@@ -785,9 +779,7 @@ export default function EnterCodeForm({ match, location }) {
                 variant="h2"
                 style={{ marginBottom: "30px", color: "white" }}
               >
-                <b>
-                  {Translations[userLanguage].play.host.presets.podiumplaces}
-                </b>
+                <b>{translations.play.host.presets.podiumplaces}</b>
               </Typography>
               <input
                 style={{
@@ -855,7 +847,7 @@ export default function EnterCodeForm({ match, location }) {
                     setHostStep(hostStep - 1);
                   }}
                 >
-                  {Translations[userLanguage].play.join.back}
+                  {translations.play.join.back}
                 </Button>
                 <Button
                   variant="contained"
@@ -869,7 +861,7 @@ export default function EnterCodeForm({ match, location }) {
                     setHostStep(hostStep + 1);
                   }}
                 >
-                  {Translations[userLanguage].hostroom.next}
+                  {translations.hostroom.next}
                 </Button>
               </div>
             </div>
@@ -880,7 +872,7 @@ export default function EnterCodeForm({ match, location }) {
                 variant="h2"
                 style={{ marginBottom: "30px", color: "white" }}
               >
-                <b>{Translations[userLanguage].play.host.presets.friendly}</b>
+                <b>{translations.play.host.presets.friendly}</b>
               </Typography>
               <div
                 style={{
@@ -908,7 +900,7 @@ export default function EnterCodeForm({ match, location }) {
                     friendlyNicknamesGlobal = true;
                   }}
                 >
-                  {Translations[userLanguage].play.host.presets.yes}
+                  {translations.play.host.presets.yes}
                 </Button>
                 <Button
                   variant={isFriendlyNicknames ? "outlined" : "contained"}
@@ -920,7 +912,7 @@ export default function EnterCodeForm({ match, location }) {
                     friendlyNicknamesGlobal = false;
                   }}
                 >
-                  {Translations[userLanguage].play.host.presets.no}
+                  {translations.play.host.presets.no}
                 </Button>
               </div>
               <div style={{ marginTop: "100px" }}>
@@ -932,7 +924,7 @@ export default function EnterCodeForm({ match, location }) {
                     setHostStep(hostStep - 1);
                   }}
                 >
-                  {Translations[userLanguage].play.join.back}
+                  {translations.play.join.back}
                 </Button>
                 <Button
                   variant="contained"
@@ -946,7 +938,7 @@ export default function EnterCodeForm({ match, location }) {
                     setHostStep(hostStep + 1);
                   }}
                 >
-                  {Translations[userLanguage].hostroom.next}
+                  {translations.hostroom.next}
                 </Button>
               </div>
             </div>
@@ -957,7 +949,7 @@ export default function EnterCodeForm({ match, location }) {
                 variant="h2"
                 style={{ marginBottom: "100px", color: "white" }}
               >
-                <b>{Translations[userLanguage].play.host.presets.ready}</b>
+                <b>{translations.play.host.presets.ready}</b>
               </Typography>
               <div
                 style={{
@@ -980,7 +972,7 @@ export default function EnterCodeForm({ match, location }) {
                     setHostStep(hostStep - 1);
                   }}
                 >
-                  {Translations[userLanguage].play.join.back}
+                  {translations.play.join.back}
                 </Button>
                 <Button
                   variant="contained"
@@ -999,7 +991,7 @@ export default function EnterCodeForm({ match, location }) {
                   {spinner2 ? (
                     <CircularProgress size={72} style={{ color: "white" }} />
                   ) : (
-                    Translations[userLanguage].play.host.presets.button2
+                    translations.play.host.presets.button2
                   )}
                 </Button>
               </div>

@@ -9,10 +9,9 @@ import {
   ClickAwayListener,
 } from "@mui/material";
 
-import Translations from "../../translations/translations.json";
-
 import { useQuery, useMutation, gql } from "@apollo/client";
 import getUser from "../../hooks/getUser";
+import useTranslations from "../../hooks/useTranslations";
 
 const GET_NOTIFICATIONS = gql`
   query allNotificationsByUser($userId: ID!) {
@@ -34,9 +33,7 @@ const CLEAR_NOTIFICATIONS = gql`
 
 function NotificationBox({ close }) {
   const user = getUser();
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const { loading, error, data } = useQuery(GET_NOTIFICATIONS, {
     variables: {
@@ -84,7 +81,7 @@ function NotificationBox({ close }) {
       <div className="notification__box">
         <div className="notification__header">
           <Typography variant="h6" className="notification__title">
-            <b>{Translations[userLanguage].notifications.title}</b>
+            <b>{translations.notifications.title}</b>
           </Typography>
           <div style={{ width: "90%" }}>
             <Divider light />
@@ -123,7 +120,7 @@ function NotificationBox({ close }) {
             className="notification__card__button"
             onClick={() => handleClearNotifications()}
           >
-            {Translations[userLanguage].notifications.clear}
+            {translations.notifications.clear}
           </Button>
         </div>
       </div>

@@ -19,7 +19,7 @@ import "firebase/storage";
 import uploadImg from "../../img/uploadImg.svg";
 import { Button, Typography, ClickAwayListener } from "@mui/material";
 import { toast } from "react-toastify";
-import Translations from "../../translations/translations.json";
+import useTranslations from "../../hooks/useTranslations.js";
 
 // This is to demonstate how to make and center a % aspect crop
 // which is a bit trickier so we use some helper functions.
@@ -58,9 +58,7 @@ export default function CropperComponent({
   const inputRef = useRef(null);
 
   const firebase = getFirebase();
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   function onSelectFile(e) {
     if (e.target.files && e.target.files.length > 0) {
@@ -111,7 +109,7 @@ export default function CropperComponent({
       } else if (mode === "multi") {
         setImage(subIndex, index, url);
       }
-      toast.success(Translations[userLanguage].alerts.uploadedpic);
+      toast.success(translations.alerts.uploadedpic);
     } catch (error) {
       console.log("error", error);
     }
@@ -251,7 +249,7 @@ export default function CropperComponent({
               }}
               disabled={!Boolean(completedCrop)}
             >
-              ✨ {Translations[userLanguage].newquiz.questions.save} ✨
+              ✨ {translations.newquiz.questions.save} ✨
             </Button>
           </div>
         </div>

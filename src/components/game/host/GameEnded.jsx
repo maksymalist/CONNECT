@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PodiumAnimation from "./PodiumAnimation";
-import Translations from "../../../translations/translations.json";
 import { Button, Typography } from "@mui/material";
+import useTranslations from "../../../hooks/useTranslations";
 
 export default function GameEnded(props) {
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   useEffect(() => {
     console.log(props.podium);
     return () => {
@@ -24,7 +22,7 @@ export default function GameEnded(props) {
       }}
     >
       <Typography variant="h3" style={{ color: "white", marginBottom: "50px" }}>
-        <b>{Translations[userLanguage].gameended.title}</b>
+        <b>{translations.gameended.title}</b>
       </Typography>
       <PodiumAnimation
         maxPodiumPlayers={props.maxPodiumPlayers}

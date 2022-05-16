@@ -17,11 +17,10 @@ import TagIcon from "@mui/icons-material/Tag";
 
 import Placeholder from "../../img/quizCoverPlaceholder.svg";
 
-import Translations from "../../translations/translations.json";
-
 import { useQuery, gql } from "@apollo/client";
 
 import QuizCard from "../cards/QuizCard";
+import useTranslations from "../../hooks/useTranslations";
 
 const GET_QUIZZES = gql`
   query allQuizzes {
@@ -55,9 +54,7 @@ const GET_MULTIS = gql`
 
 export default function BrowseQuizzes({ classID, gamemode }) {
   const [gameMode, setGameMode] = useState("normal");
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const { loading, error, data: quizzes } = useQuery(GET_QUIZZES);
   const { loading: multisLoading, data: multis } = useQuery(GET_MULTIS);
@@ -86,11 +83,11 @@ export default function BrowseQuizzes({ classID, gamemode }) {
         }}
       >
         <h1 style={{ fontSize: "1.5rem", marginRight: "20px" }}>
-          {Translations[userLanguage].quizzes.bar.title}
+          {translations.quizzes.bar.title}
         </h1>
         <FormControl variant="outlined">
           <InputLabel id="demo-simple-select-outlined-label">
-            {Translations[userLanguage].quizzes.bar.gamemode.title}
+            {translations.quizzes.bar.gamemode.title}
           </InputLabel>
           <Select
             labelId="demo-simple-select-outlined-label"
@@ -102,10 +99,10 @@ export default function BrowseQuizzes({ classID, gamemode }) {
             required
           >
             <MenuItem value="normal">
-              ⚡️ {Translations[userLanguage].quizzes.bar.gamemode.normal}
+              ⚡️ {translations.quizzes.bar.gamemode.normal}
             </MenuItem>
             <MenuItem value="multi">
-              🥳 {Translations[userLanguage].quizzes.bar.gamemode.multi}
+              🥳 {translations.quizzes.bar.gamemode.multi}
             </MenuItem>
           </Select>
         </FormControl>
@@ -141,7 +138,7 @@ export default function BrowseQuizzes({ classID, gamemode }) {
             setCurrentTag("");
           }}
         >
-          {Translations[userLanguage].quizzes.bar.add}
+          {translations.quizzes.bar.add}
         </Button>
       </div>
       <div style={{ marginTop: "20px" }}>

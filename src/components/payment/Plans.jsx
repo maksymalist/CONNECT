@@ -8,27 +8,25 @@ import { toast } from "react-toastify";
 import { Button, Typography, Chip, Divider } from "@mui/material";
 
 import { CheckRounded } from "@mui/icons-material";
-import Translations from "../../translations/translations.json";
 
 import { useSelector } from "react-redux";
 import getUser from "../../hooks/getUser";
 
 import banner from "../../img/plansBanner.svg";
 import Wave from "../../img/WhiteBigStripe.svg";
+import useTranslations from "../../hooks/useTranslations";
 
 export default function Plans() {
   const user = getUser();
   const plan = useSelector((state) => state.plan);
   // eslint-disable-next-line
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const selectClassroomPlan = () => {
     if (plan == "Starter") {
       window.location = `/subscription/classroom`;
     } else {
-      toast.info(Translations[userLanguage].alerts.alreadyhaveplan);
+      toast.info(translations.alerts.alreadyhaveplan);
     }
   };
   useEffect(() => {
@@ -66,7 +64,7 @@ export default function Plans() {
                 maxWidth: "600px",
               }}
             >
-              {Translations[userLanguage].plans.title1}{" "}
+              {translations.plans.title1}{" "}
               <b
                 style={{
                   fontWeight: "bold",
@@ -74,9 +72,9 @@ export default function Plans() {
                   marginBottom: "15px",
                 }}
               >
-                {Translations[userLanguage].plans.title2}
+                {translations.plans.title2}
               </b>{" "}
-              {Translations[userLanguage].plans.title3}
+              {translations.plans.title3}
             </Typography>
           </div>
           <div></div>
@@ -109,7 +107,7 @@ export default function Plans() {
             style={{ marginTop: "20px", marginBottom: "20px" }}
             color="#6c63ff"
           >
-            <b>{Translations[userLanguage].plans.starter.title}</b>
+            <b>{translations.plans.starter.title}</b>
           </Typography>
           <Divider />
           <div
@@ -123,16 +121,16 @@ export default function Plans() {
             />
           </div>
           <Typography variant="h5" color="#4F5251">
-            {Translations[userLanguage].plans.starter.at} <br></br>{" "}
+            {translations.plans.starter.at} <br></br>{" "}
             <span style={{ color: "#6c63ff", fontSize: "1.8em" }}>
-              {Translations[userLanguage].plans.starter.price}
+              {translations.plans.starter.price}
             </span>
             <br></br>
-            {Translations[userLanguage].plans.starter.permonth}
+            {translations.plans.starter.permonth}
           </Typography>
           <br></br>
           <Typography variant="sub1" color="#4F5251">
-            {Translations[userLanguage].plans.starter.sub}
+            {translations.plans.starter.sub}
           </Typography>
           <br></br>
           <div
@@ -150,33 +148,31 @@ export default function Plans() {
               size="large"
               onClick={() => {
                 plan == "Starter"
-                  ? toast.info(
-                      Translations[userLanguage].alerts.alreadyhaveplan
-                    )
-                  : toast.info(Translations[userLanguage].alerts.betterplan);
+                  ? toast.info(translations.alerts.alreadyhaveplan)
+                  : toast.info(translations.alerts.betterplan);
               }}
             >
               {plan === "Starter"
-                ? Translations[userLanguage].plans.classroom.buttonsubscribed
-                : Translations[userLanguage].plans.classroom.button}
+                ? translations.plans.classroom.buttonsubscribed
+                : translations.plans.classroom.button}
             </Button>
           </div>
           <div>
             <Typography variant="subtitle1" className="features">
               {"✅ "}
-              {Translations[userLanguage].plans.starter.features.feature1}
+              {translations.plans.starter.features.feature1}
             </Typography>
             <Typography variant="subtitle1" className="features">
               {"✅ "}
-              {Translations[userLanguage].plans.starter.features.feature2}
+              {translations.plans.starter.features.feature2}
             </Typography>
             <Typography variant="subtitle1" className="features">
               {"✅ "}
-              {Translations[userLanguage].plans.starter.features.feature3}
+              {translations.plans.starter.features.feature3}
             </Typography>
             <Typography variant="subtitle1" className="features">
               {"✅ "}
-              {Translations[userLanguage].plans.starter.features.feature4}
+              {translations.plans.starter.features.feature4}
             </Typography>
           </div>
         </div>
@@ -193,7 +189,7 @@ export default function Plans() {
               }}
             >
               <Typography variant="h6" style={{ color: "white" }}>
-                {Translations[userLanguage].plans.classroom.bestvalue}
+                {translations.plans.classroom.bestvalue}
               </Typography>
             </div>
             <Typography
@@ -201,7 +197,7 @@ export default function Plans() {
               style={{ marginTop: "20px", marginBottom: "20px" }}
               color="#6c63ff"
             >
-              <b>{Translations[userLanguage].plans.classroom.title}</b>
+              <b>{translations.plans.classroom.title}</b>
             </Typography>
             <Divider />
             <div
@@ -219,16 +215,16 @@ export default function Plans() {
               />
             </div>
             <Typography variant="h5" color="#4F5251">
-              {Translations[userLanguage].plans.classroom.at} <br></br>{" "}
+              {translations.plans.classroom.at} <br></br>{" "}
               <span style={{ color: "#6c63ff", fontSize: "1.8em" }}>
-                {Translations[userLanguage].plans.classroom.price}
+                {translations.plans.classroom.price}
               </span>
               <br></br>
-              {Translations[userLanguage].plans.classroom.permonth}
+              {translations.plans.classroom.permonth}
             </Typography>
             <br></br>
             <Typography variant="sub1" color="#4F5251">
-              {Translations[userLanguage].plans.classroom.sub}
+              {translations.plans.classroom.sub}
             </Typography>
             <br></br>
             <div
@@ -248,8 +244,8 @@ export default function Plans() {
                 onClick={() => selectClassroomPlan()}
               >
                 {plan === "Classroom"
-                  ? Translations[userLanguage].plans.classroom.buttonsubscribed
-                  : Translations[userLanguage].plans.classroom.button}
+                  ? translations.plans.classroom.buttonsubscribed
+                  : translations.plans.classroom.button}
               </Button>
             </div>
             <div
@@ -261,31 +257,31 @@ export default function Plans() {
             >
               <Typography variant="subtitle1" className="features">
                 {"✅ "}
-                {Translations[userLanguage].plans.classroom.features.feature1}
+                {translations.plans.classroom.features.feature1}
               </Typography>
               <Typography variant="subtitle1" className="features">
                 {"✅ "}
-                {Translations[userLanguage].plans.classroom.features.feature2}
+                {translations.plans.classroom.features.feature2}
               </Typography>
               <Typography variant="subtitle1" className="features">
                 {"✅ "}
-                {Translations[userLanguage].plans.classroom.features.feature3}
+                {translations.plans.classroom.features.feature3}
               </Typography>
               <Typography variant="subtitle1" className="features">
                 {"✅ "}
-                {Translations[userLanguage].plans.classroom.features.feature4}
+                {translations.plans.classroom.features.feature4}
               </Typography>
               <Typography variant="subtitle1" className="features">
                 {"✅ "}
-                {Translations[userLanguage].plans.classroom.features.feature5}
+                {translations.plans.classroom.features.feature5}
               </Typography>
               <Typography variant="subtitle1" className="features">
                 {"✅ "}
-                {Translations[userLanguage].plans.classroom.features.feature6}
+                {translations.plans.classroom.features.feature6}
               </Typography>
               <Typography variant="subtitle1" className="features">
                 {"✅ "}
-                {Translations[userLanguage].plans.classroom.features.feature7}
+                {translations.plans.classroom.features.feature7}
               </Typography>
             </div>
           </div>
@@ -296,7 +292,7 @@ export default function Plans() {
             style={{ marginTop: "20px", marginBottom: "20px" }}
             color="#6c63ff"
           >
-            <b>{Translations[userLanguage].plans.entreprise.title}</b>
+            <b>{translations.plans.entreprise.title}</b>
           </Typography>
           <Divider />
           <div
@@ -311,17 +307,17 @@ export default function Plans() {
           </div>
 
           <Typography variant="h5" color="#4F5251">
-            {Translations[userLanguage].plans.entreprise.at} <br></br>{" "}
+            {translations.plans.entreprise.at} <br></br>{" "}
             <span style={{ color: "#6c63ff", fontSize: "1.8em" }}>
-              {Translations[userLanguage].plans.entreprise.price}
+              {translations.plans.entreprise.price}
             </span>
             <br></br>
-            {Translations[userLanguage].plans.entreprise.permonth}
+            {translations.plans.entreprise.permonth}
           </Typography>
           <br></br>
 
           <Typography variant="sub1" color="#4F5251">
-            {Translations[userLanguage].plans.entreprise.sub}
+            {translations.plans.entreprise.sub}
           </Typography>
           <br></br>
           <div
@@ -339,8 +335,8 @@ export default function Plans() {
               size="large"
             >
               {plan === "Entreprise"
-                ? Translations[userLanguage].plans.entreprise.buttonsubscribed
-                : Translations[userLanguage].plans.entreprise.button}
+                ? translations.plans.entreprise.buttonsubscribed
+                : translations.plans.entreprise.button}
             </Button>
           </div>
           <div
@@ -352,31 +348,31 @@ export default function Plans() {
           >
             <Typography variant="subtitle1" className="features">
               {"✅ "}
-              {Translations[userLanguage].plans.entreprise.features.feature1}
+              {translations.plans.entreprise.features.feature1}
             </Typography>
             <Typography variant="subtitle1" className="features">
               {"✅ "}
-              {Translations[userLanguage].plans.entreprise.features.feature2}
+              {translations.plans.entreprise.features.feature2}
             </Typography>
             <Typography variant="subtitle1" className="features">
               {"✅ "}
-              {Translations[userLanguage].plans.entreprise.features.feature3}
+              {translations.plans.entreprise.features.feature3}
             </Typography>
             <Typography variant="subtitle1" className="features">
               {"✅ "}
-              {Translations[userLanguage].plans.entreprise.features.feature4}
+              {translations.plans.entreprise.features.feature4}
             </Typography>
             <Typography variant="subtitle1" className="features">
               {"✅ "}
-              {Translations[userLanguage].plans.entreprise.features.feature5}
+              {translations.plans.entreprise.features.feature5}
             </Typography>
             <Typography variant="subtitle1" className="features">
               {"✅ "}
-              {Translations[userLanguage].plans.entreprise.features.feature6}
+              {translations.plans.entreprise.features.feature6}
             </Typography>
             <Typography variant="subtitle1" className="features">
               {"✅ "}
-              {Translations[userLanguage].plans.entreprise.features.feature7}
+              {translations.plans.entreprise.features.feature7}
             </Typography>
           </div>
         </div>

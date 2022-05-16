@@ -8,8 +8,6 @@ import { toast } from "react-toastify";
 
 import { Typography } from "@mui/material";
 
-import Translations from "../../../translations/translations.json";
-
 import axios from "axios";
 
 import config from "../../../config.json";
@@ -33,10 +31,6 @@ export default function GameRoom({ match }) {
   const [popUpHidden, setPopUpHidden] = useState(true);
 
   let quiz = [];
-
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
 
   const getQuiz = async () => {
     const response = await axios.post(

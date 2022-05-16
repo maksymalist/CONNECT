@@ -6,13 +6,10 @@ import {
   StepLabel,
   CircularProgress,
 } from "@mui/material";
-
-import Translations from "../../../translations/translations.json";
+import useTranslations from "../../../hooks/useTranslations";
 
 const WaitingForHost = ({ steps, activeStep }) => {
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   return (
     <div>
       <Typography
@@ -20,8 +17,7 @@ const WaitingForHost = ({ steps, activeStep }) => {
         style={{ color: "white", marginTop: "100px", marginBottom: "50px" }}
       >
         <b>
-          {Translations[userLanguage].waitforhost.title} <br />{" "}
-          {Translations[userLanguage].waitforhost.sub}
+          {translations.waitforhost.title} <br /> {translations.waitforhost.sub}
         </b>
       </Typography>
       <div

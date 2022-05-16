@@ -19,8 +19,6 @@ import logo from "../../img/logo.svg";
 import longLogo from "../../img/connect-text.svg";
 import "../../style/nav.css";
 
-import Translations from "../../translations/translations.json";
-
 import { Add, TranslateSharp, NotificationsSharp } from "@mui/icons-material";
 
 import NotificationBox from "./NotificationBox";
@@ -29,6 +27,8 @@ import { useQuery, gql } from "@apollo/client";
 
 import config from "../../config.json";
 import getUser from "../../hooks/getUser";
+import useTranslations from "../../hooks/useTranslations";
+import useLanguage from "../../hooks/useLanguage";
 
 const GET_NOTIFICATION_LENGTH = gql`
   query notificationNumber($userId: ID!) {
@@ -42,13 +42,12 @@ function Nav({ isLoggedIn, customerId }) {
   const [anchorEl2, setAnchorEl2] = useState(null);
   const [anchorEl3, setAnchorEl3] = useState(null);
 
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const [currentUsername, setCurrentUsername] = useState(null);
 
   const [language, setLanguage] = useState("english");
+  const defaultLanguage = useLanguage();
 
   const [notificationBoxIsOpen, setNotificationBoxIsOpen] = useState(false);
 
@@ -64,11 +63,7 @@ function Nav({ isLoggedIn, customerId }) {
   useEffect(() => {
     if (user === null) return;
     setCurrentUsername(user?.profileObj.name);
-    if (userLanguage != null) {
-      setLanguage(userLanguage);
-    } else {
-      setLanguage("english");
-    }
+    setLanguage(defaultLanguage);
   }, []);
 
   const handleClick = (event) => {
@@ -97,7 +92,7 @@ function Nav({ isLoggedIn, customerId }) {
 
   const openCustomerPortal = async () => {
     if (customerId == undefined) {
-      toast.info(Translations[userLanguage].alerts.buyplanseeinfo);
+      toast.info(translations.alerts.buyplanseeinfo);
       return;
     }
     setAnchorEl(null);
@@ -175,28 +170,22 @@ function Nav({ isLoggedIn, customerId }) {
               <MenuIcon />
             </button>
             <div className="dropdown-content">
-              <a href="/play">{Translations[userLanguage].nav.dropdown.play}</a>
-              <a href="/quizzes">
-                {Translations[userLanguage].nav.dropdown.quizzes}
-              </a>
-              <a href="/plans">
-                {Translations[userLanguage].nav.dropdown.plans}
-              </a>
-              <a href="/login">
-                {Translations[userLanguage].nav.dropdown.login}
-              </a>
+              <a href="/play">{translations.nav.dropdown.play}</a>
+              <a href="/quizzes">{translations.nav.dropdown.quizzes}</a>
+              <a href="/plans">{translations.nav.dropdown.plans}</a>
+              <a href="/login">{translations.nav.dropdown.login}</a>
             </div>
           </div>
         ) : (
           <div className="nav-left-links">
             <Link className="nav-left-link" to="/play">
-              {Translations[userLanguage].nav.play}
+              {translations.nav.play}
             </Link>
             <Link className="nav-left-link" to="/quizzes">
-              {Translations[userLanguage].nav.quizzes}
+              {translations.nav.quizzes}
             </Link>
             <Link className="nav-left-link" to="/plans">
-              {Translations[userLanguage].nav.plans}
+              {translations.nav.plans}
             </Link>
           </div>
         )}
@@ -271,14 +260,14 @@ function Nav({ isLoggedIn, customerId }) {
                 window.location = "/newquiz";
               }}
             >
-              ⚡️ {Translations[userLanguage].nav.add.normal}
+              ⚡️ {translations.nav.add.normal}
             </MenuItem>
             <MenuItem
               onClick={() => {
                 window.location = "/new-multi-quiz";
               }}
             >
-              🥳 {Translations[userLanguage].nav.add.multi}
+              🥳 {translations.nav.add.multi}
             </MenuItem>
           </Menu>
           <Menu
@@ -338,7 +327,7 @@ function Nav({ isLoggedIn, customerId }) {
           !mediumScreen && (
             <Link className="nav-right-links-login" to="/login">
               <Button variant="contained" color="action">
-                {Translations[userLanguage].nav.login}
+                {translations.nav.login}
               </Button>
             </Link>
           )
@@ -383,14 +372,14 @@ function Nav({ isLoggedIn, customerId }) {
                 }}
                 onClick={handleClose}
               >
-                {Translations[userLanguage].nav.profile.head}
+                {translations.nav.profile.head}
                 <br></br> {currentUsername}
               </MenuItem>
               <MenuItem onClick={() => (window.location = "/profile")}>
-                {Translations[userLanguage].nav.profile.account}
+                {translations.nav.profile.account}
               </MenuItem>
               <MenuItem onClick={openCustomerPortal}>
-                {Translations[userLanguage].nav.profile.subscription}
+                {translations.nav.profile.subscription}
               </MenuItem>
               <MenuItem
                 style={{
@@ -401,7 +390,7 @@ function Nav({ isLoggedIn, customerId }) {
                 }}
                 onClick={logOut}
               >
-                {Translations[userLanguage].nav.profile.logout}
+                {translations.nav.profile.logout}
               </MenuItem>
             </Menu>
           </>
@@ -418,11 +407,11 @@ export default Nav;
             <MenuIcon />
           </button>
           <div className="dropdown-content">
-            <a href="/play">{Translations[userLanguage].nav.dropdown.play}</a>
+            <a href="/play">{translations.nav.dropdown.play}</a>
             <a href="/quizzes">
-              {Translations[userLanguage].nav.dropdown.quizzes}
+              {translations.nav.dropdown.quizzes}
             </a>
-            <a href="/plans">{Translations[userLanguage].nav.dropdown.plans}</a>
-            <a href="/login">{Translations[userLanguage].nav.dropdown.login}</a>
+            <a href="/plans">{translations.nav.dropdown.plans}</a>
+            <a href="/login">{translations.nav.dropdown.login}</a>
           </div>
         </div> */

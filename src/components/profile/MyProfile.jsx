@@ -22,7 +22,6 @@ import "../../style/profileStyles.css";
 
 import Placeholder from "../../img/quizCoverPlaceholder.svg";
 import LockedEmote from "../../img/lockedEmote.svg";
-import Translations from "../../translations/translations.json";
 import Emotes from "../../emotes/emotes.json";
 import { useSelector } from "react-redux";
 
@@ -34,6 +33,7 @@ import config from "../../config.json";
 import getUser from "../../hooks/getUser";
 
 import QuizCard from "../cards/QuizCard";
+import useTranslations from "../../hooks/useTranslations";
 
 //queries
 const GET_USER_PROFILE = gql`
@@ -104,9 +104,7 @@ function MyProfile(props) {
 
   const [value, setValue] = useState(0);
 
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const quizzesTab = useRef(null);
 
@@ -325,7 +323,7 @@ function MyProfile(props) {
           {data?.user?.plan === "Classroom" && (
             <Chip
               className="mui-chip"
-              label={Translations[userLanguage].profile.tags.classroom}
+              label={translations.profile.tags.classroom}
               color="primary"
               variant="outlined"
             />
@@ -333,14 +331,14 @@ function MyProfile(props) {
           {data?.allQuizzesByUser?.length > 0 ? (
             <Chip
               className="mui-chip"
-              label={Translations[userLanguage].profile.tags.creator}
+              label={translations.profile.tags.creator}
               color="primary"
               variant="outlined"
             />
           ) : data?.allMultiQuizzesByUser?.length > 0 ? (
             <Chip
               className="mui-chip"
-              label={Translations[userLanguage].profile.tags.creator}
+              label={translations.profile.tags.creator}
               color="primary"
               variant="outlined"
             />
@@ -348,7 +346,7 @@ function MyProfile(props) {
           {data?.user?.role === "student" && (
             <Chip
               className="mui-chip"
-              label={Translations[userLanguage].profile.tags.student}
+              label={translations.profile.tags.student}
               color="primary"
               variant="outlined"
             />
@@ -356,7 +354,7 @@ function MyProfile(props) {
           {data?.user?.role === "teacher" && (
             <Chip
               className="mui-chip"
-              label={Translations[userLanguage].profile.tags.teacher}
+              label={translations.profile.tags.teacher}
               color="primary"
               variant="outlined"
             />
@@ -364,7 +362,7 @@ function MyProfile(props) {
           {data?.getUserEmotes?.length === 16 && (
             <Chip
               className="mui-chip"
-              label={Translations[userLanguage].profile.tags.collector}
+              label={translations.profile.tags.collector}
               color="primary"
               variant="outlined"
             />
@@ -378,8 +376,8 @@ function MyProfile(props) {
             onChange={handleChange}
             aria-label="disabled tabs example"
           >
-            <Tab label={Translations[userLanguage].profile.quizzes.title} />
-            <Tab label={Translations[userLanguage].profile.class.title} />
+            <Tab label={translations.profile.quizzes.title} />
+            <Tab label={translations.profile.class.title} />
             <Tab icon={<EmojiEmotionsOutlined />} />
           </Tabs>
         </div>
@@ -388,7 +386,7 @@ function MyProfile(props) {
         {value === 0 ? (
           <div>
             <Typography variant="h3" style={{ margin: "20px" }}>
-              {Translations[userLanguage].profile.quizzes.title}
+              {translations.profile.quizzes.title}
             </Typography>
             <Divider style={{ marginLeft: "10px", marginRight: "10px" }} />
             <br></br>
@@ -432,7 +430,7 @@ function MyProfile(props) {
         {value === 1 ? (
           <div>
             <Typography variant="h3" style={{ margin: "20px" }}>
-              {Translations[userLanguage].profile.class.title}
+              {translations.profile.class.title}
             </Typography>
             <Divider style={{ marginLeft: "10px", marginRight: "10px" }} />
             <br></br>
@@ -452,7 +450,7 @@ function MyProfile(props) {
                     color="primary"
                     style={{ margin: "10px" }}
                   >
-                    {Translations[userLanguage].classroom.createbutton}
+                    {translations.classroom.createbutton}
                   </Button>
                 </Link>
               </div>
@@ -475,7 +473,7 @@ function MyProfile(props) {
         {value === 2 ? (
           <div>
             <Typography variant="h3" style={{ margin: "20px" }}>
-              {Translations[userLanguage].profile.emotes.title}
+              {translations.profile.emotes.title}
             </Typography>
             <Divider style={{ marginLeft: "10px", marginRight: "10px" }} />
             <br></br>

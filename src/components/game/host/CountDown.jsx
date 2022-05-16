@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "../../../style/countDownStyles.css";
 
-import Translations from "../../../translations/translations.json";
 import countdown_sfx from "../../../audio/countdown.mp3";
 
 import ReactHowler from "react-howler";
+import useTranslations from "../../../hooks/useTranslations";
 
 function CountDown({ start, room, muteMusic, unmuteMusic, numberOfUsers }) {
   let [number, setNumber] = useState(0);
   let [isCountdown, setIsCountdown] = useState(false);
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   const [countDownText, setCountDownText] = useState(
-    Translations[userLanguage].countdown.ready
+    translations.countdown.ready
   );
 
   useEffect(() => {
@@ -21,7 +19,7 @@ function CountDown({ start, room, muteMusic, unmuteMusic, numberOfUsers }) {
     setIsCountdown((isCountdown = true));
     setInterval(() => {
       if (isCountdown === false) return;
-      setCountDownText(Translations[userLanguage].countdown.go);
+      setCountDownText(translations.countdown.go);
       setNumber((number += 1));
       if (number === 4) {
         setIsCountdown((isCountdown = false));

@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Typography, Button } from "@mui/material";
-import Translations from "../../../translations/translations.json";
+import useTranslations from "../../../hooks/useTranslations";
 
 const FinishedSceen = ({ time }) => {
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   return (
     <div
       style={{
@@ -34,10 +32,10 @@ const FinishedSceen = ({ time }) => {
             🎉
           </Typography>
           <h1 style={{ marginBottom: "30px" }}>
-            {Translations[userLanguage].finishedscreen.WOW}
+            {translations.finishedscreen.WOW}
           </h1>
           <h2>
-            {Translations[userLanguage].finishedscreen.sub2}
+            {translations.finishedscreen.sub2}
             {time}s !!! 🥳
           </h2>
         </div>
@@ -48,7 +46,7 @@ const FinishedSceen = ({ time }) => {
             color="primary"
             onClick={() => (window.location.href = "/")}
           >
-            {Translations[userLanguage].finishedscreen.return}
+            {translations.finishedscreen.return}
           </Button>
         </div>
       </div>

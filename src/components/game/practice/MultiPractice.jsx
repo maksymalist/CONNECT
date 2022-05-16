@@ -7,8 +7,6 @@ import "../../../style/style.css";
 import { toast } from "react-toastify";
 import { Typography, Stepper, Step, StepLabel } from "@mui/material";
 
-import Translations from "../../../translations/translations.json";
-
 import axios from "axios";
 
 import config from "../../../config.json";
@@ -38,10 +36,6 @@ function MultiGameRoom({ match }) {
   var secondTimer = 0;
 
   var quiz;
-
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
 
   const getQuiz = async (currentQuiz, name) => {
     quiz = currentQuiz;

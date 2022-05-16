@@ -13,8 +13,6 @@ import { v4 as uuidv4 } from "uuid";
 import "firebase/database";
 import { toast } from "react-toastify";
 
-import Translations from "../../translations/translations.json";
-
 import axios from "axios";
 
 import config from "../../config.json";
@@ -27,6 +25,7 @@ import { useMutation, gql } from "@apollo/client";
 //hooks
 import getUser from "../../hooks/getUser";
 import useUnsavedChangesWarning from "../../hooks/useUnsavedChangesWarning";
+import useTranslations from "../../hooks/useTranslations";
 
 const CREATE_CLASS = gql`
   mutation createClassroom(
@@ -81,10 +80,7 @@ function CreateClass() {
 
   const imgRef = useRef(null);
 
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
-
+  const translations = useTranslations();
   const [Prompt] = useUnsavedChangesWarning();
 
   const [createClassMutation] = useMutation(CREATE_CLASS);
@@ -169,19 +165,19 @@ function CreateClass() {
     const membersArr = [...members];
 
     if (!res.data) {
-      toast.error(Translations[userLanguage].alerts.thisUserDoesNotExist);
+      toast.error(translations.alerts.thisUserDoesNotExist);
       return;
     }
 
     if (res.data?._id === USERID_PREFIX + user?.profileObj.googleId) {
-      toast.error(Translations[userLanguage].alerts.cannotAddYourself);
+      toast.error(translations.alerts.cannotAddYourself);
       return;
     }
 
     if (res.data) {
       membersArr?.map((member) => {
         if (member?.id === res.data?._id) {
-          toast.error(Translations[userLanguage].alerts.memberAlreadyExists);
+          toast.error(translations.alerts.memberAlreadyExists);
           return;
         }
       });
@@ -214,13 +210,13 @@ function CreateClass() {
             }}
           >
             <Typography variant="h2" gutterBottom>
-              <b>{Translations[userLanguage].createclass.title}</b>
+              <b>{translations.createclass.title}</b>
             </Typography>
             <br></br>
             <Divider style={{ width: "90vw" }} light />
             <br></br>
             <Typography variant="h5" style={{ margin: "10px" }}>
-              {Translations[userLanguage].createclass.steps.step1}
+              {translations.createclass.steps.step1}
             </Typography>
             <input
               value={className}
@@ -234,12 +230,12 @@ function CreateClass() {
                 height: "50px",
               }}
               type="text"
-              placeholder={Translations[userLanguage].createclass.steps.input1}
+              placeholder={translations.createclass.steps.input1}
             ></input>
           </div>
           <div>
             <Typography variant="h5" style={{ marginTop: "100px" }}>
-              {Translations[userLanguage].createclass.steps.step2}
+              {translations.createclass.steps.step2}
             </Typography>
             <UploadBox imgRef={imgRef} />
           </div>
@@ -256,7 +252,7 @@ function CreateClass() {
             }}
           >
             <Typography variant="h3">
-              {Translations[userLanguage].createclass.steps.members}
+              {translations.createclass.steps.members}
             </Typography>
             <br></br>
             <Divider light />
@@ -264,11 +260,10 @@ function CreateClass() {
             <TextField
               variant="outlined"
               size="small"
-              label={Translations[userLanguage].createclass.steps.memberinput}
+              label={translations.createclass.steps.memberinput}
               helperText={
                 <span style={{ color: "black" }}>
-                  {members.length}{" "}
-                  {Translations[userLanguage].createclass.steps.members}
+                  {members.length} {translations.createclass.steps.members}
                 </span>
               }
               onChange={(e) => {
@@ -284,7 +279,7 @@ function CreateClass() {
                 addMember(currentMember);
               }}
             >
-              {Translations[userLanguage].createclass.steps.addbutton}
+              {translations.createclass.steps.addbutton}
             </Button>
             <br></br>
             {members.map((member, index) => {
@@ -319,7 +314,7 @@ function CreateClass() {
                 createClass();
               }}
             >
-              {Translations[userLanguage].createclass.steps.createclassbutton}
+              {translations.createclass.steps.createclassbutton}
             </Button>
           </div>
         </div>

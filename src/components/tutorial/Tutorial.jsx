@@ -8,16 +8,14 @@ import { Button, Typography } from "@mui/material";
 import Game from "./Game";
 import FinishedTutorial from "./FinishedTutorial";
 
-import Translations from "../../translations/translations.json";
+import useTranslations from "../../hooks/useTranslations";
 
 const Tutorial = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [user, setUser] = useState("");
 
   const [modal, setModal] = useState(true);
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   useEffect(() => {
     document.getElementById("main-nav").remove();
@@ -69,11 +67,11 @@ const Tutorial = () => {
           }}
         >
           <Typography variant="h4">
-            <b>{Translations[userLanguage].tutorial.welcome.title}</b>
+            <b>{translations.tutorial.welcome.title}</b>
           </Typography>
           <br></br>
           <Typography variant="subtitle1" style={{ maxWidth: "450px" }}>
-            {Translations[userLanguage].tutorial.welcome.sub}
+            {translations.tutorial.welcome.sub}
           </Typography>
           <Button
             variant="contained"
@@ -84,7 +82,7 @@ const Tutorial = () => {
             }}
             onClick={() => setModal(false)}
           >
-            {Translations[userLanguage].tutorial.welcome.button}
+            {translations.tutorial.welcome.button}
           </Button>
         </div>
       </div>
@@ -103,7 +101,7 @@ const Tutorial = () => {
     >
       {modal && <WelcomeModal />}
       <Typography variant="h2" color="white">
-        <b>{Translations[userLanguage].tutorial.title}</b>
+        <b>{translations.tutorial.title}</b>
       </Typography>
       <Stepper activeStep={activeStep} />
       {activeStep === 0 && <JoinSection />}

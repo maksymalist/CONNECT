@@ -10,9 +10,6 @@ import FirstPlaceIcon from "../../img/PodiumIcons/firstPlace.svg";
 import SecondPlaceIcon from "../../img/PodiumIcons/secondPlace.svg";
 import ThirdPlaceIcon from "../../img/PodiumIcons/thirdPlace.svg";
 
-//translations
-import Translations from "../../translations/translations.json";
-
 //material-ui
 import {
   Typography,
@@ -33,13 +30,12 @@ import axios from "axios";
 
 import config from "../../config.json";
 import getUser from "../../hooks/getUser";
+import useTranslations from "../../hooks/useTranslations";
 
 export default function MemberRoom() {
   const user = getUser();
   const plan = useSelector((state) => state.plan);
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const [members, setMembers] = useState([]);
   const [name, setName] = useState("");
@@ -139,7 +135,7 @@ export default function MemberRoom() {
     <div className="classroom__main__div">
       <div className="classroom__members">
         <Typography variant="h4" className="classroom__members__title">
-          {Translations[userLanguage].classroom.members.title}({members.length})
+          {translations.classroom.members.title}({members.length})
         </Typography>
         <div></div>
         <div style={{ width: "90%" }}>
@@ -217,7 +213,7 @@ export default function MemberRoom() {
         </div>
         <div className="classroom__hall__of__fame">
           <Typography variant="h3" className="classroom__hall__of__fame__title">
-            {Translations[userLanguage].classroom.halloffame.title}
+            {translations.classroom.halloffame.title}
           </Typography>
           <div className="classroom__hall__of__fame__card__container">
             {hallOfFame.map((member, index) => {
@@ -290,7 +286,7 @@ export default function MemberRoom() {
                 variant="h3"
                 className="classroom__recent__games__title"
               >
-                {Translations[userLanguage].classroom.recentGames.title}
+                {translations.classroom.recentGames.title}
               </Typography>
               <div style={{ width: "100%" }}>
                 <br></br>
@@ -335,7 +331,7 @@ export default function MemberRoom() {
                           }}
                         />
                       )}
-                      <h3>{`${Translations[userLanguage].quizzes.by} ${
+                      <h3>{`${translations.quizzes.by} ${
                         game.userName || "undefined"
                       }`}</h3>
                     </div>
@@ -382,7 +378,7 @@ export default function MemberRoom() {
                 variant="h3"
                 className="classroom__recent__games__title"
               >
-                {Translations[userLanguage].classroom.finalists.title}
+                {translations.classroom.finalists.title}
               </Typography>
               <div style={{ width: "100%" }}>
                 <br></br>

@@ -1,11 +1,9 @@
 import { Typography } from "@mui/material";
 import { useState } from "react";
-import Translations from "../../../translations/translations.json";
+import useTranslations from "../../../hooks/useTranslations";
 
 function PositionScreen({ position, player }) {
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   return (
     <div>
       {position === 0 && (
@@ -37,21 +35,21 @@ function PositionScreen({ position, player }) {
       >
         <b>
           {position === 0
-            ? Translations[userLanguage].positionscreen.ohno
-            : Translations[userLanguage].positionscreen.wow}
+            ? translations.positionscreen.ohno
+            : translations.positionscreen.wow}
         </b>
       </Typography>
       <Typography variant="h3" style={{ color: "white" }}>
         <b>
           {position === 0
-            ? Translations[userLanguage].positionscreen.notfinished
+            ? translations.positionscreen.notfinished
             : position === 1
-            ? Translations[userLanguage].positionscreen.yougot1st
+            ? translations.positionscreen.yougot1st
             : position === 2
-            ? Translations[userLanguage].positionscreen.yougot2nd
+            ? translations.positionscreen.yougot2nd
             : position === 3
-            ? Translations[userLanguage].positionscreen.yougot3rd
-            : `${Translations[userLanguage].positionscreen.yougotother1} ${position}${Translations[userLanguage].positionscreen.yougotother2}`}
+            ? translations.positionscreen.yougot3rd
+            : `${translations.positionscreen.yougotother1} ${position}${translations.positionscreen.yougotother2}`}
         </b>
       </Typography>
 
@@ -101,8 +99,8 @@ function PositionScreen({ position, player }) {
             >
               <b>
                 {position === 0
-                  ? Translations[userLanguage].positionscreen.dobetter
-                  : Translations[userLanguage].positionscreen.keepitup}
+                  ? translations.positionscreen.dobetter
+                  : translations.positionscreen.keepitup}
               </b>
             </Typography>
           </div>

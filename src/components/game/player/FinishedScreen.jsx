@@ -4,12 +4,10 @@ import React, { useState } from "react";
 import { CircularProgress } from "@mui/material";
 
 import "../../../style/style.css";
-import Translations from "../../../translations/translations.json";
+import useTranslations from "../../../hooks/useTranslations";
 
 export default function FinishedScreen({ match, user }) {
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   return (
     <div
       style={{
@@ -22,10 +20,10 @@ export default function FinishedScreen({ match, user }) {
       }}
     >
       <h1 style={{ color: "white", fontWeight: "bold" }}>
-        {Translations[userLanguage].finishedscreen.title}
+        {translations.finishedscreen.title}
       </h1>
       <h2 style={{ color: "white", textAlign: "center" }}>
-        {Translations[userLanguage].finishedscreen.sub}
+        {translations.finishedscreen.sub}
       </h2>
       <CircularProgress
         size={150}

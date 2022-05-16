@@ -6,11 +6,10 @@ import { toast } from "react-toastify";
 
 import { Button, Typography } from "@mui/material";
 
-import Translations from "../../translations/translations.json";
-
 import ReactHowler from "react-howler";
 import themeSong from "../../audio/connect_theme.mp3";
 import PopUp from "./PopUp";
+import useTranslations from "../../hooks/useTranslations";
 
 export default function Game({ nickname, nextSection }) {
   var [time, updateTime] = useState(0);
@@ -52,9 +51,7 @@ export default function Game({ nickname, nextSection }) {
     __v: { $numberInt: "0" },
   };
 
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const getQuiz = async () => {
     setName((name = quiz?.name));
@@ -269,7 +266,7 @@ export default function Game({ nickname, nextSection }) {
               variant="h3"
               style={{ color: "white", marginTop: "50px" }}
             >
-              <b>{Translations[userLanguage].tutorial.game.notbad}</b>
+              <b>{translations.tutorial.game.notbad}</b>
             </Typography>
             <div
               style={{
@@ -287,7 +284,7 @@ export default function Game({ nickname, nextSection }) {
                   nextSection();
                 }}
               >
-                {Translations[userLanguage].tutorial.game.button}
+                {translations.tutorial.game.button}
               </Button>
             </div>
           </div>

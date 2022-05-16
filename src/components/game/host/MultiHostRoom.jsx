@@ -44,8 +44,6 @@ import CountDown from "./CountDown";
 
 import SharePopup from "./SharePopup";
 
-import Translations from "../../../translations/translations.json";
-
 import axios from "axios";
 
 import config from "../../../config.json";
@@ -58,6 +56,7 @@ import themeSong from "../../../audio/connect_theme.mp3";
 
 //hooks
 import getUser from "../../../hooks/getUser";
+import useTranslations from "../../../hooks/useTranslations";
 
 const playersTime = [];
 let finished2 = [];
@@ -86,9 +85,7 @@ export default function HostRoom(props) {
   let [transitionTimer, setTransitionTimer] = useState(0);
   let [finishingTimer, setFinishingTimer] = useState(0);
 
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const [isRoomLeft, setIsRoomLeft] = useState(false);
 
@@ -193,16 +190,13 @@ export default function HostRoom(props) {
       //'first-place', 'second-place', 'third-place', 'other-place'
       setCurrentPlace(currentPlace++);
 
-      toast.success(
-        `${data.user} ${Translations[userLanguage].alerts.playerfinishedgame}`,
-        {
-          autoClose: 750,
-        }
-      );
+      toast.success(`${data.user} ${translations.alerts.playerfinishedgame}`, {
+        autoClose: 750,
+      });
 
       if (podium.length == playerPodiumMax) {
         toast.info(
-          `${playerPodiumMax} ${Translations[userLanguage].alerts.maxpodiumlimitreached}`
+          `${playerPodiumMax} ${translations.alerts.maxpodiumlimitreached}`
         );
       }
     });
@@ -285,7 +279,7 @@ export default function HostRoom(props) {
             justifyContent: "center",
           }}
         >
-          {Translations[userLanguage].hostroom.podium}{" "}
+          {translations.hostroom.podium}{" "}
           <AssessmentRoundedIcon
             color="primary"
             style={{ width: "50px", height: "50px" }}
@@ -335,9 +329,8 @@ export default function HostRoom(props) {
                   src={FirstPlaceIcon}
                   alt="FirstPlaceIcon"
                 />
-                {playerArr[i].player} {Translations[userLanguage].hostroom.time}
-                : {playerArr[i].time}{" "}
-                {Translations[userLanguage].hostroom.place}:{" "}
+                {playerArr[i].player} {translations.hostroom.time}:{" "}
+                {playerArr[i].time} {translations.hostroom.place}:{" "}
                 {playerArr[i].place}
               </h1>
             </div>
@@ -361,8 +354,8 @@ export default function HostRoom(props) {
                 src={SecondPlaceIcon}
                 alt="SecondPlaceIcon"
               />
-              {playerArr[i].player} {Translations[userLanguage].hostroom.time}:{" "}
-              {playerArr[i].time} {Translations[userLanguage].hostroom.place}:{" "}
+              {playerArr[i].player} {translations.hostroom.time}:{" "}
+              {playerArr[i].time} {translations.hostroom.place}:{" "}
               {playerArr[i].place}
             </h1>
           </>,
@@ -385,8 +378,8 @@ export default function HostRoom(props) {
                 src={ThirdPlaceIcon}
                 alt="ThirdPlaceIcon"
               />
-              {playerArr[i].player} {Translations[userLanguage].hostroom.time}:{" "}
-              {playerArr[i].time} {Translations[userLanguage].hostroom.place}:{" "}
+              {playerArr[i].player} {translations.hostroom.time}:{" "}
+              {playerArr[i].time} {translations.hostroom.place}:{" "}
               {playerArr[i].place}
             </h1>
           </>,
@@ -403,8 +396,8 @@ export default function HostRoom(props) {
               data-playerid={playerArr[i].id}
               id={playerArr[i].player + "⠀"}
             >
-              {playerArr[i].player} {Translations[userLanguage].hostroom.time}:{" "}
-              {playerArr[i].time} {Translations[userLanguage].hostroom.place}:{" "}
+              {playerArr[i].player} {translations.hostroom.time}:{" "}
+              {playerArr[i].time} {translations.hostroom.place}:{" "}
               {playerArr[i].place}
             </h1>
           </>,
@@ -609,7 +602,7 @@ export default function HostRoom(props) {
 
   const startCountdown = () => {
     if (numberOfUsers <= 0) {
-      toast.error(Translations[userLanguage].alerts.notenoughplayers);
+      toast.error(translations.alerts.notenoughplayers);
       return;
     }
     setIsCountdown(true);
@@ -824,8 +817,8 @@ export default function HostRoom(props) {
               disabled={isTransition ? true : isFinishing ? true : false}
             >
               {activeStep === steps.length - 1
-                ? Translations[userLanguage].hostroom.finish
-                : Translations[userLanguage].hostroom.next}
+                ? translations.hostroom.finish
+                : translations.hostroom.next}
             </Button>
             <Button
               variant="contained"
@@ -926,7 +919,7 @@ export default function HostRoom(props) {
                   textAlign: "center",
                 }}
               >
-                <b>{Translations[userLanguage].hostroom.quizcompleted}</b>
+                <b>{translations.hostroom.quizcompleted}</b>
               </Typography>
             </div>
             <div
@@ -942,7 +935,7 @@ export default function HostRoom(props) {
                 variant="h4"
                 style={{ color: "black", marginBottom: "50px" }}
               >
-                <b>{Translations[userLanguage].hostroom.displayingwinners}</b>
+                <b>{translations.hostroom.displayingwinners}</b>
               </Typography>
               <LinearProgress
                 variant="determinate"
@@ -990,7 +983,7 @@ export default function HostRoom(props) {
                   }}
                 >
                   <Typography variant="sub1">
-                    {Translations[userLanguage].hostroom.private}
+                    {translations.hostroom.private}
                   </Typography>
                 </div>
               )}
@@ -1048,7 +1041,7 @@ export default function HostRoom(props) {
                       variant="sub1"
                       style={bigScreen ? { fontSize: "25px" } : {}}
                     >
-                      {Translations[userLanguage].hostroom.joinat}
+                      {translations.hostroom.joinat}
                       <span
                         style={
                           bigScreen
@@ -1163,7 +1156,7 @@ export default function HostRoom(props) {
                       shareLink();
                     }}
                   >
-                    {Translations[userLanguage].hostroom.sharebutton}
+                    {translations.hostroom.sharebutton}
                   </Button>
                 )}
                 <VolumeSlider />
@@ -1181,8 +1174,7 @@ export default function HostRoom(props) {
                 >
                   <Typography variant="h6">
                     <b>
-                      {finished.length}{" "}
-                      {Translations[userLanguage].hostroom.finished}
+                      {finished.length} {translations.hostroom.finished}
                     </b>
                   </Typography>
                 </div>
@@ -1196,7 +1188,7 @@ export default function HostRoom(props) {
                     }}
                     variant="contained"
                   >
-                    {Translations[userLanguage].hostroom.startbutton}
+                    {translations.hostroom.startbutton}
                   </Button>
                   <div style={{ width: "10px", height: "10px" }} />
                   <Button
@@ -1281,7 +1273,7 @@ export default function HostRoom(props) {
                       >
                         <div>
                           <Typography variant="h3">
-                            {Translations[userLanguage].hostroom.nextup}{" "}
+                            {translations.hostroom.nextup}{" "}
                             <b style={{ color: "#636cff" }}>
                               {steps[activeStep + 1]}
                             </b>
@@ -1413,7 +1405,7 @@ export default function HostRoom(props) {
               justifyContent: "center",
             }}
           >
-            {Translations[userLanguage].hostroom.podium}{" "}
+            {translations.hostroom.podium}{" "}
             <AssessmentRoundedIcon
               color="primary"
               style={{ width: "50px", height: "50px" }}

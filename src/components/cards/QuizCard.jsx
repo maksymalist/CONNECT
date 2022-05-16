@@ -1,13 +1,11 @@
 import { Lock } from "@mui/icons-material";
-import Translations from "../../translations/translations.json";
 import { Chip, Avatar, Typography } from "@mui/material";
 import { useState } from "react";
 import Placeholder from "../../img/quizCoverPlaceholder.png";
+import useTranslations from "../../hooks/useTranslations";
 
 const QuizCard = ({ data, isPrivate, tags, classID }) => {
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   const handleQuizClick = (key, type, isPrivate, classID) => {
     if (classID) {
       if (isPrivate) {
@@ -78,8 +76,7 @@ const QuizCard = ({ data, isPrivate, tags, classID }) => {
                   {data.name} {isPrivate ? "🔒" : null}
                 </h3>
                 <span className="quiz__card__status">
-                  {Translations[userLanguage].profile.quizzes.by}{" "}
-                  {data.userName}
+                  {translations.profile.quizzes.by} {data.userName}
                 </span>
               </div>
             </div>

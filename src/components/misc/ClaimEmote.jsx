@@ -4,7 +4,7 @@ import getUser from "../../hooks/getUser";
 import { Button, CircularProgress, Typography } from "@mui/material";
 import Emotes from "../../emotes/emotes.json";
 import { useLocation } from "react-router-dom";
-import Translations from "../../translations/translations.json";
+import useTranslations from "../../hooks/useTranslations";
 
 const CLAIM_EMOTE = gql`
   mutation ($emoteId: ID!, $owner: ID!, $secret: ID!) {
@@ -21,9 +21,7 @@ function ClaimEmote() {
   const secret = new URLSearchParams(search).get("secret");
   const emoteId = new URLSearchParams(search).get("emoteId");
 
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   useEffect(() => {
     if (user) {
@@ -62,7 +60,7 @@ function ClaimEmote() {
               style={{ color: "white", fontWeight: "bold" }}
               variant="h3"
             >
-              {Translations[userLanguage].claimemote.title1}
+              {translations.claimemote.title1}
             </Typography>
             <div style={{ marginTop: "50px" }}>
               <img
@@ -79,7 +77,7 @@ function ClaimEmote() {
                 color="primary"
                 onClick={() => (window.location.href = "/profile")}
               >
-                {Translations[userLanguage].claimemote.button1}
+                {translations.claimemote.button1}
               </Button>
             </div>
           </div>
@@ -89,7 +87,7 @@ function ClaimEmote() {
               style={{ color: "white", fontWeight: "bold" }}
               variant="h3"
             >
-              {Translations[userLanguage].claimemote.title2}
+              {translations.claimemote.title2}
             </Typography>
             <div style={{ marginTop: "50px" }}>
               <img
@@ -108,7 +106,7 @@ function ClaimEmote() {
                 color="primary"
                 onClick={() => (window.location.href = "/")}
               >
-                {Translations[userLanguage].claimemote.button2}
+                {translations.claimemote.button2}
               </Button>
             </div>
           </div>

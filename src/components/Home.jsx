@@ -13,8 +13,6 @@ import Connected from "../img/connected.svg";
 import Teacher from "../img/teacher.svg";
 import Books from "../img/books.svg";
 
-import Translations from "../translations/translations.json";
-
 import "../style/home.css";
 
 import {
@@ -28,6 +26,7 @@ import {
 
 //hooks
 import getUser from "../hooks/getUser";
+import useTranslations from "../hooks/useTranslations";
 
 export default function HomePage() {
   const user = getUser();
@@ -40,9 +39,7 @@ export default function HomePage() {
     };
   }, []);
 
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const [hostActiveStep, setHostActiveStep] = useState(0);
   const [joinActiveStep, setJoinActiveStep] = useState(0);
@@ -56,12 +53,12 @@ export default function HomePage() {
             <div className="home-page-section-1-content-top">
               <div className="home-page-section-1-content-top-text">
                 <Typography variant="h2" className="gradient-text">
-                  {Translations[userLanguage].home.sub1}
+                  {translations.home.sub1}
                 </Typography>
               </div>
               <div className="home-page-section-1-content-top-text-2">
                 <Typography variant="h3" className="black-text">
-                  {Translations[userLanguage].home.sub2}
+                  {translations.home.sub2}
                 </Typography>
               </div>
               <div className="home-page-section-1-content-top-button-container">
@@ -75,7 +72,7 @@ export default function HomePage() {
                     window.location = "/play";
                   }}
                 >
-                  {Translations[userLanguage].home.buttonText}
+                  {translations.home.buttonText}
                 </Button>
                 <Button
                   variant="outlined"
@@ -86,7 +83,7 @@ export default function HomePage() {
                     window.location = "/plans";
                   }}
                 >
-                  {Translations[userLanguage].home.buttonText2}
+                  {translations.home.buttonText2}
                 </Button>
               </div>
             </div>
@@ -107,7 +104,7 @@ export default function HomePage() {
                 variant="h3"
                 className="white-text home-page-section-2-header-text"
               >
-                {Translations[userLanguage].home.about.title}
+                {translations.home.about.title}
               </Typography>
               <div className="home-page-section-2-header-line" />
             </div>
@@ -121,7 +118,7 @@ export default function HomePage() {
                   variant="h6"
                   className="white-text home-page-section-2-content-card-text"
                 >
-                  {Translations[userLanguage].home.about.sub}
+                  {translations.home.about.sub}
                 </Typography>
               </div>
               <div className="home-page-section-2-content-card">
@@ -133,7 +130,7 @@ export default function HomePage() {
                   variant="h6"
                   className="white-text home-page-section-2-content-card-text"
                 >
-                  {Translations[userLanguage].home.about.sub2}
+                  {translations.home.about.sub2}
                 </Typography>
               </div>
               <div className="home-page-section-2-content-card">
@@ -145,7 +142,7 @@ export default function HomePage() {
                   variant="h6"
                   className="white-text home-page-section-2-content-card-text"
                 >
-                  {Translations[userLanguage].home.about.sub3}
+                  {translations.home.about.sub3}
                 </Typography>
               </div>
             </div>
@@ -159,7 +156,7 @@ export default function HomePage() {
                 variant="h3"
                 className="black-text home-page-section-3-header-text"
               >
-                {Translations[userLanguage].home.howitworks.title}
+                {translations.home.howitworks.title}
               </Typography>
               <div className="home-page-section-3-header-line" />
             </div>
@@ -172,7 +169,7 @@ export default function HomePage() {
                     variant="h4"
                     className="black-text home-page-section-3-card-wrapper-section-card-header-text"
                   >
-                    {Translations[userLanguage].home.howitworks.join.title}
+                    {translations.home.howitworks.join.title}
                   </Typography>
                   <div className="home-page-section-3-card-wrapper-section-card-header-line" />
                 </div>
@@ -199,17 +196,17 @@ export default function HomePage() {
                   </Stepper>
                   {joinActiveStep === 0 && (
                     <Typography variant="h5" style={{ margin: "25px" }}>
-                      {Translations[userLanguage].home.howitworks.join.step1}
+                      {translations.home.howitworks.join.step1}
                     </Typography>
                   )}
                   {joinActiveStep === 1 && (
                     <Typography variant="h5" style={{ margin: "25px" }}>
-                      {Translations[userLanguage].home.howitworks.join.step2}
+                      {translations.home.howitworks.join.step2}
                     </Typography>
                   )}
                   {joinActiveStep === 2 && (
                     <Typography variant="h5" style={{ margin: "25px" }}>
-                      {Translations[userLanguage].home.howitworks.join.step3}
+                      {translations.home.howitworks.join.step3}
                     </Typography>
                   )}
                   <div
@@ -234,7 +231,7 @@ export default function HomePage() {
                           : null
                       }
                     >
-                      {Translations[userLanguage].home.howitworks.join.back}
+                      {translations.home.howitworks.join.back}
                     </Button>
                     <Button
                       style={{ margin: "10px" }}
@@ -249,7 +246,7 @@ export default function HomePage() {
                           : null
                       }
                     >
-                      {Translations[userLanguage].home.howitworks.join.next}
+                      {translations.home.howitworks.join.next}
                     </Button>
                   </div>
                 </div>
@@ -270,7 +267,7 @@ export default function HomePage() {
                     variant="h4"
                     className="black-text home-page-section-3-card-wrapper-section-card-header-text"
                   >
-                    {Translations[userLanguage].home.howitworks.host.title}
+                    {translations.home.howitworks.host.title}
                   </Typography>
                   <div className="home-page-section-3-card-wrapper-section-card-header-line" />
                 </div>
@@ -307,32 +304,32 @@ export default function HomePage() {
                   </Stepper>
                   {hostActiveStep === 0 && (
                     <Typography variant="h5" style={{ margin: "25px" }}>
-                      {Translations[userLanguage].home.howitworks.host.step1}
+                      {translations.home.howitworks.host.step1}
                     </Typography>
                   )}
                   {hostActiveStep === 1 && (
                     <Typography variant="h5" style={{ margin: "25px" }}>
-                      {Translations[userLanguage].home.howitworks.host.step2}
+                      {translations.home.howitworks.host.step2}
                     </Typography>
                   )}
                   {hostActiveStep === 2 && (
                     <Typography variant="h5" style={{ margin: "25px" }}>
-                      {Translations[userLanguage].home.howitworks.host.step3}
+                      {translations.home.howitworks.host.step3}
                     </Typography>
                   )}
                   {hostActiveStep === 3 && (
                     <Typography variant="h5" style={{ margin: "25px" }}>
-                      {Translations[userLanguage].home.howitworks.host.step4}
+                      {translations.home.howitworks.host.step4}
                     </Typography>
                   )}
                   {hostActiveStep === 4 && (
                     <Typography variant="h5" style={{ margin: "25px" }}>
-                      {Translations[userLanguage].home.howitworks.host.step5}
+                      {translations.home.howitworks.host.step5}
                     </Typography>
                   )}
                   {hostActiveStep === 5 && (
                     <Typography variant="h5" style={{ margin: "25px" }}>
-                      {Translations[userLanguage].home.howitworks.host.step6}
+                      {translations.home.howitworks.host.step6}
                     </Typography>
                   )}
                   <div
@@ -357,7 +354,7 @@ export default function HomePage() {
                           : null
                       }
                     >
-                      {Translations[userLanguage].home.howitworks.host.back}
+                      {translations.home.howitworks.host.back}
                     </Button>
                     <Button
                       style={{ margin: "10px" }}
@@ -372,7 +369,7 @@ export default function HomePage() {
                           : null
                       }
                     >
-                      {Translations[userLanguage].home.howitworks.host.next}
+                      {translations.home.howitworks.host.next}
                     </Button>
                   </div>
                 </div>
@@ -385,7 +382,7 @@ export default function HomePage() {
                     variant="h4"
                     className="black-text home-page-section-3-card-wrapper-section-card-header-text"
                   >
-                    {Translations[userLanguage].home.howitworks.play.title}
+                    {translations.home.howitworks.play.title}
                   </Typography>
                   <div className="home-page-section-3-card-wrapper-section-card-header-line" />
                 </div>
@@ -413,17 +410,17 @@ export default function HomePage() {
                   </Stepper>
                   {playActiveStep === 0 && (
                     <Typography variant="h5">
-                      {Translations[userLanguage].home.howitworks.play.step1}
+                      {translations.home.howitworks.play.step1}
                     </Typography>
                   )}
                   {playActiveStep === 1 && (
                     <Typography variant="h5">
-                      {Translations[userLanguage].home.howitworks.play.step2}
+                      {translations.home.howitworks.play.step2}
                     </Typography>
                   )}
                   {playActiveStep === 2 && (
                     <Typography variant="h5">
-                      {Translations[userLanguage].home.howitworks.play.step3}
+                      {translations.home.howitworks.play.step3}
                     </Typography>
                   )}
                   <div
@@ -448,7 +445,7 @@ export default function HomePage() {
                           : null
                       }
                     >
-                      {Translations[userLanguage].home.howitworks.play.back}
+                      {translations.home.howitworks.play.back}
                     </Button>
                     <Button
                       style={{ margin: "10px" }}
@@ -463,7 +460,7 @@ export default function HomePage() {
                           : null
                       }
                     >
-                      {Translations[userLanguage].home.howitworks.play.next}
+                      {translations.home.howitworks.play.next}
                     </Button>
                   </div>
                 </div>

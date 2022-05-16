@@ -10,8 +10,6 @@ import Placeholder from "../../img/quizCoverPlaceholder.svg";
 
 import "../../style/playButtonAnimation.css";
 
-import Translations from "../../translations/translations.json";
-
 import { useLocation } from "react-router-dom";
 
 import { useQuery, gql } from "@apollo/client";
@@ -19,6 +17,7 @@ import { useQuery, gql } from "@apollo/client";
 import { CircularProgress } from "@mui/material";
 
 import getUser from "../../hooks/getUser";
+import useTranslations from "../../hooks/useTranslations";
 
 const GET_QUIZ = gql`
   query privateQuiz($id: ID!) {
@@ -44,9 +43,7 @@ function ViewQuiz() {
 
   const { code } = useParams();
 
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const classid = new URLSearchParams(search).get("classid");
 
@@ -112,8 +109,7 @@ function ViewQuiz() {
               </Typography>
               <br></br>
               <Typography variant="sub1">
-                ✨ {quiz.privateQuiz.plays}{" "}
-                {Translations[userLanguage].quiz.plays} ✨
+                ✨ {quiz.privateQuiz.plays} {translations.quiz.plays} ✨
               </Typography>
               <div
                 style={{
@@ -139,7 +135,7 @@ function ViewQuiz() {
                       window.location = `/play?gamecode=${code}&classid=${classid}&mode=quiz`;
                     }}
                   >
-                    {Translations[userLanguage].multiquiz.play}
+                    {translations.multiquiz.play}
                   </Button>
                   <Button
                     variant="contained"
@@ -149,7 +145,7 @@ function ViewQuiz() {
                       window.location = `/practice/normal/${code}`;
                     }}
                   >
-                    {Translations[userLanguage].multiquiz.practice}
+                    {translations.multiquiz.practice}
                   </Button>
                 </div>
               </div>
@@ -207,7 +203,7 @@ function ViewQuiz() {
                     />
                   )}
                   <h3>
-                    {Translations[userLanguage].quiz.by}{" "}
+                    {translations.quiz.by}{" "}
                     {quiz.privateQuiz.userName || "undefined"}
                   </h3>
                 </div>
@@ -245,7 +241,7 @@ function ViewQuiz() {
               }}
             >
               <Typography variant="h5" component="h5">
-                {Translations[userLanguage].quiz.questions}(
+                {translations.quiz.questions}(
                 {quiz.privateQuiz.questions.length})
               </Typography>
               {ansIsShown ? (
@@ -254,7 +250,7 @@ function ViewQuiz() {
                   color="secondary"
                   onClick={() => handleHideAnswers()}
                 >
-                  {Translations[userLanguage].quiz.hideanswers}
+                  {translations.quiz.hideanswers}
                 </Button>
               ) : (
                 <Button
@@ -262,7 +258,7 @@ function ViewQuiz() {
                   color="primary"
                   onClick={() => handleShowAnswers()}
                 >
-                  {Translations[userLanguage].quiz.showanswers}
+                  {translations.quiz.showanswers}
                 </Button>
               )}
             </div>

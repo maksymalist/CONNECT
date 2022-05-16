@@ -26,8 +26,6 @@ import Spline from "@splinetool/react-spline";
 //material-icons
 import { Redeem, AlternateEmail } from "@mui/icons-material";
 
-import Translations from "../../translations/translations.json";
-
 import { useMutation, gql } from "@apollo/client";
 
 import { useSelector } from "react-redux";
@@ -35,6 +33,7 @@ import { useSelector } from "react-redux";
 import config from "../../config.json";
 import TeacherImg from "../../img/teacher_sub.svg";
 import getUser from "../../hooks/getUser";
+import useTranslations from "../../hooks/useTranslations";
 
 const UPDATE_USER_SUBSCRIPTION = gql`
   mutation ($id: ID!, $plan: String!, $subscriptionDetails: String!) {
@@ -87,9 +86,7 @@ function HomePage(props) {
 
   const [open, setOpen] = useState(false);
 
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const [updateUserSubscriptionMutation] = useMutation(
     UPDATE_USER_SUBSCRIPTION
@@ -118,7 +115,7 @@ function HomePage(props) {
     if (plan === "Starter") return;
     if (plan === "Classroom") {
       window.location.href = "/plans";
-      toast.warn(Translations[userLanguage].alreadyhaveplan);
+      toast.warn(translations.alreadyhaveplan);
     }
   }, [plan]);
 
@@ -176,7 +173,7 @@ function HomePage(props) {
 
   const handleSubmitSub = async (event) => {
     if (user == null) {
-      toast.error(Translations[userLanguage].alerts.loginbeforebuy);
+      toast.error(translations.alerts.loginbeforebuy);
       setSpinner(false);
       return;
     } else {
@@ -211,11 +208,11 @@ function HomePage(props) {
 
           if (status !== "succeeded") {
             toast.error(
-              `${Translations[userLanguage].alerts.purchasefailed} Status ${status}`
+              `${translations.alerts.purchasefailed} Status ${status}`
             );
             setSpinner(false);
           } else {
-            toast.success(Translations[userLanguage].alerts.wowsoeasy);
+            toast.success(translations.alerts.wowsoeasy);
             setSuccess(true);
             setSpinner(false);
             handleUpdateUserSubscription(JSON.parse(subscription_obj));
@@ -234,11 +231,11 @@ function HomePage(props) {
             res.data;
           if (status !== "succeeded") {
             toast.error(
-              `${Translations[userLanguage].alerts.purchasefailed} Status ${status}`
+              `${translations.alerts.purchasefailed} Status ${status}`
             );
             setSpinner(false);
           } else {
-            toast.success(Translations[userLanguage].alerts.wowsoeasy);
+            toast.success(translations.alerts.wowsoeasy);
             setSuccess(true);
             setSpinner(false);
             handleUpdateUserSubscription(JSON.parse(subscription_obj));
@@ -252,7 +249,7 @@ function HomePage(props) {
 
   const handleApplyCoupon = async () => {
     if (coupon === "") {
-      toast.error(Translations[userLanguage].alerts.entercoupon);
+      toast.error(translations.alerts.entercoupon);
       return;
     } else {
       const res = await axios.post(`${config["api-server"]}/get-coupon`, {
@@ -260,7 +257,7 @@ function HomePage(props) {
       });
       console.log(res.data);
       if (res.data === "Invalid Coupon") {
-        toast.error(Translations[userLanguage].alerts.entervalidcoupon);
+        toast.error(translations.alerts.entervalidcoupon);
         setActiveCoupon(false);
         setCurrentDiscount((currentDiscount = "this field is optional"));
         setDiscount(0);
@@ -285,7 +282,7 @@ function HomePage(props) {
           );
           setDiscount((res.data.percent_off / 100) * 10);
         }
-        toast.success(Translations[userLanguage].alerts.couponapplied);
+        toast.success(translations.alerts.couponapplied);
         return;
       }
     }
@@ -304,7 +301,7 @@ function HomePage(props) {
       handleSubmitSub();
     } else {
       setComfirmPurchase(false);
-      toast.error(Translations[userLanguage].alerts.purchasefailed);
+      toast.error(translations.alerts.purchasefailed);
     }
   };
 
@@ -433,12 +430,12 @@ function HomePage(props) {
                   color="white"
                   style={{ textAlign: "left" }}
                 >
-                  {Translations[userLanguage].plans.classroom.at} <br></br>{" "}
+                  {translations.plans.classroom.at} <br></br>{" "}
                   <span style={{ fontSize: "1.8em" }}>
-                    {Translations[userLanguage].plans.classroom.price}
+                    {translations.plans.classroom.price}
                   </span>
                   <br></br>
-                  {Translations[userLanguage].plans.classroom.permonth}
+                  {translations.plans.classroom.permonth}
                 </Typography>
                 <br></br>
                 <Divider />
@@ -459,52 +456,31 @@ function HomePage(props) {
                 >
                   <Typography variant="subtitle1" className="features">
                     {"✅ "}
-                    {
-                      Translations[userLanguage].plans.classroom.features
-                        .feature1
-                    }
+                    {translations.plans.classroom.features.feature1}
                   </Typography>
                   <Typography variant="subtitle1" className="features">
                     {"✅ "}
-                    {
-                      Translations[userLanguage].plans.classroom.features
-                        .feature2
-                    }
+                    {translations.plans.classroom.features.feature2}
                   </Typography>
                   <Typography variant="subtitle1" className="features">
                     {"✅ "}
-                    {
-                      Translations[userLanguage].plans.classroom.features
-                        .feature3
-                    }
+                    {translations.plans.classroom.features.feature3}
                   </Typography>
                   <Typography variant="subtitle1" className="features">
                     {"✅ "}
-                    {
-                      Translations[userLanguage].plans.classroom.features
-                        .feature4
-                    }
+                    {translations.plans.classroom.features.feature4}
                   </Typography>
                   <Typography variant="subtitle1" className="features">
                     {"✅ "}
-                    {
-                      Translations[userLanguage].plans.classroom.features
-                        .feature5
-                    }
+                    {translations.plans.classroom.features.feature5}
                   </Typography>
                   <Typography variant="subtitle1" className="features">
                     {"✅ "}
-                    {
-                      Translations[userLanguage].plans.classroom.features
-                        .feature6
-                    }
+                    {translations.plans.classroom.features.feature6}
                   </Typography>
                   <Typography variant="subtitle1" className="features">
                     {"✅ "}
-                    {
-                      Translations[userLanguage].plans.classroom.features
-                        .feature7
-                    }
+                    {translations.plans.classroom.features.feature7}
                   </Typography>
                 </div>
               </div>
@@ -522,9 +498,9 @@ function HomePage(props) {
                 component="h4"
                 style={{ textAlign: "left", fontWeight: "bold" }}
               >
-                {Translations[userLanguage].paymentform.title}
+                {translations.paymentform.title}
                 <Typography variant="h4" color="#6c63ff">
-                  {Translations[userLanguage].paymentform.plan}
+                  {translations.paymentform.plan}
                 </Typography>
               </Typography>
               <br></br>
@@ -573,7 +549,7 @@ function HomePage(props) {
                   style={{ marginTop: "-12px", marginLeft: "5px" }}
                   onClick={() => handleApplyCoupon()}
                 >
-                  {Translations[userLanguage].paymentform.button}
+                  {translations.paymentform.button}
                 </Button>
               </div>
               <CardElement options={CARD_ELEMENT_OPTIONS} />
@@ -598,7 +574,7 @@ function HomePage(props) {
                       size={20}
                     />
                   ) : (
-                    Translations[userLanguage].paymentform.button2
+                    translations.paymentform.button2
                   )}
                 </Button>
               </div>

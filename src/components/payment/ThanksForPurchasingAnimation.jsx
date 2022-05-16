@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import "../../style/checkAnimation.css";
 import Button from "@mui/material/Button";
-import Translations from "../../translations/translations.json";
 import { Typography } from "@mui/material";
+import useTranslations from "../../hooks/useTranslations";
 
 export default function ThanksForPurchasingAnimation() {
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   return (
     <div style={{ display: "flex", justifyContent: "center", marginTop: "0x" }}>
       <div
@@ -48,7 +46,7 @@ export default function ThanksForPurchasingAnimation() {
             />
           </svg>
           <Typography variant="h4" color="white" style={{ marginTop: "50px" }}>
-            🎉🎉 {Translations[userLanguage].thanksforpurchasing.title} 🎉🎉
+            🎉🎉 {translations.thanksforpurchasing.title} 🎉🎉
           </Typography>
         </div>
         <Button
@@ -58,7 +56,7 @@ export default function ThanksForPurchasingAnimation() {
           color="primary"
           size="large"
         >
-          {Translations[userLanguage].thanksforpurchasing.button}
+          {translations.thanksforpurchasing.button}
         </Button>
       </div>
     </div>

@@ -5,12 +5,10 @@ import "../../../style/podiumAnimation.css";
 import { Howl, Howler } from "howler";
 import soundEffect from "../../../audio/drum_roll.mp3";
 import { Button } from "@mui/material";
-import Translations from "../../../translations/translations.json";
+import useTranslations from "../../../hooks/useTranslations";
 
 function PodiumAnimation({ podium, maxPodiumPlayers }) {
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   //{ podium, maxPodiumPlayers }
 
   // const podium = [
@@ -360,7 +358,7 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
                   color="primary"
                   onClick={() => (window.location = "/")}
                 >
-                  {Translations[userLanguage].finishedscreen.return}
+                  {translations.finishedscreen.return}
                 </Button>
               </div>
             </motion.div>
@@ -375,7 +373,7 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
             color="primary"
             onClick={() => (window.location = "/")}
           >
-            {Translations[userLanguage].finishedscreen.return}
+            {translations.finishedscreen.return}
           </Button>
         </div>
       )}

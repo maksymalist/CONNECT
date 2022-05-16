@@ -11,7 +11,6 @@ import SecondPlaceIcon from "../../img/PodiumIcons/secondPlace.svg";
 import ThirdPlaceIcon from "../../img/PodiumIcons/thirdPlace.svg";
 
 //translations
-import Translations from "../../translations/translations.json";
 
 //config
 import config from "../../config.json";
@@ -45,6 +44,7 @@ import { useMutation, gql } from "@apollo/client";
 
 //hooks
 import getUser from "../../hooks/getUser";
+import useTranslations from "../../hooks/useTranslations";
 
 const ADD_MEMBER = gql`
   mutation createMember($classId: ID!, $userId: ID!, $role: String!) {
@@ -77,10 +77,7 @@ const DELETE_MEMBER = gql`
 export default function MemberRoom() {
   const user = getUser();
   const plan = useSelector((state) => state.plan);
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
-
+  const translations = useTranslations();
   const [isBrowseQuizzes, setIsBrowseQuizzes] = useState(false);
 
   const [members, setMembers] = useState([]);
@@ -219,19 +216,19 @@ export default function MemberRoom() {
     const membersArr = [...members];
 
     if (!res.data) {
-      toast.error(Translations[userLanguage].alerts.thisUserDoesNotExist);
+      toast.error(translations.alerts.thisUserDoesNotExist);
       return;
     }
 
     if (res.data._id === USERID_PREFIX + user?.profileObj.googleId) {
-      toast.error(Translations[userLanguage].alerts.cannotAddYourself);
+      toast.error(translations.alerts.cannotAddYourself);
       return;
     }
 
     if (res.data) {
       membersArr.map((member) => {
         if (member.id === res.data._id) {
-          toast.error(Translations[userLanguage].alerts.memberAlreadyExists);
+          toast.error(translations.alerts.memberAlreadyExists);
           return;
         }
       });
@@ -277,7 +274,7 @@ export default function MemberRoom() {
 
   const removeMember = (index, memberId) => {
     if (memberId === `user:${user?.profileObj.googleId}`) {
-      toast.error(Translations[userLanguage].alerts.cannotRemoveYourself);
+      toast.error(translations.alerts.cannotRemoveYourself);
       return;
     }
     const cloneMemberArr = [...members];
@@ -301,7 +298,7 @@ export default function MemberRoom() {
     <div className="classroom__main__div">
       <div className="classroom__members">
         <Typography variant="h4" className="classroom__members__title">
-          {Translations[userLanguage].classroom.members.title}({members.length})
+          {translations.classroom.members.title}({members.length})
         </Typography>
         <div>
           <Button
@@ -310,7 +307,7 @@ export default function MemberRoom() {
             color="primary"
             onClick={() => handleAddMember()}
           >
-            {Translations[userLanguage].classroom.members.add}
+            {translations.classroom.members.add}
           </Button>
           <Button
             style={{ margin: "10px" }}
@@ -319,8 +316,8 @@ export default function MemberRoom() {
             onClick={() => setRemoveMode(!removeMode)}
           >
             {removeMode
-              ? Translations[userLanguage].classroom.members.cancel
-              : Translations[userLanguage].classroom.members.remove}
+              ? translations.classroom.members.cancel
+              : translations.classroom.members.remove}
           </Button>
         </div>
         {isAddMemberPopup ? (
@@ -348,7 +345,7 @@ export default function MemberRoom() {
                   variant="h4"
                   className="classroom__addmember__title"
                 >
-                  {Translations[userLanguage].classroom.addmember.title}
+                  {translations.classroom.addmember.title}
                 </Typography>
                 <CancelRounded
                   style={{ fontSize: "2rem", color: "red", cursor: "pointer" }}
@@ -362,11 +359,11 @@ export default function MemberRoom() {
                 <TextField
                   variant="outlined"
                   size="small"
-                  label={Translations[userLanguage].classroom.addmember.input}
+                  label={translations.classroom.addmember.input}
                   helperText={
                     <span style={{ color: "black" }}>
                       {newMembers.length}{" "}
-                      {Translations[userLanguage].classroom.addmember.members}
+                      {translations.classroom.addmember.members}
                     </span>
                   }
                   onChange={(e) => {
@@ -382,7 +379,7 @@ export default function MemberRoom() {
                     addMember(currentMember);
                   }}
                 >
-                  {Translations[userLanguage].classroom.addmember.button}
+                  {translations.classroom.addmember.button}
                 </Button>
               </div>
               <br></br>
@@ -433,7 +430,7 @@ export default function MemberRoom() {
                     handleAddMemberComfirm();
                   }}
                 >
-                  {Translations[userLanguage].classroom.addmember.confirm}
+                  {translations.classroom.addmember.confirm}
                 </Button>
               </div>
             </div>
@@ -517,7 +514,7 @@ export default function MemberRoom() {
                 color="secondary"
                 onClick={handleRenderGames}
               >
-                {Translations[userLanguage].classroom.play.backbutton}
+                {translations.classroom.play.backbutton}
               </Button>
             </div>
             <div style={{ width: "100%" }}>
@@ -555,7 +552,7 @@ export default function MemberRoom() {
                 color="primary"
                 onClick={handleRenderGames}
               >
-                {Translations[userLanguage].classroom.play.playbutton}
+                {translations.classroom.play.playbutton}
               </Button>
             </div>
             <div style={{ width: "100%" }}>
@@ -575,7 +572,7 @@ export default function MemberRoom() {
               variant="h3"
               className="classroom__hall__of__fame__title"
             >
-              {Translations[userLanguage].classroom.halloffame.title}
+              {translations.classroom.halloffame.title}
             </Typography>
             <div className="classroom__hall__of__fame__card__container">
               {hallOfFame.map((member, index) => {
@@ -648,7 +645,7 @@ export default function MemberRoom() {
                   variant="h3"
                   className="classroom__recent__games__title"
                 >
-                  {Translations[userLanguage].classroom.recentGames.title}
+                  {translations.classroom.recentGames.title}
                 </Typography>
                 <div style={{ width: "100%" }}>
                   <br></br>
@@ -693,7 +690,7 @@ export default function MemberRoom() {
                             }}
                           />
                         )}
-                        <h3>{`${Translations[userLanguage].quizzes.by} ${
+                        <h3>{`${translations.quizzes.by} ${
                           game.userName || "undefined"
                         }`}</h3>
                       </div>
@@ -742,7 +739,7 @@ export default function MemberRoom() {
                   variant="h3"
                   className="classroom__recent__games__title"
                 >
-                  {Translations[userLanguage].classroom.finalists.title}
+                  {translations.classroom.finalists.title}
                 </Typography>
                 <div style={{ width: "100%" }}>
                   <br></br>

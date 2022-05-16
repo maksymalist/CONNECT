@@ -6,13 +6,12 @@ import { Divider, Typography, Button, Chip } from "@mui/material";
 
 import Placeholder from "../../img/quizCoverPlaceholder.svg";
 
-import Translations from "../../translations/translations.json";
-
 import { useLocation } from "react-router-dom";
 
 import { useQuery, gql } from "@apollo/client";
 
 import { CircularProgress } from "@mui/material";
+import useTranslations from "../../hooks/useTranslations";
 
 const GET_QUIZ_DETAILS = gql`
   query multi($id: ID!) {
@@ -36,9 +35,7 @@ function ViewMultiQuiz() {
 
   const { mode, code } = useParams();
 
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   const search = useLocation().search;
 
@@ -99,8 +96,7 @@ function ViewMultiQuiz() {
               </Typography>
               <br></br>
               <Typography variant="sub1">
-                ✨ {data.multi.plays}{" "}
-                {Translations[userLanguage].multiquiz.plays} ✨
+                ✨ {data.multi.plays} {translations.multiquiz.plays} ✨
               </Typography>
               <div
                 style={{
@@ -126,7 +122,7 @@ function ViewMultiQuiz() {
                       window.location = `/play?gamecode=${code}&classid=${classid}&mode=multi`;
                     }}
                   >
-                    {Translations[userLanguage].multiquiz.play}
+                    {translations.multiquiz.play}
                   </Button>
                   <Button
                     variant="contained"
@@ -136,7 +132,7 @@ function ViewMultiQuiz() {
                       window.location = `/practice/multi/${code}`;
                     }}
                   >
-                    {Translations[userLanguage].multiquiz.practice}
+                    {translations.multiquiz.practice}
                   </Button>
                 </div>
               </div>
@@ -173,7 +169,7 @@ function ViewMultiQuiz() {
                   }}
                 />
                 <h3>
-                  {Translations[userLanguage].multiquiz.by}{" "}
+                  {translations.multiquiz.by}{" "}
                   {data.multi.userName || "undefined"}
                 </h3>
               </div>
@@ -210,7 +206,7 @@ function ViewMultiQuiz() {
               }}
             >
               <Typography variant="h5" component="h5">
-                {Translations[userLanguage].multiquiz.steps}(
+                {translations.multiquiz.steps}(
                 {Object.keys(JSON.parse(data.multi.steps)).length})
               </Typography>
               {ansIsShown ? (
@@ -219,7 +215,7 @@ function ViewMultiQuiz() {
                   color="secondary"
                   onClick={() => handleHideAnswers()}
                 >
-                  {Translations[userLanguage].multiquiz.hideanswers}
+                  {translations.multiquiz.hideanswers}
                 </Button>
               ) : (
                 <Button
@@ -227,7 +223,7 @@ function ViewMultiQuiz() {
                   color="primary"
                   onClick={() => handleShowAnswers()}
                 >
-                  {Translations[userLanguage].multiquiz.showanswers}
+                  {translations.multiquiz.showanswers}
                 </Button>
               )}
             </div>

@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { Typography, Button, Divider } from "@mui/material";
-import Translations from "../../translations/translations.json";
+import useTranslations from "../../hooks/useTranslations";
 
 const PopUp = ({ startGame }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [selected, setSelected] = useState([]);
 
-  const [userLanguage, setUserLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
 
   useEffect(() => {
     if (selected.length <= 0) return;
@@ -75,7 +73,7 @@ const PopUp = ({ startGame }) => {
             }}
           >
             <Typography variant="h4" style={{ maxWidth: "350px" }}>
-              {Translations[userLanguage].tutorial.popup.step0.title}
+              {translations.tutorial.popup.step0.title}
             </Typography>
             <br></br>
             <Button
@@ -85,14 +83,14 @@ const PopUp = ({ startGame }) => {
               onClick={() => setActiveStep(1)}
               style={{ width: "100%" }}
             >
-              {Translations[userLanguage].tutorial.popup.next}
+              {translations.tutorial.popup.next}
             </Button>
           </div>
         )}
         {activeStep === 1 && (
           <div>
             <Typography variant="h4">
-              {Translations[userLanguage].tutorial.popup.step1.title}
+              {translations.tutorial.popup.step1.title}
             </Typography>
             <br></br>
             <Divider />
@@ -109,7 +107,7 @@ const PopUp = ({ startGame }) => {
                 className="card quest-card"
                 style={{ width: "200px", height: "200px" }}
               >
-                {Translations[userLanguage].tutorial.popup.step1.card}
+                {translations.tutorial.popup.step1.card}
               </div>
             </div>
             <br></br>
@@ -126,7 +124,7 @@ const PopUp = ({ startGame }) => {
                 color="action"
                 onClick={() => setActiveStep(2)}
               >
-                {Translations[userLanguage].tutorial.popup.next}
+                {translations.tutorial.popup.next}
               </Button>
             </div>
           </div>
@@ -134,7 +132,7 @@ const PopUp = ({ startGame }) => {
         {activeStep === 2 && (
           <div>
             <Typography variant="h4">
-              {Translations[userLanguage].tutorial.popup.step2.title}
+              {translations.tutorial.popup.step2.title}
             </Typography>
             <br></br>
             <Divider />
@@ -151,7 +149,7 @@ const PopUp = ({ startGame }) => {
                 className="card ans-card"
                 style={{ width: "200px", height: "200px" }}
               >
-                {Translations[userLanguage].tutorial.popup.step2.card}
+                {translations.tutorial.popup.step2.card}
               </div>
             </div>
             <br></br>
@@ -168,7 +166,7 @@ const PopUp = ({ startGame }) => {
                 color="action"
                 onClick={() => setActiveStep(3)}
               >
-                {Translations[userLanguage].tutorial.popup.next}
+                {translations.tutorial.popup.next}
               </Button>
             </div>
           </div>
@@ -176,7 +174,7 @@ const PopUp = ({ startGame }) => {
         {activeStep === 3 && (
           <div>
             <Typography variant="h4">
-              {Translations[userLanguage].tutorial.popup.step3.title}
+              {translations.tutorial.popup.step3.title}
             </Typography>
             <br></br>
             <Divider />
@@ -208,7 +206,7 @@ const PopUp = ({ startGame }) => {
                   setSelected([...selected, "quest-card"]);
                 }}
               >
-                {Translations[userLanguage].tutorial.popup.step3.card1}
+                {translations.tutorial.popup.step3.card1}
               </div>
               <div
                 className="card ans-card"
@@ -228,7 +226,7 @@ const PopUp = ({ startGame }) => {
                   setSelected([...selected, "ans-card"]);
                 }}
               >
-                {Translations[userLanguage].tutorial.popup.step3.card2}
+                {translations.tutorial.popup.step3.card2}
               </div>
             </div>
           </div>
@@ -236,11 +234,11 @@ const PopUp = ({ startGame }) => {
         {activeStep === 4 && (
           <div>
             <Typography variant="h4">
-              {Translations[userLanguage].tutorial.popup.step4.title}
+              {translations.tutorial.popup.step4.title}
             </Typography>
             <br></br>
             <Typography variant="sub1">
-              <i>{Translations[userLanguage].tutorial.popup.step4.sub}</i>
+              <i>{translations.tutorial.popup.step4.sub}</i>
             </Typography>
             <br></br>
             <Divider />

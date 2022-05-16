@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 
 //style
 import "../../style/loginStyles.css";
-import Translations from "../../translations/translations.json";
 import { useMutation, gql } from "@apollo/client";
 import axios from "axios";
 
@@ -15,6 +14,7 @@ import config from "../../config.json";
 import LoginArt from "../../img/Login/loginArt.svg";
 import teacher from "../../img/Login/teacher_role.svg";
 import student from "../../img/Login/student_role.svg";
+import useTranslations from "../../hooks/useTranslations";
 
 //mutations
 const CREATE_USER = gql`
@@ -38,9 +38,7 @@ const CREATE_USER = gql`
 `;
 
 function Login() {
-  const [userLanguage] = useState(
-    localStorage.getItem("connectLanguage") || "english"
-  );
+  const translations = useTranslations();
   const [createUser] = useMutation(CREATE_USER);
 
   const search = useLocation().search;
@@ -113,16 +111,12 @@ function Login() {
         <div className="login-component-container">
           <br></br>
           <Typography variant="h3" className="login-title">
-            <b style={{ color: "#6C63FF" }}>
-              {Translations[userLanguage].login.title}
-            </b>
+            <b style={{ color: "#6C63FF" }}>{translations.login.title}</b>
           </Typography>
           <br></br>
           <br></br>
           <Typography variant="h6" className="login-title">
-            <b style={{ fontStyle: "italic" }}>
-              {Translations[userLanguage].login.title2}
-            </b>
+            <b style={{ fontStyle: "italic" }}>{translations.login.title2}</b>
           </Typography>
           <br></br>
           <div style={{ width: "100%", height: "auto", marginBottom: "40px" }}>
@@ -137,7 +131,7 @@ function Login() {
           </div>
           <GoogleLogin
             clientId="701696427912-ajmlkcj3hpo46q5fokhtn5mmeib0m3be.apps.googleusercontent.com"
-            buttonText={Translations[userLanguage].login.googlebutton}
+            buttonText={translations.login.googlebutton}
             onSuccess={responseGoogle}
             onFailure={(error) => {
               window.location = "/no-local-storage";
@@ -156,13 +150,13 @@ function Login() {
             className="login-title"
             style={{ color: "white" }}
           >
-            <b>{Translations[userLanguage].login.role.title}</b>
+            <b>{translations.login.role.title}</b>
           </Typography>
           <div style={{ width: "100%", height: "100px" }} />
           <div className="role__img__wrapper">
             <div className="role__img__card">
               <Typography variant="h4" className="login-title">
-                <b>{Translations[userLanguage].login.role.teacher}</b>
+                <b>{translations.login.role.teacher}</b>
               </Typography>
               <img
                 src={teacher}
@@ -175,7 +169,7 @@ function Login() {
             </div>
             <div className="role__img__card">
               <Typography variant="h4" className="login-title">
-                <b>{Translations[userLanguage].login.role.student}</b>
+                <b>{translations.login.role.student}</b>
               </Typography>
               <img
                 src={student}
