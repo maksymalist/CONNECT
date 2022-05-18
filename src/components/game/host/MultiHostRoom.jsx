@@ -59,7 +59,6 @@ import getUser from "../../../hooks/getUser";
 import useTranslations from "../../../hooks/useTranslations";
 
 const playersTime = [];
-const timesObj = {};
 let finished2 = [];
 let activeStep2 = 0;
 let userLimit2 = 0;
@@ -136,28 +135,22 @@ export default function HostRoom(props) {
 
       if (playersTime.includes(data.user) == true) {
         if (!document.getElementById(data.user)) return;
-
-        //update timesObj
-        timesObj[data.user] = {
-          time: data.time,
-        };
+        document.getElementById(
+          data.user
+        ).innerHTML = `${data.user} <span class="time__text" style='color:#6976EA'>${data.time}s</span>`;
+        document.getElementById(data.user).dataset.time = data.time;
       } else {
-        //create new entry in time obj
         playersTime.push(data.user);
 
-        timesObj[data.user] = {
-          time: data.time,
-          userId: data.userId,
-        };
-        // let newTime = document.createElement("h1");
+        let newTime = document.createElement("h1");
 
-        // newTime.innerHTML = `${data.user} <span class="time__text" style='color:#6976EA'>${data.time}s</span>`;
-        // newTime.id = data.user;
-        // newTime.className = "time-box";
-        // newTime.dataset.time = data.time;
-        // newTime.dataset.userId = data.userId;
+        newTime.innerHTML = `${data.user} <span class="time__text" style='color:#6976EA'>${data.time}s</span>`;
+        newTime.id = data.user;
+        newTime.className = "time-box";
+        newTime.dataset.time = data.time;
+        newTime.dataset.userId = data.userId;
 
-        // document.getElementById("time__div").appendChild(newTime);
+        document.getElementById("time__div").appendChild(newTime);
       }
     });
 
@@ -472,14 +465,17 @@ export default function HostRoom(props) {
 
   const nextSection = () => {
     let positions = [];
-    if (Object.keys(timesObj).length > 0) {
-      for (let i = 0; i < Object.keys(timesObj).length; i++) {
-        const name = Object.keys(timesObj)[i];
-        const el = timesObj[name];
+    if (document.getElementsByClassName("time-box").length > 0) {
+      for (
+        let i = 0;
+        i < document.getElementsByClassName("time-box").length;
+        i++
+      ) {
+        const el = document.getElementsByClassName("time-box")[i];
         positions.push({
-          player: name,
-          time: el.time,
-          userId: el.userId,
+          player: el.id,
+          time: el.dataset.time,
+          userId: el.dataset.userId,
         });
       }
       if (positions.length > 0) {
@@ -570,11 +566,14 @@ export default function HostRoom(props) {
   const getLowestTime = () => {
     const times = [];
     const podiumLength = props.podiumPlaces;
-    if (Object.keys(timesObj).length > 0) {
-      for (let i = 0; i < Object.keys(timesObj).length; i++) {
-        const name = Object.keys(timesObj)[i];
-        const el = timesObj[name];
-        times.push({ player: name, time: el.time });
+    if (document.getElementsByClassName("time-box").length > 0) {
+      for (
+        let i = 0;
+        i < document.getElementsByClassName("time-box").length;
+        i++
+      ) {
+        const el = document.getElementsByClassName("time-box")[i];
+        times.push({ player: el.id, time: el.dataset.time });
       }
       if (times.length > 0) {
         times.sort((a, b) => a.time - b.time);
