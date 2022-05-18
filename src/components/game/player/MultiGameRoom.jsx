@@ -56,7 +56,6 @@ function MultiGameRoom({ match }) {
   const getQuiz = async (currentQuiz, name) => {
     quiz = currentQuiz;
     setName(name); //name = quiz.name
-    console.log(currentQuiz);
     setCardsFunction(currentQuiz);
   };
 
@@ -80,8 +79,6 @@ function MultiGameRoom({ match }) {
   };
 
   const setCardsFunction = (quiz) => {
-    console.log(quiz);
-
     const keys = Object.keys(quiz);
 
     keys.map((key, index) => {
@@ -94,8 +91,6 @@ function MultiGameRoom({ match }) {
         type: quiz[key].type === undefined ? "ques_ans" : quiz[key].type,
       });
     });
-
-    console.log(cards);
 
     GetCards();
   };
@@ -147,8 +142,6 @@ function MultiGameRoom({ match }) {
     cards.map((card, i) => {
       numberOfCardsArr.push(i);
     });
-    console.log(cards);
-    console.log(numberOfCardsArr);
     for (var i = 0; i < cards.length; i++) {
       let newCard = document.createElement("div");
       const item = cards[randomNum[i]].question;
@@ -203,15 +196,6 @@ function MultiGameRoom({ match }) {
 
       elements += 2;
     }
-    console.log(randomNum, randomNum2);
-    randomNum.map((num, i) => {
-      const item = cards[num].question;
-      console.log(item);
-    });
-    randomNum2.map((num, i) => {
-      const item = cards[num].ans;
-      console.log(item);
-    });
     cards = [];
   };
   var memory = [];
@@ -245,7 +229,6 @@ function MultiGameRoom({ match }) {
           return;
         }
 
-        console.log(memory[0].question, memory[1].ans);
         document.getElementById(memory[0].question).remove();
         document.getElementById(memory[1].ans).remove();
 
@@ -299,14 +282,10 @@ function MultiGameRoom({ match }) {
         const multi = res.data;
 
         const stepArr = [];
-        console.log(Object.keys(multi.steps));
         Object.keys(JSON.parse(multi.steps)).map((step, index) => {
-          console.log(step);
-
           stepArr.push(step);
         });
 
-        console.log("hey look here is your quizz :))))) !!!!", multi);
         const steps = multi.steps;
         const step = Object.keys(JSON.parse(steps))[activeStep2];
         getQuiz(JSON.parse(steps)[step], multi.name);
@@ -320,7 +299,7 @@ function MultiGameRoom({ match }) {
     document.getElementById("main-nav").remove();
 
     socket.on("joinedGameRoom", (data) => {
-      console.log(data);
+      //
     });
     socket.emit("joinGame", {
       room: match.params.room,
@@ -332,21 +311,12 @@ function MultiGameRoom({ match }) {
     });
 
     socket.on("showCurrentPosition", (data) => {
-      console.log(data);
       const positions = data.positions;
       const id = user?.profileObj.googleId;
       const userName = match.params.user;
-      console.log(positions);
 
       for (let i = 0; i < positions.length; i++) {
         const position = positions[i];
-        console.log(position);
-        console.log(`
-          id: ${position.userId}
-          id2: ${id} json
-          user: ${position.player}
-          user2: ${match.params.user} match
-        `);
 
         /*   
           id: undefined
@@ -356,7 +326,6 @@ function MultiGameRoom({ match }) {
          */
 
         if (position.userId === id && position.player === userName) {
-          console.log(position);
           setIsWaiting(false);
           isWaiting2 = false;
           setIsShowingPosition(true);
@@ -373,13 +342,10 @@ function MultiGameRoom({ match }) {
     });
 
     socket.on("startNextSection", (data) => {
-      console.log(data);
       setIsWaiting(false);
       isWaiting2 = false;
       setIsShowingPosition(false);
       isShowingPosition2 = false;
-
-      console.log(position2);
 
       if (position2 === 0) {
         updateTime((prev) => (time = prev += 25));
@@ -412,8 +378,6 @@ function MultiGameRoom({ match }) {
           const multi = res.data;
           const steps = multi.steps;
           const step = Object.keys(JSON.parse(steps))[activeStep2];
-
-          console.log(JSON.parse(steps)[step]);
 
           getQuiz(JSON.parse(steps)[step], multi.name);
         });
