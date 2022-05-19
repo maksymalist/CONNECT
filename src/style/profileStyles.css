@@ -88,7 +88,8 @@
   margin: 10px;
   width: 100%;
   max-width: 340px;
-  padding-bottom: 100px;
+  text-transform: capitalize;
+  background-color: #1bb978;
 }
 
 .profile__class__card:hover {

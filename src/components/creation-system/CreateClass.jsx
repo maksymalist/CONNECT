@@ -123,7 +123,7 @@ function CreateClass() {
 
     /*notify members*/
 
-    //window.location.href = `/class/${classID}`;
+    window.location = `/class/${classID}`;
   };
 
   return (

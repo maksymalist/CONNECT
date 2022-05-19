@@ -164,7 +164,7 @@ function MyProfile(props) {
     return (
       <div className="profile__class__card">
         <Typography
-          style={{ fontWeight: "bold", margin: "20px", color: "black" }}
+          style={{ fontWeight: "bold", margin: "20px", color: "white" }}
           variant="h5"
         >
           {name}
