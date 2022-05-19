@@ -170,7 +170,7 @@ export default function NewQuiz() {
       });
     }
     toast.success(translations.alerts.quizcreated);
-    window.location.reload();
+    setQuestionArray([]);
   };
   const getTags = () => {
     const newTagArr = [];

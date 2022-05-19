@@ -522,7 +522,8 @@ function NewMultiQuiz() {
       });
     }
     toast.success(translations.alerts.quizcreated);
-    window.location.reload();
+    setQuizArray([]);
+    quizObj = {};
   };
 
   const setQuizObj = (isPrivate, name, description) => {

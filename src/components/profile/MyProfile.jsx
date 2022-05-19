@@ -140,12 +140,21 @@ function MyProfile(props) {
   }, []);
 
   const getClasses = async () => {
-    const res = await axios.post(`${config["api-server"]}/get-user-classes`, {
-      userId: user?.profileObj.googleId,
-    });
+    try {
+      const res = await axios.post(`${config["api-server"]}/get-user-classes`, {
+        userId: user?.profileObj.googleId,
+      });
 
-    if (res.data) {
-      setUserClasses(res.data || []);
+      if (res.data) {
+        for (let i = 0; i < res.data.length; i++) {
+          const resp = await axios.post(`${config["api-server"]}/get-class`, {
+            id: res.data[i].classId,
+          });
+          setUserClasses((prev) => [...prev, resp.data]);
+        }
+      }
+    } catch (error) {
+      setUserClasses([]);
     }
   };
 
