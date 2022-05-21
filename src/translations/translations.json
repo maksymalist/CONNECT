@@ -494,7 +494,9 @@
       "hint": {
         "title": "HINT: ",
         "text": "it's literally just 123-456 🙃"
-      }
+      },
+      "addedmember": "Added Member ✨",
+      "declinedmember": "Declined Member ❌"
     },
     "paymentform": {
       "title": "Subscribe to",
@@ -506,8 +508,13 @@
     "classroom": {
       "createbutton": "Create Class",
       "members": {
-        "title": "Members",
-        "add": "add member",
+        "title1": "Members",
+        "title2": "Invitation Link",
+        "title3": "Join Requests",
+        "tab1": "link",
+        "tab2": "requests",
+        "copy": "Copy",
+        "add": "invite members",
         "cancel": "Cancel",
         "remove": "remove member"
       },
@@ -531,6 +538,14 @@
       "finalists": {
         "title": "Finalists"
       }
+    },
+    "joinclass": {
+      "title": "you have been invited to join",
+      "members": "members",
+      "button1": "request to join 🚀",
+      "button2": "no, thanks.",
+      "requestsent": "Request Sent ✅",
+      "button3": "return home 🏠"
     },
     "createclass": {
       "title": "Create Class",
@@ -1046,7 +1061,9 @@
       "hint": {
         "title": "INDICE: ",
         "text": "c'est littéralement juste 123-456 🙃"
-      }
+      },
+      "addedmember": "Membre Rajouté ✨",
+      "declinedmember": "Membre Rejeté ❌"
     },
     "paymentform": {
       "title": "Abonnement au",
@@ -1058,8 +1075,13 @@
     "classroom": {
       "createbutton": "Créer Classe",
       "members": {
-        "title": "Membres",
-        "add": "Ajouter",
+        "title1": "Membres",
+        "title2": "Lien d'Invitation",
+        "title3": "Demandes d'invitation",
+        "tab1": "lien",
+        "tab2": "demandes",
+        "copy": "Copier",
+        "add": "inviter membres",
         "cancel": "Annuler",
         "remove": "retirer"
       },
@@ -1083,6 +1105,14 @@
       "finalists": {
         "title": "Finalistes"
       }
+    },
+    "joinclass": {
+      "title": "vous avez reçu une invitation de",
+      "members": "membres",
+      "button1": "demander à rejoindre 🚀",
+      "button2": "non, merci.",
+      "requestsent": "Demande Envoyée ✅",
+      "button3": "retour 🏠"
     },
     "createclass": {
       "title": "Créer Classe",

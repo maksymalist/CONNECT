@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 //styles
 import "../../style/classroomStyles.css";
@@ -24,6 +24,10 @@ import {
   Avatar,
   Backdrop,
   TextField,
+  ClickAwayListener,
+  CircularProgress,
+  Tab,
+  Tabs,
 } from "@mui/material";
 import { AccountCircle, CancelRounded } from "@mui/icons-material";
 
@@ -40,7 +44,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 //apollo
-import { useMutation, gql } from "@apollo/client";
+import { useMutation, gql, useQuery } from "@apollo/client";
 
 //hooks
 import getUser from "../../hooks/getUser";
@@ -74,6 +78,26 @@ const DELETE_MEMBER = gql`
   }
 `;
 
+const GET_JOIN_REQUESTS = gql`
+  query ($classId: ID!) {
+    allJoinRequestsByClass(classId: $classId) {
+      message
+      _id
+      user {
+        name
+        _id
+        imageUrl
+      }
+    }
+  }
+`;
+
+const DELETE_JOIN_REQUEST = gql`
+  mutation ($classId: ID!, $userId: ID!) {
+    deleteJoinRequest(classId: $classId, userId: $userId)
+  }
+`;
+
 export default function MemberRoom() {
   const user = getUser();
   const plan = useSelector((state) => state.plan);
@@ -98,11 +122,28 @@ export default function MemberRoom() {
   //popups
   const [isAddMemberPopup, setIsAddMemberPopup] = useState(false);
   const [removeMode, setRemoveMode] = useState(false);
+  const [inviteTab, setInviteTab] = useState(0);
+
+  //queries
+  const {
+    data: joinRequests,
+    loading: loadingJoinRequests,
+    error: JoinRequestError,
+  } = useQuery(GET_JOIN_REQUESTS, {
+    variables: {
+      classId: id,
+    },
+  });
 
   //mutations
-  const [addMemberMutation] = useMutation(ADD_MEMBER);
+  const [addMemberMutation] = useMutation(ADD_MEMBER, {
+    refetchQueries: [{ query: GET_JOIN_REQUESTS, variables: { classId: id } }],
+  });
   const [createNotification] = useMutation(CREATE_NOTIFICATION);
   const [deleteMemberMutation] = useMutation(DELETE_MEMBER);
+  const [deleteJoinRequest] = useMutation(DELETE_JOIN_REQUEST, {
+    refetchQueries: [{ query: GET_JOIN_REQUESTS, variables: { classId: id } }],
+  });
 
   //prefixes
   const USERID_PREFIX = "user:";
@@ -238,40 +279,6 @@ export default function MemberRoom() {
     }
   };
 
-  const handleAddMemberComfirm = () => {
-    const membersArr = [...newMembers];
-
-    membersArr.map((member) => {
-      const memberId = member.data._id;
-
-      const notification = {
-        userId: memberId.replace(/user:/g, ""),
-        type: "added_to_class",
-        message: `${user?.profileObj.name} has added you to ${name}!`,
-        data: id,
-      };
-
-      const memberData = {
-        classId: id,
-        userId: memberId,
-        role: "member",
-      };
-
-      addMemberMutation({ variables: memberData });
-      createNotification({ variables: notification });
-    });
-    window.location.reload();
-  };
-
-  const removeNewMember = (member) => {
-    const cloneArr = [...newMembers];
-    const index = cloneArr.indexOf(member);
-    cloneArr.splice(index, 1);
-    console.log(member);
-    console.log(cloneArr);
-    setNewMembers(cloneArr);
-  };
-
   const removeMember = (index, memberId) => {
     if (memberId === `user:${user?.profileObj.googleId}`) {
       toast.error(translations.alerts.cannotRemoveYourself);
@@ -294,11 +301,105 @@ export default function MemberRoom() {
     deleteMemberMutation({ variables: { classId: id, userId: memberId } });
   };
 
+  const acceptMember = (classId, userId, role, name, className) => {
+    const notification = {
+      userId: userId.replace(/user:/g, ""),
+      type: "added_to_class",
+      message: `${name} has added you to ${className}!`,
+      data: id,
+    };
+
+    createNotification({ variables: notification });
+    addMemberMutation({
+      variables: { classId: classId, userId: userId, role: role },
+    });
+    deleteJoinRequest({ variables: { classId: classId, userId: userId } });
+    toast.success(translations.alerts.addedmember);
+  };
+
+  const declineMember = (classId, userId) => {
+    deleteJoinRequest({ variables: { classId: classId, userId: userId } });
+    toast.error(translations.alerts.declinedmember);
+  };
+
+  const JoinRequest = ({ data }) => {
+    return (
+      <div
+        style={{
+          width: "100%",
+          margin: "10px",
+          border: "2px solid black",
+          padding: "10px",
+        }}
+      >
+        <div>
+          <Typography variant="h4">Join Request 👋</Typography>
+          <Divider style={{ width: "100%", margin: "20px" }} />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Avatar
+              style={{ marginRight: "15px", width: "35px", height: "35px" }}
+              src={data.user.imageUrl}
+            >
+              {data.user.name.charAt(0)}
+            </Avatar>
+            <Typography variant="h6">{data.user.name}</Typography>
+          </div>
+          <div
+            style={{ display: "flex", justifyContent: "center", width: "100%" }}
+          >
+            <Typography
+              style={{ margin: "25px", alignItems: "center" }}
+              variant="body1"
+            >
+              <i>{data.message}</i>
+            </Typography>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() =>
+                acceptMember(
+                  id,
+                  data.user._id,
+                  "member",
+                  user?.profileObj.name,
+                  name
+                )
+              }
+            >
+              Accept ✨
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => declineMember(id, data.user._id)}
+            >
+              Decline 🚫
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="classroom__main__div">
       <div className="classroom__members">
         <Typography variant="h4" className="classroom__members__title">
-          {translations.classroom.members.title}({members.length})
+          {translations.classroom.members.title1}({members.length})
         </Typography>
         <div>
           <Button
@@ -331,109 +432,120 @@ export default function MemberRoom() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              zIndex: "9999",
+              backgroundColor: "rgba(0,0,0,0.5)",
             }}
           >
-            <div className="classroom__addmember__div">
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Typography
-                  variant="h4"
-                  className="classroom__addmember__title"
-                >
-                  {translations.classroom.addmember.title}
-                </Typography>
-                <CancelRounded
-                  style={{ fontSize: "2rem", color: "red", cursor: "pointer" }}
-                  onClick={() => setIsAddMemberPopup(false)}
-                />
-              </div>
-              <br></br>
-              <Divider light />
-              <br></br>
-              <div>
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  label={translations.classroom.addmember.input}
-                  helperText={
-                    <span style={{ color: "black" }}>
-                      {newMembers.length}{" "}
-                      {translations.classroom.addmember.members}
-                    </span>
-                  }
-                  onChange={(e) => {
-                    setCurrentMember(e.target.value);
-                  }}
-                  value={currentMember}
-                />
-                <Button
-                  variant="contained"
-                  size="medium"
-                  color="primary"
-                  onClick={() => {
-                    addMember(currentMember);
+            <ClickAwayListener onClickAway={() => setIsAddMemberPopup(false)}>
+              <div className="classroom__addmember__div">
+                <div
+                  style={{
+                    position: "sticky",
+                    top: "0",
+                    backgroundColor: "white",
+                    width: "100%",
+                    zIndex: "11",
+                    paddingTop: "10px",
                   }}
                 >
-                  {translations.classroom.addmember.button}
-                </Button>
-              </div>
-              <br></br>
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexWrap: "wrap",
-                }}
-              >
-                {newMembers.map((member, index) => {
-                  return (
-                    <Chip
-                      style={{ marginTop: "10px", margin: "2px" }}
-                      key={member.data.email + index}
-                      id={member.data.name + index}
-                      label={member.data.name}
-                      onDelete={() => removeNewMember(member)}
-                      color="primary"
-                      avatar={
-                        member.data.imageUrl === undefined ? (
-                          <Avatar alt={member.data.name}>
-                            {member.data.name.charAt(0)}
-                          </Avatar>
-                        ) : (
-                          <Avatar alt="user-pfp" src={member.data.imageUrl} />
-                        )
-                      }
+                  <Typography variant="h4">
+                    {inviteTab === 0
+                      ? translations.classroom.members.title2
+                      : translations.classroom.members.title3}
+                  </Typography>
+                  <Tabs
+                    value={inviteTab}
+                    onChange={(event, newValue) => {
+                      setInviteTab(newValue);
+                    }}
+                  >
+                    <Tab label={translations.classroom.members.tab1} />
+                    <Tab
+                      label={`${translations.classroom.members.tab2} (${
+                        loadingJoinRequests
+                          ? "0"
+                          : JoinRequestError
+                          ? "0"
+                          : joinRequests?.allJoinRequestsByClass.length
+                      })`}
                     />
-                  );
-                })}
+                  </Tabs>
+                  <div style={{ width: "100%" }}>
+                    <Divider />
+                  </div>
+                </div>
+                <br></br>
+                {inviteTab === 0 && (
+                  <>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        height: "50px",
+                        alignItems: "center",
+                        width: "100%",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <TextField
+                        label={translations.classroom.members.email}
+                        variant="outlined"
+                        value={`https://quiz-connect.netlify.app/join/${id}`}
+                        style={{ width: "270px", margin: "10px" }}
+                      />
+                      <Button
+                        variant="contained"
+                        color="action"
+                        style={{ height: "50px" }}
+                        onClick={() => {
+                          //copy to clipboard
+                          navigator.clipboard
+                            .writeText(
+                              `https://quiz-connect.netlify.app/join/${id}`
+                            )
+                            .then(
+                              function () {
+                                toast.success(
+                                  translations.alerts.copiedinvitation
+                                );
+                              },
+                              function (err) {
+                                toast.error(err);
+                              }
+                            );
+                        }}
+                      >
+                        {translations.classroom.members.copy}
+                      </Button>
+                    </div>
+                    <br></br>
+                  </>
+                )}
+                {inviteTab === 1 && (
+                  <div
+                    style={{
+                      margin: "25px",
+                      display: "flex",
+                      width: "100%",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    {loadingJoinRequests ? (
+                      <CircularProgress thickness={5} size={100} />
+                    ) : JoinRequestError ? (
+                      <Typography variant="h6">
+                        Looks like there might be an error :(
+                      </Typography>
+                    ) : (
+                      joinRequests?.allJoinRequestsByClass?.map((request) => {
+                        return <JoinRequest data={request} />;
+                      })
+                    )}
+                  </div>
+                )}
               </div>
-              <div
-                style={{
-                  width: "95%",
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  marginTop: "100px",
-                }}
-              >
-                <Button
-                  variant="contained"
-                  size="medium"
-                  color="primary"
-                  onClick={() => {
-                    handleAddMemberComfirm();
-                  }}
-                >
-                  {translations.classroom.addmember.confirm}
-                </Button>
-              </div>
-            </div>
+            </ClickAwayListener>
           </div>
         ) : null}
         <div style={{ width: "90%" }}>
@@ -489,13 +601,17 @@ export default function MemberRoom() {
       {isBrowseQuizzes ? (
         <div id="classroom__dashboard" className="classroom__dashboard">
           <div
-            style={{
-              position: "sticky",
-              top: "0",
-              backgroundColor: "white",
-              width: "100%",
-              zIndex: "11",
-            }}
+            style={
+              isAddMemberPopup
+                ? {}
+                : {
+                    position: "sticky",
+                    top: "0",
+                    backgroundColor: "white",
+                    width: "100%",
+                    zIndex: "11",
+                  }
+            }
           >
             <div
               style={{
@@ -527,13 +643,17 @@ export default function MemberRoom() {
       ) : (
         <div id="classroom__dashboard" className="classroom__dashboard">
           <div
-            style={{
-              position: "sticky",
-              top: "0",
-              backgroundColor: "white",
-              width: "100%",
-              zIndex: "11",
-            }}
+            style={
+              isAddMemberPopup
+                ? {}
+                : {
+                    position: "sticky",
+                    top: "0",
+                    backgroundColor: "white",
+                    width: "100%",
+                    zIndex: "11",
+                  }
+            }
           >
             <div
               style={{
@@ -547,7 +667,11 @@ export default function MemberRoom() {
                 {name}
               </Typography>
               <Button
-                style={{ marginRight: "10px" }}
+                style={
+                  isAddMemberPopup
+                    ? { marginRight: "10px", zIndex: "-1" }
+                    : { marginRight: "10px" }
+                }
                 variant="contained"
                 color="primary"
                 onClick={handleRenderGames}

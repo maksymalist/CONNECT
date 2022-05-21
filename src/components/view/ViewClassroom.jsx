@@ -135,7 +135,7 @@ export default function MemberRoom() {
     <div className="classroom__main__div">
       <div className="classroom__members">
         <Typography variant="h4" className="classroom__members__title">
-          {translations.classroom.members.title}({members.length})
+          {translations.classroom.members.title1}({members.length})
         </Typography>
         <div></div>
         <div style={{ width: "90%" }}>

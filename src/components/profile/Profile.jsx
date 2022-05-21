@@ -169,7 +169,7 @@ function MyProfile() {
     return (
       <div className="profile__class__card">
         <Typography
-          style={{ fontWeight: "bold", margin: "20px", color: "black" }}
+          style={{ fontWeight: "bold", margin: "20px", color: "white" }}
           variant="h5"
         >
           {name}
@@ -448,27 +448,6 @@ function MyProfile() {
             </Typography>
             <Divider style={{ marginLeft: "10px", marginRight: "10px" }} />
             <br></br>
-            {plan === "Classroom" ? (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  width: "100%",
-                  alignItems: "center",
-                }}
-              >
-                <Link to="/create-class" style={{ width: "170px" }}>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    color="primary"
-                    style={{ margin: "10px" }}
-                  >
-                    {translations.classroom.createbutton}
-                  </Button>
-                </Link>
-              </div>
-            ) : null}
             <div className="profile__user__classes">
               {userClasses.map((myclass, index) => {
                 return (

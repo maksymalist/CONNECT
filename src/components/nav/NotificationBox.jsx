@@ -7,6 +7,7 @@ import {
   Divider,
   CircularProgress,
   ClickAwayListener,
+  Avatar,
 } from "@mui/material";
 
 import { useQuery, useMutation, gql } from "@apollo/client";
@@ -71,6 +72,33 @@ function NotificationBox({ close }) {
     </div>
   );
 
+  const NotificationJoinRequestCard = ({ data }) => {
+    const userData = JSON.parse(data.data);
+
+    return (
+      <div className="notification__card">
+        <Typography variant="h6" className="notification__card__title">
+          {data.message}:
+        </Typography>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Avatar
+            style={{ marginRight: "15px", width: "35px", height: "35px" }}
+            src={userData.imageUrl}
+          >
+            {userData.name.charAt(0)}
+          </Avatar>
+          <Typography variant="h6">{userData.name}</Typography>
+        </div>
+      </div>
+    );
+  };
+
   const handleClearNotifications = () => {
     clearNotifications();
     window.location.reload();
@@ -100,6 +128,9 @@ function NotificationBox({ close }) {
               }
               if (notification.type === "removed_from_class") {
                 return <NotificationCard message={notification.message} />;
+              }
+              if (notification.type === "join_request") {
+                return <NotificationJoinRequestCard data={notification} />;
               }
               if (notification.type === "invitation_to_room") {
                 return (

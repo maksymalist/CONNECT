@@ -46,6 +46,7 @@ import getUser from "./hooks/getUser";
 import Cropper from "./components/misc/CropperComponent";
 import NoLocalStorage from "./components/NoLocalStorage";
 import Tutorial from "./components/tutorial/Tutorial";
+import JoinClass from "./components/JoinClass";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAuhaVNdwDaivPThUZ6wxYKCkvs0tEDRNs",
@@ -126,7 +127,6 @@ function App() {
           userId: user?.profileObj.googleId,
         })
         .then((res) => {
-          console.log(res.data);
           if (res.data !== null && res.data !== undefined) {
             const subObj = JSON.parse(res.data);
             fetchCustomerData(subObj?.id || null);
@@ -185,7 +185,6 @@ function App() {
       }
 
       setCustomerId(JSON.parse(res?.data?.subscriptionDetails)?.customer);
-      console.log(JSON.parse(res?.data?.subscriptionDetails));
       updateUserSubscription({
         variables: {
           id: user?.profileObj.googleId,
@@ -236,6 +235,7 @@ function App() {
           <Route path="/claim-emote" component={ClaimEmote} />
           <Route path="/no-local-storage" component={NoLocalStorage} />
           <Route path="/tutorial" component={Tutorial} />
+          <Route path="/join/:classId" component={JoinClass} />
         </Switch>
       </div>
     </Router>
