@@ -86,10 +86,11 @@
   border: 2px solid black;
   box-shadow: 10px 10px 0 #262626;
   margin: 10px;
-  width: 100%;
-  max-width: 340px;
+  min-width: 340px;
+  min-height: 450px;
+  height: auto;
   text-transform: capitalize;
-  background-color: #1bb978;
+  background-color: #ffffff;
 }
 
 .profile__class__card:hover {

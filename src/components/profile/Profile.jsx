@@ -164,21 +164,49 @@ function MyProfile() {
   };
 
   const ClassCardComponent = ({ data }) => {
-    const { name, banner, owner, _id } = data;
+    const { name, banner, members, _id } = data;
     console.log(_id);
     return (
-      <div className="profile__class__card">
-        <Typography
-          style={{ fontWeight: "bold", margin: "20px", color: "white" }}
-          variant="h5"
+      <div
+        className="profile__class__card"
+        style={{
+          backgroundImage: `url(${banner || Placeholder})`,
+          backgroundSize: "cover",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
+        <div
+          style={{
+            width: "100%",
+            backgroundColor: "white",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "25px",
+          }}
         >
-          {name}
-        </Typography>
-        <img
-          style={{ width: "100%", height: "300px" }}
-          src={banner || Placeholder}
-          alt="banner-img"
-        />
+          <Typography
+            style={{ fontWeight: "bold", color: "black" }}
+            variant="h5"
+          >
+            {name}
+          </Typography>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "flex-start",
+          }}
+        >
+          <Chip
+            color="primary"
+            label={`${members.length} ${translations.classroom.members.title1}`}
+            style={{ margin: "5px" }}
+          />
+        </div>
       </div>
     );
   };
