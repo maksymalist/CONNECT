@@ -2,6 +2,7 @@ import {
   Button,
   Chip,
   Divider,
+  TextareaAutosize,
   Typography,
   useMediaQuery,
 } from "@mui/material";
@@ -12,9 +13,9 @@ import { useParams } from "react-router-dom";
 import { useMutation, gql, useQuery } from "@apollo/client";
 
 //img
-import RequestSent from "../img/RequestSent.svg";
-import getUser from "../hooks/getUser";
-import useTranslations from "../hooks/useTranslations";
+import RequestSent from "../../img/RequestSent.svg";
+import getUser from "../../hooks/getUser";
+import useTranslations from "../../hooks/useTranslations";
 
 const GET_CLASS = gql`
   query ($classroomId: ID!) {
@@ -66,23 +67,24 @@ const JoinClass = () => {
 
   const [createJoinRequest] = useMutation(CREATE_JOIN_REQUEST);
 
-  const [requested, setRequested] = useState(false);
+  const [step, setStep] = useState(0);
   const user = getUser();
+  const translations = useTranslations();
 
-  const sendJoinRequest = async () => {
+  const [message, setMessage] = useState("");
+
+  const sendJoinRequest = async (message) => {
     createJoinRequest({
       variables: {
         classId: classId,
-        message: "Can I join ur class? :)",
+        message: message,
         userId: "user:" + user?.profileObj.googleId,
         name: user?.profileObj.name,
         imageUrl: user?.profileObj.imageUrl,
       },
     });
-    setRequested(true);
+    setStep(2);
   };
-
-  const translations = useTranslations();
 
   return (
     <div
@@ -94,44 +96,7 @@ const JoinClass = () => {
         justifyContent: "center",
       }}
     >
-      {requested ? (
-        <div
-          style={{
-            backgroundColor: "white",
-            border: "2px solid black",
-            boxShadow: "10px 10px 0 #262626",
-            maxWidth: "600px",
-            width: "100%",
-            height: "fit-content",
-            padding: "20px",
-            margin: "20px",
-          }}
-        >
-          <Typography variant="h3" style={{ textAlign: "center" }}>
-            {translations.joinclass.requestsent}
-          </Typography>
-          <div>
-            <img
-              src={RequestSent}
-              alt="Request Sent"
-              style={{
-                width: "300px",
-                height: "auto",
-                margin: "50px",
-              }}
-            />
-          </div>
-          <div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => (window.location = "/")}
-            >
-              {translations.joinclass.button3}
-            </Button>
-          </div>
-        </div>
-      ) : (
+      {step === 0 && (
         <div
           style={
             isSmall
@@ -226,7 +191,7 @@ const JoinClass = () => {
                     color="action"
                     size="large"
                     style={{ paddingLeft: "30px", paddingRight: "30px" }}
-                    onClick={() => sendJoinRequest()}
+                    onClick={() => setStep(1)}
                   >
                     {translations.joinclass.button1}
                   </Button>
@@ -263,6 +228,90 @@ const JoinClass = () => {
                     }
               }
             ></div>
+          </div>
+        </div>
+      )}
+      {step === 1 && (
+        <div
+          style={{
+            backgroundColor: "white",
+            border: "2px solid black",
+            boxShadow: "10px 10px 0 #262626",
+            maxWidth: "600px",
+            width: "100%",
+            height: "fit-content",
+            padding: "20px",
+            margin: "20px",
+          }}
+        >
+          <Typography variant="h3" style={{ textAlign: "center" }}>
+            {translations.joinclass.message}
+          </Typography>
+          <br></br>
+          <Divider />
+          <br></br>
+          <TextareaAutosize
+            defaultValue={translations.joinclass.messageplaceholder}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            style={{
+              width: "100%",
+              maxWidth: "600px",
+              minHeight: "300px",
+              maxHeight: "500px",
+              resize: "vertical",
+            }}
+          />
+          <div
+            style={{ display: "flex", flexDirection: "column", margin: "30px" }}
+          >
+            <Button
+              variant="contained"
+              color="action"
+              size="large"
+              style={{ paddingLeft: "30px", paddingRight: "30px" }}
+              onClick={() => sendJoinRequest(message)}
+            >
+              {translations.joinclass.button1}
+            </Button>
+          </div>
+        </div>
+      )}
+      {step === 2 && (
+        <div
+          style={{
+            backgroundColor: "white",
+            border: "2px solid black",
+            boxShadow: "10px 10px 0 #262626",
+            maxWidth: "600px",
+            width: "100%",
+            height: "fit-content",
+            padding: "20px",
+            margin: "20px",
+          }}
+        >
+          <Typography variant="h3" style={{ textAlign: "center" }}>
+            {translations.joinclass.requestsent}
+          </Typography>
+          <div>
+            <img
+              src={RequestSent}
+              alt="Request Sent"
+              style={{
+                width: "300px",
+                height: "auto",
+                margin: "50px",
+              }}
+            />
+          </div>
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => (window.location = "/")}
+            >
+              {translations.joinclass.button3}
+            </Button>
           </div>
         </div>
       )}

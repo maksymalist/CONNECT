@@ -46,7 +46,7 @@ import getUser from "./hooks/getUser";
 import Cropper from "./components/misc/CropperComponent";
 import NoLocalStorage from "./components/NoLocalStorage";
 import Tutorial from "./components/tutorial/Tutorial";
-import JoinClass from "./components/JoinClass";
+import JoinClass from "./components/classroom/JoinClass";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAuhaVNdwDaivPThUZ6wxYKCkvs0tEDRNs",

@@ -544,6 +544,8 @@
       "members": "members",
       "button1": "request to join 🚀",
       "button2": "no, thanks.",
+      "message": "Request Message 💬 (optional)",
+      "messageplaceholder": "Can I join your class? :)",
       "requestsent": "Request Sent ✅",
       "button3": "return home 🏠"
     },
@@ -1109,8 +1111,10 @@
     "joinclass": {
       "title": "vous avez reçu une invitation de",
       "members": "membres",
-      "button1": "demander à rejoindre 🚀",
+      "button1": "envoyer demande 🚀",
       "button2": "non, merci.",
+      "message": "Message de Demande 💬 (facultatif)",
+      "messageplaceholder": "Puis-je rejoindre votre classe ? :)",
       "requestsent": "Demande Envoyée ✅",
       "button3": "retour 🏠"
     },
