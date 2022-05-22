@@ -12,7 +12,7 @@ export default function AfterRoomLeave() {
   const { type } = useParams();
   const search = useLocation().search;
   const position = new URLSearchParams(search).get("position");
-  const h1 = { color: "#fff", fontSize: "4.5rem" };
+  const h1 = { color: "#fff", fontSize: "3.5rem" };
   const h2 = { color: "#fff", fontSize: "1.5rem" };
   const translations = useTranslations();
   return (
@@ -69,7 +69,7 @@ export default function AfterRoomLeave() {
                     width: "100%",
                     width: "100%",
                     maxWidth: "250px",
-                    minWidth: "250px"
+                    minWidth: "250px",
                   }}
                 />
               </div>
@@ -88,7 +88,7 @@ export default function AfterRoomLeave() {
                     width: "100%",
                     width: "100%",
                     maxWidth: "250px",
-                    minWidth: "250px"
+                    minWidth: "250px",
                   }}
                 />
               </div>
@@ -107,7 +107,7 @@ export default function AfterRoomLeave() {
                     width: "100%",
                     width: "100%",
                     maxWidth: "250px",
-                    minWidth: "250px"
+                    minWidth: "250px",
                   }}
                 />
               </div>
@@ -130,7 +130,7 @@ export default function AfterRoomLeave() {
                     width: "100%",
                     width: "100%",
                     maxWidth: "250px",
-                    minWidth: "250px"
+                    minWidth: "250px",
                   }}
                 />
               </div>

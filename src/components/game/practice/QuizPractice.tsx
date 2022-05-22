@@ -197,7 +197,17 @@ export default function GameRoom({ match }) {
             width: "100%",
           }}
         >
-          <h2>{user}</h2>
+          <h2
+            style={{
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              width: "100%",
+              textAlign: "left",
+            }}
+          >
+            {user}
+          </h2>
           <div style={{ display: "flex", width: "150px" }}>
             <Typography variant="h4">⏳</Typography>
             <Typography variant="h4" style={{ textAlign: "left" }}>
