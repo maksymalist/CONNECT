@@ -139,10 +139,10 @@ function MultiGameRoom({ match }) {
   const numberOfCardsArr = [];
   const GetCards = () => {
     const numberOfCardsArr = [];
-    const randomNum = numberOfCardsArr.sort(() => 0.5 - Math.random()); //[0,1,2,3,4,5].sort( () => .5 - Math.random() )
-    cards.map((card, i) => {
+    cards.forEach((card, i) => {
       numberOfCardsArr.push(i);
     });
+    const randomNum = numberOfCardsArr.sort(() => 0.5 - Math.random()); //[0,1,2,3,4,5].sort( () => .5 - Math.random() )
     for (var i = 0; i < cards.length; i++) {
       let newCard = document.createElement("div");
       const item = cards[randomNum[i]].question;

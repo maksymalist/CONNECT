@@ -1,9 +1,11 @@
-//@ts-nocheck
 import React, { useState, useEffect } from "react";
 import "../../../style/countDownStyles.css";
+
 import countdown_sfx from "../../../audio/countdown.mp3";
+
 import ReactHowler from "react-howler";
 import useTranslations from "../../../hooks/useTranslations";
+
 function CountDown({ start, room, muteMusic, unmuteMusic, numberOfUsers }) {
   let [number, setNumber] = useState(0);
   let [isCountdown, setIsCountdown] = useState(false);
@@ -11,6 +13,7 @@ function CountDown({ start, room, muteMusic, unmuteMusic, numberOfUsers }) {
   const [countDownText, setCountDownText] = useState(
     translations.countdown.ready
   );
+
   useEffect(() => {
     muteMusic();
     setIsCountdown((isCountdown = true));
@@ -25,6 +28,7 @@ function CountDown({ start, room, muteMusic, unmuteMusic, numberOfUsers }) {
       }
     }, 1000);
   }, []);
+
   return (
     <>
       <ReactHowler src={countdown_sfx} playing={isCountdown} volume={0.5} />
@@ -32,11 +36,11 @@ function CountDown({ start, room, muteMusic, unmuteMusic, numberOfUsers }) {
         <div className="demo">
           <div className="demo__colored-blocks">
             <div className="demo__colored-blocks-rotater">
-              <div className="demo__colored-block" />
-              <div className="demo__colored-block" />
-              <div className="demo__colored-block" />
+              <div className="demo__colored-block"></div>
+              <div className="demo__colored-block"></div>
+              <div className="demo__colored-block"></div>
             </div>
-            <div className="demo__colored-blocks-inner" />
+            <div className="demo__colored-blocks-inner"></div>
             <div className="demo__text" id="countdown__text">
               {countDownText}
             </div>
@@ -64,7 +68,8 @@ function CountDown({ start, room, muteMusic, unmuteMusic, numberOfUsers }) {
               </defs>
               <path
                 className="demo__numbers-path"
-                d="M-10,20 60,20 40,50 a18,15 0 1,1 -12,19  Q25/>44 34.4,27.4
+                d="M-10,20 60,20 40,50 a18,15 0 1,1 -12,19 
+                        Q25,44 34.4,27.4
                         l7,-7 a16,16 0 0,1 22.6,22.6 l-30,30 l35,0 L69,73 
                         a20,10 0 0,1 20,10 a17,17 0 0,1 -34,0 L55,83 
                         l0,-61 L40,28"
@@ -76,4 +81,5 @@ function CountDown({ start, room, muteMusic, unmuteMusic, numberOfUsers }) {
     </>
   );
 }
+
 export default CountDown;
