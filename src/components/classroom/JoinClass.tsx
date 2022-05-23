@@ -72,9 +72,12 @@ const JoinClass = () => {
   const user = getUser();
   const translations = useTranslations();
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(
+    translations.joinclass.messageplaceholder
+  );
 
   const sendJoinRequest = async (message) => {
+    console.log(message);
     createJoinRequest({
       variables: {
         classId: classId,
@@ -252,7 +255,6 @@ const JoinClass = () => {
           <Divider />
           <br></br>
           <TextareaAutosize
-            defaultValue={translations.joinclass.messageplaceholder}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             style={{
