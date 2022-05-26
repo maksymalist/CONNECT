@@ -370,7 +370,17 @@
         "title": "✨ Select your role ✨",
         "student": "Student 🎓",
         "teacher": "Teacher 🍏"
-      }
+      },
+      "nolocalstorage": {
+        "title": "Wow, it seems there might be a problem with your browser 😱",
+        "howtofix": {
+          "title": "How to fix ⚒️?",
+          "step1": "✅ If you’re using private mode turn it off",
+          "step2": "✅ Make sure your cookies are enabled",
+          "step3": "✅ Restart your browser"
+        }
+      },
+      "reportissue": "✨Report Issue✨"
     },
     "tutorial": {
       "title": "Tutorial 📚",
@@ -939,7 +949,17 @@
         "title": "✨ Sélectionnez votre rôle ✨",
         "student": "Étudiant 🎓",
         "teacher": "Enseignant 🍏"
-      }
+      },
+      "nolocalstorage": {
+        "title": "Wow, il semble qu'il y ait un problème avec votre navigateur 😱",
+        "howtofix": {
+          "title": "Comment réparer ⚒️ ?",
+          "step1": "✅ Si vous utilisez le mode privé, désactivez-le",
+          "step2": "✅ Assurez-vous que vos cookies sont activés",
+          "step3": "✅ Redémarrez votre navigateur"
+        }
+      },
+      "reportissue": "✨Signaler un problème✨"
     },
     "tutorial": {
       "title": "Tutoriel 📚",

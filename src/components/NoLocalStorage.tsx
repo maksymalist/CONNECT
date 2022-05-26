@@ -1,13 +1,16 @@
 import { Typography } from "@mui/material";
-import React from "react";
+import useTranslations from "../hooks/useTranslations";
+
 function NoLocalStorage() {
+  const translations = useTranslations();
+
   return (
     <div style={{ marginTop: "120px" }}>
-      <Typography variant="h3" color="white">
-        <strong>
-          Wow, it seems there might be a <br /> problem with your browser 😱
-        </strong>
-      </Typography>
+      <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+        <Typography variant="h3" color="white" style={{ maxWidth: "950px" }}>
+          <strong>{translations.login.nolocalstorage.title}</strong>
+        </Typography>
+      </div>
       <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
         <div
           style={{
@@ -16,8 +19,9 @@ function NoLocalStorage() {
             border: "2px solid black",
             boxShadow: "10px 10px 0 #262626",
             width: "100%",
-            maxWidth: "500px",
-            marginTop: "50px"
+            maxWidth: "600px",
+            marginTop: "50px",
+            marginBottom: "50px",
           }}
         >
           <div
@@ -25,16 +29,18 @@ function NoLocalStorage() {
               width: "100%",
               display: "flex",
               justifyContent: "flex-start",
-              marginBottom: "40px"
+              marginBottom: "40px",
             }}
           >
             <div>
-              <Typography variant="h3">How to fix ⚒️?</Typography>
+              <Typography variant="h3">
+                {translations.login.nolocalstorage.howtofix.title}
+              </Typography>
               <div
                 style={{
                   backgroundColor: "#6c63ff",
                   height: "3px",
-                  width: "100%"
+                  width: "100%",
                 }}
               />
             </div>
@@ -44,18 +50,36 @@ function NoLocalStorage() {
               width: "100%",
               display: "flex",
               textAlign: "left",
-              flexDirection: "column"
+              flexDirection: "column",
             }}
           >
             <Typography variant="h5">
-              ✅ If you’re using private mode turn it off
+              {translations.login.nolocalstorage.howtofix.step1}
             </Typography>
             <br />
             <Typography variant="h5">
-              ✅ Make sure your cookies are enabled
+              {translations.login.nolocalstorage.howtofix.step2}
             </Typography>
             <br />
-            <Typography variant="h5">✅ Restart your browser</Typography>
+            <Typography variant="h5">
+              {" "}
+              {translations.login.nolocalstorage.howtofix.step3}
+            </Typography>
+          </div>
+          <div
+            style={{ display: "flex", textAlign: "left", marginTop: "20px" }}
+          >
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSey6V_tD3Sp4YDE9Q-PY5nuMFv6s5Q7_2BPfbFDXQ2CjoTfkg/viewform?usp=sf_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                textDecoration: "underline",
+                color: "#6c63ff",
+              }}
+            >
+              {translations.login.reportissue}
+            </a>
           </div>
         </div>
       </div>

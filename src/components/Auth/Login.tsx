@@ -131,6 +131,25 @@ function Login() {
             className="google-login-button"
             type="large"
           />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "20px",
+            }}
+          >
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSey6V_tD3Sp4YDE9Q-PY5nuMFv6s5Q7_2BPfbFDXQ2CjoTfkg/viewform?usp=sf_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                textDecoration: "underline",
+                color: "#6c63ff",
+              }}
+            >
+              {translations.login.reportissue}
+            </a>
+          </div>
         </div>
       )}
       {step === 1 && (

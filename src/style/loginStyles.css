@@ -3,7 +3,6 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  margin-top: 200px;
   width: 100%;
 }
 .login-component-container {
@@ -16,7 +15,7 @@
   border: 2px solid black;
   padding: 20px;
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
 }
 .login-component-container-blank {
   height: auto;
