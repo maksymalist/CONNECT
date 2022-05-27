@@ -36,16 +36,6 @@ import TeacherImg from "../../img/teacher_sub.svg";
 import getUser from "../../hooks/getUser";
 import useTranslations from "../../hooks/useTranslations";
 
-const UPDATE_USER_SUBSCRIPTION = gql`
-  mutation ($id: ID!, $plan: String!, $subscriptionDetails: String!) {
-    updateUserSubscription(
-      id: $id
-      plan: $plan
-      subscriptionDetails: $subscriptionDetails
-    )
-  }
-`;
-
 const CARD_ELEMENT_OPTIONS = {
   style: {
     base: {
@@ -80,7 +70,7 @@ function HomePage(props) {
   const [discount, setDiscount] = useState(0);
 
   const [total, setTotal] = useState(0);
-  const [price, setPrice] = useState(10);
+  const [price, setPrice] = useState(9.99);
 
   const [comfirmPurchase, setComfirmPurchase] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -89,17 +79,13 @@ function HomePage(props) {
 
   const translations = useTranslations();
 
-  const [updateUserSubscriptionMutation] = useMutation(
-    UPDATE_USER_SUBSCRIPTION
-  );
-
   const stripe = useStripe();
   const elements = useElements();
 
   const smallScreen = useMediaQuery("(max-width:980px)");
 
   useEffect(() => {
-    setTotal(price - discount);
+    setTotal(Math.round((price - discount) * 100) / 100);
     console.log(total);
     if (discount >= price) {
       setTotal(0);
@@ -119,18 +105,6 @@ function HomePage(props) {
       toast.warn(translations.alreadyhaveplan);
     }
   }, [plan]);
-
-  const handleUpdateUserSubscription = async (subscriptionDetails) => {
-    const subscriptionObj = {
-      id: user?.profileObj.googleId,
-      plan: "Classroom",
-      subscriptionDetails: JSON.stringify(subscriptionDetails),
-    };
-
-    updateUserSubscriptionMutation({
-      variables: subscriptionObj,
-    });
-  };
 
   const handleSubmitPay = async (event) => {
     if (!stripe || !elements) {
@@ -194,6 +168,8 @@ function HomePage(props) {
         },
       });
 
+      console.log(result);
+
       if (result.error) {
         toast.error(result.error.message, "Try Again");
         setSpinner(false);
@@ -202,23 +178,20 @@ function HomePage(props) {
           const res = await axios.post(`${config["api-server"]}/sub`, {
             payment_method: result.paymentMethod.id,
             email: email,
+            id: user?.profileObj.googleId,
           });
           // eslint-disable-next-line camelcase
           const { client_secret, status, customer_obj, subscription_obj } =
             res.data;
-
-          if (status !== "succeeded") {
+          if (status === "success") {
+            toast.success(translations.alerts.wowsoeasy);
+            setSuccess(true);
+            setSpinner(false);
+          } else {
             toast.error(
               `${translations.alerts.purchasefailed} Status ${status}`
             );
             setSpinner(false);
-          } else {
-            toast.success(translations.alerts.wowsoeasy);
-            setSuccess(true);
-            setSpinner(false);
-            handleUpdateUserSubscription(JSON.parse(subscription_obj));
-            // No additional information was needed
-            // Show a success message to your customer
           }
         }
         if (activeCoupon === true) {
@@ -226,22 +199,20 @@ function HomePage(props) {
             payment_method: result.paymentMethod.id,
             email: email,
             coupon: coupon,
+            id: user?.profileObj.googleId,
           });
           // eslint-disable-next-line camelcase
-          const { client_secret, status, customer_obj, subscription_obj } =
-            res.data;
-          if (status !== "succeeded") {
+          const { status } = res.data;
+          console.log(res.data);
+          if (status === "success") {
+            toast.success(translations.alerts.wowsoeasy);
+            setSuccess(true);
+            setSpinner(false);
+          } else {
             toast.error(
               `${translations.alerts.purchasefailed} Status ${status}`
             );
             setSpinner(false);
-          } else {
-            toast.success(translations.alerts.wowsoeasy);
-            setSuccess(true);
-            setSpinner(false);
-            handleUpdateUserSubscription(JSON.parse(subscription_obj));
-            // No additional information was needed
-            // Show a success message to your customer
           }
         }
       }

@@ -104,7 +104,11 @@ function Nav({ isLoggedIn, customerId }) {
     );
 
     const { redirectUrl } = res.data;
-    console.log(redirectUrl);
+
+    if (redirectUrl === null) {
+      toast.info(translations.alerts.buyplanseeinfo);
+      return;
+    }
 
     window.location = redirectUrl;
 

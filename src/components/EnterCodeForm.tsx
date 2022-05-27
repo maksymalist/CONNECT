@@ -700,8 +700,6 @@ export default function EnterCodeForm(props: Props) {
                 }}
                 id="max-players"
                 type="number"
-                min="3"
-                max="90"
                 value={maxPlayers}
                 onChange={(event) => {
                   if (
@@ -813,8 +811,6 @@ export default function EnterCodeForm(props: Props) {
                 }}
                 id="podium-places"
                 type="number"
-                min="3"
-                max="90"
                 value={podiumPlaces}
               />
               <div

@@ -113,6 +113,15 @@ function App() {
 
   const dispatch = useDispatch();
 
+  const BAD_STATUS_ARR = [
+    "past_due",
+    "canceled",
+    "unpaid",
+    "incomplete",
+    "incomplete_expired",
+    "trialing",
+  ];
+
   useEffect(() => {
     if (user !== null && user !== undefined && user !== "") {
       dispatch(setIsLoggedIn());
@@ -170,20 +179,22 @@ function App() {
         dispatch(setStarter());
         return;
       }
-      let plan = "";
+      let plan = "Starter";
       if (
         JSON.parse(res?.data?.subscriptionDetails)?.plan?.id ==
-          "price_1JMwC7BqTzgw1Au76sejuZu4" &&
+          "price_1L3rXSBqTzgw1Au7uf9cyg2r" &&
         JSON.parse(res?.data?.subscriptionDetails)?.status == "active"
       ) {
         plan = "Classroom";
         dispatch(setClassroom());
-      }
-      if (JSON.parse(res?.data?.subscriptionDetails)?.status == "canceled") {
+      } else if (
+        BAD_STATUS_ARR.includes(
+          JSON.parse(res?.data?.subscriptionDetails)?.status
+        )
+      ) {
         plan = "Starter";
         dispatch(setStarter());
-      }
-      if (JSON.parse(res?.data?.subscriptionDetails)?.status == "inactive") {
+      } else {
         plan = "Starter";
         dispatch(setStarter());
       }

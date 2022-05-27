@@ -151,7 +151,7 @@
         "title": "Classroom",
         "sub": "This plan is a must-have if you are a teacher or professor.",
         "at": "starting at",
-        "price": "✨$10.00✨",
+        "price": "✨$9.99✨",
         "permonth": "per month",
         "features": {
           "title": "Features",
@@ -170,7 +170,7 @@
         "title": "Enterprise",
         "sub": "This plan is best suited for companies and organizations.",
         "at": "starting at",
-        "price": "✨$100.00✨",
+        "price": "✨$59.99✨",
         "permonth": "per month",
         "features": {
           "title": "Features",
@@ -511,7 +511,7 @@
     "paymentform": {
       "title": "Subscribe to",
       "plan": "Classroom Plan",
-      "price": "$10 monthly",
+      "price": "$9.99 monthly",
       "button": "Apply",
       "button2": "Subscribe"
     },
@@ -730,7 +730,7 @@
         "title": "Classe",
         "sub": "Ce forfait est indispensable si vous êtes enseignant ou professeur.",
         "at": "à partir de",
-        "price": "✨$10.00✨",
+        "price": "✨$9.99✨",
         "permonth": "par mois",
         "features": {
           "title": "Avantages",
@@ -749,7 +749,7 @@
         "title": "Entreprise",
         "sub": "Ce forfait est le mieux adapté pour les entreprises et les organisations.",
         "at": "à partir de",
-        "price": "✨$100.00✨",
+        "price": "✨$59.99✨",
         "permonth": "par mois",
         "features": {
           "title": "Avantages",
@@ -1090,7 +1090,7 @@
     "paymentform": {
       "title": "Abonnement au",
       "plan": "Forfait de classe",
-      "price": "10 $ par mois",
+      "price": "$9.99 par mois",
       "button": "Appliquer",
       "button2": "S'abonner"
     },
