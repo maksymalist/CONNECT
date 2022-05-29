@@ -1,4 +1,4 @@
-![Github-banner](https://user-images.githubusercontent.com/79988159/165832209-e12a158a-7c2a-4c17-9474-4982aebe1c75.png)
+![Github-banner](https://user-images.githubusercontent.com/79988159/170887599-283e0733-7160-48fd-80e8-ea09a7d3be1b.png)
 
 
 
@@ -30,5 +30,5 @@ subscriptions are not definitive yet and will be changed soon
 
 |             | **Starter** | **Classroom** | **Entreprise** |
 | ----------- | ----------- | ------------- | -------------- |
-| **Price**   | Free        | 10$           | 100$           |
-| **Players** | 8           | 100            | 200            |
+| **Price**   | Free        | 9.99$           | 59.99$           |
+| **Players** | 8           | 100            | 300            |
