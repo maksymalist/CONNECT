@@ -11,6 +11,7 @@
     "@mui/icons-material": "^5.2.4",
     "@mui/material": "^5.2.4",
     "@nivo/circle-packing": "^0.79.1",
+    "@nivo/core": "^0.79.0",
     "@splinetool/react-spline": "^2.0.0",
     "@splinetool/runtime": "^0.9.18",
     "@stripe/react-stripe-js": "^1.4.1",
