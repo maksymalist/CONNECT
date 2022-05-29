@@ -1011,7 +1011,7 @@ export default function HostRoom(props) {
                         margin: "10px",
                         paddingInline: "30px",
                         width: "600px",
-                        height: "250px",
+                        height: "200px",
                       }
                     : {
                         backgroundColor: "white",
@@ -1034,7 +1034,7 @@ export default function HostRoom(props) {
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <Typography
                       variant="h2"
-                      style={bigScreen ? { fontSize: "145px" } : {}}
+                      style={bigScreen ? { fontSize: "115px" } : {}}
                     >
                       <b>{props.room}</b>
                     </Typography>
@@ -1078,7 +1078,7 @@ export default function HostRoom(props) {
                 >
                   <QRCode
                     value={`https://quiz-connect.netlify.app/play?code=${props.room}`}
-                    size={bigScreen ? 225 : 86}
+                    size={bigScreen ? 190 : 86}
                   />
                 </div>
               )}

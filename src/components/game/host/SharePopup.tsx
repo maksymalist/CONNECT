@@ -6,7 +6,7 @@ import {
   Divider,
   TextField,
   InputAdornment,
-  Backdrop
+  Backdrop,
 } from "@mui/material";
 import { Link } from "@mui/icons-material";
 import GoogleShareToClassRoom from "google-classroom-share";
@@ -18,29 +18,26 @@ function SharePopup({ shareLink, close }) {
   const [url, setUrl] = useState("");
   const [showPopupModal, setShowPopupModal] = useState(false);
   const translations = useTranslations();
-  useEffect(
-    () => {
-      const script = document.createElement("script");
-      script.src = "https://teams.microsoft.com/share/launcher.js";
-      script.async = true;
-      script.defer = true;
-      document.body.appendChild(script);
-      return () => {
-        document.body.removeChild(script);
-      };
-    },
-    [showPopupModal]
-  );
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://teams.microsoft.com/share/launcher.js";
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, [showPopupModal]);
   useEffect(() => {
     setUrl(shareLink);
   }, []);
   const shareLinkFunc = () => {
     var text = url;
     navigator.clipboard.writeText(text).then(
-      function() {
+      function () {
         toast.success(translations.alerts.copiedinvitation);
       },
-      function(err) {
+      function (err) {
         toast.error(err);
       }
     );
@@ -54,7 +51,7 @@ function SharePopup({ shareLink, close }) {
             alignItems: "center",
             justifyContent: "flex-start",
             paddingLeft: "10px",
-            width: "100%"
+            width: "100%",
           }}
         >
           <Typography variant="h4">{translations.sharepopup.title}</Typography>
@@ -68,7 +65,7 @@ function SharePopup({ shareLink, close }) {
             alignItems: "center",
             justifyContent: "flex-start",
             paddingLeft: "10px",
-            width: "100%"
+            width: "100%",
           }}
         >
           <Typography variant="h6">{translations.sharepopup.sub}</Typography>
@@ -79,8 +76,8 @@ function SharePopup({ shareLink, close }) {
             itemType="assignment"
             url={url}
             size={60}
-            title="Join CONNECT!"
-            onShare={type => console.log(`GoogleShareToClassRoom:${type}`)}
+            title="Join CONNECT"
+            onShare={(type) => console.log(`GoogleShareToClassRoom:${type}`)}
             onShareComplete={() =>
               console.log("GoogleShareToClassRoom:onShareComplete")
             }
@@ -102,7 +99,7 @@ function SharePopup({ shareLink, close }) {
             alignItems: "center",
             justifyContent: "flex-start",
             paddingLeft: "10px",
-            width: "100%"
+            width: "100%",
           }}
         >
           <Typography variant="h6">{translations.sharepopup.sub2}</Typography>
@@ -111,7 +108,7 @@ function SharePopup({ shareLink, close }) {
           style={{
             display: "flex",
             alignItems: "center",
-            flexDirection: "row"
+            flexDirection: "row",
           }}
         >
           <TextField
@@ -120,7 +117,7 @@ function SharePopup({ shareLink, close }) {
                 <InputAdornment position="start">
                   <Link style={{ color: "c4c4c4", opacity: "90%" }} />
                 </InputAdornment>
-              )
+              ),
             }}
             id="outlined-email-input"
             margin="normal"
@@ -140,7 +137,7 @@ function SharePopup({ shareLink, close }) {
               marginTop: "8px",
               height: "50px",
               marginLeft: "10px",
-              width: "100px"
+              width: "100px",
             }}
           >
             {translations.sharepopup.button}

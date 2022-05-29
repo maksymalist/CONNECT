@@ -1,4 +1,4 @@
-# Contributing to CONNECT!
+# Contributing to CONNECT
 
 Contributing to our project is a great way of helping us to bring our project to life.
 

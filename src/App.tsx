@@ -31,6 +31,7 @@ import CreateClass from "./components/creation-system/CreateClass";
 import QuizPractice from "./components/game/practice/QuizPractice";
 import MultiPractice from "./components/game/practice/MultiPractice";
 import ClaimEmote from "./components/misc/ClaimEmote";
+import Bubble from "./components/charts/Bubble";
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { setStarter, setClassroom, setEntreprise } from "./actions/Plan";
@@ -251,6 +252,7 @@ function App() {
           <Route path="/no-local-storage" component={NoLocalStorage} />
           <Route path="/tutorial" component={Tutorial} />
           <Route path="/join/:classId" component={JoinClass} />
+          <Route path="/bub" component={Bubble} />
         </Switch>
       </div>
     </Router>

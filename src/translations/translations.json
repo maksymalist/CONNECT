@@ -25,11 +25,11 @@
     },
     "home": {
       "sub1": "Take learning to the next level.",
-      "sub2": "CONNECT! helps you learn faster and together.",
+      "sub2": "CONNECT helps you learn faster and together.",
       "buttonText": "try now 🚀",
       "buttonText2": "pricing 💰",
       "about": {
-        "title": "What is CONNECT! ?",
+        "title": "What is CONNECT ?",
         "sub": "A new way to study in groups 📚",
         "sub2": "A tool that makes learning and teaching fun 🎉",
         "sub3": "A platform for learning and sharing knowledge 🔗"
@@ -128,11 +128,11 @@
     },
     "plans": {
       "title1": "Ready to take",
-      "title2": "CONNECT!",
+      "title2": "CONNECT",
       "title3": "to the next level? 🚀",
       "starter": {
         "title": "Starter",
-        "sub": "This is the most basic version of CONNECT! available for free.",
+        "sub": "This is the most basic version of CONNECT available for free.",
         "at": "starting at",
         "price": "✨Free✨",
         "permonth": "per month",
@@ -386,7 +386,7 @@
       "title": "Tutorial 📚",
       "welcome": {
         "title": "Welcome to the Tutorial! 📚",
-        "sub": "If you have no idea how CONNECT! works it might be a good idea to stick around and learn about it.",
+        "sub": "If you have no idea how CONNECT works it might be a good idea to stick around and learn about it.",
         "button": "Let's Go! 🚀"
       },
       "waitingroom": {
@@ -452,7 +452,7 @@
       "button2": "Go home 🏠"
     },
     "alerts": {
-      "loginalert": "You Have To Login If You Want To Use CONNECT!",
+      "loginalert": "You Have To Login If You Want To Use CONNECT",
       "roomalreadyexists": "A Room With This Name Already Exists Choose Another Name",
       "gamealreadystarted": "The Game has Already Started in Room",
       "entername": "Please Enter a Name",
@@ -535,6 +535,11 @@
         "button": "Add Member",
         "confirm": "confirm"
       },
+      "joinrequest": {
+        "title": "Join Request 👋",
+        "accept": "Accept ✨",
+        "decline": "Decline 🚫"
+      },
       "play": {
         "playbutton": "Play Games",
         "backbutton": "⬅️ Back"
@@ -603,11 +608,11 @@
     },
     "home": {
       "sub1": "L'apprentissage au niveau supérieur.",
-      "sub2": "CONNECT! vous aide à apprendre ensemble et rapidement.",
+      "sub2": "CONNECT vous aide à apprendre ensemble et rapidement.",
       "buttonText": "allons-y 🚀",
       "buttonText2": "forfaits 💰",
       "about": {
-        "title": "C'est quoi CONNECT! ?",
+        "title": "C'est quoi CONNECT ?",
         "sub": "Une nouvelle façon d'étudier en groupe 📚",
         "sub2": "Un outil qui rend l'apprentissage et l'enseignement amusants 🎉",
         "sub3": "Une plateforme d'apprentissage et de partage des connaissances 🔗"
@@ -706,12 +711,12 @@
     },
     "plans": {
       "title1": "Êtes-vous prêt à passer",
-      "title2": "CONNECT!",
+      "title2": "CONNECT",
       "title3": "au niveau supérieur? 🚀",
       "month": "mois",
       "starter": {
         "title": "Débutant",
-        "sub": "Ceci est la version la plus basique de CONNECT! disponible gratuitement.",
+        "sub": "Ceci est la version la plus basique de CONNECT disponible gratuitement.",
         "at": "à partir de",
         "price": "✨ Gratuit ✨",
         "permonth": "par mois",
@@ -965,7 +970,7 @@
       "title": "Tutoriel 📚",
       "welcome": {
         "title": "Bienvenue dans le tutoriel ! 📚",
-        "sub": "Si vous n'avez aucune idée du fonctionnement de CONNECT!, ce serait peut-être une bonne idée de rester dans le coin et d'en savoir plus.",
+        "sub": "Si vous n'avez aucune idée du fonctionnement de CONNECT, ce serait peut-être une bonne idée de rester dans le coin et d'en savoir plus.",
         "button": "Allons-y ! 🚀"
       },
       "waitingroom": {
@@ -1117,6 +1122,11 @@
         "members": "Membres",
         "button": "Ajouter",
         "confirm": "confirmer"
+      },
+      "joinrequest": {
+        "title": "Demande 👋",
+        "accept": "Accepter ✨",
+        "decline": "Refuser 🚫"
       },
       "halloffame": {
         "title": "Temple de la renommée"

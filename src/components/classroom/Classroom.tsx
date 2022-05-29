@@ -34,6 +34,7 @@ import { AccountCircle, CancelRounded } from "@mui/icons-material";
 
 //components
 import BrowseQuizzes from "../browse/BrowseQuizzesClassroom";
+import Analytics from "./Analytics";
 
 //toast
 import { toast } from "react-toastify";
@@ -334,7 +335,9 @@ export default function MemberRoom() {
         }}
       >
         <div>
-          <Typography variant="h4">Join Request 👋</Typography>
+          <Typography variant="h4">
+            {translations.classroom.joinrequest.title}
+          </Typography>
           <Divider style={{ width: "100%", margin: "20px" }} />
           <div
             style={{
@@ -381,14 +384,14 @@ export default function MemberRoom() {
                 )
               }
             >
-              Accept ✨
+              {translations.classroom.joinrequest.accept}
             </Button>
             <Button
               variant="contained"
               color="secondary"
               onClick={() => declineMember(id, data.user._id)}
             >
-              Decline 🚫
+              {translations.classroom.joinrequest.decline}
             </Button>
           </div>
         </div>
@@ -634,10 +637,6 @@ export default function MemberRoom() {
                 {translations.classroom.play.backbutton}
               </Button>
             </div>
-            <div style={{ width: "100%" }}>
-              <br></br>
-              <Divider light />
-            </div>
           </div>
           <BrowseQuizzes classID={id} gamemode={"normal"} />
         </div>
@@ -667,18 +666,31 @@ export default function MemberRoom() {
               <Typography variant="h4" className="classroom__dashboard__title">
                 {name}
               </Typography>
-              <Button
-                style={
-                  isAddMemberPopup
-                    ? { marginRight: "10px", zIndex: "-1" }
-                    : { marginRight: "10px" }
-                }
-                variant="contained"
-                color="primary"
-                onClick={handleRenderGames}
-              >
-                {translations.classroom.play.playbutton}
-              </Button>
+              <div>
+                <Button
+                  variant="contained"
+                  color="action"
+                  style={
+                    isAddMemberPopup
+                      ? { marginRight: "10px", zIndex: "-1" }
+                      : { marginRight: "10px" }
+                  }
+                >
+                  Analytics 📈
+                </Button>
+                <Button
+                  style={
+                    isAddMemberPopup
+                      ? { marginRight: "10px", zIndex: "-1" }
+                      : { marginRight: "10px" }
+                  }
+                  variant="contained"
+                  color="primary"
+                  onClick={handleRenderGames}
+                >
+                  {translations.classroom.play.playbutton}
+                </Button>
+              </div>
             </div>
             <div style={{ width: "100%" }}>
               <br></br>

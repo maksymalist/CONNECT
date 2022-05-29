@@ -786,6 +786,16 @@ input:hover {
   box-shadow: 5px 5px 0 #262626;
   padding: 5px;
 }
+@media only screen and (min-width: 1900px) {
+  .userH1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 20px;
+    border: 2px solid black;
+    box-shadow: 10px 10px 0 #262626;
+    padding: 15px;
+  }
+}
 .homepage-text {
   padding-left: 5vw;
   padding-bottom: 25px;

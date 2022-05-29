@@ -467,7 +467,7 @@ export default function HomePage() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            © 2022 CONNECT! – All Rights Reserved
+            © 2022 CONNECT – All Rights Reserved
           </a>
           <a
             href="https://docs.google.com/forms/d/e/1FAIpQLSey6V_tD3Sp4YDE9Q-PY5nuMFv6s5Q7_2BPfbFDXQ2CjoTfkg/viewform?usp=sf_link"

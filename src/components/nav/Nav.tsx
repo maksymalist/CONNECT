@@ -165,8 +165,8 @@ function Nav({ isLoggedIn, customerId }) {
           src={smallScreen ? (!isLoggedIn ? longLogo : logo) : longLogo}
           style={{
             marginLeft: mediumScreen ? "10px" : "70px",
-            height: "60px",
-            width: smallScreen ? (!isLoggedIn ? "auto" : "60px") : "auto",
+            height: "50px",
+            width: smallScreen ? (!isLoggedIn ? "auto" : "50px") : "auto",
           }}
         />
         {mediumScreen ? (

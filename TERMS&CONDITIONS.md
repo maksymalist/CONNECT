@@ -5,7 +5,7 @@
 ## AGREEMENT TO TERMS
 
 These Terms of Use constitute a legally binding agreement made between you, whether
-personally or on behalf of an entity (“you”) and Connect! (" **Company** ," “ **we** ," “ **us** ," or “ **our** ”),
+personally or on behalf of an entity (“you”) and CONNECT (" **Company** ," “ **we** ," “ **us** ," or “ **our** ”),
 concerning your access to and use of the quiz-connect.netlify.app website as well as any other
 media form, media channel, mobile website or mobile application related, linked, or otherwise
 connected thereto (collectively, the “Site”). We are registered in Canada and have our registered
@@ -328,7 +328,7 @@ or to supply any corrections, updates, or releases in connection therewith.
 
 ## GOVERNING LAW
 
-These Terms shall be governed by and defined following the laws of Canada. Connect! and
+These Terms shall be governed by and defined following the laws of Canada. CONNECT and
 yourself irrevocably consent that the courts of Canada shall have exclusive jurisdiction to
 resolve any dispute which may arise in connection with these terms.
 
@@ -521,7 +521,7 @@ these Terms of Use and the lack of signing by the parties hereto to execute thes
 In order to resolve a complaint regarding the Site or to receive further information regarding use
 of the Site, please contact us at:
 
-**Connect!
+**CONNECT
 Montreal, Quebec
 Canada**
 
