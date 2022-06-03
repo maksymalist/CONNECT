@@ -100,6 +100,67 @@ const DELETE_JOIN_REQUEST = gql`
   }
 `;
 
+const analyticsData = {
+  name: "root",
+  children: [
+    {
+      name: "Jake",
+      value: 17,
+      profile: "https://i.pravatar.cc/300",
+    },
+    {
+      name: "David",
+      value: 88,
+      profile: "https://i.pravatar.cc/300",
+    },
+    {
+      name: "Joe",
+      value: 9,
+      profile: "https://i.pravatar.cc/300",
+    },
+    {
+      name: "Jane",
+      value: 53,
+      profile: "https://i.pravatar.cc/300",
+    },
+    {
+      name: "John",
+      value: 21,
+      profile: "https://i.pravatar.cc/300",
+    },
+    {
+      name: "Mary",
+      value: 70,
+      profile: "https://i.pravatar.cc/300",
+    },
+    {
+      name: "Peter",
+      value: 43,
+      profile: "https://i.pravatar.cc/300",
+    },
+    {
+      name: "Nicole",
+      value: 60,
+      profile: "https://i.pravatar.cc/300",
+    },
+    {
+      name: "Tim",
+      value: 92,
+      profile: "https://i.pravatar.cc/300",
+    },
+    {
+      name: "Tom",
+      value: 66,
+      profile: "https://i.pravatar.cc/300",
+    },
+    {
+      name: "William",
+      value: 56,
+      profile: "https://i.pravatar.cc/300",
+    },
+  ],
+};
+
 export default function MemberRoom() {
   const user = getUser();
   const plan = useSelector((state) => state.plan);
@@ -125,6 +186,7 @@ export default function MemberRoom() {
   const [isAddMemberPopup, setIsAddMemberPopup] = useState(false);
   const [removeMode, setRemoveMode] = useState(false);
   const [inviteTab, setInviteTab] = useState(0);
+  const [analyticsTab, setAnalyticsTab] = useState(false);
 
   //queries
   const {
@@ -620,7 +682,7 @@ export default function MemberRoom() {
             <div
               style={{
                 display: "flex",
-                flexDirection: "row",
+                flexWrap: "wrap",
                 justifyContent: "space-between",
                 alignItems: "center",
               }}
@@ -669,14 +731,19 @@ export default function MemberRoom() {
               <div>
                 <Button
                   variant="contained"
-                  color="action"
+                  color={analyticsTab ? "secondary" : "action"}
                   style={
                     isAddMemberPopup
-                      ? { marginRight: "10px", zIndex: "-1" }
-                      : { marginRight: "10px" }
+                      ? {
+                          marginRight: "10px",
+                          zIndex: "-1",
+                          margin: "20px",
+                        }
+                      : { marginRight: "10px", margin: "20px" }
                   }
+                  onClick={() => setAnalyticsTab(!analyticsTab)}
                 >
-                  Analytics 📈
+                  {analyticsTab ? "⬅️ Back" : "Analytics 📈"}
                 </Button>
                 <Button
                   style={
@@ -692,249 +759,261 @@ export default function MemberRoom() {
                 </Button>
               </div>
             </div>
-            <div style={{ width: "100%" }}>
-              <br></br>
-              <Divider light />
-            </div>
           </div>
-          <div className="classroom__banner__div">
-            <img
-              src={banner || Placeholder}
-              alt="banner"
-              className="classroom__banner"
-            />
-          </div>
-          <div className="classroom__hall__of__fame">
-            <Typography
-              variant="h3"
-              className="classroom__hall__of__fame__title"
-            >
-              {translations.classroom.halloffame.title}
-            </Typography>
-            <div className="classroom__hall__of__fame__card__container">
-              {hallOfFame.map((member, index) => {
-                if (index >= 3) return;
-                return (
-                  <div className="classroom__hall__of__fame__card" key={index}>
-                    {index + 1 === 1 && (
-                      <img
-                        draggable="false"
-                        src={FirstPlaceIcon}
-                        alt="first-badge"
-                        className="classroom__hall__of__fame__card__rank"
-                      />
-                    )}
-                    {index + 1 === 2 && (
-                      <img
-                        draggable="false"
-                        src={SecondPlaceIcon}
-                        alt="second-badge"
-                        className="classroom__hall__of__fame__card__rank"
-                      />
-                    )}
-                    {index + 1 === 3 && (
-                      <img
-                        draggable="false"
-                        src={ThirdPlaceIcon}
-                        alt="third-badge"
-                        className="classroom__hall__of__fame__card__rank"
-                      />
-                    )}
-                    <Avatar
-                      src={member.imageUrl}
-                      alt="member"
-                      className="classroom__hall__of__fame__card__img"
-                    />
-                    <Typography
-                      variant="h4"
-                      className="classroom__hall__of__fame__card__name"
-                    >
-                      {member.name}
-                    </Typography>
-                    <Typography
-                      variant="h6"
-                      className="classroom__hall__of__fame__card__points"
-                    >
-                      {member.points} pts
-                    </Typography>
-                  </div>
-                );
-              })}
-              {/* <div className="classroom__reward__date__container">
-                            {rewardTime !== null && rewardTime !== "" && <Typography variant='h6' className="classroom__reward__date">Next Reward is: {rewardTime}</Typography>}
-                            {reward !== null && reward !== "" && <Typography variant='h6' className="classroom__reward__date">Reward: {reward}</Typography>}
-                            <Button variant="contained" color="primary" className="classroom__reward__button">Set Reward</Button>
-                        </div> */}
-            </div>
-          </div>
-          <div className="classroom__recent__games">
-            <div className="classroom__recent__games__games">
-              <div
-                style={{
-                  position: "sticky",
-                  top: "0",
-                  backgroundColor: "white",
-                  width: "100%",
-                  zIndex: "10",
-                }}
-              >
+          {!analyticsTab ? (
+            <>
+              <div className="classroom__banner__div">
+                <img
+                  src={banner || Placeholder}
+                  alt="banner"
+                  className="classroom__banner"
+                />
+              </div>
+              <div className="classroom__hall__of__fame">
                 <Typography
                   variant="h3"
-                  className="classroom__recent__games__title"
+                  className="classroom__hall__of__fame__title"
                 >
-                  {translations.classroom.recentGames.title}
+                  {translations.classroom.halloffame.title}
                 </Typography>
-                <div style={{ width: "100%" }}>
-                  <br></br>
-                  <Divider light />
-                  <br></br>
-                </div>
-              </div>
-              <div className="classroom__recent__games__container">
-                {recentGames.map((game) => {
-                  return (
-                    <div
-                      className="classroom__recent__games__game"
-                      onClick={() => handleSetFinalists(game.finalists || [])}
-                    >
-                      <img
-                        style={{ width: "100%", height: "250px" }}
-                        src={game.coverImg || Placeholder}
-                        alt="cover-img"
-                      />
-                      <h2>{game.name}</h2>
+                <div className="classroom__hall__of__fame__card__container">
+                  {hallOfFame.map((member, index) => {
+                    if (index >= 3) return;
+                    return (
                       <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
+                        className="classroom__hall__of__fame__card"
+                        key={index}
                       >
-                        {game.userProfilePic == "" ? (
-                          <AccountCircle
-                            style={{ marginRight: "10px" }}
-                            color="primary"
-                          />
-                        ) : (
+                        {index + 1 === 1 && (
                           <img
-                            width="25px"
-                            height="25px"
-                            src={game.userProfilePic}
-                            alt={game.userProfilePic}
-                            style={{
-                              borderRadius: "100%",
-                              marginRight: "10px",
-                            }}
+                            draggable="false"
+                            src={FirstPlaceIcon}
+                            alt="first-badge"
+                            className="classroom__hall__of__fame__card__rank"
                           />
                         )}
-                        <h3>{`${translations.quizzes.by} ${
-                          game.userName || "undefined"
-                        }`}</h3>
-                      </div>
-                      <div>
-                        {game.tags == "" ? null : (
-                          <div>
-                            <br></br>
-                            {game.tags.map((tag, index) => {
-                              return (
-                                <Chip
-                                  style={{ margin: "5px" }}
-                                  key={tag + index}
-                                  label={"#" + tag}
-                                  color="primary"
-                                />
-                              );
-                            })}
-                          </div>
+                        {index + 1 === 2 && (
+                          <img
+                            draggable="false"
+                            src={SecondPlaceIcon}
+                            alt="second-badge"
+                            className="classroom__hall__of__fame__card__rank"
+                          />
                         )}
-                      </div>
-                      <div
-                        style={{ display: "flex", alignItems: "flex-start" }}
-                      >
+                        {index + 1 === 3 && (
+                          <img
+                            draggable="false"
+                            src={ThirdPlaceIcon}
+                            alt="third-badge"
+                            className="classroom__hall__of__fame__card__rank"
+                          />
+                        )}
+                        <Avatar
+                          src={member.imageUrl}
+                          alt="member"
+                          className="classroom__hall__of__fame__card__img"
+                        />
+                        <Typography
+                          variant="h4"
+                          className="classroom__hall__of__fame__card__name"
+                        >
+                          {member.name}
+                        </Typography>
                         <Typography
                           variant="h6"
-                          className="classroom__recent__games__game__points"
+                          className="classroom__hall__of__fame__card__points"
                         >
-                          {game.date}
+                          {member.points} pts
                         </Typography>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="classroom__recent__games__finalists">
-              <div
-                style={{
-                  position: "sticky",
-                  top: "0",
-                  backgroundColor: "white",
-                  width: "100%",
-                }}
-              >
-                <Typography
-                  variant="h3"
-                  className="classroom__recent__games__title"
-                >
-                  {translations.classroom.finalists.title}
-                </Typography>
-                <div style={{ width: "100%" }}>
-                  <br></br>
-                  <Divider light />
-                  <br></br>
+                    );
+                  })}
+                  {/* <div className="classroom__reward__date__container">
+                              {rewardTime !== null && rewardTime !== "" && <Typography variant='h6' className="classroom__reward__date">Next Reward is: {rewardTime}</Typography>}
+                              {reward !== null && reward !== "" && <Typography variant='h6' className="classroom__reward__date">Reward: {reward}</Typography>}
+                              <Button variant="contained" color="primary" className="classroom__reward__button">Set Reward</Button>
+                          </div> */}
                 </div>
               </div>
-              <div className="classroom__finalists">
-                {finalists.map((finalist, index) => {
-                  return (
-                    <div className="classroom__finalists__card" key={index}>
-                      <Avatar
-                        src={finalist.profileImg || null}
-                        alt="member"
-                        className="classroom__finalists__card__img"
-                      />
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <Typography
-                          variant="sub1"
-                          className="classroom__finalists__card__name"
-                        >
-                          {finalist.name}
-                        </Typography>
-                        <Typography
-                          variant="sub1"
-                          className="classroom__finalists__card__name"
-                        >{`" ${finalist.player}"`}</Typography>
-                      </div>
-                      {finalist.position == 1 && (
-                        <img
-                          draggable="false"
-                          src={FirstPlaceIcon}
-                          alt="first-badge"
-                          className="classroom__finalist__card__rank"
-                        />
-                      )}
-                      {finalist.position == 2 && (
-                        <img
-                          draggable="false"
-                          src={SecondPlaceIcon}
-                          alt="second-badge"
-                          className="classroom__finalist__card__rank"
-                        />
-                      )}
-                      {finalist.position == 3 && (
-                        <img
-                          draggable="false"
-                          src={ThirdPlaceIcon}
-                          alt="third-badge"
-                          className="classroom__finalist__card__rank"
-                        />
-                      )}
+              <div className="classroom__recent__games">
+                <div className="classroom__recent__games__games">
+                  <div
+                    style={{
+                      position: "sticky",
+                      top: "0",
+                      backgroundColor: "white",
+                      width: "100%",
+                      zIndex: "10",
+                    }}
+                  >
+                    <Typography
+                      variant="h3"
+                      className="classroom__recent__games__title"
+                    >
+                      {translations.classroom.recentGames.title}
+                    </Typography>
+                    <div style={{ width: "100%" }}>
+                      <br></br>
+                      <Divider light />
+                      <br></br>
                     </div>
-                  );
-                })}
+                  </div>
+                  <div className="classroom__recent__games__container">
+                    {recentGames.map((game) => {
+                      return (
+                        <div
+                          className="classroom__recent__games__game"
+                          onClick={() =>
+                            handleSetFinalists(game.finalists || [])
+                          }
+                        >
+                          <img
+                            style={{ width: "100%", height: "250px" }}
+                            src={game.coverImg || Placeholder}
+                            alt="cover-img"
+                          />
+                          <h2>{game.name}</h2>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            {game.userProfilePic == "" ? (
+                              <AccountCircle
+                                style={{ marginRight: "10px" }}
+                                color="primary"
+                              />
+                            ) : (
+                              <img
+                                width="25px"
+                                height="25px"
+                                src={game.userProfilePic}
+                                alt={game.userProfilePic}
+                                style={{
+                                  borderRadius: "100%",
+                                  marginRight: "10px",
+                                }}
+                              />
+                            )}
+                            <h3>{`${translations.quizzes.by} ${
+                              game.userName || "undefined"
+                            }`}</h3>
+                          </div>
+                          <div>
+                            {game.tags == "" ? null : (
+                              <div>
+                                <br></br>
+                                {game.tags.map((tag, index) => {
+                                  return (
+                                    <Chip
+                                      style={{ margin: "5px" }}
+                                      key={tag + index}
+                                      label={"#" + tag}
+                                      color="primary"
+                                    />
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "flex-start",
+                            }}
+                          >
+                            <Typography
+                              variant="h6"
+                              className="classroom__recent__games__game__points"
+                            >
+                              {game.date}
+                            </Typography>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="classroom__recent__games__finalists">
+                  <div
+                    style={{
+                      position: "sticky",
+                      top: "0",
+                      backgroundColor: "white",
+                      width: "100%",
+                    }}
+                  >
+                    <Typography
+                      variant="h3"
+                      className="classroom__recent__games__title"
+                    >
+                      {translations.classroom.finalists.title}
+                    </Typography>
+                    <div style={{ width: "100%" }}>
+                      <br></br>
+                      <Divider light />
+                      <br></br>
+                    </div>
+                  </div>
+                  <div className="classroom__finalists">
+                    {finalists.map((finalist, index) => {
+                      return (
+                        <div className="classroom__finalists__card" key={index}>
+                          <Avatar
+                            src={finalist.profileImg || null}
+                            alt="member"
+                            className="classroom__finalists__card__img"
+                          />
+                          <div
+                            style={{ display: "flex", flexDirection: "column" }}
+                          >
+                            <Typography
+                              variant="sub1"
+                              className="classroom__finalists__card__name"
+                            >
+                              {finalist.name}
+                            </Typography>
+                            <Typography
+                              variant="sub1"
+                              className="classroom__finalists__card__name"
+                            >{`" ${finalist.player}"`}</Typography>
+                          </div>
+                          {finalist.position == 1 && (
+                            <img
+                              draggable="false"
+                              src={FirstPlaceIcon}
+                              alt="first-badge"
+                              className="classroom__finalist__card__rank"
+                            />
+                          )}
+                          {finalist.position == 2 && (
+                            <img
+                              draggable="false"
+                              src={SecondPlaceIcon}
+                              alt="second-badge"
+                              className="classroom__finalist__card__rank"
+                            />
+                          )}
+                          {finalist.position == 3 && (
+                            <img
+                              draggable="false"
+                              src={ThirdPlaceIcon}
+                              alt="third-badge"
+                              className="classroom__finalist__card__rank"
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            </>
+          ) : (
+            <Analytics data={analyticsData} />
+          )}
         </div>
       )}
     </div>

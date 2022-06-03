@@ -8,67 +8,13 @@ import { ResponsiveCirclePackingCanvas } from "@nivo/circle-packing";
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-const MyResponsiveCirclePackingCanvas = () => {
-  const data = {
-    name: "root",
-    children: [
-      {
-        name: "Jake",
-        value: 17,
-        profile: "https://i.pravatar.cc/300",
-      },
-      {
-        name: "David",
-        value: 88,
-        profile: "https://i.pravatar.cc/300",
-      },
-      {
-        name: "Joe",
-        value: 9,
-        profile: "https://i.pravatar.cc/300",
-      },
-      {
-        name: "Jane",
-        value: 53,
-        profile: "https://i.pravatar.cc/300",
-      },
-      {
-        name: "John",
-        value: 21,
-        profile: "https://i.pravatar.cc/300",
-      },
-      {
-        name: "Mary",
-        value: 70,
-        profile: "https://i.pravatar.cc/300",
-      },
-      {
-        name: "Peter",
-        value: 43,
-        profile: "https://i.pravatar.cc/300",
-      },
-      {
-        name: "Nicole",
-        value: 60,
-        profile: "https://i.pravatar.cc/300",
-      },
-      {
-        name: "Tim",
-        value: 92,
-        profile: "https://i.pravatar.cc/300",
-      },
-      {
-        name: "Tom",
-        value: 66,
-        profile: "https://i.pravatar.cc/300",
-      },
-      {
-        name: "William",
-        value: 56,
-        profile: "https://i.pravatar.cc/300",
-      },
-    ],
-  };
+
+type Props = {
+  data: any;
+};
+
+const MyResponsiveCirclePackingCanvas = (props: Props) => {
+  const data = props.data;
 
   const finalists = [
     {
@@ -119,6 +65,7 @@ const MyResponsiveCirclePackingCanvas = () => {
         labelTextColor="#ffffff"
         enableLabels={true}
         leavesOnly={true}
+        padding={4}
         borderWidth={2}
         borderColor="#000000"
         animate={false}

@@ -658,16 +658,34 @@ export default function HostRoom(props) {
           <div>
             <img src={TextLogo} alt="logo" draggable={false} />
           </div>
-          <Button
-            variant="contained"
-            size={bigScreen ? "large" : "medium"}
-            color="secondary"
-            onClick={() => {
-              GameOver();
-            }}
-          >
-            <ExitToAppRounded />
-          </Button>
+
+          <div>
+            <Button
+              variant="contained"
+              size={bigScreen ? "large" : "medium"}
+              color="action"
+              style={{
+                backgroundColor: "#1bb978",
+                color: "white",
+                marginRight: "10px",
+              }}
+              onClick={() => {
+                GameOver();
+              }}
+            >
+              {translations.hostroom.finish}
+            </Button>
+            <Button
+              variant="contained"
+              size={bigScreen ? "large" : "medium"}
+              color="secondary"
+              onClick={() => {
+                GameOver();
+              }}
+            >
+              <ExitToAppRounded />
+            </Button>
+          </div>
         </div>
       </nav>
       <div style={{ width: "100vw", height: "100px" }} />
