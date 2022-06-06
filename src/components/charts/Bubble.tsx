@@ -16,31 +16,12 @@ type Props = {
 const MyResponsiveCirclePackingCanvas = (props: Props) => {
   const data = props.data;
 
-  const finalists = [
-    {
-      time: "11.9",
-      position: "1",
-      player: "Arrogant_Reindeer⠀",
-      playerID: "107441883042764793504",
-    },
-    {
-      time: "13.1",
-      position: "2",
-      player: "Upset_Camel⠀",
-      playerID: "110652498476692336552",
-    },
-    {
-      time: "36.9",
-      position: "3",
-      player: "Mike⠀",
-      playerID: "113937164238966385301",
-    },
-  ];
-
   interface ToolTip {
+    userId: string;
     name: string;
+    imageUrl: string;
+    position: number;
     value: number;
-    profile: string;
   }
 
   return (
@@ -87,11 +68,14 @@ const MyResponsiveCirclePackingCanvas = (props: Props) => {
                 justifyContent: "space-between",
               }}
             >
-              <Avatar style={{ marginRight: "10px" }} src={data.profile}>
+              <Avatar style={{ marginRight: "10px" }} src={data.imageUrl}>
                 {data.name.charAt(0)}
               </Avatar>
               <h3>
-                {data.name} {data.value}
+                {data.name}{" "}
+                <b style={{ color: "#6c63ff" }}>
+                  {Math.round(data.position * 100) / 100}
+                </b>
               </h3>
             </div>
           );

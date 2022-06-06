@@ -528,6 +528,11 @@
         "cancel": "Cancel",
         "remove": "remove member"
       },
+      "analytics": {
+        "title": "Average Positions 🏆",
+        "button": "Analytics 📊",
+        "back": "⬅️ Back"
+      },
       "addmember": {
         "title": "Add Member",
         "input": "Member Email",
@@ -541,7 +546,7 @@
         "decline": "Decline 🚫"
       },
       "play": {
-        "playbutton": "Play Games",
+        "playbutton": "Play Games 🚀",
         "backbutton": "⬅️ Back"
       },
       "halloffame": {
@@ -1111,6 +1116,11 @@
         "add": "inviter membres",
         "cancel": "Annuler",
         "remove": "retirer"
+      },
+      "analytics": {
+        "title": "Places Moyennes 🏆",
+        "button": "Analyses 📊",
+        "back": "⬅️ Retour"
       },
       "play": {
         "playbutton": "Jouer 🚀",

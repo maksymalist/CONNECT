@@ -100,67 +100,6 @@ const DELETE_JOIN_REQUEST = gql`
   }
 `;
 
-const analyticsData = {
-  name: "root",
-  children: [
-    {
-      name: "Jake",
-      value: 17,
-      profile: "https://i.pravatar.cc/300",
-    },
-    {
-      name: "David",
-      value: 88,
-      profile: "https://i.pravatar.cc/300",
-    },
-    {
-      name: "Joe",
-      value: 9,
-      profile: "https://i.pravatar.cc/300",
-    },
-    {
-      name: "Jane",
-      value: 53,
-      profile: "https://i.pravatar.cc/300",
-    },
-    {
-      name: "John",
-      value: 21,
-      profile: "https://i.pravatar.cc/300",
-    },
-    {
-      name: "Mary",
-      value: 70,
-      profile: "https://i.pravatar.cc/300",
-    },
-    {
-      name: "Peter",
-      value: 43,
-      profile: "https://i.pravatar.cc/300",
-    },
-    {
-      name: "Nicole",
-      value: 60,
-      profile: "https://i.pravatar.cc/300",
-    },
-    {
-      name: "Tim",
-      value: 92,
-      profile: "https://i.pravatar.cc/300",
-    },
-    {
-      name: "Tom",
-      value: 66,
-      profile: "https://i.pravatar.cc/300",
-    },
-    {
-      name: "William",
-      value: 56,
-      profile: "https://i.pravatar.cc/300",
-    },
-  ],
-};
-
 export default function MemberRoom() {
   const user = getUser();
   const plan = useSelector((state) => state.plan);
@@ -172,6 +111,7 @@ export default function MemberRoom() {
   const [banner, setBanner] = useState("");
   const [hallOfFame, setHallOfFame] = useState([]);
   const [recentGames, setRecentGames] = useState([]);
+  const [memberPerformances, setMemberPerformances] = useState([]);
 
   const [newMembers, setNewMembers] = useState([]);
 
@@ -267,6 +207,16 @@ export default function MemberRoom() {
     const recentGames = games.data;
 
     setRecentGames(recentGames);
+
+    //set member performances
+    const memberPerformances = await axios.post(
+      `${config["api-server"]}/get-members-performances`,
+      {
+        classId: id,
+      }
+    );
+    console.log(memberPerformances.data);
+    setMemberPerformances(memberPerformances.data);
   };
 
   useEffect(() => {
@@ -743,7 +693,9 @@ export default function MemberRoom() {
                   }
                   onClick={() => setAnalyticsTab(!analyticsTab)}
                 >
-                  {analyticsTab ? "⬅️ Back" : "Analytics 📈"}
+                  {analyticsTab
+                    ? translations.classroom.analytics.back
+                    : translations.classroom.analytics.button}
                 </Button>
                 <Button
                   style={
@@ -1012,7 +964,10 @@ export default function MemberRoom() {
               </div>
             </>
           ) : (
-            <Analytics data={analyticsData} />
+            <Analytics
+              data={memberPerformances.length > 0 ? memberPerformances : []}
+              members={members.length}
+            />
           )}
         </div>
       )}

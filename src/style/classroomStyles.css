@@ -208,7 +208,6 @@
   flex-direction: column;
   background-color: white;
   border: 2px solid black;
-  box-shadow: 10px 10px 0 #262626;
   width: 620px;
   height: 680px;
   margin: 10px;
@@ -244,7 +243,6 @@
   flex-direction: column;
   background-color: white;
   border: 2px solid black;
-  box-shadow: 10px 10px 0 #262626;
   width: 380px;
   height: 680px;
   margin: 10px;
