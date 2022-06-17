@@ -37,7 +37,7 @@ body {
 .features {
   margin: 10px !important;
   text-align: left;
-  color: "#4F5251";
+  color: '#4F5251';
 }
 
 @keyframes gradient {
@@ -241,7 +241,7 @@ body {
 
 .quiz__card__arc path {
   fill: #ffffff;
-  d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
+  d: path('M 40 80 c 22 0 40 -22 40 -40 v 40 Z');
 }
 
 .quiz__card:hover .quiz__card__header {
@@ -634,7 +634,7 @@ body {
 }
 .best__time__text {
   margin: 0;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   font-weight: 400;
   font-size: 3rem;
   line-height: 1.167;
@@ -654,6 +654,62 @@ body {
   }
   .lowest__time__container {
     padding-left: 0;
+  }
+}
+
+.lowest-time-box-2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 15px;
+  margin-left: 25px;
+  border-radius: 0px 0px 0px 50px;
+  text-align: center;
+  min-width: 200px;
+}
+.lowest__time__container__2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-left: 25px;
+  border: 2px solid;
+  box-shadow: 10px 10px #262626;
+  margin: 10px;
+  width: 100%;
+  min-width: 220px;
+  max-width: 450px;
+}
+.lowest-time-box-text-2 {
+  text-overflow: ellipsis;
+  max-width: 300px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 630px) {
+  .lowest__time__container__2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-left: 25px;
+    border: 2px solid;
+    box-shadow: 10px 10px #262626;
+    margin: 10px;
+    width: 100%;
+    min-width: 120px;
+    max-width: 350px;
+  }
+  .lowest-time-box-2 {
+    min-width: 120px;
+  }
+  .lowest-time-box-text-2 {
+    text-overflow: ellipsis;
+    max-width: 120px;
+    overflow: hidden;
+    white-space: nowrap;
   }
 }
 
@@ -982,13 +1038,13 @@ input:hover {
 
 .ans-card {
   /* border: 2px solid #1BB978 !important; */
-  background-image: url("../img/CardBackGround/answerCard.svg");
+  background-image: url('../img/CardBackGround/answerCard.svg');
   background-repeat: no-repeat;
   background-size: contain;
 }
 .quest-card {
   /* border: 2px solid #3f51b5 !important; */
-  background-image: url("../img/CardBackGround/questionCard.svg");
+  background-image: url('../img/CardBackGround/questionCard.svg');
   background-repeat: no-repeat;
   background-size: contain;
 }
