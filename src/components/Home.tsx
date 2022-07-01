@@ -1,15 +1,15 @@
 //@ts-nocheck
-import React, { useEffect, useState } from "react";
-import HomePageImage from "../img/HomePageArt.svg";
-import WaveStripe from "../img/BigStripe.svg";
-import WaveStripe2 from "../img/BigStripe-2.svg";
-import HIW_IMG_1 from "../img/HIW_Image_1.svg";
-import HIW_IMG_2 from "../img/HIW_Image_2.svg";
-import HIW_IMG_3 from "../img/HIW_Image_3.svg";
-import Connected from "../img/connected.svg";
-import Teacher from "../img/teacher.svg";
-import Books from "../img/books.svg";
-import "../style/home.css";
+import React, { useEffect, useState } from 'react'
+import HomePageImage from '../img/HomePageArt.svg'
+import WaveStripe from '../img/BigStripe.svg'
+import WaveStripe2 from '../img/BigStripe-2.svg'
+import HIW_IMG_1 from '../img/HIW_Image_1.svg'
+import HIW_IMG_2 from '../img/HIW_Image_2.svg'
+import HIW_IMG_3 from '../img/HIW_Image_3.svg'
+import Connected from '../img/connected.svg'
+import Teacher from '../img/teacher.svg'
+import Books from '../img/books.svg'
+import '../style/home.css'
 import {
   Typography,
   Stepper,
@@ -17,23 +17,24 @@ import {
   StepLabel,
   Button,
   Divider,
-} from "@mui/material";
+} from '@mui/material'
 //hooks
-import getUser from "../hooks/getUser";
-import useTranslations from "../hooks/useTranslations";
+import getUser from '../hooks/getUser'
+import useTranslations from '../hooks/useTranslations'
+import { Link } from 'react-router-dom'
 export default function HomePage() {
-  const user = getUser();
+  const user = getUser()
   useEffect(() => {
-    if (user == null) window.location = "/login";
-    document.getElementById("root").style.padding = "0px";
+    if (user == null) window.location = '/login'
+    document.getElementById('root').style.padding = '0px'
     return () => {
-      document.getElementById("root").style.padding = "10px";
-    };
-  }, []);
-  const translations = useTranslations();
-  const [hostActiveStep, setHostActiveStep] = useState(0);
-  const [joinActiveStep, setJoinActiveStep] = useState(0);
-  const [playActiveStep, setPlayActiveStep] = useState(0);
+      document.getElementById('root').style.padding = '10px'
+    }
+  }, [])
+  const translations = useTranslations()
+  const [hostActiveStep, setHostActiveStep] = useState(0)
+  const [joinActiveStep, setJoinActiveStep] = useState(0)
+  const [playActiveStep, setPlayActiveStep] = useState(0)
   return (
     <>
       <div>
@@ -51,29 +52,27 @@ export default function HomePage() {
                 </Typography>
               </div>
               <div className="home-page-section-1-content-top-button-container">
-                <Button
-                  variant="contained"
-                  style={{ marginRight: "20px" }}
-                  color="primary"
-                  size="large"
-                  className="home-page-section-1-content-top-button"
-                  onClick={() => {
-                    window.location = "/play";
-                  }}
-                >
-                  {translations.home.buttonText}
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="action"
-                  size="large"
-                  className="home-page-section-1-content-top-button"
-                  onClick={() => {
-                    window.location = "/plans";
-                  }}
-                >
-                  {translations.home.buttonText2}
-                </Button>
+                <Link to="/play">
+                  <Button
+                    variant="contained"
+                    style={{ marginRight: '20px' }}
+                    color="primary"
+                    size="large"
+                    className="home-page-section-1-content-top-button"
+                  >
+                    {translations.home.buttonText}
+                  </Button>
+                </Link>
+                <Link to="/plans">
+                  <Button
+                    variant="outlined"
+                    color="action"
+                    size="large"
+                    className="home-page-section-1-content-top-button"
+                  >
+                    {translations.home.buttonText2}
+                  </Button>
+                </Link>
               </div>
             </div>
             <div className="home-page-section-1-content-bottom">
@@ -165,11 +164,11 @@ export default function HomePage() {
                 <div className="home-page-section-3-card-wrapper-section-card-content">
                   <Stepper
                     style={{
-                      width: "100%",
-                      maxWidth: "320px",
-                      margin: "20px",
-                      overflow: "hidden",
-                      height: "100px",
+                      width: '100%',
+                      maxWidth: '320px',
+                      margin: '20px',
+                      overflow: 'hidden',
+                      height: '100px',
                     }}
                     activeStep={joinActiveStep}
                   >
@@ -184,38 +183,38 @@ export default function HomePage() {
                     </Step>
                   </Stepper>
                   {joinActiveStep === 0 && (
-                    <Typography variant="h5" style={{ margin: "25px" }}>
+                    <Typography variant="h5" style={{ margin: '25px' }}>
                       {translations.home.howitworks.join.step1}
                     </Typography>
                   )}
                   {joinActiveStep === 1 && (
-                    <Typography variant="h5" style={{ margin: "25px" }}>
+                    <Typography variant="h5" style={{ margin: '25px' }}>
                       {translations.home.howitworks.join.step2}
                     </Typography>
                   )}
                   {joinActiveStep === 2 && (
-                    <Typography variant="h5" style={{ margin: "25px" }}>
+                    <Typography variant="h5" style={{ margin: '25px' }}>
                       {translations.home.howitworks.join.step3}
                     </Typography>
                   )}
                   <div
                     style={{
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      alignItems: "flex-end",
-                      justifyContent: "space-between",
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      alignItems: 'flex-end',
+                      justifyContent: 'space-between',
                     }}
                   >
                     <Button
-                      style={{ margin: "10px" }}
+                      style={{ margin: '10px' }}
                       variant="contained"
                       color="secondary"
                       size="large"
                       onClick={
                         joinActiveStep > 0
                           ? () => {
-                              setJoinActiveStep((prev) => prev - 1);
+                              setJoinActiveStep((prev) => prev - 1)
                             }
                           : null
                       }
@@ -223,14 +222,14 @@ export default function HomePage() {
                       {translations.home.howitworks.join.back}
                     </Button>
                     <Button
-                      style={{ margin: "10px" }}
+                      style={{ margin: '10px' }}
                       variant="contained"
                       color="primary"
                       size="large"
                       onClick={
                         joinActiveStep < 2
                           ? () => {
-                              setJoinActiveStep((prev) => prev + 1);
+                              setJoinActiveStep((prev) => prev + 1)
                             }
                           : null
                       }
@@ -264,11 +263,11 @@ export default function HomePage() {
                   <Stepper
                     id="stepRef"
                     style={{
-                      width: "100%",
-                      maxWidth: "320px",
-                      margin: "20px",
-                      overflow: "hidden",
-                      height: "100px",
+                      width: '100%',
+                      maxWidth: '320px',
+                      margin: '20px',
+                      overflow: 'hidden',
+                      height: '100px',
                     }}
                     activeStep={hostActiveStep}
                   >
@@ -292,53 +291,53 @@ export default function HomePage() {
                     </Step>
                   </Stepper>
                   {hostActiveStep === 0 && (
-                    <Typography variant="h5" style={{ margin: "25px" }}>
+                    <Typography variant="h5" style={{ margin: '25px' }}>
                       {translations.home.howitworks.host.step1}
                     </Typography>
                   )}
                   {hostActiveStep === 1 && (
-                    <Typography variant="h5" style={{ margin: "25px" }}>
+                    <Typography variant="h5" style={{ margin: '25px' }}>
                       {translations.home.howitworks.host.step2}
                     </Typography>
                   )}
                   {hostActiveStep === 2 && (
-                    <Typography variant="h5" style={{ margin: "25px" }}>
+                    <Typography variant="h5" style={{ margin: '25px' }}>
                       {translations.home.howitworks.host.step3}
                     </Typography>
                   )}
                   {hostActiveStep === 3 && (
-                    <Typography variant="h5" style={{ margin: "25px" }}>
+                    <Typography variant="h5" style={{ margin: '25px' }}>
                       {translations.home.howitworks.host.step4}
                     </Typography>
                   )}
                   {hostActiveStep === 4 && (
-                    <Typography variant="h5" style={{ margin: "25px" }}>
+                    <Typography variant="h5" style={{ margin: '25px' }}>
                       {translations.home.howitworks.host.step5}
                     </Typography>
                   )}
                   {hostActiveStep === 5 && (
-                    <Typography variant="h5" style={{ margin: "25px" }}>
+                    <Typography variant="h5" style={{ margin: '25px' }}>
                       {translations.home.howitworks.host.step6}
                     </Typography>
                   )}
                   <div
                     style={{
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      alignItems: "flex-end",
-                      justifyContent: "space-between",
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      alignItems: 'flex-end',
+                      justifyContent: 'space-between',
                     }}
                   >
                     <Button
-                      style={{ margin: "10px" }}
+                      style={{ margin: '10px' }}
                       variant="contained"
                       color="secondary"
                       size="large"
                       onClick={
                         hostActiveStep > 0
                           ? () => {
-                              setHostActiveStep(hostActiveStep - 1);
+                              setHostActiveStep(hostActiveStep - 1)
                             }
                           : null
                       }
@@ -346,14 +345,14 @@ export default function HomePage() {
                       {translations.home.howitworks.host.back}
                     </Button>
                     <Button
-                      style={{ margin: "10px" }}
+                      style={{ margin: '10px' }}
                       variant="contained"
                       color="primary"
                       size="large"
                       onClick={
                         hostActiveStep < 5
                           ? () => {
-                              setHostActiveStep(hostActiveStep + 1);
+                              setHostActiveStep(hostActiveStep + 1)
                             }
                           : null
                       }
@@ -379,11 +378,11 @@ export default function HomePage() {
                   <Stepper
                     id="stepRef"
                     style={{
-                      width: "100%",
-                      maxWidth: "320px",
-                      margin: "20px",
-                      overflow: "hidden",
-                      height: "100px",
+                      width: '100%',
+                      maxWidth: '320px',
+                      margin: '20px',
+                      overflow: 'hidden',
+                      height: '100px',
                     }}
                     activeStep={playActiveStep}
                   >
@@ -414,22 +413,22 @@ export default function HomePage() {
                   )}
                   <div
                     style={{
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      alignItems: "flex-end",
-                      justifyContent: "space-between",
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      alignItems: 'flex-end',
+                      justifyContent: 'space-between',
                     }}
                   >
                     <Button
-                      style={{ margin: "10px" }}
+                      style={{ margin: '10px' }}
                       variant="contained"
                       color="secondary"
                       size="large"
                       onClick={
                         playActiveStep > 0
                           ? () => {
-                              setPlayActiveStep((prev) => prev - 1);
+                              setPlayActiveStep((prev) => prev - 1)
                             }
                           : null
                       }
@@ -437,14 +436,14 @@ export default function HomePage() {
                       {translations.home.howitworks.play.back}
                     </Button>
                     <Button
-                      style={{ margin: "10px" }}
+                      style={{ margin: '10px' }}
                       variant="contained"
                       color="primary"
                       size="large"
                       onClick={
                         playActiveStep < 2
                           ? () => {
-                              setPlayActiveStep((prev) => prev + 1);
+                              setPlayActiveStep((prev) => prev + 1)
                             }
                           : null
                       }
@@ -474,8 +473,8 @@ export default function HomePage() {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              textDecoration: "underline",
-              color: "#6c63ff",
+              textDecoration: 'underline',
+              color: '#6c63ff',
             }}
           >
             ✨Report Issue✨
@@ -483,5 +482,5 @@ export default function HomePage() {
         </footer>
       </div>
     </>
-  );
+  )
 }

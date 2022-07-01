@@ -1,15 +1,15 @@
 //@ts-nocheck
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
 
 //styles
-import "../../style/classroomStyles.css";
-import Placeholder from "../../img/quizCoverPlaceholder.svg";
+import '../../style/classroomStyles.css'
+import Placeholder from '../../img/quizCoverPlaceholder.svg'
 
 //badges
-import FirstPlaceIcon from "../../img/PodiumIcons/firstPlace.svg";
-import SecondPlaceIcon from "../../img/PodiumIcons/secondPlace.svg";
-import ThirdPlaceIcon from "../../img/PodiumIcons/thirdPlace.svg";
+import FirstPlaceIcon from '../../img/PodiumIcons/firstPlace.svg'
+import SecondPlaceIcon from '../../img/PodiumIcons/secondPlace.svg'
+import ThirdPlaceIcon from '../../img/PodiumIcons/thirdPlace.svg'
 
 //material-ui
 import {
@@ -20,39 +20,39 @@ import {
   Avatar,
   Backdrop,
   TextField,
-} from "@mui/material";
-import { AccountCircle, CancelRounded } from "@mui/icons-material";
+} from '@mui/material'
+import { AccountCircle, CancelRounded } from '@mui/icons-material'
 
 //redux
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux'
 
 //axios
-import axios from "axios";
+import axios from 'axios'
 
-import config from "../../config.json";
-import getUser from "../../hooks/getUser";
-import useTranslations from "../../hooks/useTranslations";
+import config from '../../config.json'
+import getUser from '../../hooks/getUser'
+import useTranslations from '../../hooks/useTranslations'
 
 export default function MemberRoom() {
-  const user = getUser();
-  const plan = useSelector((state) => state.plan);
-  const translations = useTranslations();
+  const user = getUser()
+  const plan = useSelector((state) => state.plan)
+  const translations = useTranslations()
 
-  const [members, setMembers] = useState([]);
-  const [name, setName] = useState("");
-  const [banner, setBanner] = useState("");
-  const [hallOfFame, setHallOfFame] = useState([]);
-  const [recentGames, setRecentGames] = useState([]);
+  const [members, setMembers] = useState([])
+  const [name, setName] = useState('')
+  const [banner, setBanner] = useState('')
+  const [hallOfFame, setHallOfFame] = useState([])
+  const [recentGames, setRecentGames] = useState([])
 
-  const [finalists, setFinalists] = useState([]);
+  const [finalists, setFinalists] = useState([])
 
-  const { id } = useParams();
+  const { id } = useParams()
 
   const handleRenderClassroom = async () => {
-    const res = await axios.post(`${config["api-server"]}/get-class`, {
+    const res = await axios.post(`${config['api-server']}/get-class`, {
       id: id,
-    });
-    const data = res.data;
+    })
+    const data = res.data
 
     if (data?.owner != user?.profileObj.googleId) {
       //window.location.href = `/view-class/${id}`
@@ -60,62 +60,62 @@ export default function MemberRoom() {
     }
 
     //set class attributes
-    setName(data.name);
-    setBanner(data.banner);
+    setName(data.name)
+    setBanner(data.banner)
 
     //set members
-    const members = data.members || [];
+    const members = data.members || []
 
-    console.log(members);
+    console.log(members)
 
     members.forEach(async (member) => {
       const userObj = {
         points: member.points,
         id: member.userId,
-        name: "",
-        imageUrl: "",
-      };
+        name: '',
+        imageUrl: '',
+      }
 
-      const res = await axios.post(`${config["api-server"]}/user-no-prefix`, {
+      const res = await axios.post(`${config['api-server']}/user-no-prefix`, {
         userId: member.userId,
-      });
-      const data = res.data;
+      })
+      const data = res.data
 
-      userObj.name = data?.name;
-      userObj.imageUrl = data?.imageUrl;
+      userObj.name = data?.name
+      userObj.imageUrl = data?.imageUrl
 
-      setMembers((prevState) => [...prevState, userObj]);
-    });
+      setMembers((prevState) => [...prevState, userObj])
+    })
 
     //set hall of fame
     const hallOfFameData = await axios.post(
-      `${config["api-server"]}/get-hall-of-fame`,
+      `${config['api-server']}/get-hall-of-fame`,
       { id: id }
-    );
-    setHallOfFame(hallOfFameData.data || []);
+    )
+    setHallOfFame(hallOfFameData.data || [])
 
     //set recent games
 
-    const games = await axios.post(`${config["api-server"]}/get-recent-games`, {
+    const games = await axios.post(`${config['api-server']}/get-recent-games`, {
       classId: id,
-    });
+    })
 
-    const recentGames = games.data;
+    const recentGames = games.data
 
-    setRecentGames(recentGames || []);
-  };
+    setRecentGames(recentGames || [])
+  }
 
   useEffect(() => {
-    handleRenderClassroom();
-  }, []);
+    handleRenderClassroom()
+  }, [])
 
   const handleSetFinalists = async (finalists) => {
-    const newFinalistsArr = [];
+    const newFinalistsArr = []
     finalists.map(async (finalist) => {
-      const res = await axios.post(`${config["api-server"]}/user`, {
+      const res = await axios.post(`${config['api-server']}/user`, {
         userId: finalist.playerID,
-      });
-      const playerData = res.data;
+      })
+      const playerData = res.data
 
       newFinalistsArr.push({
         name: playerData.name,
@@ -124,13 +124,13 @@ export default function MemberRoom() {
         playerID: finalist.playerID,
         position: finalist.position,
         time: finalist.time,
-      });
+      })
 
       if (newFinalistsArr.length === finalists.length) {
-        setFinalists(newFinalistsArr);
+        setFinalists(newFinalistsArr)
       }
-    });
-  };
+    })
+  }
 
   return (
     <div className="classroom__main__div">
@@ -139,7 +139,7 @@ export default function MemberRoom() {
           {translations.classroom.members.title1}({members.length})
         </Typography>
         <div></div>
-        <div style={{ width: "90%" }}>
+        <div style={{ width: '90%' }}>
           <br></br>
           <Divider light />
           <br></br>
@@ -147,60 +147,56 @@ export default function MemberRoom() {
         <div className="classroom__member__scroll__container">
           {members.map((member, index) => {
             return (
-              <div className="classroom__members__member" key={index}>
-                <img
-                  onClick={() =>
-                    (window.location = `/profiles/${member.id.replace(
-                      "user:",
-                      ""
-                    )}`)
-                  }
-                  src={member.imageUrl || undefined}
-                  alt="member"
-                  className="classroom__members__member__img"
-                />
-                <Typography
-                  style={{ minWidth: "150px" }}
-                  variant="subtitle1"
-                  className="classroom__members__member__name"
-                >
-                  {member.name || undefined}
-                </Typography>
-                <div
-                  style={{
-                    display: "flex",
-                    width: "100%",
-                    justifyContent: "flex-end",
-                  }}
-                ></div>
-              </div>
-            );
+              <Link to={`/profiles/${member.id.replace('user:', '')}`}>
+                <div className="classroom__members__member" key={index}>
+                  <img
+                    src={member.imageUrl || undefined}
+                    alt="member"
+                    className="classroom__members__member__img"
+                  />
+                  <Typography
+                    style={{ minWidth: '150px' }}
+                    variant="subtitle1"
+                    className="classroom__members__member__name"
+                  >
+                    {member.name || undefined}
+                  </Typography>
+                  <div
+                    style={{
+                      display: 'flex',
+                      width: '100%',
+                      justifyContent: 'flex-end',
+                    }}
+                  ></div>
+                </div>
+              </Link>
+            )
           })}
         </div>
       </div>
       <div id="classroom__dashboard" className="classroom__dashboard">
         <div
           style={{
-            position: "sticky",
-            top: "0",
-            backgroundColor: "white",
-            width: "100%",
-            zIndex: "11",
+            position: 'sticky',
+            top: '0',
+            backgroundColor: 'white',
+            width: '100%',
+            zIndex: '11',
           }}
         >
           <div
             style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}
           >
             <Typography variant="h4" className="classroom__dashboard__title">
               {name}
             </Typography>
           </div>
-          <div style={{ width: "100%" }}>
+          <div style={{ width: '100%' }}>
             <br></br>
             <Divider light />
           </div>
@@ -218,7 +214,7 @@ export default function MemberRoom() {
           </Typography>
           <div className="classroom__hall__of__fame__card__container">
             {hallOfFame.map((member, index) => {
-              if (index >= 3) return;
+              if (index >= 3) return
               return (
                 <div className="classroom__hall__of__fame__card" key={index}>
                   {index + 1 === 1 && (
@@ -263,7 +259,7 @@ export default function MemberRoom() {
                     {member.points} pts
                   </Typography>
                 </div>
-              );
+              )
             })}
             {/* <div className="classroom__reward__date__container">
                             {rewardTime !== null && rewardTime !== "" && <Typography variant='h6' className="classroom__reward__date">Next Reward is: {rewardTime}</Typography>}
@@ -276,11 +272,11 @@ export default function MemberRoom() {
           <div className="classroom__recent__games__games">
             <div
               style={{
-                position: "sticky",
-                top: "0",
-                backgroundColor: "white",
-                width: "100%",
-                zIndex: "10",
+                position: 'sticky',
+                top: '0',
+                backgroundColor: 'white',
+                width: '100%',
+                zIndex: '10',
               }}
             >
               <Typography
@@ -289,7 +285,7 @@ export default function MemberRoom() {
               >
                 {translations.classroom.recentGames.title}
               </Typography>
-              <div style={{ width: "100%" }}>
+              <div style={{ width: '100%' }}>
                 <br></br>
                 <Divider light />
                 <br></br>
@@ -303,21 +299,21 @@ export default function MemberRoom() {
                     onClick={() => handleSetFinalists(game.finalists || [])}
                   >
                     <img
-                      style={{ width: "100%", height: "250px" }}
+                      style={{ width: '100%', height: '250px' }}
                       src={game.coverImg || Placeholder}
                       alt="cover-img"
                     />
                     <h2>{game.name}</h2>
                     <div
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                       }}
                     >
-                      {game.userProfilePic == "" ? (
+                      {game.userProfilePic == '' ? (
                         <AccountCircle
-                          style={{ marginRight: "10px" }}
+                          style={{ marginRight: '10px' }}
                           color="primary"
                         />
                       ) : (
@@ -327,33 +323,33 @@ export default function MemberRoom() {
                           src={game.userProfilePic}
                           alt={game.userProfilePic}
                           style={{
-                            borderRadius: "100%",
-                            marginRight: "10px",
+                            borderRadius: '100%',
+                            marginRight: '10px',
                           }}
                         />
                       )}
                       <h3>{`${translations.quizzes.by} ${
-                        game.userName || "undefined"
+                        game.userName || 'undefined'
                       }`}</h3>
                     </div>
                     <div>
-                      {game.tags == "" ? null : (
+                      {game.tags == '' ? null : (
                         <div>
                           <br></br>
                           {game.tags.map((tag, index) => {
                             return (
                               <Chip
-                                style={{ margin: "5px" }}
+                                style={{ margin: '5px' }}
                                 key={tag + index}
-                                label={"#" + tag}
+                                label={'#' + tag}
                                 color="primary"
                               />
-                            );
+                            )
                           })}
                         </div>
                       )}
                     </div>
-                    <div style={{ display: "flex", alignItems: "flex-start" }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-start' }}>
                       <Typography
                         variant="h6"
                         className="classroom__recent__games__game__points"
@@ -362,17 +358,17 @@ export default function MemberRoom() {
                       </Typography>
                     </div>
                   </div>
-                );
+                )
               })}
             </div>
           </div>
           <div className="classroom__recent__games__finalists">
             <div
               style={{
-                position: "sticky",
-                top: "0",
-                backgroundColor: "white",
-                width: "100%",
+                position: 'sticky',
+                top: '0',
+                backgroundColor: 'white',
+                width: '100%',
               }}
             >
               <Typography
@@ -381,7 +377,7 @@ export default function MemberRoom() {
               >
                 {translations.classroom.finalists.title}
               </Typography>
-              <div style={{ width: "100%" }}>
+              <div style={{ width: '100%' }}>
                 <br></br>
                 <Divider light />
                 <br></br>
@@ -396,7 +392,7 @@ export default function MemberRoom() {
                       alt="member"
                       className="classroom__finalists__card__img"
                     />
-                    <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
                       <Typography
                         variant="sub1"
                         className="classroom__finalists__card__name"
@@ -433,12 +429,12 @@ export default function MemberRoom() {
                       />
                     )}
                   </div>
-                );
+                )
               })}
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

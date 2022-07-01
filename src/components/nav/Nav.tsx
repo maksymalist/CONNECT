@@ -1,7 +1,7 @@
 //@ts-nocheck
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import {
   Menu,
   MenuItem,
@@ -9,166 +9,165 @@ import {
   ClickAwayListener,
   useMediaQuery,
   Button,
-} from "@mui/material";
+} from '@mui/material'
 
 //material-ui
-import MenuIcon from "@mui/icons-material/Menu";
+import MenuIcon from '@mui/icons-material/Menu'
 
-import axios from "axios";
+import axios from 'axios'
 
-import logo from "../../img/logo.svg";
-import longLogo from "../../img/connect-text.svg";
-import "../../style/nav.css";
+import logo from '../../img/logo.svg'
+import longLogo from '../../img/connect-text.svg'
+import '../../style/nav.css'
 
-import { Add, TranslateSharp, NotificationsSharp } from "@mui/icons-material";
+import { Add, TranslateSharp, NotificationsSharp } from '@mui/icons-material'
 
-import NotificationBox from "./NotificationBox";
+import NotificationBox from './NotificationBox'
 
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql } from '@apollo/client'
 
-import config from "../../config.json";
-import getUser from "../../hooks/getUser";
-import useTranslations from "../../hooks/useTranslations";
-import useLanguage from "../../hooks/useLanguage";
+import config from '../../config.json'
+import getUser from '../../hooks/getUser'
+import useTranslations from '../../hooks/useTranslations'
+import useLanguage from '../../hooks/useLanguage'
 
 const GET_NOTIFICATION_LENGTH = gql`
   query notificationNumber($userId: ID!) {
     notificationNumber(userId: $userId)
   }
-`;
+`
 
 function Nav({ isLoggedIn, customerId }) {
-  const user = getUser();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [anchorEl2, setAnchorEl2] = useState(null);
-  const [anchorEl3, setAnchorEl3] = useState(null);
+  const user = getUser()
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [anchorEl2, setAnchorEl2] = useState(null)
+  const [anchorEl3, setAnchorEl3] = useState(null)
 
-  const translations = useTranslations();
+  const translations = useTranslations()
 
-  const [currentUsername, setCurrentUsername] = useState(null);
+  const [currentUsername, setCurrentUsername] = useState(null)
 
-  const [language, setLanguage] = useState("english");
-  const defaultLanguage = useLanguage();
+  const [language, setLanguage] = useState('english')
+  const defaultLanguage = useLanguage()
 
-  const [notificationBoxIsOpen, setNotificationBoxIsOpen] = useState(false);
+  const [notificationBoxIsOpen, setNotificationBoxIsOpen] = useState(false)
 
   const { loading, error, data } = useQuery(GET_NOTIFICATION_LENGTH, {
     variables: {
       userId: user ? user?.profileObj.googleId : null,
     },
-  });
+  })
 
-  const mediumScreen = useMediaQuery("(max-width:960px)");
-  const smallScreen = useMediaQuery("(max-width:520px)");
+  const mediumScreen = useMediaQuery('(max-width:960px)')
+  const smallScreen = useMediaQuery('(max-width:520px)')
 
   useEffect(() => {
-    if (user === null) return;
-    setCurrentUsername(user?.profileObj.name);
-    setLanguage(defaultLanguage);
-  }, []);
+    if (user === null) return
+    setCurrentUsername(user?.profileObj.name)
+    setLanguage(defaultLanguage)
+  }, [])
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleClick2 = (event) => {
-    setAnchorEl2(event.currentTarget);
-  };
+    setAnchorEl2(event.currentTarget)
+  }
 
   const handleClick3 = (event) => {
-    setAnchorEl3(event.currentTarget);
-  };
+    setAnchorEl3(event.currentTarget)
+  }
 
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
   const handleClose2 = () => {
-    setAnchorEl2(null);
-  };
+    setAnchorEl2(null)
+  }
 
   const handleClose3 = () => {
-    setAnchorEl3(null);
-  };
+    setAnchorEl3(null)
+  }
 
   const openCustomerPortal = async () => {
     if (customerId == undefined) {
-      toast.info(translations.alerts.buyplanseeinfo);
-      return;
+      toast.info(translations.alerts.buyplanseeinfo)
+      return
     }
-    setAnchorEl(null);
+    setAnchorEl(null)
 
     const res = await axios.post(
-      `${config["api-server"]}/create-customer-portal-session`,
+      `${config['api-server']}/create-customer-portal-session`,
       { customerId: customerId }
-    );
+    )
 
-    const { redirectUrl } = res.data;
+    const { redirectUrl } = res.data
 
     if (redirectUrl === null) {
-      toast.info(translations.alerts.buyplanseeinfo);
-      return;
+      toast.info(translations.alerts.buyplanseeinfo)
+      return
     }
 
-    window.location = redirectUrl;
+    window.location = redirectUrl
 
     if (res.error) {
       // Show error to your customer (e.g., insufficient funds)
-      console.log(res.error.message);
+      console.log(res.error.message)
     } else {
       //
     }
-  };
+  }
 
   const logOut = () => {
-    localStorage.removeItem("user");
-    window.location = "/login";
-  };
+    localStorage.removeItem('user')
+    window.location = '/login'
+  }
 
   const selectedColors = {
-    backgroundColor: "#6c63ff",
-    color: "white",
-    fontWeight: "bold",
-    borderRadius: "5px",
-    margin: "2px",
-  };
-  const regularColors = { backgroundColor: "white", color: "black" };
+    backgroundColor: '#6c63ff',
+    color: 'white',
+    fontWeight: 'bold',
+    borderRadius: '5px',
+    margin: '2px',
+  }
+  const regularColors = { backgroundColor: 'white', color: 'black' }
 
   const handleSetLanguage = (lang) => {
-    setLanguage(lang);
-    localStorage.setItem("connectLanguage", lang);
-    window.location.reload();
-  };
+    setLanguage(lang)
+    localStorage.setItem('connectLanguage', lang)
+    window.location.reload()
+  }
 
   const handleNotificationClose = () => {
-    setNotificationBoxIsOpen(false);
-  };
+    setNotificationBoxIsOpen(false)
+  }
 
   return (
     <nav
       style={
         mediumScreen
           ? !isLoggedIn
-            ? { display: "flex", justifyContent: "center" }
+            ? { display: 'flex', justifyContent: 'center' }
             : {}
           : {}
       }
       id="main-nav"
     >
       <div className="nav-left-section">
-        <img
-          id="home"
-          onClick={() => {
-            window.location = "/";
-          }}
-          alt="connect-logo"
-          src={smallScreen ? (!isLoggedIn ? longLogo : logo) : longLogo}
-          style={{
-            marginLeft: mediumScreen ? "10px" : "70px",
-            height: "50px",
-            width: smallScreen ? (!isLoggedIn ? "auto" : "50px") : "auto",
-          }}
-        />
+        <Link to="/">
+          <img
+            id="home"
+            alt="connect-logo"
+            src={smallScreen ? (!isLoggedIn ? longLogo : logo) : longLogo}
+            style={{
+              marginLeft: mediumScreen ? '10px' : '70px',
+              height: '50px',
+              width: smallScreen ? (!isLoggedIn ? 'auto' : '50px') : 'auto',
+            }}
+          />
+        </Link>
         {mediumScreen ? (
           <div className="dropdown">
             <button className="dropbtn">
@@ -198,14 +197,14 @@ function Nav({ isLoggedIn, customerId }) {
       <div className="nav-right-section">
         <div
           className="nav-right-icons"
-          style={!isLoggedIn ? { width: "0" } : {}}
+          style={!isLoggedIn ? { width: '0' } : {}}
         >
           {isLoggedIn ? (
             <>
               <Add
                 style={{
-                  width: "30px",
-                  height: "30px",
+                  width: '30px',
+                  height: '30px',
                 }}
                 className="nav-right-icon"
                 aria-controls="simple-menu"
@@ -214,8 +213,8 @@ function Nav({ isLoggedIn, customerId }) {
               />
               <TranslateSharp
                 style={{
-                  width: "30px",
-                  height: "30px",
+                  width: '30px',
+                  height: '30px',
                 }}
                 className="nav-right-icon"
                 aria-controls="simple-menu"
@@ -231,14 +230,14 @@ function Nav({ isLoggedIn, customerId }) {
                 >
                   <NotificationsSharp
                     style={{
-                      width: "30px",
-                      height: "30px",
+                      width: '30px',
+                      height: '30px',
                     }}
                     className="nav-right-icon"
                     onClick={() => {
                       setNotificationBoxIsOpen(
                         (notificationBoxIsOpen) => !notificationBoxIsOpen
-                      );
+                      )
                     }}
                   />
                 </Badge>
@@ -252,28 +251,24 @@ function Nav({ isLoggedIn, customerId }) {
             open={Boolean(anchorEl2)}
             onClose={handleClose2}
             style={{
-              width: "150px",
-              marginTop: "30px",
-              padding: "5px",
-              display: "flex",
-              alignItems: "center",
-              marginRight: "10px",
+              width: '150px',
+              marginTop: '30px',
+              padding: '5px',
+              display: 'flex',
+              alignItems: 'center',
+              marginRight: '10px',
             }}
           >
-            <MenuItem
-              onClick={() => {
-                window.location = "/newquiz";
-              }}
-            >
-              ⚡️ {translations.nav.add.normal}
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                window.location = "/new-multi-quiz";
-              }}
-            >
-              🥳 {translations.nav.add.multi}
-            </MenuItem>
+            <Link to="/newquiz">
+              <MenuItem style={{ color: '#000000' }}>
+                ⚡️ {translations.nav.add.normal}
+              </MenuItem>
+            </Link>
+            <Link to="/new-multi-quiz">
+              <MenuItem style={{ color: '#000000' }}>
+                🥳 {translations.nav.add.multi}
+              </MenuItem>
+            </Link>
           </Menu>
           <Menu
             id="simple-menu3"
@@ -282,27 +277,27 @@ function Nav({ isLoggedIn, customerId }) {
             open={Boolean(anchorEl3)}
             onClose={handleClose3}
             style={{
-              width: "150px",
-              marginTop: "30px",
-              padding: "5px",
-              display: "flex",
-              alignItems: "center",
-              marginRight: "10px",
+              width: '150px',
+              marginTop: '30px',
+              padding: '5px',
+              display: 'flex',
+              alignItems: 'center',
+              marginRight: '10px',
             }}
           >
             <MenuItem
-              style={language === "english" ? selectedColors : regularColors}
+              style={language === 'english' ? selectedColors : regularColors}
               onClick={() => {
-                handleSetLanguage("english");
+                handleSetLanguage('english')
               }}
             >
               English
             </MenuItem>
 
             <MenuItem
-              style={language === "french" ? selectedColors : regularColors}
+              style={language === 'french' ? selectedColors : regularColors}
               onClick={() => {
-                handleSetLanguage("french");
+                handleSetLanguage('french')
               }}
             >
               Français
@@ -312,13 +307,13 @@ function Nav({ isLoggedIn, customerId }) {
             style={
               notificationBoxIsOpen
                 ? {
-                    display: "flex",
-                    flexDirection: "column",
-                    padding: "10px",
-                    width: "350px",
-                    position: "absolute",
-                    top: "50px",
-                    marginLeft: "-190px",
+                    display: 'flex',
+                    flexDirection: 'column',
+                    padding: '10px',
+                    width: '350px',
+                    position: 'absolute',
+                    top: '50px',
+                    marginLeft: '-190px',
                   }
                 : null
             }
@@ -345,9 +340,9 @@ function Nav({ isLoggedIn, customerId }) {
               onClick={handleClick}
               alt="profile-pic"
               style={{
-                borderRadius: "100px",
-                marginLeft: "-20px",
-                margin: "5px",
+                borderRadius: '100px',
+                marginLeft: '-20px',
+                margin: '5px',
               }}
               className="liright"
               height="40px"
@@ -361,37 +356,37 @@ function Nav({ isLoggedIn, customerId }) {
               open={Boolean(anchorEl)}
               onClose={handleClose}
               style={{
-                width: "150px",
-                marginTop: "30px",
-                padding: "5px",
-                display: "flex",
-                alignItems: "center",
-                marginRight: "10px",
+                width: '150px',
+                marginTop: '30px',
+                padding: '5px',
+                display: 'flex',
+                alignItems: 'center',
+                marginRight: '10px',
               }}
             >
               <MenuItem
                 style={{
-                  borderBottom: "1px solid grey",
-                  width: "150px",
-                  justifyContent: "center",
+                  borderBottom: '1px solid grey',
+                  width: '150px',
+                  justifyContent: 'center',
                 }}
                 onClick={handleClose}
               >
                 {translations.nav.profile.head}
                 <br></br> {currentUsername}
               </MenuItem>
-              <MenuItem onClick={() => (window.location = "/profile")}>
-                {translations.nav.profile.account}
-              </MenuItem>
+              <Link to="/profile" style={{ color: '#000000' }}>
+                <MenuItem>{translations.nav.profile.account}</MenuItem>
+              </Link>
               <MenuItem onClick={openCustomerPortal}>
                 {translations.nav.profile.subscription}
               </MenuItem>
               <MenuItem
                 style={{
-                  backgroundColor: "rgb(220, 0, 78)",
-                  color: "white",
-                  fontWeight: "bold",
-                  borderRadius: "5px",
+                  backgroundColor: 'rgb(220, 0, 78)',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  borderRadius: '5px',
                 }}
                 onClick={logOut}
               >
@@ -402,10 +397,10 @@ function Nav({ isLoggedIn, customerId }) {
         )}
       </div>
     </nav>
-  );
+  )
 }
 
-export default Nav;
+export default Nav
 
 /*            <div className="dropdown">
           <button className="dropbtn">

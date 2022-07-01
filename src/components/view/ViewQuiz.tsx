@@ -1,15 +1,15 @@
 //@ts-nocheck
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import "../../style/viewQuizStyles.css";
-import { Divider, Typography, Button, Chip } from "@mui/material";
-import { AccountCircle } from "@mui/icons-material";
-import Placeholder from "../../img/quizCoverPlaceholder.svg";
-import "../../style/playButtonAnimation.css";
-import { useLocation } from "react-router-dom";
-import { useQuery, gql } from "@apollo/client";
-import { CircularProgress } from "@mui/material";
-import useTranslations from "../../hooks/useTranslations";
+import React, { useState, useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import '../../style/viewQuizStyles.css'
+import { Divider, Typography, Button, Chip } from '@mui/material'
+import { AccountCircle } from '@mui/icons-material'
+import Placeholder from '../../img/quizCoverPlaceholder.svg'
+import '../../style/playButtonAnimation.css'
+import { useLocation } from 'react-router-dom'
+import { useQuery, gql } from '@apollo/client'
+import { CircularProgress } from '@mui/material'
+import useTranslations from '../../hooks/useTranslations'
 const GET_QUIZ = gql`
   query quiz($id: ID!) {
     quiz(id: $id) {
@@ -25,13 +25,13 @@ const GET_QUIZ = gql`
       plays
     }
   }
-`;
+`
 function ViewQuiz() {
-  const [ansIsShown, setAnsIsShown] = useState(false);
-  const search = useLocation().search;
-  const { code } = useParams();
-  const translations = useTranslations();
-  const classid = new URLSearchParams(search).get("classid");
+  const [ansIsShown, setAnsIsShown] = useState(false)
+  const search = useLocation().search
+  const { code } = useParams()
+  const translations = useTranslations()
+  const classid = new URLSearchParams(search).get('classid')
   const {
     loading,
     error,
@@ -40,49 +40,49 @@ function ViewQuiz() {
     variables: {
       id: code,
     },
-  });
+  })
   useEffect(() => {
     Object.keys(
-      document.getElementsByClassName("view__quiz__content__question")
+      document.getElementsByClassName('view__quiz__content__question')
     ).map((el, index) => {
       if (
-        document.getElementsByClassName("view__quiz__content__question")[
+        document.getElementsByClassName('view__quiz__content__question')[
           index
         ] !== undefined
       )
         document
-          .getElementsByClassName("view__quiz__content__question")
-          [index].remove();
-    });
-  }, []);
+          .getElementsByClassName('view__quiz__content__question')
+          [index].remove()
+    })
+  }, [])
   const handleShowAnswers = () => {
-    setAnsIsShown(true);
-  };
+    setAnsIsShown(true)
+  }
   const handleHideAnswers = () => {
-    setAnsIsShown(false);
-  };
+    setAnsIsShown(false)
+  }
   const handleUserProfile = (userID) => {
-    const id = userID.replace("user:", "");
-    window.location.href = `/profiles/${id}`;
-  };
+    const id = userID.replace('user:', '')
+    window.location.href = `/profiles/${id}`
+  }
   return (
     <div>
       {loading ? (
         <CircularProgress
           size={150}
           thickness={3}
-          style={{ color: "white", margin: "100px" }}
+          style={{ color: 'white', margin: '100px' }}
         />
       ) : quiz ? (
         <div className="view__quiz__flex">
           <div className="view__quiz__content">
             <img
-              style={{ width: "100%", height: "400px" }}
+              style={{ width: '100%', height: '400px' }}
               src={quiz.quiz.coverImg || Placeholder}
               alt="quiz"
               className="view__quiz__image"
             />
-            <div style={{ textAlign: "left", padding: "10px" }}>
+            <div style={{ textAlign: 'left', padding: '10px' }}>
               <Typography variant="h4" component="h4">
                 {quiz.quiz.name}
               </Typography>
@@ -92,95 +92,92 @@ function ViewQuiz() {
               </Typography>
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
                 }}
               >
                 <br />
                 <div
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    flexDirection: "row",
-                    width: "100%",
-                    marginTop: "30px",
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    width: '100%',
+                    marginTop: '30px',
                   }}
                 >
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                      window.location = `/play?gamecode=${code}&classid=${classid}&mode=quiz`;
-                    }}
+                  <Link
+                    to={`/play?gamecode=${code}&classid=${classid}&mode=quiz`}
                   >
-                    {translations.multiquiz.play}
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="info"
-                    style={{ marginLeft: "20px" }}
-                    onClick={() => {
-                      window.location = `/practice/normal/${code}`;
-                    }}
-                  >
-                    {translations.multiquiz.practice}
-                  </Button>
+                    <Button variant="contained" color="primary">
+                      {translations.multiquiz.play}
+                    </Button>
+                  </Link>
+                  <Link to={`/practice/normal/${code}`}>
+                    <Button
+                      variant="contained"
+                      color="info"
+                      style={{ marginLeft: '20px' }}
+                    >
+                      {translations.multiquiz.practice}
+                    </Button>
+                  </Link>
                 </div>
               </div>
               <div
                 style={{
-                  textAlign: "left",
-                  marginBottom: "20px",
-                  marginTop: "20px",
+                  textAlign: 'left',
+                  marginBottom: '20px',
+                  marginTop: '20px',
                 }}
                 dangerouslySetInnerHTML={{
                   __html:
-                    quiz.quiz.description !== "" ? quiz.quiz.description : "",
+                    quiz.quiz.description !== '' ? quiz.quiz.description : '',
                 }}
               />
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  flexDirection: "column",
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  flexDirection: 'column',
                 }}
               >
                 <div
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
                   }}
                 >
                   {quiz.quiz.userProfilePic !== undefined ? (
                     <img
                       style={{
-                        width: "30px",
-                        height: "30px",
-                        marginRight: "10px",
-                        borderRadius: "50%",
+                        width: '30px',
+                        height: '30px',
+                        marginRight: '10px',
+                        borderRadius: '50%',
                       }}
                       draggable="false"
                       src={quiz.quiz.userProfilePic}
                       alt="quiz-img"
                       onClick={() => {
-                        handleUserProfile(quiz.quiz.userID);
+                        handleUserProfile(quiz.quiz.userID)
                       }}
                     />
                   ) : (
                     <AccountCircle
                       style={{
-                        width: "30px",
-                        height: "30px",
-                        marginRight: "10px",
-                        borderRadius: "50%",
+                        width: '30px',
+                        height: '30px',
+                        marginRight: '10px',
+                        borderRadius: '50%',
                       }}
                       color="primary"
                     />
                   )}
                   <h3>
-                    {translations.quiz.by} {quiz.quiz.userName || "undefined"}
+                    {translations.quiz.by} {quiz.quiz.userName || 'undefined'}
                   </h3>
                 </div>
                 <div>
@@ -190,12 +187,12 @@ function ViewQuiz() {
                       {quiz.quiz.tags.map((tag, index) => {
                         return (
                           <Chip
-                            style={{ margin: "5px" }}
+                            style={{ margin: '5px' }}
                             key={tag + index}
-                            label={"#" + tag}
+                            label={'#' + tag}
                             color="primary"
                           />
-                        );
+                        )
                       })}
                     </div>
                   )}
@@ -206,14 +203,14 @@ function ViewQuiz() {
           <div className="view__quiz__content__questions">
             <div
               style={{
-                display: "flex",
-                justifyContent: "space-between",
-                position: "sticky",
-                top: "0",
-                backgroundColor: "white",
-                padding: "10px",
-                zIndex: "1",
-                borderBottom: "1px solid #c4c4c4",
+                display: 'flex',
+                justifyContent: 'space-between',
+                position: 'sticky',
+                top: '0',
+                backgroundColor: 'white',
+                padding: '10px',
+                zIndex: '1',
+                borderBottom: '1px solid #c4c4c4',
               }}
             >
               <Typography variant="h5" component="h5">
@@ -238,16 +235,16 @@ function ViewQuiz() {
               )}
             </div>
             {quiz.quiz.questions.map((data, index) => {
-              data = JSON.parse(data);
-              const type = data.type === undefined ? "ques_ans" : data.type;
+              data = JSON.parse(data)
+              const type = data.type === undefined ? 'ques_ans' : data.type
               return (
                 <div className="view__quiz__content__question" key={index}>
-                  {type === "ques_ans" && (
+                  {type === 'ques_ans' && (
                     <Typography variant="h5" component="h5">
                       {index + 1}. {data.question}
                     </Typography>
                   )}
-                  {type === "ques_img" && (
+                  {type === 'ques_img' && (
                     <>
                       <Typography variant="h5" component="h5">
                         {index + 1}.
@@ -255,9 +252,9 @@ function ViewQuiz() {
                       <br />
                       <img
                         style={{
-                          width: "100%",
-                          maxWidth: "200px",
-                          height: "150px",
+                          width: '100%',
+                          maxWidth: '200px',
+                          height: '150px',
                         }}
                         src={data.question}
                         alt="quiz"
@@ -265,7 +262,7 @@ function ViewQuiz() {
                     </>
                   )}
                   {ansIsShown ? (
-                    <div style={{ width: "100%" }}>
+                    <div style={{ width: '100%' }}>
                       <br />
                       <Divider light />
                       <br />
@@ -275,12 +272,12 @@ function ViewQuiz() {
                     </div>
                   ) : null}
                 </div>
-              );
+              )
             })}
           </div>
         </div>
       ) : null}
     </div>
-  );
+  )
 }
-export default ViewQuiz;
+export default ViewQuiz

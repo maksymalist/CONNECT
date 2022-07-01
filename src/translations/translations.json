@@ -584,7 +584,8 @@
     },
     "notifications": {
       "title": "Notifications 🔔",
-      "clear": "Clear Notifications"
+      "clear": "Clear Notifications",
+      "join": "Join 🚀"
     }
   },
   "french": {
@@ -1173,7 +1174,8 @@
     },
     "notifications": {
       "title": "Notifications 🔔",
-      "clear": "Effacer notifications"
+      "clear": "Effacer notifications",
+      "join": "Rejoindre 🚀"
     }
   }
 }

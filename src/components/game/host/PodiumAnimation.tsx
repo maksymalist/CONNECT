@@ -1,15 +1,15 @@
 //@ts-nocheck
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion/dist/framer-motion";
-import Confetti from "react-confetti";
-import "../../../style/podiumAnimation.css";
-import { Howl, Howler } from "howler";
-import soundEffect from "../../../audio/drum_roll.mp3";
-import { Button } from "@mui/material";
-import useTranslations from "../../../hooks/useTranslations";
+import React, { useEffect, useState } from 'react'
+import { motion } from 'framer-motion/dist/framer-motion'
+import Confetti from 'react-confetti'
+import '../../../style/podiumAnimation.css'
+import { Howl, Howler } from 'howler'
+import soundEffect from '../../../audio/drum_roll.mp3'
+import { Button } from '@mui/material'
+import useTranslations from '../../../hooks/useTranslations'
 
 function PodiumAnimation({ podium, maxPodiumPlayers }) {
-  const translations = useTranslations();
+  const translations = useTranslations()
   //{ podium, maxPodiumPlayers }
 
   // const podium = [
@@ -80,9 +80,9 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
   const PlaySound = (mp3) => {
     let sound = new Howl({
       src: mp3,
-    });
-    sound.play();
-  };
+    })
+    sound.play()
+  }
 
   const FirstPlace = ({ name }) => {
     return (
@@ -90,10 +90,10 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
         initial={{ height: 60 }}
         animate={{ height: 450 }}
         exit={{ height: 60 }}
-        transition={{ duration: 2, delay: 5, type: "spring", stiffness: 50 }}
+        transition={{ duration: 2, delay: 5, type: 'spring', stiffness: 50 }}
         onAnimationComplete={() => {
-          document.getElementById("podium__confetti").style.visibility =
-            "visible";
+          document.getElementById('podium__confetti').style.visibility =
+            'visible'
         }}
       >
         <div>
@@ -113,10 +113,10 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
             >
               <h1
                 style={{
-                  color: "white",
-                  width: "200px",
-                  textAlign: "center",
-                  zIndex: "10",
+                  color: 'white',
+                  width: '200px',
+                  textAlign: 'center',
+                  zIndex: '10',
                 }}
               >
                 {name}
@@ -125,19 +125,19 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
           </motion.div>
           <div
             style={{
-              backgroundColor: "#FCC73E",
-              padding: "5px",
-              width: "200px",
-              marginLeft: "10px",
-              borderRadius: "5px",
-              height: "450px",
+              backgroundColor: '#FCC73E',
+              padding: '5px',
+              width: '200px',
+              marginLeft: '10px',
+              borderRadius: '5px',
+              height: '450px',
             }}
           >
             <h1
               style={{
-                color: "white",
-                fontWeight: "bold",
-                textAlign: "center",
+                color: 'white',
+                fontWeight: 'bold',
+                textAlign: 'center',
               }}
             >
               1st 🥇
@@ -145,8 +145,8 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
           </div>
         </div>
       </motion.div>
-    );
-  };
+    )
+  }
 
   const SecondPlace = ({ name }) => {
     return (
@@ -154,7 +154,7 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
         initial={{ height: 60 }}
         animate={{ height: 350 }}
         exit={{ height: 60 }}
-        transition={{ duration: 2, delay: 2, type: "spring" }}
+        transition={{ duration: 2, delay: 2, type: 'spring' }}
       >
         <div>
           <motion.div
@@ -173,10 +173,10 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
             >
               <h1
                 style={{
-                  color: "white",
-                  width: "200px",
-                  textAlign: "center",
-                  zIndex: "10",
+                  color: 'white',
+                  width: '200px',
+                  textAlign: 'center',
+                  zIndex: '10',
                 }}
               >
                 {name}
@@ -185,19 +185,19 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
           </motion.div>
           <div
             style={{
-              backgroundColor: "#2D93F0",
-              padding: "5px",
-              width: "200px",
-              marginLeft: "10px",
-              borderRadius: "5px",
-              height: "350px",
+              backgroundColor: '#2D93F0',
+              padding: '5px',
+              width: '200px',
+              marginLeft: '10px',
+              borderRadius: '5px',
+              height: '350px',
             }}
           >
             <h1
               style={{
-                color: "white",
-                fontWeight: "bold",
-                textAlign: "center",
+                color: 'white',
+                fontWeight: 'bold',
+                textAlign: 'center',
               }}
             >
               2nd 🥈
@@ -205,8 +205,8 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
           </div>
         </div>
       </motion.div>
-    );
-  };
+    )
+  }
 
   const ThirdPlace = ({ name }) => {
     return (
@@ -233,10 +233,10 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
             >
               <h1
                 style={{
-                  color: "white",
-                  width: "200px",
-                  textAlign: "center",
-                  zIndex: "10",
+                  color: 'white',
+                  width: '200px',
+                  textAlign: 'center',
+                  zIndex: '10',
                 }}
               >
                 {name}
@@ -245,19 +245,19 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
           </motion.div>
           <div
             style={{
-              backgroundColor: "#CE3EE5",
-              padding: "5px",
-              width: "200px",
-              marginLeft: "10px",
-              borderRadius: "5px",
-              height: "300px",
+              backgroundColor: '#CE3EE5',
+              padding: '5px',
+              width: '200px',
+              marginLeft: '10px',
+              borderRadius: '5px',
+              height: '300px',
             }}
           >
             <h1
               style={{
-                color: "white",
-                fontWeight: "bold",
-                textAlign: "center",
+                color: 'white',
+                fontWeight: 'bold',
+                textAlign: 'center',
               }}
             >
               3rd 🥉
@@ -265,15 +265,15 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
           </div>
         </div>
       </motion.div>
-    );
-  };
+    )
+  }
 
   useEffect(() => {
-    if (podium.length <= 0) return;
-    PlaySound(soundEffect);
-  }, [podium]);
+    if (podium.length <= 0) return
+    PlaySound(soundEffect)
+  }, [podium])
 
-  Howler.volume(1.0);
+  Howler.volume(1.0)
 
   return (
     <>
@@ -282,47 +282,47 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
           <Confetti
             width={window.innerWidth}
             height={window.innerHeight}
-            style={{ visibility: "hidden" }}
+            style={{ visibility: 'hidden' }}
             id="podium__confetti"
           />
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div
               style={{
-                display: "flex",
-                alignItems: "flex-end",
-                width: "100%",
-                justifyContent: "center",
-                overflow: "hidden",
+                display: 'flex',
+                alignItems: 'flex-end',
+                width: '100%',
+                justifyContent: 'center',
+                overflow: 'hidden',
               }}
             >
               {podium.map((podiumPlayer, index) => {
-                if (podiumPlayer?.position === "2") {
+                if (podiumPlayer?.position === '2') {
                   return (
                     <SecondPlace
                       key={index}
-                      name={podiumPlayer?.player.replace("⠀", "")}
+                      name={podiumPlayer?.player.replace('⠀', '')}
                     />
-                  );
+                  )
                 }
               })}
               {podium.map((podiumPlayer, index) => {
-                if (podiumPlayer?.position === "1") {
+                if (podiumPlayer?.position === '1') {
                   return (
                     <FirstPlace
                       key={index}
-                      name={podiumPlayer?.player.replace("⠀", "")}
+                      name={podiumPlayer?.player.replace('⠀', '')}
                     />
-                  );
+                  )
                 }
               })}
               {podium.map((podiumPlayer, index) => {
-                if (podiumPlayer?.position === "3") {
+                if (podiumPlayer?.position === '3') {
                   return (
                     <ThirdPlace
                       key={index}
-                      name={podiumPlayer?.player.replace("⠀", "")}
+                      name={podiumPlayer?.player.replace('⠀', '')}
                     />
-                  );
+                  )
                 }
               })}
             </div>
@@ -330,13 +330,13 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 2, delay: 5.5, type: "easeInOut" }}
+              transition={{ duration: 2, delay: 5.5, type: 'easeInOut' }}
             >
               <div
                 style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  justifyContent: "center",
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  justifyContent: 'center',
                 }}
               >
                 {podium.map((place, index) => {
@@ -346,10 +346,10 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
                   ) {
                     return (
                       <div key={index} className="other-place">
-                        {place?.position}th place{" "}
-                        {place?.player.replace("⠀", "")}
+                        {place?.position}th place{' '}
+                        {place?.player.replace('⠀', '')}
                       </div>
-                    );
+                    )
                   }
                 })}
               </div>
@@ -357,7 +357,7 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => (window.location = "/")}
+                  onClick={() => (window.location = '/')}
                 >
                   {translations.finishedscreen.return}
                 </Button>
@@ -367,19 +367,19 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
         </>
       ) : (
         <div
-          style={{ display: "flex", justifyContent: "center", margin: "30px" }}
+          style={{ display: 'flex', justifyContent: 'center', margin: '30px' }}
         >
           <Button
             variant="contained"
             color="primary"
-            onClick={() => (window.location = "/")}
+            onClick={() => (window.location = '/')}
           >
             {translations.finishedscreen.return}
           </Button>
         </div>
       )}
     </>
-  );
+  )
 }
 
-export default PodiumAnimation;
+export default PodiumAnimation

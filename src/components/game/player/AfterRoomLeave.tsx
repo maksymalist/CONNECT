@@ -1,7 +1,7 @@
 //@ts-nocheck
 import { useState, useEffect } from 'react'
 import { Button, CircularProgress } from '@mui/material'
-import { useParams, useLocation } from 'react-router-dom'
+import { useParams, useLocation, Link } from 'react-router-dom'
 //badges
 import FirstPlaceIcon from '../../../img/PodiumIcons/firstPlace.svg'
 import SecondPlaceIcon from '../../../img/PodiumIcons/secondPlace.svg'
@@ -41,17 +41,16 @@ export default function AfterRoomLeave() {
             <b>{translations.leftroom.kicked.title}</b>
           </h1>
           <h2 style={h2}>{translations.leftroom.kicked.sub}</h2>
-          <Button
-            style={{ marginBottom: '1vh' }}
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={() => {
-              window.location = '/play'
-            }}
-          >
-            {translations.leftroom.button}
-          </Button>
+          <Link to="/play">
+            <Button
+              style={{ marginBottom: '1vh' }}
+              variant="contained"
+              color="primary"
+              size="small"
+            >
+              {translations.leftroom.button}
+            </Button>
+          </Link>
         </div>
       )}
       {type === 'ended' && (
@@ -59,17 +58,16 @@ export default function AfterRoomLeave() {
           <h1 style={h1}>
             <b>{translations.leftroom.ended}</b>
           </h1>
-          <Button
-            style={{ marginBottom: '1vh' }}
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={() => {
-              window.location = '/play'
-            }}
-          >
-            {translations.leftroom.button}
-          </Button>
+          <Link to="/play">
+            <Button
+              style={{ marginBottom: '1vh' }}
+              variant="contained"
+              color="primary"
+              size="small"
+            >
+              {translations.leftroom.button}
+            </Button>
+          </Link>
         </div>
       )}
       {type === 'gameover' && (
@@ -184,17 +182,16 @@ export default function AfterRoomLeave() {
                   <h2 style={h2}>{translations.leftroom.over.sub}</h2>
                 </>
               )}
-              <Button
-                style={{ marginBottom: '1vh' }}
-                variant="contained"
-                color="primary"
-                size="small"
-                onClick={() => {
-                  window.location = '/play'
-                }}
-              >
-                {translations.leftroom.button}
-              </Button>
+              <Link to="/play">
+                <Button
+                  style={{ marginBottom: '1vh' }}
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                >
+                  {translations.leftroom.button}
+                </Button>
+              </Link>
             </>
           ) : (
             <>
@@ -218,17 +215,16 @@ export default function AfterRoomLeave() {
       {type === 'left' && (
         <div style={{ textAlign: 'center' }}>
           <h1 style={h1}>{translations.leftroom.title}</h1>
-          <Button
-            style={{ marginBottom: '1vh' }}
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={() => {
-              window.location = '/play'
-            }}
-          >
-            {translations.leftroom.button}
-          </Button>
+          <Link to="/play">
+            <Button
+              style={{ marginBottom: '1vh' }}
+              variant="contained"
+              color="primary"
+              size="small"
+            >
+              {translations.leftroom.button}
+            </Button>
+          </Link>
         </div>
       )}
     </div>

@@ -6,17 +6,17 @@ import {
   TextareaAutosize,
   Typography,
   useMediaQuery,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+} from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { useParams, Link } from 'react-router-dom'
 
 //apollo
-import { useMutation, gql, useQuery } from "@apollo/client";
+import { useMutation, gql, useQuery } from '@apollo/client'
 
 //img
-import RequestSent from "../../img/RequestSent.svg";
-import getUser from "../../hooks/getUser";
-import useTranslations from "../../hooks/useTranslations";
+import RequestSent from '../../img/RequestSent.svg'
+import getUser from '../../hooks/getUser'
+import useTranslations from '../../hooks/useTranslations'
 
 const GET_CLASS = gql`
   query ($classroomId: ID!) {
@@ -28,7 +28,7 @@ const GET_CLASS = gql`
       }
     }
   }
-`;
+`
 
 const CREATE_JOIN_REQUEST = gql`
   mutation (
@@ -46,58 +46,58 @@ const CREATE_JOIN_REQUEST = gql`
       imageUrl: $imageUrl
     )
   }
-`;
+`
 
 const JoinClass = () => {
-  const isSmall = useMediaQuery("(max-width:600px)");
+  const isSmall = useMediaQuery('(max-width:600px)')
   useEffect(() => {
-    document.getElementById("root").style.padding = "0px";
+    document.getElementById('root').style.padding = '0px'
 
     return () => {
-      document.getElementById("root").style.padding = "10px";
-    };
-  }, []);
+      document.getElementById('root').style.padding = '10px'
+    }
+  }, [])
 
-  const { classId } = useParams();
+  const { classId } = useParams()
 
   const { loading, error, data } = useQuery(GET_CLASS, {
     variables: {
       classroomId: classId,
     },
-  });
+  })
 
-  const [createJoinRequest] = useMutation(CREATE_JOIN_REQUEST);
+  const [createJoinRequest] = useMutation(CREATE_JOIN_REQUEST)
 
-  const [step, setStep] = useState(0);
-  const user = getUser();
-  const translations = useTranslations();
+  const [step, setStep] = useState(0)
+  const user = getUser()
+  const translations = useTranslations()
 
   const [message, setMessage] = useState(
     translations.joinclass.messageplaceholder
-  );
+  )
 
   const sendJoinRequest = async (message) => {
-    console.log(message);
+    console.log(message)
     createJoinRequest({
       variables: {
         classId: classId,
         message: message,
-        userId: "user:" + user?.profileObj.googleId,
+        userId: 'user:' + user?.profileObj.googleId,
         name: user?.profileObj.name,
         imageUrl: user?.profileObj.imageUrl,
       },
-    });
-    setStep(2);
-  };
+    })
+    setStep(2)
+  }
 
   return (
     <div
       style={{
-        width: "100vw",
-        height: "100vh",
-        marginTop: "100px",
-        display: "flex",
-        justifyContent: "center",
+        width: '100vw',
+        height: '100vh',
+        marginTop: '100px',
+        display: 'flex',
+        justifyContent: 'center',
       }}
     >
       {step === 0 && (
@@ -105,47 +105,47 @@ const JoinClass = () => {
           style={
             isSmall
               ? {
-                  backgroundColor: "white",
-                  border: "2px solid black",
-                  boxShadow: "10px 10px 0 #262626",
-                  maxWidth: "800px",
-                  width: "100%",
-                  height: "auto",
+                  backgroundColor: 'white',
+                  border: '2px solid black',
+                  boxShadow: '10px 10px 0 #262626',
+                  maxWidth: '800px',
+                  width: '100%',
+                  height: 'auto',
                 }
               : {
-                  backgroundColor: "white",
-                  border: "2px solid black",
-                  boxShadow: "10px 10px 0 #262626",
-                  maxWidth: "800px",
-                  width: "100%",
-                  maxHeight: "500px",
+                  backgroundColor: 'white',
+                  border: '2px solid black',
+                  boxShadow: '10px 10px 0 #262626',
+                  maxWidth: '800px',
+                  width: '100%',
+                  maxHeight: '500px',
                 }
           }
         >
           <div
             style={
               isSmall
-                ? { display: "flex", flexDirection: "column" }
-                : { display: "flex", flexDirection: "row" }
+                ? { display: 'flex', flexDirection: 'column' }
+                : { display: 'flex', flexDirection: 'row' }
             }
           >
             <div
               style={
                 isSmall
                   ? {
-                      padding: "15px",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      textAlign: "center",
+                      padding: '15px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      textAlign: 'center',
                     }
                   : {
-                      flex: "50",
-                      padding: "15px",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      textAlign: "center",
+                      flex: '50',
+                      padding: '15px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      textAlign: 'center',
                     }
               }
             >
@@ -157,11 +157,11 @@ const JoinClass = () => {
               </div>
               <div>
                 <Typography variant="h3">
-                  <b style={{ color: "#6c63ff" }}>
+                  <b style={{ color: '#6c63ff' }}>
                     {loading
-                      ? "loading..."
+                      ? 'loading...'
                       : error
-                      ? ""
+                      ? ''
                       : data?.classroom?.name}
                   </b>
                 </Typography>
@@ -171,11 +171,11 @@ const JoinClass = () => {
                 <Chip
                   label={
                     loading
-                      ? "0"
+                      ? '0'
                       : error
-                      ? "0"
+                      ? '0'
                       : data?.classroom?.members?.length +
-                        " " +
+                        ' ' +
                         translations.joinclass.members
                   }
                   variant="outlined"
@@ -183,32 +183,28 @@ const JoinClass = () => {
               </div>
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  width: "100%",
-                  marginTop: "100px",
+                  display: 'flex',
+                  justifyContent: 'center',
+                  width: '100%',
+                  marginTop: '100px',
                 }}
               >
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <Button
                     variant="contained"
                     color="action"
                     size="large"
-                    style={{ paddingLeft: "30px", paddingRight: "30px" }}
+                    style={{ paddingLeft: '30px', paddingRight: '30px' }}
                     onClick={() => setStep(1)}
                   >
                     {translations.joinclass.button1}
                   </Button>
-                  <Button
-                    variant="text"
-                    color="secondary"
-                    size="large"
-                    onClick={() => {
-                      window.location = "/";
-                    }}
-                  >
-                    {translations.joinclass.button2}
-                  </Button>
+
+                  <Link to="/">
+                    <Button variant="contained" color="primary">
+                      {translations.joinclass.button2}
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -216,18 +212,18 @@ const JoinClass = () => {
               style={
                 isSmall
                   ? {
-                      height: "500px",
-                      backgroundSize: "cover",
+                      height: '500px',
+                      backgroundSize: 'cover',
                       backgroundImage: `url(${
-                        loading ? "" : error ? "" : data?.classroom?.banner
+                        loading ? '' : error ? '' : data?.classroom?.banner
                       })`,
                     }
                   : {
-                      flex: "50",
-                      height: "500px",
-                      backgroundSize: "cover",
+                      flex: '50',
+                      height: '500px',
+                      backgroundSize: 'cover',
                       backgroundImage: `url(${
-                        loading ? "" : error ? "" : data?.classroom?.banner
+                        loading ? '' : error ? '' : data?.classroom?.banner
                       })`,
                     }
               }
@@ -238,17 +234,17 @@ const JoinClass = () => {
       {step === 1 && (
         <div
           style={{
-            backgroundColor: "white",
-            border: "2px solid black",
-            boxShadow: "10px 10px 0 #262626",
-            maxWidth: "600px",
-            width: "100%",
-            height: "fit-content",
-            padding: "20px",
-            margin: "20px",
+            backgroundColor: 'white',
+            border: '2px solid black',
+            boxShadow: '10px 10px 0 #262626',
+            maxWidth: '600px',
+            width: '100%',
+            height: 'fit-content',
+            padding: '20px',
+            margin: '20px',
           }}
         >
-          <Typography variant="h3" style={{ textAlign: "center" }}>
+          <Typography variant="h3" style={{ textAlign: 'center' }}>
             {translations.joinclass.message}
           </Typography>
           <br></br>
@@ -258,21 +254,21 @@ const JoinClass = () => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             style={{
-              width: "100%",
-              maxWidth: "600px",
-              minHeight: "300px",
-              maxHeight: "500px",
-              resize: "vertical",
+              width: '100%',
+              maxWidth: '600px',
+              minHeight: '300px',
+              maxHeight: '500px',
+              resize: 'vertical',
             }}
           />
           <div
-            style={{ display: "flex", flexDirection: "column", margin: "30px" }}
+            style={{ display: 'flex', flexDirection: 'column', margin: '30px' }}
           >
             <Button
               variant="contained"
               color="action"
               size="large"
-              style={{ paddingLeft: "30px", paddingRight: "30px" }}
+              style={{ paddingLeft: '30px', paddingRight: '30px' }}
               onClick={() => sendJoinRequest(message)}
             >
               {translations.joinclass.button1}
@@ -283,17 +279,17 @@ const JoinClass = () => {
       {step === 2 && (
         <div
           style={{
-            backgroundColor: "white",
-            border: "2px solid black",
-            boxShadow: "10px 10px 0 #262626",
-            maxWidth: "600px",
-            width: "100%",
-            height: "fit-content",
-            padding: "20px",
-            margin: "20px",
+            backgroundColor: 'white',
+            border: '2px solid black',
+            boxShadow: '10px 10px 0 #262626',
+            maxWidth: '600px',
+            width: '100%',
+            height: 'fit-content',
+            padding: '20px',
+            margin: '20px',
           }}
         >
-          <Typography variant="h3" style={{ textAlign: "center" }}>
+          <Typography variant="h3" style={{ textAlign: 'center' }}>
             {translations.joinclass.requestsent}
           </Typography>
           <div>
@@ -301,25 +297,23 @@ const JoinClass = () => {
               src={RequestSent}
               alt="Request Sent"
               style={{
-                width: "300px",
-                height: "auto",
-                margin: "50px",
+                width: '300px',
+                height: 'auto',
+                margin: '50px',
               }}
             />
           </div>
           <div>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => (window.location = "/")}
-            >
-              {translations.joinclass.button3}
-            </Button>
+            <Link to="/">
+              <Button variant="contained" color="primary">
+                {translations.joinclass.button3}
+              </Button>
+            </Link>
           </div>
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default JoinClass;
+export default JoinClass
