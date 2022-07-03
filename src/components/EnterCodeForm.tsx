@@ -405,20 +405,16 @@ export default function EnterCodeForm(props: Props) {
   }, [isFriendlyNicknames, maxPlayers, podiumPlaces])
 
   const JoinRoom = async () => {
-    alert('started')
     if (sessionStorage.getItem('roomJoined') == 'true') {
       toast.info(translations.alerts.sessionexpired)
-      alert('expired')
       return
     } else {
       if (joinFormNickname === '') {
         toast.error(translations.alerts.entername)
-        alert('no nick name')
         return
       }
       if (joinFormCode === '') {
         toast.error(translations.alerts.entercode)
-        alert('no code')
         return
       }
       const res = await axios.post(`${config['api-server']}/get-user-classes`, {
@@ -432,9 +428,7 @@ export default function EnterCodeForm(props: Props) {
         profane: list.array.includes(joinFormNickname),
         classes: classes ? classes : [],
       })
-      alert('else')
     }
-    alert('finished')
   }
 
   const CreateRoom = async () => {
@@ -580,7 +574,6 @@ export default function EnterCodeForm(props: Props) {
                   size="small"
                   onClick={() => {
                     JoinRoom()
-                    alert('join')
                   }}
                 >
                   {spinner1 ? (
