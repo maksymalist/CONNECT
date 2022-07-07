@@ -1,7 +1,7 @@
 //@ts-nocheck
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react'
 
-import "../../style/style.css";
+import '../../style/style.css'
 import {
   InputLabel,
   FormControl,
@@ -13,17 +13,17 @@ import {
   Typography,
   TextField,
   InputAdornment,
-} from "@mui/material";
+} from '@mui/material'
 
-import TagIcon from "@mui/icons-material/Tag";
+import TagIcon from '@mui/icons-material/Tag'
 
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql } from '@apollo/client'
 
-import banner from "../../img/banner.svg";
-import Wave from "../../img/WhiteBigStripe.svg";
+import banner from '../../img/banner.svg'
+import Wave from '../../img/WhiteBigStripe.svg'
 
-import QuizCard from "../cards/QuizCard";
-import useTranslations from "../../hooks/useTranslations";
+import QuizCard from '../cards/QuizCard'
+import useTranslations from '../../hooks/useTranslations'
 
 const GET_QUIZZES = gql`
   query allQuizzes {
@@ -38,7 +38,7 @@ const GET_QUIZZES = gql`
       __typename
     }
   }
-`;
+`
 
 const GET_MULTIS = gql`
   query allMultis {
@@ -53,44 +53,44 @@ const GET_MULTIS = gql`
       __typename
     }
   }
-`;
+`
 
 export default function BrowseQuizzes() {
-  const [gameMode, setGameMode] = useState("normal");
-  const translations = useTranslations();
+  const [gameMode, setGameMode] = useState('normal')
+  const translations = useTranslations()
 
-  const [currentTag, setCurrentTag] = useState("");
-  const [tags, setTags] = useState([]);
+  const [currentTag, setCurrentTag] = useState('')
+  const [tags, setTags] = useState([])
 
   useEffect(() => {
-    document.getElementById("root").style.padding = "0px";
+    document.getElementById('root').style.padding = '0px'
 
     return () => {
-      document.getElementById("root").style.padding = "10px";
-    };
-  }, []);
+      document.getElementById('root').style.padding = '10px'
+    }
+  }, [])
 
-  const { loading, error, data: quizzes } = useQuery(GET_QUIZZES);
-  const { loading: multisLoading, data: multis } = useQuery(GET_MULTIS);
+  const { loading, error, data: quizzes } = useQuery(GET_QUIZZES)
+  const { loading: multisLoading, data: multis } = useQuery(GET_MULTIS)
 
   const changeGamemode = (event) => {
-    event.preventDefault();
-    setGameMode(event.target.value);
-  };
+    event.preventDefault()
+    setGameMode(event.target.value)
+  }
 
   return (
     <>
       <div
         style={{
-          width: "100vw",
-          height: "auto",
-          minHeight: "200px",
-          display: "flex",
-          justifyContent: "space-evenly",
-          flexWrap: "wrap",
-          marginTop: "50px",
-          backgroundColor: "#fff",
-          padding: "10px",
+          width: '100vw',
+          height: 'auto',
+          minHeight: '200px',
+          display: 'flex',
+          justifyContent: 'space-evenly',
+          flexWrap: 'wrap',
+          marginTop: '50px',
+          backgroundColor: '#fff',
+          padding: '10px',
         }}
       >
         <div>
@@ -98,10 +98,10 @@ export default function BrowseQuizzes() {
             <Typography
               variant="h2"
               style={{
-                marginBottom: "20px",
-                marginTop: "50px",
-                fontWeight: "bold",
-                textAlign: "left",
+                marginBottom: '20px',
+                marginTop: '50px',
+                fontWeight: 'bold',
+                textAlign: 'left',
               }}
             >
               {translations.quizzes.bar.discover}
@@ -110,35 +110,35 @@ export default function BrowseQuizzes() {
           <div>
             <div
               style={{
-                display: "flex",
-                alignItems: "left",
-                marginLeft: "10px",
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "center",
+                display: 'flex',
+                alignItems: 'left',
+                marginLeft: '10px',
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
               }}
             >
               <Chip
                 label={translations.quizzes.bar.tags.history}
-                style={{ backgroundColor: "#FCC73E" }}
+                style={{ backgroundColor: '#FCC73E' }}
                 className="mui-chip"
                 color="primary"
               />
               <Chip
                 label={translations.quizzes.bar.tags.geography}
-                style={{ backgroundColor: "#1594DB" }}
+                style={{ backgroundColor: '#1594DB' }}
                 className="mui-chip"
                 color="primary"
               />
               <Chip
                 label={translations.quizzes.bar.tags.science}
-                style={{ backgroundColor: "#1BB978" }}
+                style={{ backgroundColor: '#1BB978' }}
                 className="mui-chip"
                 color="primary"
               />
               <Chip
                 label={translations.quizzes.bar.tags.sports}
-                style={{ backgroundColor: "#DC014E" }}
+                style={{ backgroundColor: '#DC014E' }}
                 className="mui-chip"
                 color="primary"
               />
@@ -150,10 +150,10 @@ export default function BrowseQuizzes() {
             src={banner}
             alt="banner"
             style={{
-              maxWidth: "400px",
-              maxHeight: "400px",
-              width: "100%",
-              height: "100%",
+              maxWidth: '400px',
+              maxHeight: '400px',
+              width: '100%',
+              height: '100%',
             }}
           />
         </div>
@@ -162,26 +162,26 @@ export default function BrowseQuizzes() {
         src={Wave}
         alt="wave"
         style={{
-          width: "100%",
-          height: "auto",
+          width: '100%',
+          height: 'auto',
         }}
       />
       <br></br>
-      <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+      <div style={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
         <div
           style={{
-            display: "flex",
-            justifyContent: "flex-start",
-            flexWrap: "wrap",
-            backgroundColor: "white",
-            alignItems: "center",
-            border: "2px solid black",
-            boxShadow: "10px 10px 0 #262626",
-            padding: "20px",
-            width: "90%",
+            display: 'flex',
+            justifyContent: 'flex-start',
+            flexWrap: 'wrap',
+            backgroundColor: 'white',
+            alignItems: 'center',
+            border: '2px solid black',
+            boxShadow: '10px 10px 0 #262626',
+            padding: '20px',
+            width: '90%',
           }}
         >
-          <Typography variant="h4" style={{ marginRight: "20px" }}>
+          <Typography variant="h4" style={{ marginRight: '20px' }}>
             <b>{translations.quizzes.bar.title}</b>
           </Typography>
           <FormControl variant="outlined">
@@ -194,7 +194,7 @@ export default function BrowseQuizzes() {
               value={gameMode}
               onChange={changeGamemode}
               label="GameMode"
-              style={{ width: "180px", height: "40px" }}
+              style={{ width: '180px', height: '40px' }}
               required
             >
               <MenuItem value="normal">
@@ -205,7 +205,7 @@ export default function BrowseQuizzes() {
               </MenuItem>
             </Select>
           </FormControl>
-          <FormControl variant="outlined" style={{ marginLeft: "10px" }}>
+          <FormControl variant="outlined" style={{ marginLeft: '10px' }}>
             <TextField
               variant="outlined"
               label={translations.quizzes.bar.tagsearch}
@@ -213,13 +213,13 @@ export default function BrowseQuizzes() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <TagIcon style={{ color: "c4c4c4", opacity: "90%" }} />
+                    <TagIcon style={{ color: 'c4c4c4', opacity: '90%' }} />
                   </InputAdornment>
                 ),
               }}
               value={currentTag}
               onChange={(e) => {
-                setCurrentTag(e.target.value);
+                setCurrentTag(e.target.value)
               }}
             />
           </FormControl>
@@ -233,61 +233,61 @@ export default function BrowseQuizzes() {
                   tag: currentTag,
                   seed: Math.floor(Math.random() * (3 + 1)),
                 },
-              ]);
-              setCurrentTag("");
+              ])
+              setCurrentTag('')
             }}
           >
             {translations.quizzes.bar.add}
           </Button>
         </div>
       </div>
-      <div style={{ marginTop: "20px" }}>
+      <div style={{ marginTop: '20px' }}>
         {tags.map((tag, index) => (
           <Chip
             key={index}
             label={tag.tag}
             className="mui-chip"
             onDelete={() => {
-              setTags(tags.filter((t) => t.tag !== tag.tag));
+              setTags(tags.filter((t) => t.tag !== tag.tag))
             }}
             color="primary"
             style={{
-              backgroundColor: ["#FCC73E", "#1594DB", "#1BB978", "#DC014E"][
+              backgroundColor: ['#FCC73E', '#1594DB', '#1BB978', '#DC014E'][
                 tag.seed
               ],
-              color: "white",
+              color: 'white',
             }}
           />
         ))}
       </div>
-      <div style={{ marginTop: "30px" }} id="feed">
-        {gameMode === "normal" ? (
+      <div style={{ marginTop: '30px' }} id="feed">
+        {gameMode === 'normal' ? (
           loading ? (
             <CircularProgress
               size={150}
               thickness={3}
-              style={{ margin: "100px", color: "white" }}
+              style={{ margin: '100px', color: 'white' }}
             />
           ) : (
             quizzes?.allQuizzes?.map((quiz, index) => {
-              return <QuizCard key={quiz.id + index} data={quiz} tags={tags} />;
+              return <QuizCard key={quiz.id + index} data={quiz} tags={tags} />
             })
           )
         ) : null}
-        {gameMode === "multi" ? (
+        {gameMode === 'multi' ? (
           multisLoading ? (
             <CircularProgress
               size={150}
               thickness={3}
-              style={{ margin: "100px", color: "white" }}
+              style={{ margin: '100px', color: 'white' }}
             />
           ) : (
             multis?.allMultis?.map((quiz, index) => {
-              return <QuizCard key={quiz.id + index} data={quiz} tags={tags} />;
+              return <QuizCard key={quiz.id + index} data={quiz} tags={tags} />
             })
           )
         ) : null}
       </div>
     </>
-  );
+  )
 }

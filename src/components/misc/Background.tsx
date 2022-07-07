@@ -1,5 +1,5 @@
-import React from "react";
-import "../../style/background.css";
+import React from 'react'
+import '../../style/background.css'
 export default function Background() {
   return (
     <>
@@ -16,5 +16,5 @@ export default function Background() {
         <li />
       </ul>
     </>
-  );
+  )
 }
