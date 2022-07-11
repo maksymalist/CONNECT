@@ -8,7 +8,7 @@ import {
   useMediaQuery,
 } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 //apollo
 import { useMutation, gql, useQuery } from '@apollo/client'
@@ -199,9 +199,8 @@ const JoinClass = () => {
                   >
                     {translations.joinclass.button1}
                   </Button>
-
                   <Link to="/">
-                    <Button variant="contained" color="primary">
+                    <Button variant="text" color="secondary" size="large">
                       {translations.joinclass.button2}
                     </Button>
                   </Link>
@@ -304,11 +303,13 @@ const JoinClass = () => {
             />
           </div>
           <div>
-            <Link to="/">
-              <Button variant="contained" color="primary">
-                {translations.joinclass.button3}
-              </Button>
-            </Link>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => (window.location = '/')}
+            >
+              {translations.joinclass.button3}
+            </Button>
           </div>
         </div>
       )}
