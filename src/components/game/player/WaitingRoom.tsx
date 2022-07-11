@@ -338,6 +338,18 @@ export default function WaitingRoom(props) {
               {translations.waitingroom.leavebutton}
             </Button>
             <Button
+              variant="contained"
+              color="action"
+              size="large"
+              onClick={() => {
+                socket.emit('leave-room', {
+                  room: props.room,
+                })
+              }}
+            >
+              Test
+            </Button>
+            <Button
               endIcon={<EmojiEmotionsOutlined />}
               style={{ marginLeft: '40px' }}
               onClick={() => {
