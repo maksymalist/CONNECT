@@ -1,4 +1,4 @@
 {
-  "socket-server": "https://quiz-connect-websocket.herokuapp.com",
-  "api-server": "https://quiz-connect-api-v2.herokuapp.com"
+  "socket-server": "http://localhost:5001",
+  "api-server": "http://localhost:3001"
 }
