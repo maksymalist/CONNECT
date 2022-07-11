@@ -88,7 +88,12 @@ export default function WaitingRoom(props) {
 
     //check connection every 8 seconds
     const check_connection_interval = setInterval(() => {
-      checkConnection(props.room, props.user, user?.profileObj.googleId)
+      checkConnection(
+        props.room,
+        props.user,
+        user?.profileObj.googleId,
+        'WAITING_FOR_PLAYERS'
+      )
     }, 8000)
 
     socket.on('addeduser', (data) => {
@@ -336,18 +341,6 @@ export default function WaitingRoom(props) {
               }}
             >
               {translations.waitingroom.leavebutton}
-            </Button>
-            <Button
-              variant="contained"
-              color="action"
-              size="large"
-              onClick={() => {
-                socket.emit('leave-room', {
-                  room: props.room,
-                })
-              }}
-            >
-              Test
             </Button>
             <Button
               endIcon={<EmojiEmotionsOutlined />}
