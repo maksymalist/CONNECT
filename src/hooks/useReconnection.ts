@@ -1,4 +1,8 @@
+import { toast } from 'react-toastify'
 import socket from '../socket-io'
+import useTranslations from '../hooks/useTranslations'
+
+const translations = useTranslations()
 
 type ReconnectionStatus = 'error' | 'success' | 'already-in-room' | 'no-room'
 type GameState =
@@ -25,7 +29,7 @@ const handleReconnection = (data: any) => {
   const status: ReconnectionStatus = data.status
 
   if (status === 'success') {
-    alert('reconnected to room')
+    toast.info(translations.alerts.reconnected)
   }
 }
 

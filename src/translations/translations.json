@@ -506,7 +506,8 @@
         "text": "it's literally just 123-456 🙃"
       },
       "addedmember": "Added Member ✨",
-      "declinedmember": "Declined Member ❌"
+      "declinedmember": "Declined Member ❌",
+      "reconnected": "🔄 Reconnected 🔄"
     },
     "paymentform": {
       "title": "Subscribe to",
@@ -1096,7 +1097,8 @@
         "text": "c'est littéralement juste 123-456 🙃"
       },
       "addedmember": "Membre Rajouté ✨",
-      "declinedmember": "Membre Rejeté ❌"
+      "declinedmember": "Membre Rejeté ❌",
+      "reconnected": "🔄 Reconnecté 🔄"
     },
     "paymentform": {
       "title": "Abonnement au",
