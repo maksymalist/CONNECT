@@ -1,20 +1,19 @@
 //@ts-nocheck
-import { useState } from "react";
 import {
   Typography,
   Stepper,
   Step,
   StepLabel,
-  CircularProgress
-} from "@mui/material";
-import useTranslations from "../../../hooks/useTranslations";
+  CircularProgress,
+} from '@mui/material'
+import useTranslations from '../../../hooks/useTranslations'
 const WaitingForHost = ({ steps, activeStep }) => {
-  const translations = useTranslations();
+  const translations = useTranslations()
   return (
     <div>
       <Typography
         variant="h3"
-        style={{ color: "white", marginTop: "100px", marginBottom: "50px" }}
+        style={{ color: 'white', marginTop: '100px', marginBottom: '50px' }}
       >
         <b>
           {translations.waitforhost.title} <br /> {translations.waitforhost.sub}
@@ -22,21 +21,21 @@ const WaitingForHost = ({ steps, activeStep }) => {
       </Typography>
       <div
         style={{
-          display: "flex",
-          alignItems: "center",
-          width: "100%",
-          justifyContent: "center"
+          display: 'flex',
+          alignItems: 'center',
+          width: '100%',
+          justifyContent: 'center',
         }}
       >
         <Stepper
           id="stepRef"
           style={{
-            width: "100%",
-            maxWidth: "800px",
-            margin: "20px",
-            overflowX: "auto",
-            backgroundColor: "white",
-            padding: "15px"
+            width: '100%',
+            maxWidth: '800px',
+            margin: '20px',
+            overflowX: 'auto',
+            backgroundColor: 'white',
+            padding: '15px',
           }}
           activeStep={activeStep}
         >
@@ -45,7 +44,7 @@ const WaitingForHost = ({ steps, activeStep }) => {
               <Step key={index}>
                 <StepLabel>{step}</StepLabel>
               </Step>
-            );
+            )
           })}
         </Stepper>
       </div>
@@ -53,10 +52,10 @@ const WaitingForHost = ({ steps, activeStep }) => {
         <CircularProgress
           size={200}
           thickness={3}
-          style={{ color: "white", margin: "100px" }}
+          style={{ color: 'white', margin: '100px' }}
         />
       </div>
     </div>
-  );
-};
-export default WaitingForHost;
+  )
+}
+export default WaitingForHost

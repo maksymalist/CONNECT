@@ -96,6 +96,10 @@ export default function WaitingRoom(props) {
       )
     }, 8000)
 
+    socket.on('reconnection-status', (data) => {
+      handleReconnection(data)
+    })
+
     socket.on('addeduser', (data) => {
       //console.log(data)
       /*var RoomUsers = []

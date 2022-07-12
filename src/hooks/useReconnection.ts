@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify'
 import socket from '../socket-io'
 
 type ReconnectionStatus = 'error' | 'success' | 'already-in-room' | 'no-room'
@@ -26,7 +25,7 @@ const handleReconnection = (data: any) => {
   const status: ReconnectionStatus = data.status
 
   if (status === 'success') {
-    toast.success(`✨ Reconnected ✨`)
+    alert('reconnected to room')
   }
 }
 
