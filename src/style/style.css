@@ -11,17 +11,13 @@ body {
   height: 90vh;
 }
 #root {
-  padding: 10px;
   overflow-x: hidden;
 }
 .App {
   text-align: center;
 }
 #navMargin {
-  margin: 50px;
-}
-#navMargin2 {
-  margin: 50px;
+  margin: 70px;
 }
 
 .MuiMenu-list {

@@ -24,13 +24,6 @@ import useTranslations from '../hooks/useTranslations'
 import { Link } from 'react-router-dom'
 export default function HomePage() {
   const user = getUser()
-  useEffect(() => {
-    if (user == null) window.location = '/login'
-    document.getElementById('root').style.padding = '0px'
-    return () => {
-      document.getElementById('root').style.padding = '10px'
-    }
-  }, [])
   const translations = useTranslations()
   const [hostActiveStep, setHostActiveStep] = useState(0)
   const [joinActiveStep, setJoinActiveStep] = useState(0)

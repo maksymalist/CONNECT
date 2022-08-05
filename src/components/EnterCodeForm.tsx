@@ -506,7 +506,12 @@ export default function EnterCodeForm(props: Props) {
   return (
     <div
       id="main__container__wrapper"
-      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        height: '100vh',
+      }}
     >
       {playMode ? (
         <div id="mainConatainer">

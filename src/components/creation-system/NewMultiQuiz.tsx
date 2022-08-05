@@ -1,6 +1,8 @@
 //@ts-nocheck
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import '../../style/NewQuizStyle.css'
+import QuizCreated from '../../img/NewQuizImg/quiz_created.svg'
 
 import {
   Chip,
@@ -11,6 +13,9 @@ import {
   Switch,
   TextareaAutosize,
   ClickAwayListener,
+  Stepper,
+  Step,
+  StepLabel,
 } from '@mui/material'
 import { toast } from 'react-toastify'
 import { AddCircleRounded, SaveAs, DeleteRounded } from '@mui/icons-material'
@@ -81,6 +86,7 @@ const CREATE_PRIVATE_MULTI_QUIZ = gql`
 `
 
 function NewMultiQuiz() {
+  const [step, setStep] = useState(0)
   const user = getUser()
   const [name, setName] = useState('')
   const [quizArray, setQuizArray] = useState([])
@@ -96,9 +102,7 @@ function NewMultiQuiz() {
   const quizObj = {}
 
   //
-  const quizName = useRef(null)
-
-  const imgRef = useRef(null)
+  const [imgSrc, setImgSrc] = useState('')
 
   const [createMulti, { data, loading, error }] = useMutation(CREATE_MULTI_QUIZ)
   const [
@@ -155,7 +159,7 @@ function NewMultiQuiz() {
                 borderRadius: '5px',
                 border: '1px solid #e0e0e0',
               }}
-              placeholder={translations.newquiz.questions.question + ' 💭'}
+              placeholder={translations.newmultiquiz.questions.question + ' 💭'}
             />
             <br></br>
             <TextareaAutosize
@@ -170,7 +174,7 @@ function NewMultiQuiz() {
                 borderRadius: '5px',
                 border: '1px solid #e0e0e0',
               }}
-              placeholder={translations.newquiz.questions.answer + '💡'}
+              placeholder={translations.newmultiquiz.questions.answer + '💡'}
             />
           </div>
           <div
@@ -186,14 +190,14 @@ function NewMultiQuiz() {
                 SaveQuestion(subIndex, index, question, answer, type)
               }
             >
-              ✨ {translations.newmultiquiz.questions.save} ✨
+              ✨ {translations.newmultiquiz.questions.save}
             </Button>
             <div style={{ width: '10px', height: '10px' }} />
             <Button
               color="secondary"
               onClick={() => DeleteQuestion(subIndex, index)}
             >
-              ❌ {translations.newmultiquiz.questions.delete} ❌
+              ❌ {translations.newmultiquiz.questions.delete}
             </Button>
           </div>
         </div>
@@ -267,7 +271,7 @@ function NewMultiQuiz() {
                 borderRadius: '5px',
                 border: '1px solid #e0e0e0',
               }}
-              placeholder={translations.newquiz.questions.answer + '💡'}
+              placeholder={translations.newmultiquiz.questions.answer + '💡'}
             />
           </div>
           <div
@@ -283,14 +287,14 @@ function NewMultiQuiz() {
                 SaveQuestion(subIndex, index, question, answer, type)
               }
             >
-              ✨ {translations.newmultiquiz.questions.save} ✨
+              ✨ {translations.newmultiquiz.questions.save}
             </Button>
             <div style={{ width: '10px', height: '10px' }} />
             <Button
               color="secondary"
               onClick={() => DeleteQuestion(subIndex, index)}
             >
-              ❌ {translations.newmultiquiz.questions.delete} ❌
+              ❌ {translations.newmultiquiz.questions.delete}
             </Button>
           </div>
         </div>
@@ -525,7 +529,7 @@ function NewMultiQuiz() {
     setTags([])
     setDescription([])
     setName([])
-    document.getElementById('coverImg').src = null
+    setImgSrc([])
   }
 
   const setQuizObj = (isPrivate, name, description) => {
@@ -538,7 +542,7 @@ function NewMultiQuiz() {
     quizObj.userName = user?.profileObj.name
     quizObj.userProfilePic = user.profileObj.imageUrl
     quizObj.userID = user.profileObj.googleId
-    quizObj.coverImg = imgRef.current ? imgRef.current.src : ''
+    quizObj.coverImg = imgSrc || ''
     quizObj.tags = getTags()
     quizObj.description = description
 
@@ -671,7 +675,16 @@ function NewMultiQuiz() {
           }}
         />
       ) : null}
-      <div style={{ marginTop: '100px' }}>
+      <div
+        style={{
+          marginTop: '100px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100vw',
+        }}
+      >
         {Prompt}
         <div
           style={{
@@ -682,197 +695,320 @@ function NewMultiQuiz() {
             margin: '10px',
             border: '2px solid black',
             boxShadow: '10px 10px 0 #262626',
+            width: '90%',
+            maxWidth: '900px',
+            padding: '50px',
+            paddingBottom: '0',
+            paddingTop: '0',
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-            }}
-          >
-            <Typography variant="h2" style={{ margin: '10px' }}>
-              <b>{translations.newmultiquiz.title}</b>
-            </Typography>
-            <br></br>
-            <Divider style={{ width: '90vw' }} light />
-            <br></br>
-            <input
-              ref={quizName}
-              className="userInput quizName"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-              type="text"
-              placeholder={translations.newmultiquiz.input}
-            ></input>
-          </div>
-          <div
+          <Stepper
             style={{
               width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-              marginTop: '10px',
+              maxWidth: '650px',
+              overflowX: 'auto',
+              margin: '30px',
             }}
+            activeStep={step}
           >
-            <UploadButton imgRef={imgRef} />
-          </div>
-          <ReactQuill
-            theme="snow"
-            value={description}
-            placeholder={translations.newmultiquiz.description}
-            onChange={setDescription}
-            style={{
-              width: '100%',
-              maxWidth: '700px',
-              height: '400px',
-              marginTop: '10px',
-              marginBottom: '50px',
-            }}
-          />
-          <div
-            style={{
-              backgroundColor: 'white',
-              padding: '15px',
-              border: '2px solid black',
-              boxShadow: '10px 10px 0 #262626',
-              width: '80vw',
-              maxWidth: '700px',
-              marginTop: '10px',
-            }}
-          >
-            <Typography variant="h4">
-              {translations.newmultiquiz.tags.title}
-            </Typography>
-            <br></br>
-            <Divider light />
-            <br></br>
-            <TextField
-              variant="outlined"
-              size="small"
-              label="Tag Name"
-              helperText={
-                <span style={{ color: 'black' }}>
-                  {5 - tagNumber} {translations.newmultiquiz.tags.helpertext}
-                </span>
-              }
-              onChange={(e) => {
-                setCurrentTag(e.target.value)
-              }}
-              value={currentTag}
-            />
-            <Button
-              variant="contained"
-              size="medium"
-              color="primary"
-              onClick={() => {
-                AddTag(currentTag)
-              }}
-            >
-              {translations.newmultiquiz.tags.button}
-            </Button>
-            <br></br>
-            {tags.map((tag, index) => (
-              <Chip
-                style={{ marginTop: '10px' }}
-                key={tag + index}
-                id={tag + index}
-                label={'#' + tag}
-                onDelete={() => handleDelete(tag + index, tag)}
-                color="primary"
+            <Step>
+              <StepLabel>{translations.newmultiquiz.stepper.step1}</StepLabel>
+            </Step>
+            <Step>
+              <StepLabel>{translations.newmultiquiz.stepper.step2}</StepLabel>
+            </Step>
+            <Step>
+              <StepLabel>{translations.newmultiquiz.stepper.step3}</StepLabel>
+            </Step>
+            <Step>
+              <StepLabel>{translations.newmultiquiz.stepper.step4}</StepLabel>
+            </Step>
+            <Step>
+              <StepLabel>{translations.newmultiquiz.stepper.step5}</StepLabel>
+            </Step>
+          </Stepper>
+          {step === 0 && (
+            <div>
+              <Typography variant="h3" style={{ margin: '10px' }}>
+                <b>{translations.newmultiquiz.step1}</b>
+              </Typography>
+              <br></br>
+              <Divider style={{ width: '90%', height: '1px' }} />
+              <br></br>
+              <input
+                className="userInput quizName"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                type="text"
+                placeholder={translations.newmultiquiz.input}
               />
-            ))}
-          </div>
-          <Typography
-            variant="h4"
-            style={{ margin: '10px', marginTop: '50px' }}
-          >
-            {translations.newmultiquiz.qna}
-          </Typography>
-          <br></br>
-          <Divider style={{ width: '90vw' }} light />
-          <br></br>
-          <div
-            className="cardContainer2-sub"
-            id="cardContainer2-sub"
-            style={{ margin: '1%', marginTop: '100px' }}
-          >
-            {quizArray.map((subject, index) => {
-              return (
-                <Subject
-                  key={index}
-                  index={index}
-                  name={subject.name}
-                  cards={subject.cards}
-                />
-              )
-            })}
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '100%',
-              }}
-            >
+            </div>
+          )}
+          {step === 1 && (
+            <>
+              <Typography variant="h3" style={{ margin: '10px' }}>
+                <b>{translations.newmultiquiz.step2}</b>
+              </Typography>
+              <br></br>
+              <Divider style={{ width: '90%', height: '1px' }} />
+              <br></br>
               <div
-                onClick={() => {
-                  AddSubject()
-                }}
-                className="card2-2-subject"
                 style={{
+                  width: '100%',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  flexDirection: 'column',
+                  marginTop: '10px',
                 }}
               >
-                <AddCircleRounded
-                  style={{ width: '75px', height: '75px' }}
-                  color="primary"
-                />
+                <UploadButton setImg={setImgSrc} url={imgSrc} />
               </div>
-            </div>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
+            </>
+          )}
+          {step === 2 && (
+            <>
+              <Typography variant="h3" style={{ margin: '10px' }}>
+                <b>
+                  <b>{translations.newmultiquiz.description}</b>
+                </b>
+              </Typography>
+              <br></br>
+              <Divider style={{ width: '90%', height: '1px' }} />
+              <br></br>
+              <ReactQuill
+                theme="snow"
+                value={description}
+                placeholder={translations.newmultiquiz.description}
+                onChange={setDescription}
+                style={{
+                  width: '100%',
+                  maxWidth: '700px',
+                  height: '400px',
+                  marginTop: '10px',
+                  marginBottom: '50px',
+                }}
+              />
+            </>
+          )}
+          {step === 3 && (
+            <>
+              <Typography variant="h3" style={{ margin: '10px' }}>
+                <b>{translations.newmultiquiz.step3}</b>
+              </Typography>
+              <br></br>
+              <Divider style={{ width: '90%', height: '1px' }} />
+              <br></br>
+              <div
+                style={{
+                  padding: '15px',
+                  width: '80vw',
+                  maxWidth: '700px',
+                  marginTop: '10px',
+                }}
+              >
+                <TextField
+                  variant="outlined"
+                  size="small"
+                  label={translations.newmultiquiz.tags.input}
+                  helperText={
+                    <span style={{ color: 'black' }}>
+                      {5 - tagNumber}{' '}
+                      {translations.newmultiquiz.tags.helpertext}
+                    </span>
+                  }
+                  onChange={(e) => {
+                    setCurrentTag(e.target.value)
+                  }}
+                  value={currentTag}
+                />
+                <Button
+                  variant="contained"
+                  size="medium"
+                  color="primary"
+                  onClick={() => {
+                    AddTag(currentTag)
+                  }}
+                >
+                  {translations.newmultiquiz.tags.button}
+                </Button>
+                <br></br>
+                {tags.map((tag, index) => (
+                  <Chip
+                    style={{ marginTop: '10px' }}
+                    key={tag + index}
+                    id={tag + index}
+                    label={'#' + tag}
+                    onDelete={() => handleDelete(tag + index, tag)}
+                    color="primary"
+                  />
+                ))}
+              </div>
+            </>
+          )}
+          {step === 4 && (
+            <>
+              <Typography variant="h3" style={{ margin: '10px' }}>
+                <b>{translations.newmultiquiz.qna}</b>
+              </Typography>
+              <br></br>
+              <Divider style={{ width: '90%', height: '1px' }} />
+              <br></br>
+              <div className="cardContainer2-sub" id="cardContainer2-sub">
+                {quizArray.map((subject, index) => {
+                  return (
+                    <Subject
+                      key={index}
+                      index={index}
+                      name={subject.name}
+                      cards={subject.cards}
+                    />
+                  )
+                })}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                  }}
+                >
+                  <div
+                    onClick={() => {
+                      AddSubject()
+                    }}
+                    className="card2-2-subject"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <AddCircleRounded
+                      style={{ width: '75px', height: '75px' }}
+                      color="primary"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography variant="subtitle1" style={{ margin: '10px' }}>
+                    {translations.newmultiquiz.private}
+                  </Typography>
+                  <Switch
+                    size="medium"
+                    checked={isPrivate}
+                    onChange={() => {
+                      setIsPrivate(!isPrivate)
+                    }}
+                    color="primary"
+                    name="checked"
+                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                  />
+                </div>
+              </div>
+            </>
+          )}
+          {step === 5 && (
             <div
               style={{
+                margin: '10px',
+              }}
+            >
+              <Typography variant="h3" style={{ margin: '10px' }}>
+                <b>{translations.newmultiquiz.success}</b>
+              </Typography>
+              <br></br>
+              <Divider style={{ width: '90%', height: '1px' }} />
+              <br></br>
+              <img draggable="false" src={QuizCreated} alt="quiz" />
+              <div
+                style={{
+                  margin: '10px',
+                  marginTop: '40px',
+                }}
+              >
+                <Link to="/">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{
+                      marginRight: '10px',
+                    }}
+                  >
+                    {translations.newmultiquiz.return}
+                  </Button>
+                </Link>
+                {/* <Link to="/practice/normal/quiz:0134479a-12f7-4bb2-b48c-a14a4af2b2a5">
+                  <Button variant="contained" color="action">
+                    ..or test quiz 🎯 ?
+                  </Button>
+                </Link> */}
+              </div>
+            </div>
+          )}
+          {step < 5 && (
+            <div
+              style={{
+                width: '100%',
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'center',
+                justifyContent: 'flex-end',
+                margin: '10px',
+                marginTop: '25px',
+                marginBottom: '25px',
               }}
             >
-              <Typography variant="subtitle1" style={{ margin: '10px' }}>
-                {translations.newmultiquiz.private}
-              </Typography>
-              <Switch
-                size="medium"
-                checked={isPrivate}
-                onChange={() => {
-                  setIsPrivate(!isPrivate)
+              <Button
+                variant="contained"
+                style={{
+                  marginRight: '10px',
                 }}
-                color="primary"
-                name="checked"
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
+                color="secondary"
+                onClick={() => {
+                  if (step === 0) return
+                  setStep(step - 1)
+                }}
+              >
+                {translations.newmultiquiz.back}
+              </Button>
+              {step < 4 ? (
+                <Button
+                  variant="contained"
+                  color="action"
+                  onClick={() => {
+                    if (step === 4) return
+                    setStep(step + 1)
+                  }}
+                >
+                  {translations.newmultiquiz.next}
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    setQuizObj(isPrivate, name, description)
+                  }}
+                >
+                  {translations.newmultiquiz.button}
+                </Button>
+              )}
             </div>
-            <Button
-              style={{ marginBottom: '1vh' }}
-              variant="contained"
-              color="primary"
-              size="large"
-              onClick={() => {
-                setQuizObj(isPrivate, name, description)
-              }}
-            >
-              {translations.newquiz.button}
-            </Button>
-          </div>
+          )}
         </div>
       </div>
     </>
@@ -880,3 +1016,7 @@ function NewMultiQuiz() {
 }
 
 export default NewMultiQuiz
+
+// ~ TODO: Add titles top each step ~
+// ~ TODO: Adjust the subject div size ~
+// ~ TODO: Test to see if it works ~

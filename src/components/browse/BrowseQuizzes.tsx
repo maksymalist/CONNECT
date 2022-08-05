@@ -62,14 +62,6 @@ export default function BrowseQuizzes() {
   const [currentTag, setCurrentTag] = useState('')
   const [tags, setTags] = useState([])
 
-  useEffect(() => {
-    document.getElementById('root').style.padding = '0px'
-
-    return () => {
-      document.getElementById('root').style.padding = '10px'
-    }
-  }, [])
-
   const { loading, error, data: quizzes } = useQuery(GET_QUIZZES)
   const { loading: multisLoading, data: multis } = useQuery(GET_MULTIS)
 

@@ -264,11 +264,19 @@
       }
     },
     "newquiz": {
-      "title": "Create a Quiz",
-      "step1": "1. Give your quiz a title",
+      "stepper": {
+        "step1": "Title 💭",
+        "step2": "Image 🏜",
+        "step3": "Description 🦄",
+        "step4": "Tags 🏷",
+        "step5": "Questions 📝"
+      },
+      "success": "Quiz created successfully ✅",
+      "step1": "Give your quiz a title",
       "input": "Title",
-      "step2": "2. Upload your cover Image",
-      "step3": "3. Give your quiz some tags",
+      "description": "Give your quiz a description",
+      "step2": "Upload Image",
+      "step3": "Add some tags (optional)",
       "tags": {
         "title": "Tags (optional)",
         "input": "Tag Name",
@@ -285,16 +293,26 @@
         "delete": "delete",
         "select": "Select Card Type 💡"
       },
+      "back": "⬅️ Back",
+      "next": "Next ➡️",
       "private": "Private 🔐",
-      "button": "Create Quiz 🎉"
+      "button": "Create Quiz 🎉",
+      "return": "Return home 🏠"
     },
     "newmultiquiz": {
-      "title": "Create a Multi Quiz",
-      "step1": "1. Give your quiz a title",
+      "stepper": {
+        "step1": "Title 💭",
+        "step2": "Image 🏜",
+        "step3": "Description 🦄",
+        "step4": "Tags 🏷",
+        "step5": "Questions 📝"
+      },
+      "success": "Quiz created successfully ✅",
+      "step1": "Give your quiz a title",
       "description": "Give your quiz a description",
       "input": "Title",
-      "step2": "2. Upload your cover Image",
-      "step3": "3. Give your quiz some tags",
+      "step2": "Upload a nice picture",
+      "step3": "Add some tags (optional)",
       "tags": {
         "title": "Tags (optional)",
         "input": "Tag Name",
@@ -315,8 +333,11 @@
         "input": "Subject Name",
         "value": "My cool subject name"
       },
+      "back": "⬅️ Back",
+      "next": "Next ➡️",
       "private": "Private 🔐",
-      "button": "Create Quiz 🎉"
+      "button": "Create Quiz 🎉",
+      "return": "Return home 🏠"
     },
     "profile": {
       "quizzes": {
@@ -460,7 +481,7 @@
       "enterroomname": "Please Enter a Room Name",
       "entergamecode": "Please Enter a Game Code",
       "entergamemode": "Please Enter a Game Mode",
-      "roomterminated": "You have succesfuly terminated",
+      "roomterminated": "You have successfully terminated",
       "terminate": {
         "text1": "You are Already Hosting a Room",
         "text2": "Do you Want to Terminate that Room?",
@@ -855,11 +876,19 @@
       }
     },
     "newquiz": {
-      "title": "Créer un quiz",
-      "step1": "1. Donnez un titre à votre quiz",
+      "stepper": {
+        "step1": "Titre 💭",
+        "step2": "Image 🏜",
+        "step3": "Description 🦄",
+        "step4": "Mots clés 🏷",
+        "step5": "Questions 📝"
+      },
+      "success": "Quiz créé avec succès ✅",
+      "step1": "Donnez un titre à votre quiz",
       "input": "Titre",
-      "step2": "2. Téléchargez votre image de couverture",
-      "step3": "3. Donnez des mots clés à votre quiz",
+      "description": "Donnez une description a votre quiz",
+      "step2": "Téléchargez une image de couverture",
+      "step3": "Donnez des mots clés à votre quiz (optionnel)",
       "tags": {
         "title": "Mots clés (optionnel)",
         "input": "Nom du mots clés",
@@ -876,16 +905,26 @@
         "delete": "Supprimer",
         "select": "Sélectionner le type de carte 💡"
       },
+      "back": "⬅️ Retour",
+      "next": "Suivant ➡️",
       "private": "Privé 🔐",
-      "button": "Partager ✈️"
+      "button": "Crée Quiz 🎉",
+      "return": "Revenir à l'accueil 🏠"
     },
     "newmultiquiz": {
-      "title": "Créer un multi-quiz",
+      "stepper": {
+        "step1": "Titre 💭",
+        "step2": "Image 🏜",
+        "step3": "Description 🦄",
+        "step4": "Mots clés 🏷",
+        "step5": "Questions 📝"
+      },
+      "success": "Quiz créé avec succès ✅",
       "description": "Donnez une description a votre quiz",
-      "step1": "1. Donnez un titre à votre quiz",
+      "step1": "Donnez un titre à votre quiz",
       "input": "Titre",
-      "step2": "2. Téléchargez votre image de couverture",
-      "step3": "3. Donnez des mots clés à votre quiz",
+      "step2": "Téléchargez une image de couverture",
+      "step3": "Donnez des mots clés à votre quiz (optionnel)",
       "tags": {
         "title": "Mots clés (optionnel)",
         "input": "Nom du mots clés",
@@ -906,8 +945,11 @@
         "input": "Nom du sujet",
         "value": "Mon sujet"
       },
-      "private": "Privé 🔐",
-      "button": "Partager ✈️"
+      "back": "⬅️ Retour",
+      "next": "Suivant ➡️",
+      "private": "Private 🔐",
+      "button": "Crée Quiz 🎉",
+      "return": "Revenir à l'accueil 🏠"
     },
     "profile": {
       "quizzes": {

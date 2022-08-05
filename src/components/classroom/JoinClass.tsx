@@ -50,13 +50,6 @@ const CREATE_JOIN_REQUEST = gql`
 
 const JoinClass = () => {
   const isSmall = useMediaQuery('(max-width:600px)')
-  useEffect(() => {
-    document.getElementById('root').style.padding = '0px'
-
-    return () => {
-      document.getElementById('root').style.padding = '10px'
-    }
-  }, [])
 
   const { classId } = useParams()
 

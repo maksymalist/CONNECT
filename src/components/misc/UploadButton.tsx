@@ -13,7 +13,7 @@ import useTranslations from '../../hooks/useTranslations'
 
 import { v4 } from 'uuid'
 
-const UploadButton = ({ imgRef }) => {
+const UploadButton = ({ setImg, url }) => {
   const firebase = getFirebase()
   const ref = useRef(undefined)
   const [file, setFile] = useState(null)
@@ -41,6 +41,7 @@ const UploadButton = ({ imgRef }) => {
       const url = await storage.ref(`quizImg/${id}`).getDownloadURL()
       console.log(url)
       setFile(url)
+      setImg(url)
       toast.success(translations.alerts.uploadedpic)
     } catch (error) {
       console.log('error', error)
@@ -51,14 +52,13 @@ const UploadButton = ({ imgRef }) => {
     <div onClick={() => handleClick()} className="upload-box">
       {file === null ? (
         <img
-          src={uploadImg}
+          src={url ? url : uploadImg}
           alt="upload"
           style={{ width: '100%', height: '100%' }}
         />
       ) : (
         <img
           id="coverImg"
-          ref={imgRef}
           style={{ width: '100%', height: '100%' }}
           src={file}
           alt="quiz-cover"
