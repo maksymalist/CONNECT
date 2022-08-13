@@ -75,9 +75,9 @@ const JoinClass = () => {
       variables: {
         classId: classId,
         message: message,
-        userId: 'user:' + user?.profileObj.googleId,
-        name: user?.profileObj.name,
-        imageUrl: user?.profileObj.imageUrl,
+        userId: 'user:' + user?.profileObj?.googleId,
+        name: user?.profileObj?.name,
+        imageUrl: user?.profileObj?.imageUrl,
       },
     })
     setStep(2)

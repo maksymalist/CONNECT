@@ -1,6 +1,6 @@
 //@ts-nocheck
-import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react'
+import { useParams } from 'react-router-dom'
 import {
   Typography,
   Button,
@@ -10,32 +10,28 @@ import {
   Divider,
   Avatar,
   CircularProgress,
-} from "@mui/material";
-import {
-  AccountCircle,
-  Lock,
-  EmojiEmotionsOutlined,
-} from "@mui/icons-material";
+} from '@mui/material'
+import { AccountCircle, Lock, EmojiEmotionsOutlined } from '@mui/icons-material'
 
-import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { toast } from 'react-toastify'
+import { Link } from 'react-router-dom'
 
-import "../../style/profileStyles.css";
+import '../../style/profileStyles.css'
 
-import Placeholder from "../../img/quizCoverPlaceholder.svg";
-import LockedEmote from "../../img/lockedEmote.svg";
-import Emotes from "../../emotes/emotes.json";
-import { useSelector } from "react-redux";
+import Placeholder from '../../img/quizCoverPlaceholder.svg'
+import LockedEmote from '../../img/lockedEmote.svg'
+import Emotes from '../../emotes/emotes.json'
+import { useSelector } from 'react-redux'
 
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql } from '@apollo/client'
 
-import axios from "axios";
+import axios from 'axios'
 
-import config from "../../config.json";
-import getUser from "../../hooks/getUser";
+import config from '../../config.json'
+import getUser from '../../hooks/getUser'
 
-import QuizCard from "../cards/QuizCard";
-import useTranslations from "../../hooks/useTranslations";
+import QuizCard from '../cards/QuizCard'
+import useTranslations from '../../hooks/useTranslations'
 
 //queries
 const GET_USER_PROFILE = gql`
@@ -93,103 +89,103 @@ const GET_USER_PROFILE = gql`
       __typename
     }
   }
-`;
+`
 
 function MyProfile() {
-  const { id } = useParams();
-  const user = getUser();
+  const { id } = useParams()
+  const user = getUser()
 
   const { loading, data } = useQuery(GET_USER_PROFILE, {
     variables: {
       userId: id,
     },
-  });
+  })
 
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(0)
 
-  const translations = useTranslations();
+  const translations = useTranslations()
 
-  const quizzesTab = useRef(null);
+  const quizzesTab = useRef(null)
 
-  const plan = useSelector((state) => state.plan);
+  const plan = useSelector((state) => state.plan)
 
-  const [userClasses, setUserClasses] = useState([]);
+  const [userClasses, setUserClasses] = useState([])
 
   const [lockedEmotes, setLockedEmotes] = useState([
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-    "17",
-    "18",
-    "19",
-    "20",
-  ]);
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+  ])
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+    setValue(newValue)
+  }
   useEffect(() => {
-    if (id == user?.profileObj.googleId) {
-      window.location = "/profile";
-      return;
+    if (id == user?.profileObj?.googleId) {
+      window.location = '/profile'
+      return
     }
-    getClasses();
-  }, []);
+    getClasses()
+  }, [])
 
   const getClasses = async () => {
     try {
-      const res = await axios.post(`${config["api-server"]}/get-user-classes`, {
+      const res = await axios.post(`${config['api-server']}/get-user-classes`, {
         userId: id,
-      });
+      })
 
       if (res.data) {
         for (let i = 0; i < res.data.length; i++) {
-          const resp = await axios.post(`${config["api-server"]}/get-class`, {
+          const resp = await axios.post(`${config['api-server']}/get-class`, {
             id: res.data[i].classId,
-          });
-          setUserClasses((prev) => [...prev, resp.data]);
+          })
+          setUserClasses((prev) => [...prev, resp.data])
         }
       }
     } catch (error) {
-      setUserClasses([]);
+      setUserClasses([])
     }
-  };
+  }
 
   const ClassCardComponent = ({ data }) => {
-    const { name, banner, members, _id } = data;
-    console.log(_id);
+    const { name, banner, members, _id } = data
+    console.log(_id)
     return (
       <div
         className="profile__class__card"
         style={{
           backgroundImage: `url(${banner || Placeholder})`,
-          backgroundSize: "cover",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
+          backgroundSize: 'cover',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
         }}
       >
         <div
           style={{
-            width: "100%",
-            backgroundColor: "white",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "25px",
+            width: '100%',
+            backgroundColor: 'white',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '25px',
           }}
         >
           <Typography
-            style={{ fontWeight: "bold", color: "black" }}
+            style={{ fontWeight: 'bold', color: 'black' }}
             variant="h5"
           >
             {name}
@@ -197,143 +193,143 @@ function MyProfile() {
         </div>
         <div
           style={{
-            display: "flex",
-            width: "100%",
-            justifyContent: "flex-start",
+            display: 'flex',
+            width: '100%',
+            justifyContent: 'flex-start',
           }}
         >
           <Chip
             color="primary"
             label={`${members.length} ${translations.classroom.members.title1}`}
-            style={{ margin: "5px" }}
+            style={{ margin: '5px' }}
           />
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   const playEmote = (src) => {
-    let emote = document.createElement("img");
-    const size = Math.floor(Math.random() * (100 - 50 + 1)) + 40;
-    emote.src = src;
-    emote.className = "emote__icons";
-    document.body.appendChild(emote);
-    emote.style.position = "fixed";
-    emote.style.top = "0";
-    emote.style.left = Math.random() * 100 + "%";
-    emote.style.top = Math.random() * 100 + "%";
-    emote.style.width = `${size}px`;
-    emote.style.height = `${size}px`;
+    let emote = document.createElement('img')
+    const size = Math.floor(Math.random() * (100 - 50 + 1)) + 40
+    emote.src = src
+    emote.className = 'emote__icons'
+    document.body.appendChild(emote)
+    emote.style.position = 'fixed'
+    emote.style.top = '0'
+    emote.style.left = Math.random() * 100 + '%'
+    emote.style.top = Math.random() * 100 + '%'
+    emote.style.width = `${size}px`
+    emote.style.height = `${size}px`
 
     setTimeout(() => {
-      emote.remove();
-    }, 5000);
-  };
+      emote.remove()
+    }, 5000)
+  }
 
   const EmoteCardComponent = ({ emoteId }) => {
-    const name = Emotes[emoteId].name;
-    const icon = Emotes[emoteId].icon;
-    const rarity = Emotes[emoteId].rarity;
+    const name = Emotes[emoteId].name
+    const icon = Emotes[emoteId].icon
+    const rarity = Emotes[emoteId].rarity
 
     return (
       <div
         className="profile__emote__card"
         onClick={() => {
-          playEmote(icon);
+          playEmote(icon)
         }}
         style={
-          rarity === "common"
+          rarity === 'common'
             ? {
-                border: "2px solid black",
-                boxShadow: "10px 10px 0 rgb(0 0 0 / 50%)",
+                border: '2px solid black',
+                boxShadow: '10px 10px 0 rgb(0 0 0 / 50%)',
               }
-            : rarity === "uncommon"
+            : rarity === 'uncommon'
             ? {
-                boxShadow: "10px 10px 0 rgb(27 185 120 / 50%)",
-                border: "2px solid #1bb978",
+                boxShadow: '10px 10px 0 rgb(27 185 120 / 50%)',
+                border: '2px solid #1bb978',
               }
-            : rarity === "rare"
+            : rarity === 'rare'
             ? {
-                boxShadow: "10px 10px 0 rgb(41 182 246 / 50%)",
-                border: "2px solid #29b6f6",
+                boxShadow: '10px 10px 0 rgb(41 182 246 / 50%)',
+                border: '2px solid #29b6f6',
               }
-            : rarity === "epic"
+            : rarity === 'epic'
             ? {
-                boxShadow: "10px 10px 0 rgb(108 99 255 / 50%)",
-                border: "2px solid #6c63ff",
+                boxShadow: '10px 10px 0 rgb(108 99 255 / 50%)',
+                border: '2px solid #6c63ff',
               }
-            : rarity === "legendary"
+            : rarity === 'legendary'
             ? {
-                boxShadow: "10px 10px 0 rgb(242 121 1 / 50%)",
-                border: "2px solid #F27901",
+                boxShadow: '10px 10px 0 rgb(242 121 1 / 50%)',
+                border: '2px solid #F27901',
               }
             : null
         }
       >
         <img
-          style={{ width: "150px", height: "150px" }}
+          style={{ width: '150px', height: '150px' }}
           src={icon}
           alt="emote-img"
         />
         <Typography
           variant="h4"
           style={
-            rarity === "common"
+            rarity === 'common'
               ? {
-                  color: "black",
+                  color: 'black',
                 }
-              : rarity === "uncommon"
+              : rarity === 'uncommon'
               ? {
-                  color: "#1bb978",
+                  color: '#1bb978',
                 }
-              : rarity === "rare"
+              : rarity === 'rare'
               ? {
-                  color: "#29b6f6",
+                  color: '#29b6f6',
                 }
-              : rarity === "epic"
+              : rarity === 'epic'
               ? {
-                  color: "#6c63ff",
+                  color: '#6c63ff',
                 }
-              : rarity === "legendary"
+              : rarity === 'legendary'
               ? {
-                  color: "#F27901",
+                  color: '#F27901',
                 }
               : null
           }
         >
-          <div style={{ width: "100%", height: "20px" }} />
+          <div style={{ width: '100%', height: '20px' }} />
           <b>{name}</b>
         </Typography>
       </div>
-    );
-  };
+    )
+  }
 
   const LockedEmoteComponent = () => {
     return (
       <div
         className="profile__emote__card"
         style={{
-          boxShadow: "10px 10px 0 rgb(0 0 0 / 50%)",
-          border: "2px solid black",
+          boxShadow: '10px 10px 0 rgb(0 0 0 / 50%)',
+          border: '2px solid black',
         }}
       >
         <img
-          style={{ width: "150px", height: "150px" }}
+          style={{ width: '150px', height: '150px' }}
           src={LockedEmote}
           alt="emote-img"
         />
         <Typography
           variant="h4"
           style={{
-            color: "black",
+            color: 'black',
           }}
         >
-          <div style={{ width: "100%", height: "20px" }} />
+          <div style={{ width: '100%', height: '20px' }} />
           <b>???</b>
         </Typography>
       </div>
-    );
-  };
+    )
+  }
 
   return (
     <div className="profile-container">
@@ -344,26 +340,26 @@ function MyProfile() {
             alt="user-pfp"
             src={loading ? null : data.user == null ? null : data.user.imageUrl}
             style={{
-              borderRadius: "50%",
-              marginTop: "-50px",
-              width: "100px",
-              height: "100px",
+              borderRadius: '50%',
+              marginTop: '-50px',
+              width: '100px',
+              height: '100px',
             }}
           />
           <div className="profile-info-text">
             <Typography
-              style={{ fontWeight: "bold", margin: "20px" }}
+              style={{ fontWeight: 'bold', margin: '20px' }}
               variant="h5"
             >
               {loading ? null : data.user == null ? null : data.user.name}
             </Typography>
-            <Typography style={{ margin: "20px" }} variant="h6">
+            <Typography style={{ margin: '20px' }} variant="h6">
               {loading ? null : data.user == null ? null : data.user.email}
             </Typography>
           </div>
         </div>
         <div className="profile-chip-div">
-          {data?.user?.plan === "Classroom" && (
+          {data?.user?.plan === 'Classroom' && (
             <Chip
               className="mui-chip"
               label={translations.profile.tags.classroom}
@@ -386,7 +382,7 @@ function MyProfile() {
               variant="outlined"
             />
           ) : null}
-          {data?.user?.role === "student" && (
+          {data?.user?.role === 'student' && (
             <Chip
               className="mui-chip"
               label={translations.profile.tags.student}
@@ -394,7 +390,7 @@ function MyProfile() {
               variant="outlined"
             />
           )}
-          {data?.user?.role === "teacher" && (
+          {data?.user?.role === 'teacher' && (
             <Chip
               className="mui-chip"
               label={translations.profile.tags.teacher}
@@ -428,10 +424,10 @@ function MyProfile() {
       <div className="profile-tab">
         {value === 0 ? (
           <div>
-            <Typography variant="h3" style={{ margin: "20px" }}>
+            <Typography variant="h3" style={{ margin: '20px' }}>
               {translations.profile.quizzes.title}
             </Typography>
-            <Divider style={{ marginLeft: "10px", marginRight: "10px" }} />
+            <Divider style={{ marginLeft: '10px', marginRight: '10px' }} />
             <br></br>
             <div className="profile-tab-quizzes" ref={quizzesTab}>
               {loading ? (
@@ -439,32 +435,32 @@ function MyProfile() {
                   color="primary"
                   size={150}
                   thickness={3}
-                  style={{ margin: "100px" }}
+                  style={{ margin: '100px' }}
                 />
               ) : data ? (
                 data.allQuizzesByUser.map((data, index) => {
-                  return <QuizCard key={index} data={data} />;
+                  return <QuizCard key={index} data={data} />
                 })
               ) : null}
               {loading
                 ? null
                 : data
                 ? data.allPrivateQuizzesByUser.map((data, index) => {
-                    return <QuizCard key={index} data={data} isPrivate />;
+                    return <QuizCard key={index} data={data} isPrivate />
                   })
                 : null}
               {loading
                 ? null
                 : data
                 ? data.allMultisByUser.map((data, index) => {
-                    return <QuizCard key={index} data={data} />;
+                    return <QuizCard key={index} data={data} />
                   })
                 : null}
               {loading
                 ? null
                 : data
                 ? data.allPrivateMultisByUser.map((data, index) => {
-                    return <QuizCard key={index} data={data} isPrivate />;
+                    return <QuizCard key={index} data={data} isPrivate />
                   })
                 : null}
             </div>
@@ -472,39 +468,39 @@ function MyProfile() {
         ) : null}
         {value === 1 ? (
           <div>
-            <Typography variant="h3" style={{ margin: "20px" }}>
+            <Typography variant="h3" style={{ margin: '20px' }}>
               {translations.profile.class.title}
             </Typography>
-            <Divider style={{ marginLeft: "10px", marginRight: "10px" }} />
+            <Divider style={{ marginLeft: '10px', marginRight: '10px' }} />
             <br></br>
             <div className="profile__user__classes">
               {userClasses.map((myclass, index) => {
                 return (
                   <Link
-                    style={{ width: "auto" }}
+                    style={{ width: 'auto' }}
                     to={`/class/${myclass._id}`}
                     key={index + 23}
                   >
                     <ClassCardComponent key={index} data={myclass} />
                   </Link>
-                );
+                )
               })}
             </div>
           </div>
         ) : null}
         {value === 2 ? (
           <div>
-            <Typography variant="h3" style={{ margin: "20px" }}>
+            <Typography variant="h3" style={{ margin: '20px' }}>
               {translations.profile.emotes.title}
             </Typography>
-            <Divider style={{ marginLeft: "10px", marginRight: "10px" }} />
+            <Divider style={{ marginLeft: '10px', marginRight: '10px' }} />
             <br></br>
             <div
               style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "center",
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
               }}
             >
               <Typography variant="h4">
@@ -512,18 +508,18 @@ function MyProfile() {
               </Typography>
               <EmojiEmotionsOutlined
                 style={{
-                  height: "35px",
-                  width: "35px",
-                  marginLeft: "5px",
-                  marginRight: "20px",
+                  height: '35px',
+                  width: '35px',
+                  marginLeft: '5px',
+                  marginRight: '20px',
                 }}
               />
             </div>
             <div
               style={{
-                display: "flex",
-                justifyContent: "center",
-                width: "100%",
+                display: 'flex',
+                justifyContent: 'center',
+                width: '100%',
               }}
             >
               <div className="profile__tab__emotes">
@@ -536,24 +532,24 @@ function MyProfile() {
                     color="primary"
                     size={150}
                     thickness={3}
-                    style={{ margin: "100px" }}
+                    style={{ margin: '100px' }}
                   />
                 ) : data ? (
                   data?.getUserEmotes.map((data, index) => {
                     return (
                       <EmoteCardComponent key={index} emoteId={data.emoteId} />
-                    );
+                    )
                   })
                 ) : null}
                 {loading
                   ? null
                   : data
                   ? lockedEmotes.map((el, index) => {
-                      const emote = data?.getUserEmotes[index]?.emoteId;
+                      const emote = data?.getUserEmotes[index]?.emoteId
                       if (emote === undefined || emote === null) {
-                        return <LockedEmoteComponent key={index} />;
+                        return <LockedEmoteComponent key={index} />
                       } else {
-                        return null;
+                        return null
                       }
                     })
                   : null}
@@ -563,7 +559,7 @@ function MyProfile() {
         ) : null}
       </div>
     </div>
-  );
+  )
 }
 
-export default MyProfile;
+export default MyProfile

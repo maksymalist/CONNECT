@@ -54,7 +54,7 @@ function Nav({ isLoggedIn, customerId }) {
 
   const { loading, error, data } = useQuery(GET_NOTIFICATION_LENGTH, {
     variables: {
-      userId: user ? user?.profileObj.googleId : null,
+      userId: user ? user?.profileObj?.googleId : null,
     },
   })
 
@@ -63,7 +63,7 @@ function Nav({ isLoggedIn, customerId }) {
 
   useEffect(() => {
     if (user === null) return
-    setCurrentUsername(user?.profileObj.name)
+    setCurrentUsername(user?.profileObj?.name)
     setLanguage(defaultLanguage)
   }, [])
 
@@ -334,7 +334,7 @@ function Nav({ isLoggedIn, customerId }) {
         ) : (
           <>
             <img
-              src={user?.profileObj.imageUrl}
+              src={user?.profileObj?.imageUrl}
               aria-controls="simple-menu"
               aria-haspopup="true"
               onClick={handleClick}

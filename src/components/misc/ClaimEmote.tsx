@@ -1,51 +1,51 @@
 //@ts-nocheck
-import React, { useEffect, useState } from "react";
-import { useMutation, gql } from "@apollo/client";
-import getUser from "../../hooks/getUser";
-import { Button, CircularProgress, Typography } from "@mui/material";
-import Emotes from "../../emotes/emotes.json";
-import { useLocation } from "react-router-dom";
-import useTranslations from "../../hooks/useTranslations";
+import React, { useEffect, useState } from 'react'
+import { useMutation, gql } from '@apollo/client'
+import getUser from '../../hooks/getUser'
+import { Button, CircularProgress, Typography } from '@mui/material'
+import Emotes from '../../emotes/emotes.json'
+import { useLocation } from 'react-router-dom'
+import useTranslations from '../../hooks/useTranslations'
 
 const CLAIM_EMOTE = gql`
   mutation ($emoteId: ID!, $owner: ID!, $secret: ID!) {
     addEmote(emoteId: $emoteId, owner: $owner, secret: $secret)
   }
-`;
+`
 
 function ClaimEmote() {
-  const [addEmote, { data, loading, error }] = useMutation(CLAIM_EMOTE);
-  const user = getUser();
+  const [addEmote, { data, loading, error }] = useMutation(CLAIM_EMOTE)
+  const user = getUser()
 
-  const search = useLocation().search;
+  const search = useLocation().search
 
-  const secret = new URLSearchParams(search).get("secret");
-  const emoteId = new URLSearchParams(search).get("emoteId");
+  const secret = new URLSearchParams(search).get('secret')
+  const emoteId = new URLSearchParams(search).get('emoteId')
 
-  const translations = useTranslations();
+  const translations = useTranslations()
 
   useEffect(() => {
     if (user) {
       addEmote({
         variables: {
           emoteId: emoteId,
-          owner: user?.profileObj.googleId,
+          owner: user?.profileObj?.googleId,
           secret: secret,
         },
-      });
+      })
     } else {
-      window.location = `/login?secret=${secret}&emoteId=${emoteId}`;
+      window.location = `/login?secret=${secret}&emoteId=${emoteId}`
     }
-  }, []);
+  }, [])
 
   return (
     <div
       style={{
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: "150px",
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: '150px',
       }}
     >
       <div>
@@ -53,17 +53,17 @@ function ClaimEmote() {
           <CircularProgress
             size={100}
             thickness={3}
-            style={{ color: "white" }}
+            style={{ color: 'white' }}
           />
         ) : data?.addEmote === true ? (
           <div>
             <Typography
-              style={{ color: "white", fontWeight: "bold" }}
+              style={{ color: 'white', fontWeight: 'bold' }}
               variant="h3"
             >
               {translations.claimemote.title1}
             </Typography>
-            <div style={{ marginTop: "50px" }}>
+            <div style={{ marginTop: '50px' }}>
               <img
                 width={250}
                 height={250}
@@ -73,10 +73,10 @@ function ClaimEmote() {
             </div>
             <div>
               <Button
-                style={{ marginTop: "50px" }}
+                style={{ marginTop: '50px' }}
                 variant="contained"
                 color="primary"
-                onClick={() => (window.location.href = "/profile")}
+                onClick={() => (window.location.href = '/profile')}
               >
                 {translations.claimemote.button1}
               </Button>
@@ -85,27 +85,27 @@ function ClaimEmote() {
         ) : (
           <div>
             <Typography
-              style={{ color: "white", fontWeight: "bold" }}
+              style={{ color: 'white', fontWeight: 'bold' }}
               variant="h3"
             >
               {translations.claimemote.title2}
             </Typography>
-            <div style={{ marginTop: "50px" }}>
+            <div style={{ marginTop: '50px' }}>
               <img
                 width={250}
                 height={250}
                 src={
-                  "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/144/apple/325/cross-mark_274c.png"
+                  'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/144/apple/325/cross-mark_274c.png'
                 }
                 alt="emote"
               />
             </div>
             <div>
               <Button
-                style={{ marginTop: "50px" }}
+                style={{ marginTop: '50px' }}
                 variant="contained"
                 color="primary"
-                onClick={() => (window.location.href = "/")}
+                onClick={() => (window.location.href = '/')}
               >
                 {translations.claimemote.button2}
               </Button>
@@ -114,7 +114,7 @@ function ClaimEmote() {
         )}
       </div>
     </div>
-  );
+  )
 }
 
-export default ClaimEmote;
+export default ClaimEmote

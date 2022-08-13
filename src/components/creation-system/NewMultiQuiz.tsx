@@ -539,9 +539,9 @@ function NewMultiQuiz() {
       return
     }
     quizObj.name = name
-    quizObj.userName = user?.profileObj.name
-    quizObj.userProfilePic = user.profileObj.imageUrl
-    quizObj.userID = user.profileObj.googleId
+    quizObj.userName = user?.profileObj?.name
+    quizObj.userProfilePic = user?.profileObj?.imageUrl
+    quizObj.userID = user?.profileObj?.googleId
     quizObj.coverImg = imgSrc || ''
     quizObj.tags = getTags()
     quizObj.description = description

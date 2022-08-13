@@ -100,7 +100,7 @@ function CreateClass() {
       _id: classID,
       name: className || '',
       banner: imgSrc || '',
-      owner: user?.profileObj.googleId,
+      owner: user?.profileObj?.googleId,
     }
 
     /*create class*/
@@ -108,7 +108,7 @@ function CreateClass() {
 
     /*notify owner*/
     const notification = {
-      userId: user?.profileObj.googleId,
+      userId: user?.profileObj?.googleId,
       type: 'class_created',
       message: `You have succesfully created ${classData.name}!`,
       data: classID,
@@ -116,7 +116,7 @@ function CreateClass() {
 
     const ownerData = {
       classId: classID,
-      userId: 'user:' + user?.profileObj.googleId,
+      userId: 'user:' + user?.profileObj?.googleId,
       role: 'owner',
     }
 

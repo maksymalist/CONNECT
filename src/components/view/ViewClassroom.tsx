@@ -54,7 +54,7 @@ export default function MemberRoom() {
     })
     const data = res.data
 
-    if (data?.owner != user?.profileObj.googleId) {
+    if (data?.owner != user?.profileObj?.googleId) {
       //window.location.href = `/view-class/${id}`
       //return
     }

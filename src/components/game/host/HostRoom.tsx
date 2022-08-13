@@ -1,8 +1,8 @@
 //@ts-nocheck
-import React, { useState, useEffect } from "react";
-import socket from "../../../socket-io";
-import ReactDOM from "react-dom";
-import { toast } from "react-toastify";
+import React, { useState, useEffect } from 'react'
+import socket from '../../../socket-io'
+import ReactDOM from 'react-dom'
+import { toast } from 'react-toastify'
 import {
   Share,
   People,
@@ -10,9 +10,9 @@ import {
   ExitToAppRounded,
   VolumeOffRounded,
   VolumeUpRounded,
-} from "@mui/icons-material";
-import GameEnded from "./GameEnded";
-import { motion } from "framer-motion/dist/framer-motion";
+} from '@mui/icons-material'
+import GameEnded from './GameEnded'
+import { motion } from 'framer-motion/dist/framer-motion'
 
 import {
   Divider,
@@ -20,202 +20,202 @@ import {
   Button,
   Slider,
   ClickAwayListener,
-} from "@mui/material";
+} from '@mui/material'
 
 //Icons
-import FirstPlaceIcon from "../../../img/PodiumIcons/firstPlace.svg";
-import SecondPlaceIcon from "../../../img/PodiumIcons/secondPlace.svg";
-import ThirdPlaceIcon from "../../../img/PodiumIcons/thirdPlace.svg";
-import TextLogo from "../../../img/text-logo.svg";
+import FirstPlaceIcon from '../../../img/PodiumIcons/firstPlace.svg'
+import SecondPlaceIcon from '../../../img/PodiumIcons/secondPlace.svg'
+import ThirdPlaceIcon from '../../../img/PodiumIcons/thirdPlace.svg'
+import TextLogo from '../../../img/text-logo.svg'
 
 //Material Ui
-import AssessmentRoundedIcon from "@mui/icons-material/AssessmentRounded";
-import TimerRoundedIcon from "@mui/icons-material/TimerRounded";
+import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded'
+import TimerRoundedIcon from '@mui/icons-material/TimerRounded'
 
-import "react-toastify/dist/ReactToastify.css";
-import "../../../style/style.css";
-import "../../../style/playButtonAnimation.css";
-import CountDown from "./CountDown";
+import 'react-toastify/dist/ReactToastify.css'
+import '../../../style/style.css'
+import '../../../style/playButtonAnimation.css'
+import CountDown from './CountDown'
 
-import SharePopup from "./SharePopup";
+import SharePopup from './SharePopup'
 
-import axios from "axios";
+import axios from 'axios'
 
-import config from "../../../config.json";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import config from '../../../config.json'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
-import QRCode from "react-qr-code";
+import QRCode from 'react-qr-code'
 
-import ReactHowler from "react-howler";
-import themeSong from "../../../audio/connect_theme.mp3";
-import getUser from "../../../hooks/getUser";
-import useTranslations from "../../../hooks/useTranslations";
+import ReactHowler from 'react-howler'
+import themeSong from '../../../audio/connect_theme.mp3'
+import getUser from '../../../hooks/getUser'
+import useTranslations from '../../../hooks/useTranslations'
 
-const playersTime = [];
-let userLimit2 = 0;
-let finished2 = [];
+const playersTime = []
+let userLimit2 = 0
+let finished2 = []
 
 export default function HostRoom(props) {
-  const user = getUser();
-  var [playerPodiumMax, setPlayerPodiumMax] = useState(props.podiumPlaces);
-  const [userLimit, setUserLimit] = useState(8);
-  const podium = [];
-  var numArray = [];
-  var playerArr = [];
-  const podiumObj = {};
-  var [numberOfUsers, setNumberOfUsers] = useState(0);
+  const user = getUser()
+  var [playerPodiumMax, setPlayerPodiumMax] = useState(props.podiumPlaces)
+  const [userLimit, setUserLimit] = useState(8)
+  const podium = []
+  var numArray = []
+  var playerArr = []
+  const podiumObj = {}
+  var [numberOfUsers, setNumberOfUsers] = useState(0)
 
-  const [name, setName] = useState("");
+  const [name, setName] = useState('')
 
-  const [isCountdown, setIsCountdown] = useState(false);
-  const [sharePopupActive, setSharePopupActive] = useState(false);
+  const [isCountdown, setIsCountdown] = useState(false)
+  const [sharePopupActive, setSharePopupActive] = useState(false)
 
-  const [gameStarted, setGameStarted] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false)
 
-  const translations = useTranslations();
+  const translations = useTranslations()
 
-  const [isRoomLeft, setIsRoomLeft] = useState(false);
+  const [isRoomLeft, setIsRoomLeft] = useState(false)
 
-  const [lowestTimeState, setLowestTime] = useState({});
+  const [lowestTimeState, setLowestTime] = useState({})
 
-  const [finalPodium, setFinalPodium] = useState([]);
-  const [finished, setFinished] = useState(0);
+  const [finalPodium, setFinalPodium] = useState([])
+  const [finished, setFinished] = useState(0)
 
-  const [musicIsPlaying, setMusicIsPlaying] = useState(false);
-  const [isSlider, setIsSlider] = useState(false);
-  const [musicVolume, setMusicVolume] = useState(50);
+  const [musicIsPlaying, setMusicIsPlaying] = useState(false)
+  const [isSlider, setIsSlider] = useState(false)
+  const [musicVolume, setMusicVolume] = useState(50)
 
-  const smallScreen = useMediaQuery("(max-width:600px)");
-  const bigScreen = useMediaQuery("(min-width:1900px)");
+  const smallScreen = useMediaQuery('(max-width:600px)')
+  const bigScreen = useMediaQuery('(min-width:1900px)')
 
   useEffect(() => {
-    setMusicIsPlaying(true);
-    fetchQuiz();
+    setMusicIsPlaying(true)
+    fetchQuiz()
     if (props.friendlyroom === true) {
-      socket.emit("addFriendlyRoom", {
+      socket.emit('addFriendlyRoom', {
         room: props.room,
-      });
+      })
     }
-    CheckPlanStatus();
-    socket.emit("joinHostRoom", {
+    CheckPlanStatus()
+    socket.emit('joinHostRoom', {
       room: props.room,
-    });
-    socket.on("addeduser", (data) => {
-      setNumberOfUsers(data?.UsersInRoom?.length);
-      updateUserDiv(data.UsersInRoom);
-      console.log(data?.UsersInRoom?.length + " / " + userLimit2);
+    })
+    socket.on('addeduser', (data) => {
+      setNumberOfUsers(data?.UsersInRoom?.length)
+      updateUserDiv(data.UsersInRoom)
+      console.log(data?.UsersInRoom?.length + ' / ' + userLimit2)
       if (data?.UsersInRoom?.length >= userLimit2) {
-        socket.emit("roomLimitReached", props.room);
+        socket.emit('roomLimitReached', props.room)
       }
-    });
+    })
 
-    socket.on("timeBoard", (data) => {
+    socket.on('timeBoard', (data) => {
       if (podium.includes(data.user)) {
-        return;
+        return
       }
 
       if (playersTime.includes(data.user) == true) {
         document.getElementById(
           data.user
-        ).innerHTML = `${data.user} <span class="time__text" style='color:#6976EA'>${data.time}s</span>`;
-        document.getElementById(data.user).dataset.time = data.time;
+        ).innerHTML = `${data.user} <span class="time__text" style='color:#6976EA'>${data.time}s</span>`
+        document.getElementById(data.user).dataset.time = data.time
       } else {
-        playersTime.push(data.user);
+        playersTime.push(data.user)
 
-        let newTime = document.createElement("h1");
+        let newTime = document.createElement('h1')
 
-        newTime.innerHTML = `${data.user} <span class="time__text" style='color:#6976EA'>${data.time}s</span>`;
-        newTime.id = data.user;
-        newTime.className = "time-box";
-        newTime.dataset.time = data.time;
+        newTime.innerHTML = `${data.user} <span class="time__text" style='color:#6976EA'>${data.time}s</span>`
+        newTime.id = data.user
+        newTime.className = 'time-box'
+        newTime.dataset.time = data.time
 
-        document.getElementById("time__div").appendChild(newTime);
+        document.getElementById('time__div').appendChild(newTime)
       }
-    });
+    })
 
-    socket.on("roomTerminated", (data) => {
-      GameOver();
-    });
+    socket.on('roomTerminated', (data) => {
+      GameOver()
+    })
 
-    socket.on("playerLeftRoom", (data) => {
-      setNumberOfUsers(data.UsersInRoom.length);
-      updateUserDiv(data.UsersInRoom);
-    });
+    socket.on('playerLeftRoom', (data) => {
+      setNumberOfUsers(data.UsersInRoom.length)
+      updateUserDiv(data.UsersInRoom)
+    })
 
-    socket.on("UpdatePodium", (data) => {
-      if (podium.includes(data.user)) return;
-      podium.push(data.user);
+    socket.on('UpdatePodium', (data) => {
+      if (podium.includes(data.user)) return
+      podium.push(data.user)
       podiumObj[data.user] = {
         time: data.time,
         id: data.id,
-      };
-      handleUpdatePodium(data.user, data.time);
+      }
+      handleUpdatePodium(data.user, data.time)
       //'first-place', 'second-place', 'third-place', 'other-place'
-      const cloneFinished = [...finished2];
+      const cloneFinished = [...finished2]
 
       if (finished2.includes(data) === false) {
-        cloneFinished.push(data);
-        finished2 = cloneFinished;
-        setFinished(cloneFinished);
+        cloneFinished.push(data)
+        finished2 = cloneFinished
+        setFinished(cloneFinished)
       }
 
       toast.success(`${data.user} ${translations.alerts.playerfinishedgame}`, {
         autoClose: 750,
-      });
+      })
 
       if (podium.length == playerPodiumMax) {
         toast.info(
           `${playerPodiumMax} ${translations.alerts.maxpodiumlimitreached}`
-        );
+        )
       }
-    });
+    })
     if (playerPodiumMax < 3) {
-      setPlayerPodiumMax(3);
+      setPlayerPodiumMax(3)
     }
-  }, []);
+  }, [])
 
   const updateUserDiv = (users) => {
-    if (gameStarted) return;
-    if (document.getElementById("userDiv") == null) return;
+    if (gameStarted) return
+    if (document.getElementById('userDiv') == null) return
     document
-      .getElementById("userDiv")
-      .querySelectorAll("*")
-      .forEach((n) => n.remove());
+      .getElementById('userDiv')
+      .querySelectorAll('*')
+      .forEach((n) => n.remove())
     users?.map((user, index) => {
-      let newUser = document.createElement("div");
-      newUser.id = user;
-      document.getElementById("userDiv").appendChild(newUser);
+      let newUser = document.createElement('div')
+      newUser.id = user
+      document.getElementById('userDiv').appendChild(newUser)
       ReactDOM.render(
         <motion.div
           initial={{ scale: 1 }}
           animate={{ scale: [1, 1.08, 1] }}
           exit={{ scale: 1 }}
-          transition={{ duration: 0.5, type: "spring", stiffness: 50 }}
+          transition={{ duration: 0.5, type: 'spring', stiffness: 50 }}
         >
           <h2
             className="userH1"
             onClick={() => {
-              kickUser(user);
+              kickUser(user)
             }}
           >
             {user}
           </h2>
         </motion.div>,
         newUser
-      );
-    });
-  };
+      )
+    })
+  }
 
   const handleUpdatePodium = () => {
-    if (document.getElementById("podium") == null) return;
+    if (document.getElementById('podium') == null) return
 
     Object.keys(podiumObj).map((key, index) => {
-      numArray.push(podiumObj[key].time);
-    });
+      numArray.push(podiumObj[key].time)
+    })
 
     numArray.sort((a, b) => {
-      return a - b;
-    });
+      return a - b
+    })
 
     Object.keys(podiumObj).map((key, index) => {
       numArray.map((time, timeIndex) => {
@@ -224,61 +224,61 @@ export default function HostRoom(props) {
             player: Object.keys(podiumObj)[index],
             time: time,
             place: timeIndex + 1,
-            id: podiumObj[Object.keys(podiumObj)[index]].id || "",
-          });
+            id: podiumObj[Object.keys(podiumObj)[index]].id || '',
+          })
         }
-      });
-    });
+      })
+    })
 
     document
-      .getElementById("podium")
-      .querySelectorAll("*")
-      .forEach((n) => n.remove());
+      .getElementById('podium')
+      .querySelectorAll('*')
+      .forEach((n) => n.remove())
 
     //render header + first-place-div + second-place-div + third-place-div
-    let podiumHeader = document.createElement("div");
-    document.getElementById("podium").appendChild(podiumHeader);
+    let podiumHeader = document.createElement('div')
+    document.getElementById('podium').appendChild(podiumHeader)
     ReactDOM.render(
       <>
         <Typography
           variant="h3"
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
-          {translations.hostroom.podium}{" "}
+          {translations.hostroom.podium}{' '}
           <AssessmentRoundedIcon
             color="primary"
-            style={{ width: "50px", height: "50px" }}
+            style={{ width: '50px', height: '50px' }}
           />
         </Typography>
         <Divider
           light
-          style={{ marginTop: "10px", marginBottom: "10px", width: "100%" }}
+          style={{ marginTop: '10px', marginBottom: '10px', width: '100%' }}
         />
       </>,
       podiumHeader
-    );
+    )
 
     //first-place-div
-    let firstPlaceDiv = document.createElement("div");
-    firstPlaceDiv.id = "first-place-div";
-    document.getElementById("podium").appendChild(firstPlaceDiv);
+    let firstPlaceDiv = document.createElement('div')
+    firstPlaceDiv.id = 'first-place-div'
+    document.getElementById('podium').appendChild(firstPlaceDiv)
     //second-place-div
-    let secondPlaceDiv = document.createElement("div");
-    secondPlaceDiv.id = "second-place-div";
-    document.getElementById("podium").appendChild(secondPlaceDiv);
+    let secondPlaceDiv = document.createElement('div')
+    secondPlaceDiv.id = 'second-place-div'
+    document.getElementById('podium').appendChild(secondPlaceDiv)
     //third-place-div
-    let thirdPlaceDiv = document.createElement("div");
-    thirdPlaceDiv.id = "third-place-div";
-    document.getElementById("podium").appendChild(thirdPlaceDiv);
+    let thirdPlaceDiv = document.createElement('div')
+    thirdPlaceDiv.id = 'third-place-div'
+    document.getElementById('podium').appendChild(thirdPlaceDiv)
 
     for (var i = 0; i < playerArr.length; i++) {
-      let newPlayerTime = document.createElement("div");
+      let newPlayerTime = document.createElement('div')
       if (playerArr[i].place > 3) {
-        document.getElementById("podium").appendChild(newPlayerTime);
+        document.getElementById('podium').appendChild(newPlayerTime)
       }
 
       if (playerArr[i].place === 1) {
@@ -290,7 +290,7 @@ export default function HostRoom(props) {
                 data-position={playerArr[i].place}
                 data-time={playerArr[i].time}
                 data-playerid={playerArr[i].id}
-                id={playerArr[i].player + "⠀"}
+                id={playerArr[i].player + '⠀'}
               >
                 <img
                   width="40"
@@ -298,14 +298,14 @@ export default function HostRoom(props) {
                   src={FirstPlaceIcon}
                   alt="FirstPlaceIcon"
                 />
-                {playerArr[i].player} {translations.hostroom.time}:{" "}
-                {playerArr[i].time} {translations.hostroom.place}:{" "}
+                {playerArr[i].player} {translations.hostroom.time}:{' '}
+                {playerArr[i].time} {translations.hostroom.place}:{' '}
                 {playerArr[i].place}
               </h1>
             </div>
           </>,
-          document.getElementById("first-place-div")
-        );
+          document.getElementById('first-place-div')
+        )
       }
       if (playerArr[i].place === 2) {
         ReactDOM.render(
@@ -315,7 +315,7 @@ export default function HostRoom(props) {
               data-position={playerArr[i].place}
               data-time={playerArr[i].time}
               data-playerid={playerArr[i].id}
-              id={playerArr[i].player + "⠀"}
+              id={playerArr[i].player + '⠀'}
             >
               <img
                 width="40"
@@ -323,13 +323,13 @@ export default function HostRoom(props) {
                 src={SecondPlaceIcon}
                 alt="SecondPlaceIcon"
               />
-              {playerArr[i].player} {translations.hostroom.time}:{" "}
-              {playerArr[i].time} {translations.hostroom.place}:{" "}
+              {playerArr[i].player} {translations.hostroom.time}:{' '}
+              {playerArr[i].time} {translations.hostroom.place}:{' '}
               {playerArr[i].place}
             </h1>
           </>,
-          document.getElementById("second-place-div")
-        );
+          document.getElementById('second-place-div')
+        )
       }
       if (playerArr[i].place === 3) {
         ReactDOM.render(
@@ -339,7 +339,7 @@ export default function HostRoom(props) {
               data-position={playerArr[i].place}
               data-time={playerArr[i].time}
               data-playerid={playerArr[i].id}
-              id={playerArr[i].player + "⠀"}
+              id={playerArr[i].player + '⠀'}
             >
               <img
                 width="40"
@@ -347,13 +347,13 @@ export default function HostRoom(props) {
                 src={ThirdPlaceIcon}
                 alt="ThirdPlaceIcon"
               />
-              {playerArr[i].player} {translations.hostroom.time}:{" "}
-              {playerArr[i].time} {translations.hostroom.place}:{" "}
+              {playerArr[i].player} {translations.hostroom.time}:{' '}
+              {playerArr[i].time} {translations.hostroom.place}:{' '}
               {playerArr[i].place}
             </h1>
           </>,
-          document.getElementById("third-place-div")
-        );
+          document.getElementById('third-place-div')
+        )
       }
       if (playerArr[i].place > 3) {
         ReactDOM.render(
@@ -363,120 +363,120 @@ export default function HostRoom(props) {
               data-position={playerArr[i].place}
               data-time={playerArr[i].time}
               data-playerid={playerArr[i].id}
-              id={playerArr[i].player + "⠀"}
+              id={playerArr[i].player + '⠀'}
             >
-              {playerArr[i].player} {translations.hostroom.time}:{" "}
-              {playerArr[i].time} {translations.hostroom.place}:{" "}
+              {playerArr[i].player} {translations.hostroom.time}:{' '}
+              {playerArr[i].time} {translations.hostroom.place}:{' '}
               {playerArr[i].place}
             </h1>
           </>,
           newPlayerTime
-        );
+        )
       }
     }
 
-    numArray = [];
-    playerArr = [];
-  };
+    numArray = []
+    playerArr = []
+  }
 
   const kickUser = (user) => {
-    socket.emit("kickUser", {
+    socket.emit('kickUser', {
       room: props.room,
       user: user,
-    });
-  };
+    })
+  }
 
   const fetchQuiz = async () => {
-    const res = await axios.post(`${config["api-server"]}/get-quiz-all-types`, {
+    const res = await axios.post(`${config['api-server']}/get-quiz-all-types`, {
       quizID: props.gamecode,
-    });
-    const quiz = res.data;
+    })
+    const quiz = res.data
 
-    setName(quiz?.name);
-  };
+    setName(quiz?.name)
+  }
 
   const CheckPlanStatus = async () => {
-    const res = await axios.post(`${config["api-server"]}/user`, {
-      userId: user?.profileObj.googleId,
-    });
-    const plan = res.data?.plan;
+    const res = await axios.post(`${config['api-server']}/user`, {
+      userId: user?.profileObj?.googleId,
+    })
+    const plan = res.data?.plan
 
-    if (plan === "Classroom") {
+    if (plan === 'Classroom') {
       if (props.maxPlayers > 100) {
-        setUserLimit(100);
-        userLimit2 = 100;
+        setUserLimit(100)
+        userLimit2 = 100
       } else if (props.maxPlayers < 3) {
-        setUserLimit(3);
-        userLimit2 = 3;
+        setUserLimit(3)
+        userLimit2 = 3
       } else {
-        setUserLimit(props.maxPlayers);
-        userLimit2 = props.maxPlayers;
+        setUserLimit(props.maxPlayers)
+        userLimit2 = props.maxPlayers
       }
     }
 
-    if (plan === "Starter") {
+    if (plan === 'Starter') {
       if (props.maxPlayers > 8) {
-        setUserLimit(8);
-        userLimit2 = 8;
+        setUserLimit(8)
+        userLimit2 = 8
       } else if (props.maxPlayers < 3) {
-        setUserLimit(3);
-        userLimit2 = 3;
+        setUserLimit(3)
+        userLimit2 = 3
       } else {
-        setUserLimit(props.maxPlayers);
-        userLimit2 = props.maxPlayers;
+        setUserLimit(props.maxPlayers)
+        userLimit2 = props.maxPlayers
       }
     }
-  };
+  }
 
   const getLowestTime = () => {
-    const times = [];
-    if (document.getElementsByClassName("time-box").length > 0) {
+    const times = []
+    if (document.getElementsByClassName('time-box').length > 0) {
       for (
         let i = 0;
-        i < document.getElementsByClassName("time-box").length;
+        i < document.getElementsByClassName('time-box').length;
         i++
       ) {
-        const el = document.getElementsByClassName("time-box")[i];
-        times.push({ player: el.id, time: el.dataset.time });
+        const el = document.getElementsByClassName('time-box')[i]
+        times.push({ player: el.id, time: el.dataset.time })
       }
       if (times.length > 0) {
-        times.sort((a, b) => a.time - b.time);
-        setLowestTime({ player: times[0].player, time: times[0].time });
+        times.sort((a, b) => a.time - b.time)
+        setLowestTime({ player: times[0].player, time: times[0].time })
       }
     }
-  };
+  }
 
   const StartGame = (room) => {
-    socket.emit("startGame", {
+    socket.emit('startGame', {
       room: room,
       gamecode: props.gamecode,
       gamemode: props.gamemode,
       maxPodium: playerPodiumMax,
-    });
+    })
     setInterval(() => {
-      getLowestTime();
-    }, 1000);
-    setGameStarted(true);
-  };
+      getLowestTime()
+    }, 1000)
+    setGameStarted(true)
+  }
 
   const startCountdown = () => {
     if (numberOfUsers <= 0) {
-      toast.error(translations.alerts.notenoughplayers);
-      return;
+      toast.error(translations.alerts.notenoughplayers)
+      return
     }
-    setIsCountdown(true);
-  };
+    setIsCountdown(true)
+  }
 
   const addPoints = async (points, userId) => {
-    const res = await axios.post(`${config["api-server"]}/add-points`, {
+    const res = await axios.post(`${config['api-server']}/add-points`, {
       points: points,
       userId: userId,
       classId: props.classid,
-    });
-  };
+    })
+  }
 
   const createRecentGame = async () => {
-    const Podium = [];
+    const Podium = []
 
     const recentGame = {
       mode: props.gamemode,
@@ -484,137 +484,134 @@ export default function HostRoom(props) {
       finalists: Podium,
       roomCode: props.room,
       classId: props.classid,
-    };
+    }
 
     for (
       let i = 0;
-      i < document.getElementsByClassName("podium-time").length;
+      i < document.getElementsByClassName('podium-time').length;
       i++
     ) {
       Podium.push({
-        time: document.getElementsByClassName("podium-time")[i].dataset.time,
+        time: document.getElementsByClassName('podium-time')[i].dataset.time,
         position:
-          document.getElementsByClassName("podium-time")[i].dataset.position,
-        player: document.getElementsByClassName("podium-time")[i].id,
+          document.getElementsByClassName('podium-time')[i].dataset.position,
+        player: document.getElementsByClassName('podium-time')[i].id,
         playerID:
-          document.getElementsByClassName("podium-time")[i].dataset.playerid,
-      });
+          document.getElementsByClassName('podium-time')[i].dataset.playerid,
+      })
     }
 
     if (props.classid !== null) {
-      await axios.post(
-        `${config["api-server"]}/create-recent-game`,
-        recentGame
-      );
+      await axios.post(`${config['api-server']}/create-recent-game`, recentGame)
 
       //add points to winners
       Podium.map(async (player) => {
         if (player.position == 1) {
-          const userId = player.playerID;
-          const res = await axios.post(`${config["api-server"]}/member`, {
+          const userId = player.playerID
+          const res = await axios.post(`${config['api-server']}/member`, {
             userId: userId,
             classId: props.classid,
-          });
+          })
           if (res.data) {
-            addPoints(100, userId);
+            addPoints(100, userId)
           }
         }
-      });
+      })
       Podium.map(async (player) => {
         if (player.position == 2) {
-          const userId = player.playerID;
-          const res = await axios.post(`${config["api-server"]}/member`, {
+          const userId = player.playerID
+          const res = await axios.post(`${config['api-server']}/member`, {
             userId: userId,
             classId: props.classid,
-          });
+          })
           if (res.data) {
-            addPoints(50, userId);
+            addPoints(50, userId)
           }
         }
-      });
+      })
       Podium.map(async (player) => {
         if (player.position == 3) {
-          const userId = player.playerID;
-          const res = await axios.post(`${config["api-server"]}/member`, {
+          const userId = player.playerID
+          const res = await axios.post(`${config['api-server']}/member`, {
             userId: userId,
             classId: props.classid,
-          });
+          })
           if (res.data) {
-            addPoints(20, userId);
+            addPoints(20, userId)
           }
         }
-      });
+      })
     }
-  };
+  }
 
   const GameOver = async () => {
-    const Podium = [];
+    const Podium = []
 
-    const res = await axios.post(`${config["api-server"]}/user`, {
-      userId: user?.profileObj.googleId,
-    });
-    const plan = res.data?.plan;
-    if (plan !== null && plan !== "" && plan !== undefined) {
-      if (plan === "Classroom") {
-        if (props.classid != "null" && props.classid !== null) {
-          createRecentGame();
+    const res = await axios.post(`${config['api-server']}/user`, {
+      userId: user?.profileObj?.googleId,
+    })
+    const plan = res.data?.plan
+    if (plan !== null && plan !== '' && plan !== undefined) {
+      if (plan === 'Classroom') {
+        if (props.classid != 'null' && props.classid !== null) {
+          createRecentGame()
         }
       }
     }
     for (
       var i = 0;
-      i < document.getElementsByClassName("podium-time").length;
+      i < document.getElementsByClassName('podium-time').length;
       i++
     ) {
       Podium.push({
-        time: document.getElementsByClassName("podium-time")[i].dataset.time,
+        time: document.getElementsByClassName('podium-time')[i].dataset.time,
         position:
-          document.getElementsByClassName("podium-time")[i].dataset.position,
-        player: document.getElementsByClassName("podium-time")[i].id,
+          document.getElementsByClassName('podium-time')[i].dataset.position,
+        player: document.getElementsByClassName('podium-time')[i].id,
         playerID:
-          document.getElementsByClassName("podium-time")[i].dataset.playerid,
-      });
+          document.getElementsByClassName('podium-time')[i].dataset.playerid,
+      })
     }
 
-    socket.emit("GameOver", {
+    socket.emit('GameOver', {
       room: props.room,
       podium: Podium,
-      googleId: user?.profileObj.googleId,
-    });
-    setGameStarted(false);
-    mute();
-    console.log(Podium);
-    setFinalPodium(Podium);
-    setIsRoomLeft(true);
-    localStorage.removeItem(user?.profileObj.googleId);
-  };
+      googleId: user?.profileObj?.googleId,
+    })
+    setGameStarted(false)
+    mute()
+    console.log(Podium)
+    setFinalPodium(Podium)
+    setIsRoomLeft(true)
+    localStorage.removeItem(user?.profileObj?.googleId)
+  }
   const shareLink = () => {
-    setSharePopupActive(!sharePopupActive);
-  };
+    setSharePopupActive(!sharePopupActive)
+  }
 
   const mute = () => {
-    setMusicIsPlaying(false);
-  };
+    setMusicIsPlaying(false)
+  }
 
   const unmute = () => {
-    setMusicIsPlaying(true);
-  };
+    setMusicIsPlaying(true)
+  }
 
   const VolumeSlider = () => (
     <div
       style={{
-        backgroundColor: "white",
+        backgroundColor: 'white',
         paddingTop: 8,
         paddingBottom: 8,
         paddingInline: 5,
         marginTop: 10,
         width: isSlider ? 150 : 45,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        border: "1px solid black",
-        boxShadow: "5px 5px 0 #262626",
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        border: '1px solid black',
+        boxShadow: '5px 5px 0 #262626',
       }}
     >
       <div
@@ -635,24 +632,24 @@ export default function HostRoom(props) {
         </ClickAwayListener>
       ) : null}
     </div>
-  );
+  )
 
   const NavBar = () => (
     <>
       <nav
         style={{
-          height: "60px",
-          backgroundColor: "white",
-          paddingInline: "10px",
-          marginBottom: "20px",
+          height: '60px',
+          backgroundColor: 'white',
+          paddingInline: '10px',
+          marginBottom: '20px',
         }}
       >
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "100%",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
           }}
         >
           <div>
@@ -662,25 +659,25 @@ export default function HostRoom(props) {
           <div>
             <Button
               variant="contained"
-              size={bigScreen ? "large" : "medium"}
+              size={bigScreen ? 'large' : 'medium'}
               color="action"
               style={{
-                backgroundColor: "#1bb978",
-                color: "white",
-                marginRight: "10px",
+                backgroundColor: '#1bb978',
+                color: 'white',
+                marginRight: '10px',
               }}
               onClick={() => {
-                GameOver();
+                GameOver()
               }}
             >
               {translations.hostroom.finish}
             </Button>
             <Button
               variant="contained"
-              size={bigScreen ? "large" : "medium"}
+              size={bigScreen ? 'large' : 'medium'}
               color="secondary"
               onClick={() => {
-                GameOver();
+                GameOver()
               }}
             >
               <ExitToAppRounded />
@@ -688,9 +685,9 @@ export default function HostRoom(props) {
           </div>
         </div>
       </nav>
-      <div style={{ width: "100vw", height: "100px" }} />
+      <div style={{ width: '100vw', height: '100px' }} />
     </>
-  );
+  )
 
   return (
     <div>
@@ -719,19 +716,19 @@ export default function HostRoom(props) {
               close={shareLink}
             />
           ) : null}
-          {props.classid != "null" && (
-            <div style={{ display: "flex", alignItems: "flex-start" }}>
+          {props.classid != 'null' && (
+            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
               {props.classid !== null && (
                 <div
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    backgroundColor: "#3f51b5",
-                    color: "white",
-                    fontWeight: "bold",
-                    borderRadius: "5px",
-                    margin: "2px",
-                    padding: "10px",
+                    display: 'flex',
+                    alignItems: 'center',
+                    backgroundColor: '#3f51b5',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    borderRadius: '5px',
+                    margin: '2px',
+                    padding: '10px',
                   }}
                 >
                   <Typography variant="sub1">
@@ -742,17 +739,17 @@ export default function HostRoom(props) {
             </div>
           )}
           {gameStarted ? (
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Typography
                 variant="h2"
                 style={{
-                  padding: "10px",
-                  border: "2px solid black",
-                  boxShadow: "5px 5px 0 #262626",
-                  backgroundColor: "white",
-                  marginTop: "10px",
-                  textAlign: "center",
-                  width: "fit-content",
+                  padding: '10px',
+                  border: '2px solid black',
+                  boxShadow: '5px 5px 0 #262626',
+                  backgroundColor: 'white',
+                  marginTop: '10px',
+                  textAlign: 'center',
+                  width: 'fit-content',
                 }}
               >
                 <b>{name}</b>
@@ -761,71 +758,71 @@ export default function HostRoom(props) {
           ) : (
             <div
               style={{
-                width: "100vw",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginBottom: "10px",
+                width: '100vw',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: '10px',
               }}
             >
               <div
                 style={
                   bigScreen
                     ? {
-                        backgroundColor: "white",
-                        border: "2px solid #000",
-                        boxShadow: "10px 10px 0 #262626",
-                        padding: "10px",
-                        margin: "10px",
-                        paddingInline: "30px",
-                        width: "600px",
-                        height: "200px",
+                        backgroundColor: 'white',
+                        border: '2px solid #000',
+                        boxShadow: '10px 10px 0 #262626',
+                        padding: '10px',
+                        margin: '10px',
+                        paddingInline: '30px',
+                        width: '600px',
+                        height: '200px',
                       }
                     : {
-                        backgroundColor: "white",
-                        border: "2px solid #000",
-                        boxShadow: "10px 10px 0 #262626",
-                        padding: "10px",
-                        margin: "10px",
-                        paddingInline: "30px",
+                        backgroundColor: 'white',
+                        border: '2px solid #000',
+                        boxShadow: '10px 10px 0 #262626',
+                        padding: '10px',
+                        margin: '10px',
+                        paddingInline: '30px',
                       }
                 }
               >
                 <div
                   style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-evenly",
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-evenly',
                   }}
                 >
-                  <div style={{ display: "flex", flexDirection: "column" }}>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography
                       variant="h2"
-                      style={bigScreen ? { fontSize: "115px" } : {}}
+                      style={bigScreen ? { fontSize: '115px' } : {}}
                     >
                       <b>{props.room}</b>
                     </Typography>
                     <Typography
                       variant="sub1"
-                      style={bigScreen ? { fontSize: "25px" } : {}}
+                      style={bigScreen ? { fontSize: '25px' } : {}}
                     >
                       {translations.hostroom.joinat}
                       <span
                         style={
                           bigScreen
                             ? {
-                                fontSize: "25px",
-                                color: "#6C63FF",
-                                textDecoration: "underline",
+                                fontSize: '25px',
+                                color: '#6C63FF',
+                                textDecoration: 'underline',
                               }
                             : {
-                                color: "#6C63FF",
-                                textDecoration: "underline",
+                                color: '#6C63FF',
+                                textDecoration: 'underline',
                               }
                         }
                         onClick={() =>
-                          window.open("https://quiz-connect.netlify.app/play")
+                          window.open('https://quiz-connect.netlify.app/play')
                         }
                       >
                         quiz-connect.netlify.app/play
@@ -837,11 +834,11 @@ export default function HostRoom(props) {
               {smallScreen ? null : (
                 <div
                   style={{
-                    backgroundColor: "white",
-                    border: "2px solid #000",
-                    boxShadow: "10px 10px 0 #262626",
-                    padding: "10px",
-                    marginLeft: "10px",
+                    backgroundColor: 'white',
+                    border: '2px solid #000',
+                    boxShadow: '10px 10px 0 #262626',
+                    padding: '10px',
+                    marginLeft: '10px',
                   }}
                 >
                   <QRCode
@@ -854,27 +851,27 @@ export default function HostRoom(props) {
           )}
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
             }}
           >
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
-                width: "150px",
+                display: 'flex',
+                flexDirection: 'column',
+                width: '150px',
               }}
             >
               {!gameStarted && (
                 <Button
-                  style={{ width: "120px" }}
+                  style={{ width: '120px' }}
                   variant="contained"
                   color="primary"
-                  size={bigScreen ? "large" : "medium"}
+                  size={bigScreen ? 'large' : 'medium'}
                   id="playButtonSvg"
                   onClick={() => {
-                    shareLink();
+                    shareLink()
                   }}
                 >
                   {translations.hostroom.sharebutton}
@@ -885,12 +882,12 @@ export default function HostRoom(props) {
             {gameStarted ? (
               <div
                 style={{
-                  padding: "5px",
-                  border: "2px solid black",
-                  boxShadow: "5px 5px 0 #262626",
-                  backgroundColor: "white",
-                  marginTop: "10px",
-                  textAlign: "center",
+                  padding: '5px',
+                  border: '2px solid black',
+                  boxShadow: '5px 5px 0 #262626',
+                  backgroundColor: 'white',
+                  marginTop: '10px',
+                  textAlign: 'center',
                 }}
               >
                 <Typography variant="h6">
@@ -900,23 +897,23 @@ export default function HostRoom(props) {
                 </Typography>
               </div>
             ) : (
-              <div style={{ display: "flex" }}>
+              <div style={{ display: 'flex' }}>
                 <Button
                   onClick={() => {
-                    startCountdown();
+                    startCountdown()
                   }}
                   variant="contained"
-                  size={bigScreen ? "large" : "medium"}
+                  size={bigScreen ? 'large' : 'medium'}
                 >
                   {translations.hostroom.startbutton}
                 </Button>
-                <div style={{ width: "10px", height: "10px" }} />
+                <div style={{ width: '10px', height: '10px' }} />
                 <Button
                   variant="contained"
                   color="secondary"
-                  size={bigScreen ? "large" : "medium"}
+                  size={bigScreen ? 'large' : 'medium'}
                   onClick={() => {
-                    GameOver();
+                    GameOver()
                   }}
                 >
                   <ExitToAppRounded />
@@ -932,10 +929,10 @@ export default function HostRoom(props) {
           {gameStarted ? null : (
             <div
               style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginBottom: "50px",
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: '50px',
               }}
             >
               <svg
@@ -1001,31 +998,31 @@ export default function HostRoom(props) {
             </div>
           )}
           {gameStarted ? null : (
-            <div style={{ color: "white" }} id="userDiv"></div>
+            <div style={{ color: 'white' }} id="userDiv"></div>
           )}
           {gameStarted && (
             <div id="game-container">
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginBottom: "50px",
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginBottom: '50px',
                 }}
               >
                 <div
                   className="lowest__time__container"
-                  style={{ backgroundColor: "#fcc73e" }}
+                  style={{ backgroundColor: '#fcc73e' }}
                 >
-                  <Typography style={{ color: "white" }} variant="h3">
+                  <Typography style={{ color: 'white' }} variant="h3">
                     👑
                   </Typography>
                   <div className="lowest-time-box">
                     <Typography variant="h3">
-                      {lowestTimeState.player}{" "}
+                      {lowestTimeState.player}{' '}
                       <span
                         className="best__time__text"
-                        style={{ color: "#6976EA" }}
+                        style={{ color: '#6976EA' }}
                       >
                         {lowestTimeState.time}s
                       </span>
@@ -1038,23 +1035,23 @@ export default function HostRoom(props) {
                   <Typography
                     variant="h3"
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}
                   >
-                    {translations.hostroom.podium}{" "}
+                    {translations.hostroom.podium}{' '}
                     <AssessmentRoundedIcon
                       color="primary"
-                      style={{ width: "50px", height: "50px" }}
+                      style={{ width: '50px', height: '50px' }}
                     />
                   </Typography>
                   <Divider
                     light
                     style={{
-                      marginTop: "10px",
-                      marginBottom: "10px",
-                      width: "100%",
+                      marginTop: '10px',
+                      marginBottom: '10px',
+                      width: '100%',
                     }}
                   />
                   <div id="first-place-div"></div>
@@ -1064,9 +1061,9 @@ export default function HostRoom(props) {
               </div>
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
                 <div id="time__div"></div>
@@ -1076,5 +1073,5 @@ export default function HostRoom(props) {
         </div>
       )}
     </div>
-  );
+  )
 }

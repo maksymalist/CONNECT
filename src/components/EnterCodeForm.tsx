@@ -292,10 +292,10 @@ export default function EnterCodeForm(props: Props) {
           document.getElementById('root')
         )
       }
-      localStorage.setItem(user?.profileObj.googleId, true as any)
+      localStorage.setItem(user?.profileObj?.googleId, true as any)
 
       socket.emit('addHost', {
-        googleId: user?.profileObj.googleId,
+        googleId: user?.profileObj?.googleId,
         room: data.room,
       })
 
@@ -303,7 +303,7 @@ export default function EnterCodeForm(props: Props) {
         socket.emit('addPrivateRoom', {
           room: data.room,
           classId: validclassId,
-          googleId: user?.profileObj.googleId,
+          googleId: user?.profileObj?.googleId,
         })
 
         const res = await axios.post(
@@ -317,7 +317,7 @@ export default function EnterCodeForm(props: Props) {
           const notification = {
             userId: memberId.replace(/user:/g, ''),
             type: 'invitation_to_room',
-            message: `${user?.profileObj.name} has invited you to play a game in room ${data.room}!`,
+            message: `${user?.profileObj?.name} has invited you to play a game in room ${data.room}!`,
             data: JSON.stringify({ room: data.room, classId: validclassId }),
           }
 
@@ -418,7 +418,7 @@ export default function EnterCodeForm(props: Props) {
         return
       }
       const res = await axios.post(`${config['api-server']}/get-user-classes`, {
-        userId: user?.profileObj.googleId,
+        userId: user?.profileObj?.googleId,
       })
       const classes = res.data
       setSpinner1(true)
@@ -455,7 +455,7 @@ export default function EnterCodeForm(props: Props) {
 
     if (data !== null) {
       const res = await axios.post(`${config['api-server']}/user`, {
-        userId: user?.profileObj.googleId,
+        userId: user?.profileObj?.googleId,
       })
       const userData = res.data
       console.log(userData)
@@ -463,7 +463,7 @@ export default function EnterCodeForm(props: Props) {
         socket.emit('createroom', {
           room: roomName,
           gamecode: gameCode,
-          host: user?.profileObj.googleId,
+          host: user?.profileObj?.googleId,
           friendly: friendlyNicknamesGlobal,
           gamemode: gameMode,
           classId: null,
@@ -473,7 +473,7 @@ export default function EnterCodeForm(props: Props) {
         socket.emit('createroom', {
           room: roomName || '',
           gamecode: gameCode,
-          host: user?.profileObj.googleId,
+          host: user?.profileObj?.googleId,
           friendly: friendlyNicknamesGlobal,
           gamemode: gameMode,
           classId: classID,
@@ -483,7 +483,7 @@ export default function EnterCodeForm(props: Props) {
       socket.emit('createroom', {
         room: roomName,
         gamecode: gameCode,
-        host: user?.profileObj.googleId,
+        host: user?.profileObj?.googleId,
         friendly: friendlyNicknamesGlobal,
         gamemode: gameMode,
         classId: null,
@@ -498,7 +498,7 @@ export default function EnterCodeForm(props: Props) {
   const terminateRoom = (room: any) => {
     socket.emit('EndGameTerminated', {
       room: room,
-      googleId: user?.profileObj.googleId,
+      googleId: user?.profileObj?.googleId,
     })
     toast.success(`${translations.alerts.roomterminated} ${room}`)
   }

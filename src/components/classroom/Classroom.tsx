@@ -158,7 +158,7 @@ export default function MemberRoom() {
     })
     const data = res.data
 
-    if (data?.owner != user?.profileObj.googleId) {
+    if (data?.owner != user?.profileObj?.googleId) {
       window.location.href = `/view-class/${id}`
       return
     }
@@ -275,7 +275,7 @@ export default function MemberRoom() {
       return
     }
 
-    if (res.data._id === USERID_PREFIX + user?.profileObj.googleId) {
+    if (res.data._id === USERID_PREFIX + user?.profileObj?.googleId) {
       toast.error(translations.alerts.cannotAddYourself)
       return
     }
@@ -294,7 +294,7 @@ export default function MemberRoom() {
   }
 
   const removeMember = (index, memberId) => {
-    if (memberId === `user:${user?.profileObj.googleId}`) {
+    if (memberId === `user:${user?.profileObj?.googleId}`) {
       toast.error(translations.alerts.cannotRemoveYourself)
       return
     }
@@ -305,7 +305,7 @@ export default function MemberRoom() {
     const notification = {
       userId: memberId.replace(/user:/g, ''),
       type: 'removed_from_class',
-      message: `${user?.profileObj.name} has removed you from ${name} :(`,
+      message: `${user?.profileObj?.name} has removed you from ${name} :(`,
       data: id,
     }
 
@@ -391,7 +391,7 @@ export default function MemberRoom() {
                   id,
                   data.user._id,
                   'member',
-                  user?.profileObj.name,
+                  user?.profileObj?.name,
                   name
                 )
               }

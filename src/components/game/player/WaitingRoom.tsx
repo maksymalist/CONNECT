@@ -39,7 +39,7 @@ export default function WaitingRoom(props) {
       const emotes = await axios.post(
         `${config['api-server']}/get-user-emotes`,
         {
-          userId: user?.profileObj.googleId,
+          userId: user?.profileObj?.googleId,
         }
       )
 
@@ -81,7 +81,7 @@ export default function WaitingRoom(props) {
     socket.emit('joinPlayerRoom', {
       room: props.room,
       name: props.user,
-      id: user?.profileObj.googleId,
+      id: user?.profileObj?.googleId,
     })
     setPeopleInRoom(props.usersInRoom)
     getEmotes()
@@ -91,7 +91,7 @@ export default function WaitingRoom(props) {
       checkConnection(
         props.room,
         props.user,
-        user?.profileObj.googleId,
+        user?.profileObj?.googleId,
         'WAITING_FOR_PLAYERS'
       )
     }, 8000)

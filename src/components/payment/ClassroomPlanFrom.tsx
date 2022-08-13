@@ -174,7 +174,7 @@ function HomePage(props) {
           const res = await axios.post(`${config['api-server']}/sub`, {
             payment_method: result.paymentMethod.id,
             email: email,
-            id: user?.profileObj.googleId,
+            id: user?.profileObj?.googleId,
           })
           // eslint-disable-next-line camelcase
           const { client_secret, status, customer_obj, subscription_obj } =
@@ -195,7 +195,7 @@ function HomePage(props) {
             payment_method: result.paymentMethod.id,
             email: email,
             coupon: coupon,
-            id: user?.profileObj.googleId,
+            id: user?.profileObj?.googleId,
           })
           // eslint-disable-next-line camelcase
           const { status } = res.data

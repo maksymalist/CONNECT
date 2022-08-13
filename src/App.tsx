@@ -128,16 +128,16 @@ function App() {
 
       updateUserProfile({
         variables: {
-          name: user?.profileObj.name,
-          email: user?.profileObj.email,
-          id: user?.profileObj.googleId,
-          imageUrl: user?.profileObj.imageUrl,
+          name: user?.profileObj?.name,
+          email: user?.profileObj?.email,
+          id: user?.profileObj?.googleId,
+          imageUrl: user?.profileObj?.imageUrl,
         },
       })
 
       axios
         .post(`${config['api-server']}/get-user-subscription-id`, {
-          userId: user?.profileObj.googleId,
+          userId: user?.profileObj?.googleId,
         })
         .then((res) => {
           if (res.data !== null && res.data !== undefined) {
@@ -202,7 +202,7 @@ function App() {
       setCustomerId(JSON.parse(res?.data?.subscriptionDetails)?.customer)
       updateUserSubscription({
         variables: {
-          id: user?.profileObj.googleId,
+          id: user?.profileObj?.googleId,
           subscriptionDetails: res?.data?.subscriptionDetails,
           plan: plan,
         },

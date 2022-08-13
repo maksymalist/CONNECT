@@ -86,7 +86,7 @@ function ViewMultiQuiz() {
           thickness={3}
           style={{ color: 'white', margin: '100px' }}
         />
-      ) : data.privateMulti.userID === 'user:' + user?.profileObj.googleId ? (
+      ) : data.privateMulti.userID === 'user:' + user?.profileObj?.googleId ? (
         <div className="view__quiz__flex">
           <div className="view__quiz__content">
             <img

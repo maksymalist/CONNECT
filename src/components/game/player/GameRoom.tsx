@@ -180,7 +180,7 @@ export default function GameRoom({ match }) {
             room: match.params.room,
             user: match.params.user,
             time: time,
-            id: user?.profileObj.googleId,
+            id: user?.profileObj?.googleId,
           })
           document.getElementById('popUp').removeAttribute('hidden')
           document.getElementById('gameContent').remove()
@@ -208,7 +208,7 @@ export default function GameRoom({ match }) {
       checkConnection(
         match.params.room,
         match.params.user,
-        user?.profileObj.googleId,
+        user?.profileObj?.googleId,
         'IN_PROGRESS'
       )
     }, 8000)
@@ -254,7 +254,7 @@ export default function GameRoom({ match }) {
       })
       const pos = data.find(
         (player) =>
-          player.playerID === user?.profileObj.googleId &&
+          player.playerID === user?.profileObj?.googleId &&
           player.player === match.params.user + '⠀'
       )
       window.location = `/roomleave/gameover?position=${pos && pos.position}`
