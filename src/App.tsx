@@ -145,8 +145,11 @@ function App() {
 
       const { customerId, plan, sub_status } = res.data
 
-      if (customerId !== null && customerId !== undefined) {
+      if (customerId) {
         setCustomerId(customerId)
+      } else {
+        dispatch(setStarter())
+        return
       }
 
       if (BAD_STATUS_ARR.includes(sub_status)) {
@@ -157,16 +160,16 @@ function App() {
       if (plan === 'Starter') {
         dispatch(setStarter())
         return
-      } else if (plan === 'Classroom') {
+      }
+      if (plan === 'Classroom') {
         dispatch(setClassroom())
         return
-      } else if (plan === 'Enterprise') {
+      }
+      if (plan === 'Enterprise') {
         dispatch(setEnterprise())
         return
-      } else {
-        dispatch(setStarter())
-        return
       }
+      dispatch(setStarter())
     } catch (error) {
       console.log(error)
       dispatch(setStarter())
