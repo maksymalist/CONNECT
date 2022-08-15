@@ -838,7 +838,7 @@ input:hover {
   box-shadow: 5px 5px 0 #262626;
   padding: 5px;
 }
-@media only screen and (min-width: 1900px) {
+@media only screen and (min-width: 2500px) {
   .userH1 {
     font-size: 2.5rem;
     font-weight: bold;

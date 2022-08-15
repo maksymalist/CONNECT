@@ -367,6 +367,15 @@ function MyProfile() {
               variant="outlined"
             />
           )}
+
+          {data?.user?.plan === 'Enterprise' && (
+            <Chip
+              className="mui-chip"
+              label={translations.profile.tags.enterprise}
+              color="primary"
+              variant="outlined"
+            />
+          )}
           {data?.allQuizzesByUser?.length > 0 ? (
             <Chip
               className="mui-chip"

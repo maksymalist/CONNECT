@@ -11,18 +11,50 @@ import getUser from '../../hooks/getUser'
 import banner from '../../img/plansBanner.svg'
 import Wave from '../../img/WhiteBigStripe.svg'
 import useTranslations from '../../hooks/useTranslations'
+import axios from 'axios'
+import config from '../../config.json'
 export default function Plans() {
   const user = getUser()
   const plan = useSelector((state) => state.plan)
   // eslint-disable-next-line
   const translations = useTranslations()
-  const selectClassroomPlan = () => {
+  const selectClassroomPlan = async () => {
     if (plan == 'Starter') {
-      window.location = `/subscription/classroom`
+      //window.location = `/subscription/classroom`
+
+      const res = await axios.post(
+        `${config['api-server']}/create-checkout-session`,
+        {
+          email: user?.profileObj?.email,
+          id: user?.profileObj?.googleId,
+          plan: 'Classroom',
+        }
+      )
+      console.log(res)
+      window.location = res.data.url || '/'
     } else {
       toast.info(translations.alerts.alreadyhaveplan)
     }
   }
+
+  const selectEnterprisePlan = async () => {
+    if (plan == 'Starter') {
+      //window.location = `/subscription/entreprise`
+      const res = await axios.post(
+        `${config['api-server']}/create-checkout-session`,
+        {
+          email: user?.profileObj?.email,
+          id: user?.profileObj?.googleId,
+          plan: 'Enterprise',
+        }
+      )
+      console.log(res)
+      window.location = res.data.url || '/'
+    } else {
+      toast.info(translations.alerts.alreadyhaveplan)
+    }
+  }
+
   return (
     <>
       <div
@@ -315,11 +347,12 @@ export default function Plans() {
             <Button
               className="sub-button"
               style={{ paddingLeft: '35px', paddingRight: '35px' }}
-              variant={plan === 'Entreprise' ? 'outlined' : 'contained'}
+              variant={plan === 'Enterprise' ? 'outlined' : 'contained'}
               color="action"
               size="large"
+              onClick={() => selectEnterprisePlan()}
             >
-              {plan === 'Entreprise'
+              {plan === 'Enterprise'
                 ? translations.plans.entreprise.buttonsubscribed
                 : translations.plans.entreprise.button}
             </Button>

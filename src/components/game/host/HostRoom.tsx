@@ -56,6 +56,13 @@ let userLimit2 = 0
 let finished2 = []
 
 export default function HostRoom(props) {
+  const BAD_STATUS_ARR = [
+    'past_due',
+    'canceled',
+    'unpaid',
+    'incomplete',
+    'incomplete_expired',
+  ]
   const user = getUser()
   var [playerPodiumMax, setPlayerPodiumMax] = useState(props.podiumPlaces)
   const [userLimit, setUserLimit] = useState(8)
@@ -86,9 +93,10 @@ export default function HostRoom(props) {
   const [musicVolume, setMusicVolume] = useState(50)
 
   const smallScreen = useMediaQuery('(max-width:600px)')
-  const bigScreen = useMediaQuery('(min-width:1900px)')
+  const bigScreen = useMediaQuery('(min-width:2500px)')
 
   useEffect(() => {
+    document.getElementById('root').style.padding = '15px'
     setMusicIsPlaying(true)
     fetchQuiz()
     if (props.friendlyroom === true) {
@@ -396,10 +404,35 @@ export default function HostRoom(props) {
   }
 
   const CheckPlanStatus = async () => {
-    const res = await axios.post(`${config['api-server']}/user`, {
-      userId: user?.profileObj?.googleId,
-    })
-    const plan = res.data?.plan
+    const res = await axios.post(
+      `${config['api-server']}/get-user-customer-id`,
+      {
+        userId: user?.profileObj?.googleId,
+      }
+    )
+
+    const { plan, status } = res.data
+
+    if (!plan) {
+      plan = 'Starter'
+    }
+
+    if (BAD_STATUS_ARR.includes(status)) {
+      plan = 'Starter'
+    }
+
+    if (plan === 'Enterprise') {
+      if (props.maxPlayers > 300) {
+        setUserLimit(300)
+        userLimit2 = 300
+      } else if (props.maxPlayers < 3) {
+        setUserLimit(3)
+        userLimit2 = 3
+      } else {
+        setUserLimit(props.maxPlayers)
+        userLimit2 = props.maxPlayers
+      }
+    }
 
     if (plan === 'Classroom') {
       if (props.maxPlayers > 100) {
@@ -552,7 +585,7 @@ export default function HostRoom(props) {
     })
     const plan = res.data?.plan
     if (plan !== null && plan !== '' && plan !== undefined) {
-      if (plan === 'Classroom') {
+      if (plan !== 'Starter') {
         if (props.classid != 'null' && props.classid !== null) {
           createRecentGame()
         }

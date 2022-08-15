@@ -64,7 +64,7 @@ export default function FinishedScreen({ match, user, steps }) {
           })}
         </Stepper>
       </div>
-      <CircularProgress thickness={5} size={250} style={{ color: 'white' }} />
+      <CircularProgress thickness={5} size={150} style={{ color: 'white' }} />
       <div>
         <nav style={{ height: '50px', backgroundColor: 'white' }}>
           <div

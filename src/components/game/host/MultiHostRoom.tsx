@@ -59,6 +59,14 @@ import themeSong from '../../../audio/connect_theme.mp3'
 import getUser from '../../../hooks/getUser'
 import useTranslations from '../../../hooks/useTranslations'
 
+const BAD_STATUS_ARR = [
+  'past_due',
+  'canceled',
+  'unpaid',
+  'incomplete',
+  'incomplete_expired',
+]
+
 const playersTime = []
 let finished2 = []
 let activeStep2 = 0
@@ -103,11 +111,12 @@ export default function HostRoom(props) {
   const [steps, setSteps] = useState([])
 
   const smallScreen = useMediaQuery('(max-width:600px)')
-  const bigScreen = useMediaQuery('(min-width:1900px)')
+  const bigScreen = useMediaQuery('(min-width:2500px)')
 
   //
 
   useEffect(() => {
+    document.getElementById('root').style.padding = '15px'
     setMusicIsPlaying(true)
     if (props.friendlyroom === true) {
       socket.emit('addFriendlyRoom', {
@@ -419,10 +428,34 @@ export default function HostRoom(props) {
   }
 
   const CheckPlanStatus = async () => {
-    const res = await axios.post(`${config['api-server']}/user`, {
-      userId: user?.profileObj?.googleId,
-    })
-    const plan = res.data?.plan
+    const res = await axios.post(
+      `${config['api-server']}/get-user-customer-id`,
+      {
+        userId: user?.profileObj?.googleId,
+      }
+    )
+    const { plan, status } = res.data
+
+    if (!plan) {
+      plan = 'Starter'
+    }
+
+    if (BAD_STATUS_ARR.includes(status)) {
+      plan = 'Starter'
+    }
+
+    if (plan === 'Enterprise') {
+      if (props.maxPlayers > 300) {
+        setUserLimit(300)
+        userLimit2 = 300
+      } else if (props.maxPlayers < 3) {
+        setUserLimit(3)
+        userLimit2 = 3
+      } else {
+        setUserLimit(props.maxPlayers)
+        userLimit2 = props.maxPlayers
+      }
+    }
 
     if (plan === 'Classroom') {
       if (props.maxPlayers > 100) {
@@ -694,7 +727,7 @@ export default function HostRoom(props) {
     })
     const plan = res.data?.plan
     if (plan !== null && plan !== '' && plan !== undefined) {
-      if (plan === 'Classroom') {
+      if (plan !== 'Starter') {
         if (props.classid != 'null' && props.classid !== null) {
           createRecentGame()
         }

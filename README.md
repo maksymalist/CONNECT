@@ -24,18 +24,19 @@ Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Plans 💳
+
 [view on site](https://quiz-connect.netlify.app/plans)
 
-|   Plans          | **Starter** | **Classroom** | **Entreprise** |
-| ----------- | ----------- | ------------- | -------------- |
-| **Price 💰**   | Free        | 9.99$           | 59.99$        |
-| **Acces to All gamemodes 🎯** |    ✅       | ✅          | ✅           |
-| **Create Quizzes 🎨** |    ✅       | ✅          | ✅           |
-| **Players 👶** | 8           | 100            | 300            |
-| **Create Classes 🏫** |    🚫      | ✅          | ✅           |
-| **Class Analytics 📊** |    🚫      | ✅          | ✅           |
-| **Create Private Quizzes 🔒** |    ✅      | ✅          | ✅           |
-| **Host private rooms 🔐** | 🚫      | ✅          | ✅           |
+| Plans                         | **Starter** | **Classroom** | **Enterprise** |
+| ----------------------------- | ----------- | ------------- | -------------- |
+| **Price 💰**                  | Free        | 9.99$         | 59.99$         |
+| **Acces to All gamemodes 🎯** | ✅          | ✅            | ✅             |
+| **Create Quizzes 🎨**         | ✅          | ✅            | ✅             |
+| **Players 👶**                | 8           | 100           | 300            |
+| **Create Classes 🏫**         | 🚫          | ✅            | ✅             |
+| **Class Analytics 📊**        | 🚫          | ✅            | ✅             |
+| **Create Private Quizzes 🔒** | ✅          | ✅            | ✅             |
+| **Host private rooms 🔐**     | 🚫          | ✅            | ✅             |
 
 <br></br>
 
@@ -44,5 +45,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 <a href="https://github.com/John8790909/CONNECT/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=John8790909/CONNECT" />
 </a>
-
-

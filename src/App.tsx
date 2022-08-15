@@ -11,7 +11,6 @@ import Nav from './components/nav/Nav'
 import NewQuiz from './components/creation-system/NewQuiz'
 import BrowseQuizzes from './components/browse/BrowseQuizzes'
 import AfterRoomLeave from './components/game/player/AfterRoomLeave'
-import StripeSubscriptions from './components/payment/StripeSubscriptions'
 import Plans from './components/payment/Plans'
 import Background from './components/misc/Background'
 import Profile from './components/profile/Profile'
@@ -33,7 +32,7 @@ import MultiPractice from './components/game/practice/MultiPractice'
 import ClaimEmote from './components/misc/ClaimEmote'
 //redux
 import { useDispatch, useSelector } from 'react-redux'
-import { setStarter, setClassroom, setEntreprise } from './actions/Plan'
+import { setStarter, setClassroom, setEnterprise } from './actions/Plan'
 import { setIsLoggedIn, setIsLoggedOut } from './actions/IsLogged'
 
 //apollo
@@ -46,6 +45,8 @@ import getUser from './hooks/getUser'
 import NoLocalStorage from './components/NoLocalStorage'
 import Tutorial from './components/tutorial/Tutorial'
 import JoinClass from './components/classroom/JoinClass'
+import ThanksForPurchasingAnimation from './components/payment/ThanksForPurchasingAnimation'
+import FinishedSceen from './components/game/player/FinishedScreen'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAuhaVNdwDaivPThUZ6wxYKCkvs0tEDRNs',
@@ -78,20 +79,6 @@ const UPDATE_USER_PROFILE = gql`
   }
 `
 
-const UPDATE_USER_SUBSCRIPTION = gql`
-  mutation updateUserSubscription(
-    $id: ID!
-    $subscriptionDetails: String!
-    $plan: String!
-  ) {
-    updateUserSubscription(
-      id: $id
-      subscriptionDetails: $subscriptionDetails
-      plan: $plan
-    )
-  }
-`
-
 toast.configure({
   autoClose: 5000,
   draggable: true,
@@ -107,7 +94,6 @@ function App() {
   const [customerId, setCustomerId] = useState(null)
 
   const [updateUserProfile] = useMutation(UPDATE_USER_PROFILE)
-  const [updateUserSubscription] = useMutation(UPDATE_USER_SUBSCRIPTION)
 
   const isLoggedIn = useSelector((state: ReduxStore) => state.isLogged)
 
@@ -119,7 +105,6 @@ function App() {
     'unpaid',
     'incomplete',
     'incomplete_expired',
-    'trialing',
   ]
 
   useEffect(() => {
@@ -135,21 +120,7 @@ function App() {
         },
       })
 
-      axios
-        .post(`${config['api-server']}/get-user-subscription-id`, {
-          userId: user?.profileObj?.googleId,
-        })
-        .then((res) => {
-          if (res.data !== null && res.data !== undefined) {
-            const subObj = JSON.parse(res.data)
-            fetchCustomerData(subObj?.id || null)
-          } else {
-            dispatch(setStarter())
-          }
-        })
-        .catch((err) => {
-          dispatch(setStarter())
-        })
+      handleSubscription()
     } else {
       dispatch(setIsLoggedOut())
       if (window.location.pathname == '/login') return
@@ -163,51 +134,41 @@ function App() {
     }
   }, [])
 
-  const fetchCustomerData = async (id: string) => {
-    if (id === null) {
-      dispatch(setStarter())
-      return
-    }
+  const handleSubscription = async () => {
     try {
       const res = await axios.post(
-        `${config['api-server']}/get-customer-data`,
+        `${config['api-server']}/get-user-customer-id`,
         {
-          subId: id,
+          userId: user?.profileObj?.googleId,
         }
       )
-      if (res.data == null || res.data == undefined) {
+
+      const { customerId, plan, sub_status } = res.data
+
+      if (customerId !== null && customerId !== undefined) {
+        setCustomerId(customerId)
+      }
+
+      if (BAD_STATUS_ARR.includes(sub_status)) {
         dispatch(setStarter())
         return
       }
-      let plan = 'Starter'
-      if (
-        JSON.parse(res?.data?.subscriptionDetails)?.plan?.id ==
-          'price_1L3rXSBqTzgw1Au7uf9cyg2r' &&
-        JSON.parse(res?.data?.subscriptionDetails)?.status == 'active'
-      ) {
-        plan = 'Classroom'
-        dispatch(setClassroom())
-      } else if (
-        BAD_STATUS_ARR.includes(
-          JSON.parse(res?.data?.subscriptionDetails)?.status
-        )
-      ) {
-        plan = 'Starter'
-        dispatch(setStarter())
-      } else {
-        plan = 'Starter'
-        dispatch(setStarter())
-      }
 
-      setCustomerId(JSON.parse(res?.data?.subscriptionDetails)?.customer)
-      updateUserSubscription({
-        variables: {
-          id: user?.profileObj?.googleId,
-          subscriptionDetails: res?.data?.subscriptionDetails,
-          plan: plan,
-        },
-      })
-    } catch (err) {
+      if (plan === 'Starter') {
+        dispatch(setStarter())
+        return
+      } else if (plan === 'Classroom') {
+        dispatch(setClassroom())
+        return
+      } else if (plan === 'Enterprise') {
+        dispatch(setEnterprise())
+        return
+      } else {
+        dispatch(setStarter())
+        return
+      }
+    } catch (error) {
+      console.log(error)
       dispatch(setStarter())
     }
   }
@@ -230,7 +191,11 @@ function App() {
           <Route path="/quizzes" component={BrowseQuizzes} />
           <Route path="/roomleave/:type" component={AfterRoomLeave} />
           <Route path="/plans" component={Plans} />
-          <Route path="/subscription/:plan" component={StripeSubscriptions} />
+          <Route
+            exact
+            path="/success"
+            component={ThanksForPurchasingAnimation}
+          />
           <Route path="/login" component={Login} />
           <Route path="/profile" component={MyProfile} />
           <Route path="/profiles/:id" component={Profile} />
@@ -251,6 +216,7 @@ function App() {
           <Route path="/no-local-storage" component={NoLocalStorage} />
           <Route path="/tutorial" component={Tutorial} />
           <Route path="/join/:classId" component={JoinClass} />
+          <Route path="/create-emote" component={FinishedSceen} />
         </Switch>
       </div>
     </Router>

@@ -1,15 +1,15 @@
 export const setStarter = () => {
-    return {
-        type: 'SET_STARTER'
-    }
+  return {
+    type: 'SET_STARTER',
+  }
 }
 export const setClassroom = () => {
-    return {
-        type: 'SET_CLASSROOM'
-    }
+  return {
+    type: 'SET_CLASSROOM',
+  }
 }
-export const setEntreprise = () => {
-    return {
-        type: 'SET_ENTERPRISE'
-    }
+export const setEnterprise = () => {
+  return {
+    type: 'SET_ENTERPRISE',
+  }
 }

@@ -15,6 +15,18 @@ export default function FinishedScreen({ match, user }) {
         flexDirection: 'column',
       }}
     >
+      <nav style={{ height: '50px', backgroundColor: 'white' }}>
+        <div
+          style={{
+            float: 'left',
+            color: 'black',
+            marginLeft: '10px',
+            marginTop: '-10px',
+          }}
+        >
+          <h2>{user}</h2>
+        </div>
+      </nav>
       <Typography variant="h3" style={{ color: 'white', marginBottom: '10px' }}>
         <b>{translations.finishedscreen.title}</b>
       </Typography>
@@ -23,23 +35,9 @@ export default function FinishedScreen({ match, user }) {
       </Typography>
       <CircularProgress
         thickness={5}
-        size={250}
-        style={{ color: 'white', margin: '100px' }}
+        size={150}
+        style={{ color: 'white', marginTop: '100px' }}
       />
-      <div>
-        <nav style={{ height: '50px', backgroundColor: 'white' }}>
-          <div
-            style={{
-              float: 'left',
-              color: 'black',
-              marginLeft: '10px',
-              marginTop: '-10px',
-            }}
-          >
-            <h2>{user}</h2>
-          </div>
-        </nav>
-      </div>
     </div>
   )
 }

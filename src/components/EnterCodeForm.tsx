@@ -469,7 +469,7 @@ export default function EnterCodeForm(props: Props) {
           classId: null,
         })
       }
-      if (userData.plan === 'Classroom') {
+      if (userData.plan != 'Starter') {
         socket.emit('createroom', {
           room: roomName || '',
           gamecode: gameCode,
