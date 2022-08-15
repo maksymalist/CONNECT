@@ -411,13 +411,13 @@ export default function HostRoom(props) {
       }
     )
 
-    const { plan, status } = res.data
+    let { plan, status } = res.data
 
     if (!plan) {
       plan = 'Starter'
     }
 
-    if (BAD_STATUS_ARR.includes(status)) {
+    if (BAD_STATUS_ARR.includes(status) || !status) {
       plan = 'Starter'
     }
 
@@ -459,6 +459,8 @@ export default function HostRoom(props) {
         userLimit2 = props.maxPlayers
       }
     }
+
+    console.log(userLimit2, userLimit, props.maxPlayers, plan, status)
   }
 
   const getLowestTime = () => {

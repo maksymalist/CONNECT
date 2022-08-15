@@ -440,7 +440,7 @@ export default function HostRoom(props) {
       plan = 'Starter'
     }
 
-    if (BAD_STATUS_ARR.includes(status)) {
+    if (BAD_STATUS_ARR.includes(status) || !status) {
       plan = 'Starter'
     }
 
