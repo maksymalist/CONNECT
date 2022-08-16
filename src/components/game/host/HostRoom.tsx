@@ -52,7 +52,7 @@ import getUser from '../../../hooks/getUser'
 import useTranslations from '../../../hooks/useTranslations'
 
 const playersTime = []
-let userLimit2 = 0
+let userLimit2 = 3
 let finished2 = []
 
 export default function HostRoom(props) {
@@ -65,7 +65,7 @@ export default function HostRoom(props) {
   ]
   const user = getUser()
   var [playerPodiumMax, setPlayerPodiumMax] = useState(props.podiumPlaces)
-  const [userLimit, setUserLimit] = useState(8)
+  const [userLimit, setUserLimit] = useState(3)
   const podium = []
   var numArray = []
   var playerArr = []
@@ -411,13 +411,13 @@ export default function HostRoom(props) {
       }
     )
 
-    let { plan, status } = res.data
+    let { plan, sub_status } = res.data
 
     if (!plan) {
       plan = 'Starter'
     }
 
-    if (BAD_STATUS_ARR.includes(status) || !status) {
+    if (BAD_STATUS_ARR.includes(sub_status) || !sub_status) {
       plan = 'Starter'
     }
 

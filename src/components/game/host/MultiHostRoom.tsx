@@ -70,12 +70,12 @@ const BAD_STATUS_ARR = [
 const playersTime = []
 let finished2 = []
 let activeStep2 = 0
-let userLimit2 = 0
+let userLimit2 = 3
 
 export default function HostRoom(props) {
   const user = getUser()
   var [playerPodiumMax, setPlayerPodiumMax] = useState(props.podiumPlaces)
-  const [userLimit, setUserLimit] = useState(8)
+  const [userLimit, setUserLimit] = useState(3)
   const podium = []
   var numArray = []
   var playerArr = []
@@ -434,13 +434,15 @@ export default function HostRoom(props) {
         userId: user?.profileObj?.googleId,
       }
     )
-    const { plan, status } = res.data
+
+    console.log(res.data)
+    let { plan, sub_status } = res.data
 
     if (!plan) {
       plan = 'Starter'
     }
 
-    if (BAD_STATUS_ARR.includes(status) || !status) {
+    if (BAD_STATUS_ARR.includes(sub_status) || !sub_status) {
       plan = 'Starter'
     }
 
