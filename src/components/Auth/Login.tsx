@@ -125,8 +125,6 @@ function Login() {
             onSuccess={responseGoogle}
             onFailure={(error) => {
               console.log(error)
-              console.log('error was triggered')
-              return
               window.location = '/no-local-storage' as any
             }}
             cookiePolicy={'single_host_origin'}

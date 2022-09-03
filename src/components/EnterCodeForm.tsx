@@ -178,16 +178,13 @@ export default function EnterCodeForm(props: Props) {
     if (Gamecode !== null) {
       setCode(Gamecode)
       setJoinFormCode(Gamecode)
-      console.log(Gamecode)
       setPlayMode(true)
     }
     const gamecodeParam = new URLSearchParams(search).get('gamecode')
     if (gamecodeParam !== null) {
-      console.log(gamecodeParam)
       setGameCode(gamecodeParam)
       setPlayMode(false)
       setClassid(classID as any)
-      console.log(classID)
       Generatecode()
       const mode = new URLSearchParams(search).get('mode')
       if (mode === null) return
@@ -383,7 +380,6 @@ export default function EnterCodeForm(props: Props) {
     })
 
     socket.on('GeneratedCode', (data) => {
-      console.log(data)
       setRoomName(data)
     })
 
@@ -395,14 +391,6 @@ export default function EnterCodeForm(props: Props) {
       toast.error(translations.alerts.cannotjoinprivate)
     })
   }, [])
-
-  useEffect(() => {
-    console.log(`
-      is friendly nicknames: ${friendlyNicknamesGlobal ? 'true' : 'false'}
-      max players: ${maxPlayersGlobal}
-      podium places: ${podiumPlacesGlobal}
-    `)
-  }, [isFriendlyNicknames, maxPlayers, podiumPlaces])
 
   const JoinRoom = async () => {
     if (sessionStorage.getItem('roomJoined') == 'true') {
@@ -444,12 +432,10 @@ export default function EnterCodeForm(props: Props) {
       toast.error(translations.alerts.entergamemode)
       return
     }
-    console.log(friendlyNicknamesGlobal)
 
     const res = await axios.post(`${config['api-server']}/get-class`, {
       id: classID,
     })
-    console.log(res.data)
 
     const data = res.data
 
@@ -458,7 +444,6 @@ export default function EnterCodeForm(props: Props) {
         userId: user?.profileObj?.googleId,
       })
       const userData = res.data
-      console.log(userData)
       if (userData?.plan === 'Starter') {
         socket.emit('createroom', {
           room: roomName,
@@ -714,7 +699,6 @@ export default function EnterCodeForm(props: Props) {
                   ) {
                     setMaxPlayers(3)
                     const array = new Array(3).fill(0)
-                    console.log(array)
                     setMaxPlayerEmojis(array)
                     maxPlayersGlobal = 3
                     return
@@ -804,7 +788,6 @@ export default function EnterCodeForm(props: Props) {
                   ) {
                     setPodiumPlaces(3)
                     const array = new Array(3).fill(0)
-                    console.log(array)
                     setPodiumPlacesArr(array)
                     podiumPlacesGlobal = 3
                     return
