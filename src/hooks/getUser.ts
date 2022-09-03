@@ -13,9 +13,9 @@ const lsTest = () => {
 }
 const getUser = () => {
   if (lsTest() === false) {
-    window.location = '/no-local-storage' as any
     console.log('no local storage')
     return null
+    window.location = '/no-local-storage' as any
   }
   try {
     const user = JSON.parse(localStorage.getItem('user') as string)
