@@ -506,7 +506,7 @@ export default function MemberRoom() {
                       <TextField
                         label={translations.classroom.members.email}
                         variant="outlined"
-                        value={`https://quiz-connect.netlify.app/join/${id}`}
+                        value={`https://quiz-connect.io/join/${id}`}
                         style={{ width: '270px', margin: '10px' }}
                       />
                       <Button
@@ -516,9 +516,7 @@ export default function MemberRoom() {
                         onClick={() => {
                           //copy to clipboard
                           navigator.clipboard
-                            .writeText(
-                              `https://quiz-connect.netlify.app/join/${id}`
-                            )
+                            .writeText(`https://quiz-connect.io/join/${id}`)
                             .then(
                               function () {
                                 toast.success(

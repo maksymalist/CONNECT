@@ -6,7 +6,7 @@
 
 These Terms of Use constitute a legally binding agreement made between you, whether
 personally or on behalf of an entity (“you”) and CONNECT (" **Company** ," “ **we** ," “ **us** ," or “ **our** ”),
-concerning your access to and use of the quiz-connect.netlify.app website as well as any other
+concerning your access to and use of the quiz-connect.io website as well as any other
 media form, media channel, mobile website or mobile application related, linked, or otherwise
 connected thereto (collectively, the “Site”). We are registered in Canada and have our registered
 office in Montreal, Quebec. You agree that by accessing the Site, you have read, understood, and

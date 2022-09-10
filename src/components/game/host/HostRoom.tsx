@@ -747,7 +747,7 @@ export default function HostRoom(props) {
           ) : null}
           {sharePopupActive ? (
             <SharePopup
-              shareLink={`https://quiz-connect.netlify.app/play?code=${props.room}`}
+              shareLink={`https://quiz-connect.io/play?code=${props.room}`}
               close={shareLink}
             />
           ) : null}
@@ -857,10 +857,10 @@ export default function HostRoom(props) {
                               }
                         }
                         onClick={() =>
-                          window.open('https://quiz-connect.netlify.app/play')
+                          window.open('https://quiz-connect.io/play')
                         }
                       >
-                        quiz-connect.netlify.app/play
+                        quiz-connect.io/play
                       </span>
                     </Typography>
                   </div>
@@ -877,7 +877,7 @@ export default function HostRoom(props) {
                   }}
                 >
                   <QRCode
-                    value={`https://quiz-connect.netlify.app/play?code=${props.room}`}
+                    value={`https://quiz-connect.io/play?code=${props.room}`}
                     size={bigScreen ? 190 : 86}
                   />
                 </div>
