@@ -123,11 +123,13 @@ function App() {
       handleSubscription()
     } else {
       dispatch(setIsLoggedOut())
-      if (window.location.pathname == '/login') return
-      if (window.location.pathname == '/play') return
-      if (window.location.pathname == '/claim-emote') return
-      if (window.location.pathname == '/no-local-storage') return
-      window.location = '/login' as any
+      // routes that are allowed to be accessed without logging in
+      const allowedRoutes = ['/', '/login', '/claim-emote', '/no-local-storage']
+      const path = window.location.pathname
+
+      if (!allowedRoutes.includes(path)) {
+        window.location.href = '/login' as any
+      }
     }
     return () => {
       //cleanup
