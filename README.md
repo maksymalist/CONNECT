@@ -25,7 +25,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Plans 💳
 
-[view on site](https://quiz-connect.netlify.app/plans)
+[view on site](https://quiz-connect.io/plans)
 
 | Plans                         | **Starter** | **Classroom** | **Enterprise** |
 | ----------------------------- | ----------- | ------------- | -------------- |
