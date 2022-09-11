@@ -469,7 +469,7 @@ export default function HomePage() {
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'underline' }}
               >
-                terms of service
+                terms & conditions
               </a>
               <a
                 href="https://github.com/John8790909/CONNECT/blob/main/LICENSE"
