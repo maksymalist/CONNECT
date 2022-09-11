@@ -464,7 +464,7 @@ export default function HomePage() {
             </a>
             <div className="footer-wrapper">
               <a
-                href="https://github.com/John8790909/CONNECT/blob/main/LICENSE"
+                href="/terms"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'underline' }}
@@ -472,7 +472,7 @@ export default function HomePage() {
                 terms & conditions
               </a>
               <a
-                href="https://github.com/John8790909/CONNECT/blob/main/LICENSE"
+                href="/privacy"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'underline' }}
