@@ -387,7 +387,7 @@
     "login": {
       "title": "✨ Welcome ✨",
       "title2": "A world of knowledge awaits you...",
-      "googlebutton": "Login with google",
+      "googlebutton": "Sign in with Google",
       "role": {
         "title": "✨ Select your role ✨",
         "student": "Student 🎓",
@@ -1000,7 +1000,7 @@
     "login": {
       "title": "✨ Bienvenue ✨",
       "title2": "Un monde de connaissances vous attend...",
-      "googlebutton": "Connectez-vous avec Google",
+      "googlebutton": "se connecter avec Google",
       "role": {
         "title": "✨ Sélectionnez votre rôle ✨",
         "student": "Étudiant 🎓",
