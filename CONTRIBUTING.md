@@ -2,6 +2,8 @@
 
 Contributing to our project is a great way of helping us to bring our project to life.
 
-If you want to help us, you can find some work in the **Issues** or message us at **quiz.connect.service@gmail.com**.
+If you want to help us, you can find some work in the **Issues** or message us at **support@quiz-connect.io**.
 
 Whenever you create an issue or a PR please add some sort of comment that clearly describes your work.
+
+©2020-2022 CONNECT. All rights reserved.

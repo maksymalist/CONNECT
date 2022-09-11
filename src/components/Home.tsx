@@ -454,24 +454,46 @@ export default function HomePage() {
           </div>
         </div>
         <footer>
-          <a
-            href="https://github.com/John8790909/CONNECT/blob/main/LICENSE"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            © 2022 CONNECT – All Rights Reserved
-          </a>
-          <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSey6V_tD3Sp4YDE9Q-PY5nuMFv6s5Q7_2BPfbFDXQ2CjoTfkg/viewform?usp=sf_link"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              textDecoration: 'underline',
-              color: '#6c63ff',
-            }}
-          >
-            ✨Report Issue✨
-          </a>
+          <div>
+            <a
+              href="https://github.com/John8790909/CONNECT/blob/main/LICENSE"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              © 2022 CONNECT – All Rights Reserved
+            </a>
+            <div className="footer-wrapper">
+              <a
+                href="https://github.com/John8790909/CONNECT/blob/main/LICENSE"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: 'underline' }}
+              >
+                terms of service
+              </a>
+              <a
+                href="https://github.com/John8790909/CONNECT/blob/main/LICENSE"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: 'underline' }}
+              >
+                privacy policy
+              </a>
+            </div>
+          </div>
+          <div>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSey6V_tD3Sp4YDE9Q-PY5nuMFv6s5Q7_2BPfbFDXQ2CjoTfkg/viewform?usp=sf_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                textDecoration: 'underline',
+                color: '#6c63ff',
+              }}
+            >
+              ✨Report Issue✨
+            </a>
+          </div>
         </footer>
       </div>
     </>

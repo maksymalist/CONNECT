@@ -130,7 +130,6 @@ function Login() {
             cookiePolicy={'single_host_origin'}
             style={{ backgroundColor: '#e0e0e0' }}
             className="google-login-button"
-            type="large"
           />
           <div
             style={{

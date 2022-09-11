@@ -30,6 +30,11 @@ import CreateClass from './components/creation-system/CreateClass'
 import QuizPractice from './components/game/practice/QuizPractice'
 import MultiPractice from './components/game/practice/MultiPractice'
 import ClaimEmote from './components/misc/ClaimEmote'
+
+// rules
+import TermsConditions from './components/rules/Terms&Conditions'
+import PrivacyPolicy from './components/rules/PrivacyPolicy'
+
 //redux
 import { useDispatch, useSelector } from 'react-redux'
 import { setStarter, setClassroom, setEnterprise } from './actions/Plan'
@@ -124,7 +129,14 @@ function App() {
     } else {
       dispatch(setIsLoggedOut())
       // routes that are allowed to be accessed without logging in
-      const allowedRoutes = ['/', '/login', '/claim-emote', '/no-local-storage']
+      const allowedRoutes = [
+        '/',
+        '/login',
+        '/claim-emote',
+        '/no-local-storage',
+        '/privacy',
+        '/terms',
+      ]
       const path = window.location.pathname
 
       if (!allowedRoutes.includes(path)) {
@@ -222,6 +234,8 @@ function App() {
           <Route path="/tutorial" component={Tutorial} />
           <Route path="/join/:classId" component={JoinClass} />
           <Route path="/create-emote" component={FinishedSceen} />
+          <Route path="/terms" component={TermsConditions} />
+          <Route path="/privacy" component={PrivacyPolicy} />
         </Switch>
       </div>
     </Router>

@@ -525,4 +525,6 @@ of the Site, please contact us at:
 Montreal, Quebec
 Canada**
 
-**quiz.connect.service@gmail.com**
+**support@quiz-connect.io**
+
+©2020-2022 CONNECT. All rights reserved.

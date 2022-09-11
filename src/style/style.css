@@ -1050,14 +1050,22 @@ footer {
   flex: 1;
   padding: 2rem 0;
   border-top: 1px solid #eaeaea;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   height: 100px;
   width: 100vw;
   background-color: white;
 }
 
-footer a {
+footer .footer-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
+}
+
+footer .footer-wrapper a {
   display: flex;
   justify-content: center;
   align-items: center;
