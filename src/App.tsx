@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { lazy, useEffect, useState } from 'react'
 
 import firebase from 'firebase/app'
 
@@ -14,7 +14,6 @@ import AfterRoomLeave from './components/game/player/AfterRoomLeave'
 import Plans from './components/payment/Plans'
 import Background from './components/misc/Background'
 import Profile from './components/profile/Profile'
-import Classroom from './components/classroom/Classroom'
 import ViewClassroom from './components/view/ViewClassroom'
 import ViewMultiPrivate from './components/view/ViewMultiPrivate'
 import ViewQuizPrivate from './components/view/ViewQuizPrivate'
@@ -30,10 +29,6 @@ import CreateClass from './components/creation-system/CreateClass'
 import QuizPractice from './components/game/practice/QuizPractice'
 import MultiPractice from './components/game/practice/MultiPractice'
 import ClaimEmote from './components/misc/ClaimEmote'
-
-// rules
-import TermsConditions from './components/rules/Terms&Conditions'
-import PrivacyPolicy from './components/rules/PrivacyPolicy'
 
 //redux
 import { useDispatch, useSelector } from 'react-redux'
@@ -197,6 +192,7 @@ function App() {
         <div style={{ margin: '0 !important' }} id="navMargin" />
         <Background />
         <Switch>
+          {/* lazy load each route using component={lazy(() => Same component route)} */}
           <Route exact path="/" component={Home} />
           <Route exact path="/play" component={EnterCodeForm} />
           <Route path="/normal/:room/:gameid/:user" component={GameRoom} />
@@ -226,7 +222,10 @@ function App() {
             path="/quiz/multi/private/:code"
             component={ViewMultiPrivate}
           />
-          <Route path="/class/:id" component={Classroom} />
+          <Route
+            path="/class/:id"
+            component={lazy(() => import('./components/classroom/Classroom'))}
+          />
           <Route path="/view-class/:id" component={ViewClassroom} />
           <Route path="/create-class" component={CreateClass} />
           <Route path="/claim-emote" component={ClaimEmote} />
@@ -234,8 +233,16 @@ function App() {
           <Route path="/tutorial" component={Tutorial} />
           <Route path="/join/:classId" component={JoinClass} />
           <Route path="/create-emote" component={FinishedSceen} />
-          <Route path="/terms" component={TermsConditions} />
-          <Route path="/privacy" component={PrivacyPolicy} />
+          <Route
+            path="/terms"
+            component={lazy(
+              () => import('./components/rules/Terms&Conditions')
+            )}
+          />
+          <Route
+            path="/privacy"
+            component={lazy(() => import('./components/rules/PrivacyPolicy'))}
+          />
         </Switch>
       </div>
     </Router>

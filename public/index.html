@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     <title>CONNECT</title>
+    <meta name="description" content="Take learning to the next level." />
+    <meta name="keywords" content="Learning, Teaching, Fun, Flashcards" />
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" sizes="16x16" />
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
@@ -13,8 +15,6 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link rel="stylesheet" href="../src/style/style.css" />
     <meta name="title" content="CONNECT" />
-    <meta name="description" content="Take learning to the next level." />
-    <meta name="keywords" content="Learning, Teaching, Fun, Flashcards" />
     <meta name="robots" content="index, follow" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="language" content="English" />
@@ -31,33 +31,19 @@
       name="twitter:image"
       content="https://user-images.githubusercontent.com/79988159/170887599-283e0733-7160-48fd-80e8-ea09a7d3be1b.png"
     />
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-7TZ8J1DMSJ"
-    ></script>
   </head>
   <body>
     <div id="root"></div>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
           navigator.serviceWorker
-            .register("./serviceworker.js")
-            .then((reg) => console.log("Success: ", reg.scope))
-            .catch((err) => console.log("Failure: ", err));
-        });
+            .register('./serviceworker.js')
+            .then((reg) => console.log('Success: ', reg.scope))
+            .catch((err) => console.log('Failure: ', err))
+        })
       }
-    </script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "G-7TZ8J1DMSJ");
     </script>
   </body>
 </html>

@@ -1,5 +1,6 @@
 //@ts-nocheck
 import React, { useEffect, useState } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import HomePageImage from '../img/HomePageArt.svg'
 import WaveStripe from '../img/BigStripe.svg'
 import WaveStripe2 from '../img/BigStripe-2.svg'
@@ -69,7 +70,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="home-page-section-1-content-bottom">
-              <img
+              <LazyLoadImage
                 src={HomePageImage}
                 alt="home-page-image"
                 className="home-page-section-1-content-right-image"
@@ -77,7 +78,11 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        <img src={WaveStripe2} alt="wave-stripe" className="wave-stripe-2" />
+        <LazyLoadImage
+          src={WaveStripe2}
+          alt="wave-stripe"
+          className="wave-stripe-2"
+        />
         <div className="home-page-section-2">
           <div className="home-page-section-2-content">
             <div className="home-page-section-2-header">
@@ -91,7 +96,7 @@ export default function HomePage() {
             </div>
             <div className="home-page-section-2-content-cards">
               <div className="home-page-section-2-content-card">
-                <img
+                <LazyLoadImage
                   src={Connected}
                   className="home-page-section-2-content-card-image"
                 />
@@ -103,7 +108,7 @@ export default function HomePage() {
                 </Typography>
               </div>
               <div className="home-page-section-2-content-card">
-                <img
+                <LazyLoadImage
                   src={Teacher}
                   className="home-page-section-2-content-card-image"
                 />
@@ -115,7 +120,7 @@ export default function HomePage() {
                 </Typography>
               </div>
               <div className="home-page-section-2-content-card">
-                <img
+                <LazyLoadImage
                   src={Books}
                   className="home-page-section-2-content-card-image"
                 />
@@ -129,7 +134,11 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        <img src={WaveStripe} alt="wave-stripe" className="wave-stripe-1" />
+        <LazyLoadImage
+          src={WaveStripe}
+          alt="wave-stripe"
+          className="wave-stripe-1"
+        />
         <div className="home-page-section-3">
           <div className="home-page-section-3-content">
             <div className="home-page-section-3-header">
@@ -232,13 +241,13 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-              <img
+              <LazyLoadImage
                 src={HIW_IMG_1}
                 className="home-page-section-3-card-wrapper-section-image"
               />
             </div>
             <div className="home-page-section-3-card-wrapper-section">
-              <img
+              <LazyLoadImage
                 src={HIW_IMG_2}
                 className="home-page-section-3-card-wrapper-section-image"
               />
@@ -446,7 +455,7 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-              <img
+              <LazyLoadImage
                 src={HIW_IMG_3}
                 className="home-page-section-3-card-wrapper-section-image"
               />
