@@ -393,6 +393,10 @@ export default function EnterCodeForm(props: Props) {
   }, [])
 
   const JoinRoom = async () => {
+    if (!user) {
+      toast.error(translations.alerts.loginalert)
+      return
+    }
     if (sessionStorage.getItem('roomJoined') == 'true') {
       toast.info(translations.alerts.sessionexpired)
       return
@@ -420,6 +424,10 @@ export default function EnterCodeForm(props: Props) {
   }
 
   const CreateRoom = async () => {
+    if (!user) {
+      toast.error(translations.alerts.loginalert)
+      return
+    }
     if (roomName === '') {
       toast.error(translations.alerts.enterroomname)
       return

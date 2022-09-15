@@ -34,6 +34,7 @@ import ClaimEmote from './components/misc/ClaimEmote'
 import { useDispatch, useSelector } from 'react-redux'
 import { setStarter, setClassroom, setEnterprise } from './actions/Plan'
 import { setIsLoggedIn, setIsLoggedOut } from './actions/IsLogged'
+import { setCustomerId, getCustomerId } from './actions/CustomerId'
 
 //apollo
 import { useMutation, gql } from '@apollo/client'
@@ -87,15 +88,15 @@ toast.configure({
 type ReduxStore = {
   isLogged: boolean
   plan: boolean
+  customerId: string
 }
 
 function App() {
   const user = getUser()
-  const [customerId, setCustomerId] = useState(null)
-
   const [updateUserProfile] = useMutation(UPDATE_USER_PROFILE)
 
-  const isLoggedIn = useSelector((state: ReduxStore) => state.isLogged)
+  const cid = useSelector((state: ReduxStore) => state.customerId)
+  const plan = useSelector((state: ReduxStore) => state.plan)
 
   const dispatch = useDispatch()
 
@@ -144,6 +145,10 @@ function App() {
   }, [])
 
   const handleSubscription = async () => {
+    if (cid && plan) {
+      console.log('already fetched')
+      return
+    }
     try {
       const res = await axios.post(
         `${config['api-server']}/get-user-customer-id`,
@@ -155,7 +160,7 @@ function App() {
       const { customerId, plan, sub_status } = res.data
 
       if (customerId) {
-        setCustomerId(customerId)
+        dispatch(setCustomerId(customerId))
       } else {
         dispatch(setStarter())
         return
@@ -188,7 +193,7 @@ function App() {
   return (
     <Router>
       <div id="App" className="App">
-        <Nav isLoggedIn={isLoggedIn} customerId={customerId} />
+        <Nav />
         <div style={{ margin: '0 !important' }} id="navMargin" />
         <Background />
         <Switch>

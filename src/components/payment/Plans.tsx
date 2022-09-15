@@ -13,12 +13,47 @@ import Wave from '../../img/WhiteBigStripe.svg'
 import useTranslations from '../../hooks/useTranslations'
 import axios from 'axios'
 import config from '../../config.json'
+
 export default function Plans() {
   const user = getUser()
   const plan = useSelector((state) => state.plan)
+  const customerId = useSelector((state) => state.customerId)
   // eslint-disable-next-line
   const translations = useTranslations()
+
+  const openCustomerPortal = async () => {
+    if (customerId == undefined) {
+      toast.info(translations.alerts.buyplanseeinfo)
+      return
+    }
+
+    const res = await axios.post(
+      `${config['api-server']}/create-customer-portal-session`,
+      { customerId: customerId }
+    )
+
+    const { redirectUrl } = res.data
+
+    if (redirectUrl === null) {
+      toast.info(translations.alerts.buyplanseeinfo)
+      return
+    }
+
+    window.location = redirectUrl
+
+    if (res.error) {
+      // Show error to your customer (e.g., insufficient funds)
+      console.log(res.error.message)
+    } else {
+      //
+    }
+  }
+
   const selectClassroomPlan = async () => {
+    if (!user) {
+      toast.info(translations.alerts.loginfirst)
+      return
+    }
     if (plan == 'Starter') {
       //window.location = `/subscription/classroom`
 
@@ -32,12 +67,18 @@ export default function Plans() {
       )
       console.log(res)
       window.location = res.data.url || '/'
+    } else if (plan == 'Enterprise') {
+      openCustomerPortal()
     } else {
       toast.info(translations.alerts.alreadyhaveplan)
     }
   }
 
   const selectEnterprisePlan = async () => {
+    if (!user) {
+      toast.info(translations.alerts.loginfirst)
+      return
+    }
     if (plan == 'Starter') {
       //window.location = `/subscription/entreprise`
       const res = await axios.post(
@@ -50,6 +91,8 @@ export default function Plans() {
       )
       console.log(res)
       window.location = res.data.url || '/'
+    } else if (plan == 'Classroom') {
+      openCustomerPortal()
     } else {
       toast.info(translations.alerts.alreadyhaveplan)
     }

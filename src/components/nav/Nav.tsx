@@ -31,19 +31,29 @@ import getUser from '../../hooks/getUser'
 import useTranslations from '../../hooks/useTranslations'
 import useLanguage from '../../hooks/useLanguage'
 
+import { useSelector } from 'react-redux'
+
 const GET_NOTIFICATION_LENGTH = gql`
   query notificationNumber($userId: ID!) {
     notificationNumber(userId: $userId)
   }
 `
 
-function Nav({ isLoggedIn, customerId }) {
+type ReduxStore = {
+  isLogged: boolean
+  plan: boolean
+  customerId: string
+}
+
+function Nav() {
   const user = getUser()
   const [anchorEl, setAnchorEl] = useState(null)
   const [anchorEl2, setAnchorEl2] = useState(null)
   const [anchorEl3, setAnchorEl3] = useState(null)
 
   const translations = useTranslations()
+  const isLoggedIn = useSelector((state: ReduxStore) => state.isLogged)
+  const customerId = useSelector((state: ReduxStore) => state.customerId)
 
   const [currentUsername, setCurrentUsername] = useState(null)
 

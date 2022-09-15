@@ -474,6 +474,7 @@
       "button2": "Go home 🏠"
     },
     "alerts": {
+      "loginfirst": "You Have To Login before buying a plan !",
       "loginalert": "You Have To Login If You Want To Use CONNECT",
       "roomalreadyexists": "A Room With This Name Already Exists Choose Another Name",
       "gamealreadystarted": "The Game has Already Started in Room",
@@ -1087,6 +1088,7 @@
       "button2": "⬅️ Retour 🏠"
     },
     "alerts": {
+      "loginfirst": "Vous devez vous connecter avant de pouvoir acheter un forfait !",
       "loginalert": "Vous devez vous connecter si vous souhaitez utiliser CONNECT !",
       "roomalreadyexists": "Une salle avec ce nom existe déjà choisissez un autre nom",
       "gamealreadystarted": "Le jeu a déjà commencé dans la salle",
