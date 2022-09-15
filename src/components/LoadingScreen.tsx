@@ -6,14 +6,14 @@ const LoadingScreen = (props: Props) => {
   return (
     <div
       style={{
-        width: '100vw',
-        height: '100vh',
+        width: '100%',
+        height: '80vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
       }}
     >
-      <CircularProgress thickness={4} size={200} />
+      <CircularProgress thickness={4} size={200} style={{ color: 'white' }} />
     </div>
   )
 }
