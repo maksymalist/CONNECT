@@ -1,6 +1,7 @@
 {
   "short_name": "CONNECT",
   "name": "CONNECT",
+  "description": "Take learning to the next level.",
   "icons": [
     {
       "src": "favicon.ico",
