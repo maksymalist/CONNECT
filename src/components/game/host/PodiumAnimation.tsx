@@ -14,68 +14,68 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
 
   // const podium = [
   //   {
-  //     player: "John Doe 💳🔗🔒",
-  //     position: "1",
-  //     time: "10s",
+  //     player: 'John Doe 💳🔗🔒',
+  //     position: '1',
+  //     time: '10s',
   //   },
   //   {
-  //     player: "Smith 💰🎉✅",
-  //     position: "2",
-  //     time: "11s",
+  //     player: 'Smith 💰🎉✅',
+  //     position: '2',
+  //     time: '11s',
   //   },
   //   {
-  //     player: "Mike 😡🥇🌀",
-  //     position: "3",
-  //     time: "13s",
+  //     player: 'Mike 😡🥇🌀',
+  //     position: '3',
+  //     time: '13s',
   //   },
   //   {
-  //     player: "Price 🚀✨🌈",
-  //     position: "4",
-  //     time: "15s",
+  //     player: 'Price 🚀✨🌈',
+  //     position: '4',
+  //     time: '15s',
   //   },
   //   {
-  //     player: "Joyce ➡️👩‍🏫💰",
-  //     position: "5",
-  //     time: "16s",
+  //     player: 'Joyce ➡️👩‍🏫💰',
+  //     position: '5',
+  //     time: '16s',
   //   },
   //   {
-  //     player: "Claire 🐳🙈",
-  //     position: "6",
-  //     time: "17s",
+  //     player: 'Claire 🐳🙈',
+  //     position: '6',
+  //     time: '17s',
   //   },
   //   {
-  //     player: "Derek 🐶🍏🍎",
-  //     position: "7",
-  //     time: "18s",
+  //     player: 'Derek 🐶🍏🍎',
+  //     position: '7',
+  //     time: '18s',
   //   },
   //   {
-  //     player: "James Bond 💣💣💣",
-  //     position: "8",
-  //     time: "177s",
+  //     player: 'James Bond 💣💣💣',
+  //     position: '8',
+  //     time: '177s',
   //   },
   //   {
-  //     player: "Tony Stark 💰🏁",
-  //     position: "9",
-  //     time: "178s",
+  //     player: 'Tony Stark 💰🏁',
+  //     position: '9',
+  //     time: '178s',
   //   },
   //   {
-  //     player: "Ethan Hunt 📈🤪",
-  //     position: "10",
-  //     time: "179s",
+  //     player: 'Ethan Hunt 📈🤪',
+  //     position: '10',
+  //     time: '179s',
   //   },
   //   {
-  //     player: "John Wick ✏️😵",
-  //     position: "11",
-  //     time: "180s",
+  //     player: 'John Wick ✏️😵',
+  //     position: '11',
+  //     time: '180s',
   //   },
   //   {
-  //     player: "Jason Bourne 🔪🔪",
-  //     position: "12",
-  //     time: "182s",
+  //     player: 'Jason Bourne 🔪🔪',
+  //     position: '12',
+  //     time: '182s',
   //   },
-  // ];
+  // ]
 
-  // const maxPodiumPlayers = 10;
+  // const maxPodiumPlayers = 10
 
   const PlaySound = (mp3) => {
     let sound = new Howl({
@@ -353,8 +353,18 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
                   }
                 })}
               </div>
-              <div>
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  margin: '30px',
+                }}
+              >
                 <Button
+                  style={{
+                    marginTop: '30px',
+                  }}
                   variant="contained"
                   color="primary"
                   onClick={() => (window.location = '/')}
@@ -370,6 +380,9 @@ function PodiumAnimation({ podium, maxPodiumPlayers }) {
           style={{ display: 'flex', justifyContent: 'center', margin: '30px' }}
         >
           <Button
+            style={{
+              marginTop: '30px',
+            }}
             variant="contained"
             color="primary"
             onClick={() => (window.location = '/')}
