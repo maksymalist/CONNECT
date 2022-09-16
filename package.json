@@ -23,6 +23,7 @@
     "@types/react-dom": "^18.0.4",
     "axios": "^0.21.1",
     "badwords-list": "^1.0.0",
+    "caniuse-lite": "^1.0.30001400",
     "firebase": "^8.5.0",
     "framer-motion": "^4.1.17",
     "google-classroom-share": "^0.5.6",

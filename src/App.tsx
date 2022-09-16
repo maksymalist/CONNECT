@@ -128,6 +128,7 @@ function App() {
       const allowedRoutes = [
         '/',
         '/login',
+        '/play',
         '/claim-emote',
         '/no-local-storage',
         '/privacy',
