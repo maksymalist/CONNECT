@@ -420,6 +420,11 @@ export default function EnterCodeForm(props: Props) {
         profane: list.array.includes(joinFormNickname),
         classes: classes ? classes : [],
       })
+      //wait 10 seconds for response
+
+      setTimeout(() => {
+        setSpinner1(false)
+      }, 10000)
     }
   }
 
@@ -983,6 +988,10 @@ export default function EnterCodeForm(props: Props) {
                   }}
                   onClick={() => {
                     CreateRoom()
+                    // wait 10 seconds for the room to be created
+                    setTimeout(() => {
+                      setSpinner2(false)
+                    }, 10000)
                   }}
                 >
                   {spinner2 ? (
