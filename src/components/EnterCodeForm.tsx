@@ -164,10 +164,12 @@ export default function EnterCodeForm(props: Props) {
 
   useEffect(() => {
     const Gamecode = new URLSearchParams(search).get('code')
+    const NoTutorial = new URLSearchParams(search).get('noTutorial')
 
     if (!user) {
       if (Gamecode !== null) {
-        window.location = `/login?code=${Gamecode}` as any
+        window.location =
+          `/login?code=${Gamecode}&noTutorial=${NoTutorial}` as any
         return
       } else {
         window.location = '/login' as any
