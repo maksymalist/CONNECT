@@ -83,24 +83,22 @@ function Login() {
         role: role,
       },
     })
-    if (Gamecode) {
-      localStorage.setItem('user', JSON.stringify(response))
-      window.location.reload()
-      window.location = `/play?code=${Gamecode}` as any
-    } else if (Secret && EmoteId) {
-      localStorage.setItem('user', JSON.stringify(response))
-      window.location.reload()
+
+    localStorage.setItem('user', JSON.stringify(response))
+
+    // if not noTutorial, redirect to tutorial
+    if (NoTutorial === 'false' || !NoTutorial) {
+      window.location.href = '/tutorial'
+      return
+    }
+
+    if (Secret && EmoteId) {
       window.location =
         `/claim-emote?secret=${Secret}&emoteId=${EmoteId}` as any
+    } else if (Gamecode) {
+      window.location = `play?code=${Gamecode}` as any
     } else {
-      localStorage.setItem('user', JSON.stringify(response))
-      window.location.reload()
-      console.log(NoTutorial, typeof NoTutorial)
-      if (NoTutorial === 'true') {
-        window.location.href = '/play'
-        return
-      }
-      window.location.href = '/tutorial'
+      window.location.href = '/play'
     }
   }
   return (
