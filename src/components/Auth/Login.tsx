@@ -95,6 +95,7 @@ function Login() {
     } else {
       localStorage.setItem('user', JSON.stringify(response))
       window.location.reload()
+      console.log(NoTutorial, typeof NoTutorial)
       if (NoTutorial === 'true') {
         window.location.href = '/play'
         return
