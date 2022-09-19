@@ -35,10 +35,13 @@ const CREATE_USER = gql`
 function Login() {
   const translations = useTranslations()
   const [createUser] = useMutation(CREATE_USER)
+
   const search = useLocation().search
   const Gamecode = new URLSearchParams(search).get('code')
   const Secret = new URLSearchParams(search).get('secret')
   const EmoteId = new URLSearchParams(search).get('emoteId')
+  const NoTutorial = new URLSearchParams(search).get('noTutorial')
+
   const [step, setStep] = useState(0)
   const [userObj, setUserObj] = useState({})
   const responseGoogle = async (response: any) => {
@@ -92,6 +95,10 @@ function Login() {
     } else {
       localStorage.setItem('user', JSON.stringify(response))
       window.location.reload()
+      if (NoTutorial === 'true') {
+        window.location.href = '/play'
+        return
+      }
       window.location.href = '/tutorial'
     }
   }
